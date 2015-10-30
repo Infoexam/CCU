@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 's3',
+    'cloud' => 'sftp',
 
     /*
     |--------------------------------------------------------------------------
@@ -60,6 +60,17 @@ return [
             // 'passive'  => true,
             // 'ssl'      => true,
             // 'timeout'  => 30,
+        ],
+
+        'sftp' => [
+            'driver'   => 'sftp',
+            'host' => env('FILESYSTEM_SFTP_HOST'),
+            'port' => env('FILESYSTEM_SFTP_PORT', 22),
+            'username' => env('FILESYSTEM_SFTP_USERNAME'),
+            'password' => env('FILESYSTEM_SFTP_PASSWORD'),
+            'private_key' => env('FILESYSTEM_SFTP_PRIVATE_KEY'),
+            'root' => env('FILESYSTEM_SFTP_ROOT', '/'),
+            'timeout' => env('FILESYSTEM_SFTP_TIMEOUT', 10),
         ],
 
         's3' => [
