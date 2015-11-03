@@ -15,16 +15,12 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
-            $table->integer('category_id')->unsigned();
             $table->integer('taggable_id')->unsigned();
             $table->string('taggable_type');
 
             $table->index('name');
-            $table->index('category_id');
             $table->index('taggable_id');
             $table->index('taggable_type');
-
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
         });
     }
 
@@ -35,10 +31,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            $table->dropForeign('tags_category_id_foreign');
-        });
-
         Schema::drop('tags');
     }
 }
