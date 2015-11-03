@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('username', 32);
             $table->string('password', 100);
             $table->rememberToken();
-            $table->string('nickname', 32);
+            $table->string('name', 32);
             $table->string('email');
             $table->char('social_security_number', 10)->default('_infoexam_');
             $table->integer('gender')->unsigned()->nullable();
@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->unique('username');
 
             $table->index('remember_token');
-            $table->index('nickname');
+            $table->index('name');
             $table->index('email');
             $table->index('social_security_number');
             $table->index('gender');
