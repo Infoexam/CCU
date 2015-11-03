@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fec422974ab318d76c93511154261a08",
-    "content-hash": "08e92a286009cde210147f51f6e562bc",
+    "hash": "25fd34c9f90a24abd0321287028b1ad9",
+    "content-hash": "6e99bc6868cc04d3f328830ef43d7d1b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1023,6 +1023,52 @@
             ],
             "description": "Flysystem adapter for SFTP",
             "time": "2015-10-25 21:59:40"
+        },
+        {
+            "name": "m6web/firewall",
+            "version": "v1.0.1",
+            "target-dir": "M6Web/Component/Firewall",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/Firewall.git",
+                "reference": "a8a89318b7653514dbdf007508c140b6a24a66b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/Firewall/zipball/a8a89318b7653514dbdf007508c140b6a24a66b1",
+                "reference": "a8a89318b7653514dbdf007508c140b6a24a66b1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "master-dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\Firewall": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Library providing IP filtering features",
+            "keywords": [
+                "IP",
+                "filtering",
+                "firewall"
+            ],
+            "time": "2015-05-26 07:04:41"
         },
         {
             "name": "monolog/monolog",
