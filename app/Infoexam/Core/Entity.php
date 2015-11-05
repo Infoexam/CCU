@@ -2,7 +2,9 @@
 
 namespace App\Infoexam\Core;
 
-class Entity extends \Eloquent
+use Eloquent;
+
+class Entity extends Eloquent
 {
     /**
      * Get the table name of this model.

@@ -15,7 +15,7 @@ class CreatePapersTable extends Migration
         Schema::create('papers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
-            $table->string('remark');
+            $table->string('remark')->nullable();
             $table->boolean('automatic');
             $table->timestamps();
             $table->softDeletes();

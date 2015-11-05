@@ -16,12 +16,12 @@ class CreateCertificatesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->tinyInteger('value')->unsigned()->nullable();
+            $table->tinyInteger('score')->unsigned()->nullable();
             $table->timestamps();
 
             $table->unique(['user_id', 'category_id']);
 
-            $table->index('value');
+            $table->index('score');
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade');

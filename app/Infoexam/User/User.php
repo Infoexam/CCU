@@ -36,4 +36,14 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * 取得該使用者的成績資訊
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function certificate()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

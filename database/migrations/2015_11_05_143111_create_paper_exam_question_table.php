@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExamQuestionPaperTable extends Migration
+class CreatePaperExamQuestionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,11 @@ class CreateExamQuestionPaperTable extends Migration
      */
     public function up()
     {
-        Schema::create('exam_question_paper', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('paper_exam_question', function (Blueprint $table) {
             $table->integer('paper_id')->unsigned();
             $table->integer('exam_question_id')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
 
-            $table->unique(['paper_id', 'exam_question_id', 'deleted_at']);
+            $table->primary(['paper_id', 'exam_question_id']);
 
             $table->foreign('exam_question_id')->references('id')->on('exam_questions')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -35,11 +32,11 @@ class CreateExamQuestionPaperTable extends Migration
      */
     public function down()
     {
-        Schema::table('exam_question_paper', function (Blueprint $table) {
-            $table->dropForeign('exam_question_paper_exam_question_id_foreign');
-            $table->dropForeign('exam_question_paper_paper_id_foreign');
+        Schema::table('paper_exam_question', function (Blueprint $table) {
+            $table->dropForeign('paper_exam_question_exam_question_id_foreign');
+            $table->dropForeign('paper_exam_question_paper_id_foreign');
         });
 
-        Schema::drop('exam_question_paper');
+        Schema::drop('paper_exam_question');
     }
 }
