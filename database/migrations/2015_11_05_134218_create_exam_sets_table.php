@@ -16,7 +16,7 @@ class CreateExamSetsTable extends Migration
             $table->increments('id');
             $table->string('name', 32);
             $table->integer('category_id')->unsigned();
-            $table->boolean('enable');
+            $table->boolean('enable')->default(false);
             $table->timestamps();
             $table->softDeletes();
 
