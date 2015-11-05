@@ -90,12 +90,19 @@ $factory->define(\App\Infoexam\Paper\Paper::class, function (\Faker\Generator $f
 });
 
 /**
- * announcements table
+ * announcements and faqs table
  */
 $factory->define(\App\Infoexam\Website\Announcement::class, function (\Faker\Generator $faker) {
     return [
-        'heading' => $faker->sentence,
+        'heading' => $faker->sentence . str_random(4),
         'link' => random_int(0, 1) ? $faker->url : null,
         'content' => $faker->paragraph,
+    ];
+});
+
+$factory->define(\App\Infoexam\Website\Faq::class, function (\Faker\Generator $faker) {
+    return [
+        'question' => $faker->sentence,
+        'answer' => $faker->sentence,
     ];
 });
