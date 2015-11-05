@@ -23,8 +23,10 @@ class CreateCertificatesTable extends Migration
 
             $table->index('value');
 
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->onUpdate('cascade');
         });
     }
 
