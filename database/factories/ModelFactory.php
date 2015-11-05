@@ -54,7 +54,7 @@ $factory->define(\App\Infoexam\Exam\Set::class, function (\Faker\Generator $fake
     return [
         'name' => $faker->name,
         'category_id' => Category::where('category', '=', 'exam.category')->get()->random()->getAttribute('id'),
-        'enable' => boolval(random_int(0, 1)),
+        'enable' => random_int(0, 1),
     ];
 });
 
@@ -62,7 +62,7 @@ $factory->define(\App\Infoexam\Exam\Question::class, function (\Faker\Generator 
     return [
         'content' => $faker->paragraph,
         'difficulty_id' => Category::where('category', '=', 'exam.difficulty')->get()->random()->getAttribute('id'),
-        'multiple' => boolval(random_int(0, 1)),
+        'multiple' => random_int(0, 1),
     ];
 });
 
@@ -85,6 +85,17 @@ $factory->define(\App\Infoexam\Paper\Paper::class, function (\Faker\Generator $f
     return [
         'name' => $faker->name,
         'remark' => $faker->sentence,
-        'automatic' => boolval(random_int(0, 1)),
+        'automatic' => random_int(0, 1),
+    ];
+});
+
+/**
+ * announcements table
+ */
+$factory->define(\App\Infoexam\Website\Announcement::class, function (\Faker\Generator $faker) {
+    return [
+        'heading' => $faker->sentence,
+        'link' => random_int(0, 1) ? $faker->url : null,
+        'content' => $faker->paragraph,
     ];
 });
