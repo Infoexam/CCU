@@ -38,6 +38,7 @@ class Paper extends Entity
      */
     public function questions()
     {
-        return $this->belongsToMany(Question::class, 'paper_exam_question', 'paper_id', 'exam_question_id');
+        return $this->belongsToMany(Question::class, 'paper_exam_question', 'paper_id', 'exam_question_id')
+            ->withPivot(['id']);
     }
 }

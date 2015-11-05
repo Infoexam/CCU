@@ -13,10 +13,11 @@ class CreatePaperExamQuestionTable extends Migration
     public function up()
     {
         Schema::create('paper_exam_question', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('paper_id')->unsigned();
             $table->integer('exam_question_id')->unsigned();
 
-            $table->primary(['paper_id', 'exam_question_id']);
+            $table->unique(['paper_id', 'exam_question_id']);
 
             $table->foreign('exam_question_id')->references('id')->on('exam_questions')
                 ->onUpdate('cascade')->onDelete('cascade');
