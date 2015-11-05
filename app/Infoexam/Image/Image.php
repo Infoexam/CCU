@@ -4,8 +4,15 @@ namespace App\Infoexam\Image;
 
 use App\Infoexam\Core\Entity;
 
-class Property extends Entity
+class Image extends Entity
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'images';
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *

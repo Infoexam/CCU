@@ -7,6 +7,13 @@ use App\Infoexam\Core\Entity;
 class Tag extends Entity
 {
     /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'tags';
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

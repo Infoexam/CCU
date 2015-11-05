@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => App\Infoexam\User::class,
+    'model' => App\Infoexam\User\User::class,
 
     /*
     |--------------------------------------------------------------------------
