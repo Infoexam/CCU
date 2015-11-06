@@ -11,8 +11,8 @@ class WebsiteRelatedTablesSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Infoexam\Website\Announcement::class, 20)->create();
+        factory(\App\Infoexam\Website\Announcement::class, random_int(15, 30))->create();
 
-        factory(\App\Infoexam\Website\Faq::class, 20)->create();
+        factory(\App\Infoexam\Website\Faq::class, random_int(15, 30))->create();
     }
 }

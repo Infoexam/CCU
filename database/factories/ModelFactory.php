@@ -48,7 +48,7 @@ $factory->define(App\Infoexam\User\Certificate::class, function (Faker\Generator
 });
 
 /**
- * exam_sets, exam_questions, exam_options and exam_explanations table
+ * exam_sets, exam_questions, exam_options, exam_explanations and exam_lists table
  */
 $factory->define(\App\Infoexam\Exam\Set::class, function (\Faker\Generator $faker) {
     return [
@@ -75,6 +75,34 @@ $factory->define(\App\Infoexam\Exam\Option::class, function (\Faker\Generator $f
 $factory->define(\App\Infoexam\Exam\Explanation::class, function (\Faker\Generator $faker) {
     return [
         'content' => $faker->paragraph,
+    ];
+});
+
+$factory->define(\App\Infoexam\Exam\Lists::class, function (\Faker\Generator $faker) {
+    return [
+        'code' => str_random(13),
+        'began_at' => $faker->dateTime,
+        'duration' => random_int(30, 90),
+        'room' => random_int(100, 999),
+        'paper_id' => \App\Infoexam\Paper\Paper::all()->random()->getAttribute('id'),
+        'apply_type_id' => 1,
+        'subject_id' => 2,
+        'std_maximum_num' => random_int(10, 50),
+    ];
+});
+
+$factory->define(\App\Infoexam\Exam\Apply::class, function (\Faker\Generator $faker) {
+    return [
+        'user_id' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
+        'apply_type_id' => 1,
+        'paid_at' => random_int(0, 1) ? $faker->dateTime : null,
+    ];
+});
+
+$factory->define(\App\Infoexam\Exam\Result::class, function (\Faker\Generator $faker) {
+    return [
+        'score' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
+        'signed_in_at' => $faker->dateTime,
     ];
 });
 

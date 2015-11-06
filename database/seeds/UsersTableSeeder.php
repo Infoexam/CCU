@@ -14,7 +14,7 @@ class UsersTableSeeder extends Seeder
     {
         $roles = \App\Infoexam\User\Role::all()->pluck('id');
 
-        factory(User::class, 10)->create()->each(function (User $user) use ($roles) {
+        factory(User::class, random_int(15, 30))->create()->each(function (User $user) use ($roles) {
             $user->certificate()->save(factory(\App\Infoexam\User\Certificate::class)->make());
 
             $r = $roles->random(random_int(1, $roles->count()));
@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             $user->roles()->sync(is_int($r) ? [$r] : $r->all());
         });
 
-        factory(User::class, 'passed', 10)->create()->each(function (User $user) use ($roles) {
+        factory(User::class, 'passed', random_int(15, 30))->create()->each(function (User $user) use ($roles) {
             $user->certificate()->save(factory(\App\Infoexam\User\Certificate::class)->make());
 
             $r = $roles->random(random_int(1, $roles->count()));

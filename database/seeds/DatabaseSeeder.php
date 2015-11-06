@@ -18,11 +18,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EntrustSeeder::class);
 
+        $this->call(WebsiteRelatedTablesSeeder::class);
+
         $this->call(UsersTableSeeder::class);
 
         $this->call(ExamSetsTableSeeder::class);
 
         $this->call(PapersTableSeeder::class);
+
+        $this->call(ExamListsTableSeeder::class);
 
         Model::reguard();
     }

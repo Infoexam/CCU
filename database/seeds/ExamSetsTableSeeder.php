@@ -15,18 +15,18 @@ class ExamSetsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Set::class, 5)->create()->each(function (Set $set) {
-            factory(Question::class, 10)->make()->each(function (Question $question) use ($set) {
+        factory(Set::class, random_int(5, 10))->create()->each(function (Set $set) {
+            factory(Question::class, random_int(10, 15))->make()->each(function (Question $question) use ($set) {
                 $set->questions()->save($question);
 
-                if (boolval(random_int(0, 2))) {
+                if (random_int(0, 2)) {
                     $question->explanation()->save(factory(Explanation::class)->make());
                 }
 
                 factory(Option::class, random_int(3, 5))->make()->each(function ($option) use ($question) {
                     $question->options()->save($option);
 
-                    if (boolval(random_int(0, 1))) {
+                    if (random_int(0, 1)) {
                         $question->answers()->save($option);
                     }
                 });
