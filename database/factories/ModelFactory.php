@@ -48,7 +48,8 @@ $factory->define(App\Infoexam\User\Certificate::class, function (Faker\Generator
 });
 
 /**
- * exam_sets, exam_questions, exam_options, exam_explanations and exam_lists table
+ * exam_sets, exam_questions, exam_options, exam_explanations,
+ * exam_lists, exam_applies and exam_results tables
  */
 $factory->define(\App\Infoexam\Exam\Set::class, function (\Faker\Generator $faker) {
     return [
