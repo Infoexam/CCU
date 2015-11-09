@@ -15,6 +15,10 @@ class AppendAdditionalHeaders
      */
     public function handle($request, Closure $next)
     {
+        if (env('WEBSITE_HTTPS', false) && ! $request->secure()) {
+            return redirect()->secure($request->getRequestUri());
+        }
+
         $response = $next($request);
 
         if ($request->secure()) {
