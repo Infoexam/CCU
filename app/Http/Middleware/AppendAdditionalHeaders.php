@@ -15,7 +15,7 @@ class AppendAdditionalHeaders
      */
     public function handle($request, Closure $next)
     {
-        if (env('WEBSITE_HTTPS', false) && ! $request->secure()) {
+        if (env('WEBSITE_HTTPS', false) && app()->environment(['production']) && ! $request->secure()) {
             return redirect()->secure($request->getRequestUri());
         }
 
@@ -25,13 +25,13 @@ class AppendAdditionalHeaders
             $response->header('Strict-Transport-Security', 'max-age=15552000; preload');
 
             if (! is_null($pins = env('PUBLIC_KEY_PINS')) && strlen($pins) > 0) {
-                $publicKeyPins = 'max-age=3600;';
+                $publicKeyPins = '';
 
                 foreach (explode(',', $pins) as $pin) {
                     $publicKeyPins .= " pin-sha256=\"{$pin}\";";
                 }
 
-                $response->header('Public-Key-Pins', $publicKeyPins);
+                $response->header('Public-Key-Pins', "{$publicKeyPins} max-age=600;");
             }
         }
 
