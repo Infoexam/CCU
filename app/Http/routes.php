@@ -21,9 +21,13 @@ $router->get('/', ['as' => 'home', function () {
 
 $router->get('auth/sign-out', ['as' => 'auth.signOut', 'uses' => 'Api\V1\AuthController@signOut']);
 
-$router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1', 'as' => 'api.v1.'], function (Router $router) {
-    $router->group(['prefix' => 'auth', 'as' => 'auth.'], function (Router $router) {
+$router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {
+    $router->group(['prefix' => 'auth', 'as' => 'api.v1.auth.'], function (Router $router) {
         $router->post('sign-in', ['as' => 'signIn', 'uses' => 'AuthController@signIn']);
         $router->get('sso', ['as' => 'sso', 'uses' => 'AuthController@sso']);
+    });
+
+    $router->group(['prefix' => 'exam'], function (Router $router) {
+        $router->resource('sets', 'ExamSetsController', ['except' => ['create']]);
     });
 });

@@ -18,6 +18,13 @@ class Question extends Entity
     protected $table = 'exam_questions';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['difficulty_id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

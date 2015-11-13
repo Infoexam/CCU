@@ -18,6 +18,13 @@ class Set extends Entity
     protected $table = 'exam_sets';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['category_id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

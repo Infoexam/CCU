@@ -40,6 +40,6 @@ class AuthTest extends TestCase
         $this->assertResponseOk();
 
         // 檢驗是否有重新 hash 密碼
-        $this->assertNotEquals(Auth::user()->getAttribute('password'), $oldPassword);
+        $this->assertNotSame(Auth::user()->getAttribute('password'), $oldPassword);
     }
 }
