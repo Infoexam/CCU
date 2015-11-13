@@ -10,4 +10,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * return 200 http response
+     *
+     * @param array $headers
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ok(array $headers = [])
+    {
+        return response('', 200, $headers);
+    }
 }
