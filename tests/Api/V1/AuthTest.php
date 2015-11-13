@@ -15,8 +15,7 @@ class AuthTest extends TestCase
      */
     public function testExample()
     {
-        $username = 'test_' . str_random(4);
-        $password = str_random(4);
+        list($username, $password) = [str_random(8), str_random(8)];
 
         // 產生測試帳號
         $user = factory(\App\Infoexam\User\User::class)->create([

@@ -13,7 +13,7 @@ class Auth
      */
     public static function attemptUsingCenter($username, $password)
     {
-        if (app()->environment(['testing'])) {
+        if (app()->environment(['local', 'testing'])) {
             return false;
         }
 
