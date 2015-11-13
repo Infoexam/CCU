@@ -48,7 +48,7 @@ return [
 
         'sqlite' => [
             'driver'   => 'sqlite',
-            'database' => storage_path('database.sqlite'),
+            'database' => database_path('database.sqlite'),
             'prefix'   => '',
         ],
 
@@ -64,12 +64,12 @@ return [
             'strict'    => false,
         ],
 
-        'pgsql' => [
+        'elearn' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host'     => env('DB_ELEARN_HOST', 'localhost'),
+            'database' => env('DB_ELEARN_DATABASE', 'forge'),
+            'username' => env('DB_ELEARN_USERNAME', 'forge'),
+            'password' => env('DB_ELEARN_PASSWORD', ''),
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
