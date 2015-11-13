@@ -15,7 +15,7 @@ class AppendAdditionalHeaders
      */
     public function handle($request, Closure $next)
     {
-        if (env('WEBSITE_HTTPS', false) && app()->environment(['production']) && ! $request->secure()) {
+        if (env('WEBSITE_HTTPS', false) && app()->environment(['production', 'development']) && ! $request->secure()) {
             return redirect()->secure($request->getRequestUri());
         }
 
