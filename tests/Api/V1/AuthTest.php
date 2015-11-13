@@ -9,11 +9,11 @@ class AuthTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * A basic test example.
+     * 測試登入 api
      *
      * @return void
      */
-    public function testExample()
+    public function testSignIn()
     {
         list($username, $password) = [str_random(8), str_random(8)];
 
