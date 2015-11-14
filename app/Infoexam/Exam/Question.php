@@ -4,6 +4,7 @@ namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\General\Category;
+use App\Infoexam\Image\Image;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -40,6 +41,13 @@ class Question extends Entity
     protected $dates = ['deleted_at'];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['images'];
+
+    /**
      * 取得該題目的選項
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -47,6 +55,16 @@ class Question extends Entity
     public function options()
     {
         return $this->hasMany(Option::class, 'exam_question_id');
+    }
+
+    /**
+     * 取得該題目的圖片
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     /**
@@ -103,10 +121,12 @@ class Question extends Entity
                 $relation->getQuery()->getQuery()->select(['id', 'exam_question_id']);
             }]);
 
+            // 刪除解析
             if (null !== ($explanation = $question->getRelation('explanation'))) {
                 $explanation->delete();
             }
 
+            // 刪除選項
             Option::where('exam_question_id', '=', $question->getAttribute('id'))->delete();
         });
     }

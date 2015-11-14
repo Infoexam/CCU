@@ -13,18 +13,22 @@ class ExamPaperQuestionController extends Controller
     /**
      * 取得試卷題目
      *
+     * @param Request $request
      * @param int $paperId
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function index($paperId)
+    public function index(Request $request, $paperId)
     {
         $paper = Paper::with(['questions' => function (BelongsToMany $relation) {
-            $relation->getQuery()->getQuery()->select(['exam_questions.id']);
-        }])->findOrFail($paperId, ['id']);
+            $relation->getQuery()->with(['difficulty'])->getQuery()
+                ->select(['exam_questions.id', 'content', 'difficulty_id', 'multiple']);
+        }])->findOrFail($paperId, ['id', 'name']);
 
-        return response()->json($paper->getRelation('questions')->pluck('id'));
+        if ($request->has('onlyId')) {
+            $paper = $paper->getRelation('questions')->pluck('id');
+        }
+
+        return response()->json($paper);
     }
 
     /**
@@ -33,12 +37,14 @@ class ExamPaperQuestionController extends Controller
      * @param Request $request
      * @param int $paperId
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function update(Request $request, $paperId)
+    public function store(Request $request, $paperId)
     {
-        Paper::findOrFail($paperId, ['id'])->questions()->sync($request->input('questions', []));
+        if (! is_array($questions = $request->input('questions', []))) {
+            $questions = [$questions];
+        }
+
+        Paper::findOrFail($paperId, ['id'])->questions()->sync($questions);
 
         return $this->ok();
     }

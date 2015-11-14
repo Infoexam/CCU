@@ -28,9 +28,10 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
     $router->group(['prefix' => 'exam'], function (Router $router) {
         $router->get('sets/all-questions', ['as' => 'api.v1.exam.sets.allQuestions', 'uses' => 'ExamSetController@allQuestions']);
-        $router->resource('sets', 'ExamSetController', ['except' => ['create']]);
+        $router->resource('sets', 'ExamSetController', ['except' => ['create', 'edit']]);
+        $router->resource('sets.questions', 'ExamSetQuestionController', ['except' => ['create', 'edit']]);
 
-        $router->resource('papers', 'ExamPaperController', ['except' => ['create']]);
-        $router->resource('papers.questions', 'ExamPaperQuestionController', ['only' => ['index', 'update', 'destroy']]);
+        $router->resource('papers', 'ExamPaperController', ['except' => ['create', 'edit']]);
+        $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'edit']]);
     });
 });

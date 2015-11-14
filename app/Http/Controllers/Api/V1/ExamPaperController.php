@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Paper;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ExamPaperController extends Controller
 {
     /**
-     * 顯示所有試卷
+     * 取得所有試卷資料
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -22,7 +21,7 @@ class ExamPaperController extends Controller
     }
 
     /**
-     * 創建試卷
+     * 新增試卷
      *
      * @param Requests\ExamPapersRequest $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
@@ -37,32 +36,12 @@ class ExamPaperController extends Controller
     }
 
     /**
-     * 顯示指定試卷題目
+     * 取得指定試卷資料
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function show($id)
-    {
-        $paper = Paper::with(['questions' => function (BelongsToMany $relation) {
-            $relation->getQuery()->with(['difficulty'])->getQuery()
-                ->select(['exam_questions.id', 'content', 'difficulty_id', 'multiple']);
-        }])->findOrFail($id, ['id', 'name']);
-
-        return response()->json($paper);
-    }
-
-    /**
-     * 取得欲編輯的試卷資料
-     *
-     * @param int  $id
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public function edit($id)
     {
         $paper = Paper::findOrFail($id, ['id', 'name', 'remark']);
 
@@ -75,8 +54,6 @@ class ExamPaperController extends Controller
      * @param Requests\ExamPapersRequest $request
      * @param int $id
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function update(Requests\ExamPapersRequest $request, $id)
     {
@@ -93,8 +70,6 @@ class ExamPaperController extends Controller
      *
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException|\Exception
      */
     public function destroy($id)
     {

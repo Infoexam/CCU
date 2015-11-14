@@ -48,4 +48,17 @@ class Image extends Entity
     {
         return $this->morphTo();
     }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Image $image) {
+        });
+    }
 }

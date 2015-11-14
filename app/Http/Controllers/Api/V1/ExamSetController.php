@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ExamSetController extends Controller
 {
     /**
-     * 顯示所有題庫資訊
+     * 取得所有題庫資料
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -37,32 +37,12 @@ class ExamSetController extends Controller
     }
 
     /**
-     * 顯示指定題庫內容
+     * 取得指定題庫資料
      *
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function show($id)
-    {
-        $set = Set::with(['questions' => function (HasMany $relation) {
-            $relation->getQuery()->with(['difficulty'])->getQuery()
-                ->select(['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
-        }])->findOrFail($id, ['id', 'name']);
-
-        return response()->json($set);
-    }
-
-    /**
-     * 取得欲編輯的題庫資料
-     *
-     * @param int  $id
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public function edit($id)
     {
         $set = Set::with(['category'])->findOrFail($id, ['id', 'name', 'category_id', 'enable']);
 
@@ -75,8 +55,6 @@ class ExamSetController extends Controller
      * @param Requests\ExamSetsRequest $request
      * @param int $id
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function update(Requests\ExamSetsRequest $request, $id)
     {
@@ -89,12 +67,11 @@ class ExamSetController extends Controller
     }
 
     /**
-     * 刪除指定題庫與其相關資料
+     * 刪除指定題庫與其相關資料（through model event）
+     * 相關資料包括：題目
      *
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException|\Exception
      */
     public function destroy($id)
     {
@@ -104,7 +81,7 @@ class ExamSetController extends Controller
     }
 
     /**
-     * 取得所有題目（用於試卷新增題目）
+     * 取得所有啟用題庫的題目（用於試卷新增題目）
      *
      * @return \Illuminate\Http\JsonResponse
      */
