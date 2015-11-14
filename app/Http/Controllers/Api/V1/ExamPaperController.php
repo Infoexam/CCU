@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Paper;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ExamPapersController extends Controller
+class ExamPaperController extends Controller
 {
     /**
      * 顯示所有試卷

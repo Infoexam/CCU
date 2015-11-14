@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ExamSetsController extends Controller
+class ExamSetController extends Controller
 {
     /**
      * 顯示所有題庫資訊
