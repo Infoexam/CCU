@@ -8,12 +8,24 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExamSetsTest extends TestCase
+class ExamSetTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
-     * 測試題庫新增 api
+     * test for \App\Http\Controller\Api\V1\ExamSetController@index
+     *
+     * @return void
+     */
+    public function testIndex()
+    {
+        $response = $this->call('GET', route('api.v1.exam.sets.index'));
+        $this->assertResponseOk();
+        $this->assertJson($response->getContent());
+    }
+
+    /**
+     * test for \App\Http\Controller\Api\V1\ExamSetController@store
      *
      * @return void
      */
@@ -53,11 +65,11 @@ class ExamSetsTest extends TestCase
     }
 
     /**
-     * 測試題庫查詢與編輯 api
+     * test for \App\Http\Controller\Api\V1\ExamSetController@show
      *
      * @return void
      */
-    public function testShowAndEdit()
+    public function testShow()
     {
         $setId = factory(Set::class)->create()->getAttribute('id');
 
@@ -70,20 +82,10 @@ class ExamSetsTest extends TestCase
 
         $this->call('GET', route('api.v1.exam.sets.show', ['sets' => $setId + 100]));
         $this->assertResponseStatus(404);
-
-        // 編輯頁面
-        $response = $this->call('GET', route('api.v1.exam.sets.edit', [
-            'sets' => $setId,
-        ]));
-        $this->assertResponseOk();
-        $this->assertJson($response->getContent());
-
-        $this->call('GET', route('api.v1.exam.sets.edit', ['sets' => $setId + 100]));
-        $this->assertResponseStatus(404);
     }
 
     /**
-     * 測試題庫更新 api
+     * test for \App\Http\Controller\Api\V1\ExamSetController@update
      *
      * @return void
      */
@@ -130,7 +132,7 @@ class ExamSetsTest extends TestCase
     }
 
     /**
-     * 測試題庫刪除 api
+     * test for \App\Http\Controller\Api\V1\ExamSetController@destroy
      *
      * @return void
      */
@@ -148,7 +150,7 @@ class ExamSetsTest extends TestCase
     }
 
     /**
-     * 測試取得所有題目 api
+     * test for \App\Http\Controller\Api\V1\ExamSetController@allQuestions
      *
      * @return void
      */
