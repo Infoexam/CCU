@@ -146,4 +146,16 @@ class ExamSetsTest extends TestCase
         // 確認查詢結果為 null
         $this->assertNull(Set::find($setId));
     }
+
+    /**
+     * 測試取得所有題目 api
+     *
+     * @return void
+     */
+    public function testAllQuestions()
+    {
+        $response = $this->call('GET', route('api.v1.exam.sets.allQuestions'));
+        $this->assertResponseOk();
+        $this->assertJson($response->getContent());
+    }
 }

@@ -102,4 +102,18 @@ class ExamSetsController extends Controller
 
         return $this->ok();
     }
+
+    /**
+     * 取得所有題目（用於試卷新增題目）
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allQuestions()
+    {
+        $set = Set::with(['questions' => function (HasMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'exam_set_id', 'content']);
+        }])->where('enable', '=', true)->get(['id', 'name']);
+
+        return response()->json($set);
+    }
 }
