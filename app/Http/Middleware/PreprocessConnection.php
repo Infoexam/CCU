@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Agent;
+use Carbon\Carbon;
 use Closure;
 use Hash;
 
@@ -18,6 +20,19 @@ class PreprocessConnection
     {
         // set the cost for BCRYPT to 12
         Hash::setRounds(12);
+
+        // set environment and carbon default language
+        $userAcceptLanguages = Agent::languages();
+        $lan = 'en';
+
+        foreach (['zh-TW', 'zh-tw', 'zh'] as $zh) {
+            if (in_array($zh, $userAcceptLanguages)) {
+                $lan = 'zh-TW';
+            }
+        }
+
+        app()->setLocale($lan);
+        Carbon::setLocale($lan);
 
         return $next($request);
     }

@@ -146,6 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\SftpServiceProvider::class,
 
+        Jenssegers\Agent\AgentServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
@@ -197,6 +198,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],

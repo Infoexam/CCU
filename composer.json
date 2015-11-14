@@ -8,6 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "~2.5",
+        "jenssegers/agent": "~2.3",
         "league/flysystem-sftp": "~1.0",
         "m6web/firewall": "~1.0",
         "paragonie/random_compat": "~1.1",
