@@ -3,7 +3,6 @@
 namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
-use App\Infoexam\Paper\Paper;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lists extends Entity

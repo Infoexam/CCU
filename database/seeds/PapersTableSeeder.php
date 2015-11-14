@@ -1,6 +1,6 @@
 <?php
 
-use App\Infoexam\Paper\Paper;
+use App\Infoexam\Exam\Paper;
 use Illuminate\Database\Seeder;
 
 class PapersTableSeeder extends Seeder

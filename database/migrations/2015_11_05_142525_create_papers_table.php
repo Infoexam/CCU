@@ -16,7 +16,7 @@ class CreatePapersTable extends Migration
             $table->increments('id');
             $table->string('name', 64);
             $table->string('remark')->nullable();
-            $table->boolean('automatic');
+            $table->boolean('automatic')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

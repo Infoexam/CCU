@@ -28,5 +28,6 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
     $router->group(['prefix' => 'exam'], function (Router $router) {
         $router->resource('sets', 'ExamSetsController', ['except' => ['create']]);
+        $router->resource('papers', 'ExamPapersController', ['except' => ['create']]);
     });
 });
