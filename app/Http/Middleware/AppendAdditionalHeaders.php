@@ -12,6 +12,8 @@ class AppendAdditionalHeaders
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
+     *
+     * @todo Content-Security-Policy header
      */
     public function handle($request, Closure $next)
     {
