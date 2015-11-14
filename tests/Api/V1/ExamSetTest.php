@@ -73,13 +73,14 @@ class ExamSetTest extends TestCase
     {
         $setId = factory(Set::class)->create()->getAttribute('id');
 
-        // 查詢頁面
+        // 正常查詢
         $response = $this->call('GET', route('api.v1.exam.sets.show', [
             'sets' => $setId,
         ]));
         $this->assertResponseOk();
         $this->assertJson($response->getContent());
 
+        // 查詢不存在的資料
         $this->call('GET', route('api.v1.exam.sets.show', ['sets' => $setId + 100]));
         $this->assertResponseStatus(404);
     }
@@ -147,6 +148,10 @@ class ExamSetTest extends TestCase
 
         // 確認查詢結果為 null
         $this->assertNull(Set::find($setId));
+
+        // 刪除不存在的資料
+        $this->call('DELETE', route('api.v1.exam.sets.destroy', ['sets' => $setId]));
+        $this->assertResponseStatus(404);
     }
 
     /**
