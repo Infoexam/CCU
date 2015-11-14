@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 
 class ExamSetsController extends Controller
 {
@@ -23,14 +22,16 @@ class ExamSetsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 新增題庫
      *
-     * @param Requests\ExamSetsRequest|Request $request
-     * @return \Illuminate\Http\Response
+     * @param Requests\ExamSetsRequest $request
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function store(Requests\ExamSetsRequest $request)
     {
-        Set::create($request->only(['name', 'category_id', 'enable']));
+        if (! Set::create($request->only(['name', 'category_id', 'enable']))->exists) {
+            return response()->json(['errors' => ['create' => '']], 500);
+        }
 
         return $this->ok();
     }
@@ -54,10 +55,12 @@ class ExamSetsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 取得欲編輯的題庫資料
      *
-     * @param  int  $id
+     * @param int  $id
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function edit($id)
     {
@@ -67,28 +70,36 @@ class ExamSetsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 更新指定題庫資料
      *
-     * @param Requests\ExamSetsRequest|Request $request
+     * @param Requests\ExamSetsRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function update(Requests\ExamSetsRequest $request, $id)
     {
-        Set::findOrFail($id, ['id', 'name', 'category_id', 'enable'])
-            ->update($request->only(['name', 'category_id', 'enable']));
+        if (! Set::findOrFail($id, ['id', 'name', 'category_id', 'enable'])
+            ->update($request->only(['name', 'category_id', 'enable']))) {
+            return response()->json(['errors' => ['update' => '']], 500);
+        }
 
         return $this->ok();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 刪除指定題庫與其相關資料
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException|\Exception
      */
     public function destroy($id)
     {
-        //
+        Set::findOrFail($id, ['id'])->delete();
+
+        return $this->ok();
     }
 }

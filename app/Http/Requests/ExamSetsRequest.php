@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Auth;
 
 class ExamSetsRequest extends Request
 {
@@ -13,7 +14,13 @@ class ExamSetsRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        if (null === ($user = Auth::user())) {
+            return false;
+        } else if (! $user->hasRole(['admin'])) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

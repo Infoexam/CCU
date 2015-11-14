@@ -4,6 +4,7 @@ namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\General\Category;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Entity
@@ -86,5 +87,27 @@ class Question extends Entity
     public function set()
     {
         return $this->belongsTo(Set::class, 'exam_set_id');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Question $question) {
+            $question->load(['explanation' => function (HasOne $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'exam_question_id']);
+            }]);
+
+            if (null !== ($explanation = $question->getRelation('explanation'))) {
+                $explanation->delete();
+            }
+
+            Option::where('exam_question_id', '=', $question->getAttribute('id'))->delete();
+        });
     }
 }

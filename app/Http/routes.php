@@ -19,11 +19,10 @@ $router->get('/', ['as' => 'home', function () {
     return view('welcome');
 }]);
 
-$router->get('auth/sign-out', ['as' => 'auth.signOut', 'uses' => 'Api\V1\AuthController@signOut']);
-
 $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {
     $router->group(['prefix' => 'auth', 'as' => 'api.v1.auth.'], function (Router $router) {
         $router->post('sign-in', ['as' => 'signIn', 'uses' => 'AuthController@signIn']);
+        $router->get('sign-out', ['as' => 'signOut', 'uses' => 'AuthController@signOut']);
         $router->get('sso', ['as' => 'sso', 'uses' => 'AuthController@sso']);
     });
 
