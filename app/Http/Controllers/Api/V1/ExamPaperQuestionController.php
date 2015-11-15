@@ -11,6 +11,15 @@ use Illuminate\Http\Request;
 class ExamPaperQuestionController extends Controller
 {
     /**
+     * ExamPaperQuestionController constructor.
+     */
+    public function __construct()
+    {
+        // 設定 middleware
+        $this->middleware('auth:admin');
+    }
+
+    /**
      * 取得試卷題目
      *
      * @param Request $request

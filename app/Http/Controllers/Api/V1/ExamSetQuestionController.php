@@ -7,13 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Question;
 use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\Request;
 
 class ExamSetQuestionController extends Controller
 {
+    /**
+     * ExamSetQuestionController constructor.
+     */
+    public function __construct()
+    {
+        // 設定 middleware
+        $this->middleware('auth:admin', ['except' => ['index']]);
+    }
+
     /**
      * 取得題庫題目
      *
@@ -57,7 +65,9 @@ class ExamSetQuestionController extends Controller
             $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
         }, 'answers', 'set' => function (BelongsTo $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'name']);
-        }])->findOrFail($questionId, ['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
+        }])
+            ->where('exam_set_id', '=', $setId)
+            ->findOrFail($questionId, ['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
 
         $question->setRelation('answers', $question->getRelation('answers')->pluck('id'));
 
@@ -86,7 +96,7 @@ class ExamSetQuestionController extends Controller
      */
     public function destroy($setId, $questionId)
     {
-        Question::findOrFail($questionId, ['id'])->delete();
+        Question::where('exam_set_id', '=', $setId)->findOrFail($questionId, ['id'])->delete();
 
         return $this->ok();
     }

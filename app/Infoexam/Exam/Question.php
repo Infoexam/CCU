@@ -27,6 +27,13 @@ class Question extends Entity
     protected $hidden = ['difficulty_id'];
 
     /**
+     * 未登入或非管理員帳號需隱藏的欄位
+     *
+     * @var array
+     */
+    protected $guestOrNotAdminHidden = ['id', 'exam_set_id', 'multiple', 'difficulty'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

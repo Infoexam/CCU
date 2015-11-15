@@ -9,6 +9,15 @@ use App\Infoexam\Exam\Paper;
 class ExamPaperController extends Controller
 {
     /**
+     * ExamPaperController constructor.
+     */
+    public function __construct()
+    {
+        // 設定 middleware
+        $this->middleware('auth:admin');
+    }
+
+    /**
      * 取得所有試卷資料
      *
      * @return \Illuminate\Http\JsonResponse

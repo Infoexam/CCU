@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ExamSetController extends Controller
 {
     /**
+     * ExamSetController constructor.
+     */
+    public function __construct()
+    {
+        // 設定 middleware
+        $this->middleware('auth:admin', ['except' => ['index', 'show']]);
+    }
+
+    /**
      * 取得所有題庫資料
      *
      * @return \Illuminate\Http\JsonResponse
