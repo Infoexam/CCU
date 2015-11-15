@@ -25,7 +25,6 @@ class Authenticate
         array_pop($roles);
 
         if (null === ($user = Auth::user())) {
-            abort(401);
             throw new UnauthorizedHttpException('Unauthorized');
         } else if (count($roles) && ! $user->hasRole($roles)) {
             throw new AccessDeniedHttpException;
