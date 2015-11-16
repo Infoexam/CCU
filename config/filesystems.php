@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => 'ftp',
+    'default' => 'local',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 'ftp',
+    'cloud' => 's3',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root'   => env('FILESYSTEM_LOCAL_ROOT', storage_path('app')),
         ],
 
         'ftp' => [
