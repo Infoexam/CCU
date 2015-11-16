@@ -9,7 +9,6 @@ use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Http\Request;
 
 class ExamSetQuestionController extends Controller
 {
@@ -41,11 +40,11 @@ class ExamSetQuestionController extends Controller
     /**
      * 新增題目
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Requests\ExamSetQuestionRequest $request
      * @param int $setId
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $setId)
+    public function store(Requests\ExamSetQuestionRequest $request, $setId)
     {
         //
     }
@@ -77,11 +76,12 @@ class ExamSetQuestionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Requests\ExamSetQuestionRequest $request
+     * @param int $setId
+     * @param int $questionId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\ExamSetQuestionRequest $request, $setId, $questionId)
     {
         //
     }

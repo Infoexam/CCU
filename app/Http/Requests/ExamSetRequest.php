@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Auth;
 
-class ExamSetsRequest extends Request
+class ExamSetRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

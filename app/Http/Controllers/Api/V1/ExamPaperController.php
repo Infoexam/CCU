@@ -32,10 +32,10 @@ class ExamPaperController extends Controller
     /**
      * 新增試卷
      *
-     * @param Requests\ExamPapersRequest $request
+     * @param Requests\ExamPaperRequest $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(Requests\ExamPapersRequest $request)
+    public function store(Requests\ExamPaperRequest $request)
     {
         if (! Paper::create($request->only(['name', 'remark']))->exists) {
             return response()->json(['errors' => ['create' => '']], 500);
@@ -60,11 +60,11 @@ class ExamPaperController extends Controller
     /**
      * 更新指定試卷資料
      *
-     * @param Requests\ExamPapersRequest $request
+     * @param Requests\ExamPaperRequest $request
      * @param int $id
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Requests\ExamPapersRequest $request, $id)
+    public function update(Requests\ExamPaperRequest $request, $id)
     {
         if (! Paper::findOrFail($id, ['id', 'name', 'remark'])
             ->update($request->only(['name', 'remark']))) {

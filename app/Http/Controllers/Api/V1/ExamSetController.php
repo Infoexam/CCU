@@ -33,10 +33,10 @@ class ExamSetController extends Controller
     /**
      * 新增題庫
      *
-     * @param Requests\ExamSetsRequest $request
+     * @param Requests\ExamSetRequest $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function store(Requests\ExamSetsRequest $request)
+    public function store(Requests\ExamSetRequest $request)
     {
         if (! Set::create($request->only(['name', 'category_id', 'enable']))->exists) {
             return response()->json(['errors' => ['create' => '']], 500);
@@ -61,11 +61,11 @@ class ExamSetController extends Controller
     /**
      * 更新指定題庫資料
      *
-     * @param Requests\ExamSetsRequest $request
+     * @param Requests\ExamSetRequest $request
      * @param int $id
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Requests\ExamSetsRequest $request, $id)
+    public function update(Requests\ExamSetRequest $request, $id)
     {
         if (! Set::findOrFail($id, ['id', 'name', 'category_id', 'enable'])
             ->update($request->only(['name', 'category_id', 'enable']))) {
