@@ -3,6 +3,7 @@
 namespace App\Infoexam\Image;
 
 use App\Infoexam\Core\Entity;
+use Storage;
 
 class Image extends Entity
 {
@@ -59,6 +60,13 @@ class Image extends Entity
         parent::boot();
 
         static::deleting(function (Image $image) {
+            list($t, $h, $e) = [
+                $image->getAttribute('uploaded_at')->timestamp,
+                $image->getAttribute('hash'),
+                $image->getAttribute('extension')
+            ];
+
+            Storage::disk('local')->delete([img_path($t, $h, $e, false, false), img_path($t, $h, $e, true, false)]);
         });
     }
 }
