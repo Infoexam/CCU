@@ -37,7 +37,7 @@ class ExamPaperController extends Controller
      */
     public function store(Requests\ExamPaperRequest $request)
     {
-        if (! Paper::create($request->only(['name', 'remark']))->exists) {
+        if (! $this->storeOrUpdate(new Paper(), $request, ['name', 'remark'])) {
             return response()->json(['errors' => ['create' => '']], 500);
         }
 
@@ -66,8 +66,7 @@ class ExamPaperController extends Controller
      */
     public function update(Requests\ExamPaperRequest $request, $id)
     {
-        if (! Paper::findOrFail($id, ['id', 'name', 'remark'])
-            ->update($request->only(['name', 'remark']))) {
+        if (! $this->storeOrUpdate(Paper::findOrFail($id), $request, ['name', 'remark'])) {
             return response()->json(['errors' => ['update' => '']], 500);
         }
 

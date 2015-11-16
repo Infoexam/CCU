@@ -38,7 +38,7 @@ class ExamSetController extends Controller
      */
     public function store(Requests\ExamSetRequest $request)
     {
-        if (! Set::create($request->only(['name', 'category_id', 'enable']))->exists) {
+        if (! $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable'])) {
             return response()->json(['errors' => ['create' => '']], 500);
         }
 
@@ -67,8 +67,7 @@ class ExamSetController extends Controller
      */
     public function update(Requests\ExamSetRequest $request, $id)
     {
-        if (! Set::findOrFail($id, ['id', 'name', 'category_id', 'enable'])
-            ->update($request->only(['name', 'category_id', 'enable']))) {
+        if (! $this->storeOrUpdate(Set::findOrFail($id), $request, ['name', 'category_id', 'enable'])) {
             return response()->json(['errors' => ['update' => '']], 500);
         }
 

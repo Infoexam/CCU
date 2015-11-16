@@ -26,6 +26,8 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
         $router->get('sso', ['as' => 'sso', 'uses' => 'AuthController@sso']);
     });
 
+    $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
+
     $router->group(['prefix' => 'exam'], function (Router $router) {
         $router->get('sets/all-questions', ['as' => 'api.v1.exam.sets.allQuestions', 'uses' => 'ExamSetController@allQuestions']);
         $router->resource('sets', 'ExamSetController', ['except' => ['create', 'edit']]);
