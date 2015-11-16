@@ -26,7 +26,7 @@ class AppendAdditionalHeaders
         if ($request->secure() || env('WEBSITE_HTTPS', false)) {
             $headers['Strict-Transport-Security'] = 'max-age=15552000; preload';
 
-            if (! is_null($pins = env('PUBLIC_KEY_PINS')) && strlen($pins) > 0) {
+            if (null !== ($pins = env('PUBLIC_KEY_PINS')) && strlen($pins) > 0) {
                 $publicKeyPins = '';
 
                 foreach (explode(',', $pins) as $pin) {

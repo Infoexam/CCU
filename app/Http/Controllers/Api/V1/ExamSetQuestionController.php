@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Infoexam\Exam\Explanation;
+use App\Infoexam\Exam\Option;
 use App\Infoexam\Exam\Question;
 use App\Infoexam\Exam\Set;
+use App\Infoexam\Image\Upload;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -46,7 +49,35 @@ class ExamSetQuestionController extends Controller
      */
     public function store(Requests\ExamSetQuestionRequest $request, $setId)
     {
-        //
+        // 新增題目
+        $question = Question::create([
+            'exam_set_id' => $setId,
+            'content' => $request->input('question.content'),
+            'difficulty_id' => $request->input('difficulty_id'),
+            'multiple' => $request->input('multiple'),
+        ]);
+
+        // 新增解析（如果有的話）
+        if ($request->has('explanation')) {
+            $question->explanation()->save(new Explanation(['content' => $request->input('explanation')]));
+        }
+
+        // 新增圖片（如果有的話）
+        if (count($request->input('question.image', []))) {
+            new Upload($request->input('question.image'), [
+                'id' => $question->getAttribute('id'),
+                'type' => Question::class
+            ]);
+        }
+
+        // 新增選項
+        foreach ($request->input('option') as $option) {
+            $temp = $question->options()->save(new Option(['content' => $option['content']]));
+
+            if (isset($option['image'])) {
+                new Upload($option['image'], ['id' => $temp->getAttribute('id'), 'type' => Option::class]);
+            }
+        }
     }
 
     /**

@@ -145,6 +145,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 
@@ -199,6 +200,7 @@ return [
 
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Imager'     => Intervention\Image\Facades\Image::class,
 
     ],
 

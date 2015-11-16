@@ -32,7 +32,7 @@ class Image extends Entity
      *
      * @var array
      */
-    protected $fillable = ['uploaded_at', 'hash', 'mime_type', 'imageable_id', 'imageable_type'];
+    protected $fillable = ['uploaded_at', 'hash', 'extension', 'imageable_id', 'imageable_type'];
 
     /**
      * The attributes that should be mutated to dates.
