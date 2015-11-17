@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\Image\Upload;
 use App\Infoexam\Website\Announcement;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class AnnouncementController extends Controller
@@ -72,11 +73,12 @@ class AnnouncementController extends Controller
     /**
      * Implement store or update method.
      *
-     * @param Announcement $announcement
+     * @param Model $announcement
      * @param Request $request
+     * @param array $attributes
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function storeOrUpdate(Announcement $announcement, Request $request)
+    public function storeOrUpdate(Model $announcement, Request $request, array $attributes = [])
     {
         parent::storeOrUpdate($announcement, $request, ['heading', 'link', 'content']);
 
