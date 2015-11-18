@@ -33,13 +33,11 @@ class ExamSetController extends Controller
      * 新增題庫
      *
      * @param Requests\ExamSetRequest $request
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Requests\ExamSetRequest $request)
     {
-        if (! $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable'])) {
-            return response()->json(['errors' => ['create' => '']], 500);
-        }
+        $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable']);
 
         return $this->ok();
     }
@@ -62,13 +60,11 @@ class ExamSetController extends Controller
      *
      * @param Requests\ExamSetRequest $request
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function update(Requests\ExamSetRequest $request, $id)
     {
-        if (! $this->storeOrUpdate(Set::findOrFail($id), $request, ['name', 'category_id', 'enable'])) {
-            return response()->json(['errors' => ['update' => '']], 500);
-        }
+        $this->storeOrUpdate(Set::findOrFail($id), $request, ['name', 'category_id', 'enable']);
 
         return $this->ok();
     }

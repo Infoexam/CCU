@@ -46,7 +46,7 @@ class ExamSetQuestionController extends Controller
      *
      * @param Requests\ExamSetQuestionRequest $request
      * @param int $setId
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(Requests\ExamSetQuestionRequest $request, $setId)
     {
@@ -82,6 +82,8 @@ class ExamSetQuestionController extends Controller
                 new Upload($option['image'], ['id' => $temp->getAttribute('id'), 'type' => Option::class]);
             }
         }
+
+        return $this->ok();
     }
 
     /**
@@ -115,6 +117,8 @@ class ExamSetQuestionController extends Controller
      * @param int $setId
      * @param int $questionId
      * @return \Illuminate\Http\Response
+     *
+     * @todo finish it
      */
     public function update(Requests\ExamSetQuestionRequest $request, $setId, $questionId)
     {

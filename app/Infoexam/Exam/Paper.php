@@ -31,6 +31,16 @@ class Paper extends Entity
     protected $dates = ['deleted_at'];
 
     /**
+     * 取得使用該試卷的測驗
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function _lists()
+    {
+        return $this->hasMany(Lists::class);
+    }
+
+    /**
      * 取得該試卷的題目
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

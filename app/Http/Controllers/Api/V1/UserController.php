@@ -26,6 +26,8 @@ class UserController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @todo finish it
      */
     public function search(Request $request)
     {

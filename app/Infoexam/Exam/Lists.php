@@ -90,4 +90,18 @@ class Lists extends Entity
     {
         return $this->hasManyThrough(Result::class, Apply::class, 'exam_list_id', 'exam_apply_id');
     }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Lists $list) {
+            Apply::where('exam_list_id', '=', $list->getAttribute('id'))->delete();
+        });
+    }
 }
