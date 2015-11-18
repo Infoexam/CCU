@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Paper;
+use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,6 @@ class ExamPaperQuestionController extends Controller
      */
     public function __construct()
     {
-        // 設定 middleware
         $this->middleware('auth:admin');
     }
 
@@ -25,6 +25,8 @@ class ExamPaperQuestionController extends Controller
      * @param Request $request
      * @param int $paperId
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @todo need check
      */
     public function index(Request $request, $paperId)
     {
@@ -67,7 +69,7 @@ class ExamPaperQuestionController extends Controller
      */
     public function destroy($paperId, $questionId)
     {
-        \DB::table('exam_paper_exam_question')
+        DB::table('exam_paper_exam_question')
             ->where('exam_paper_id', '=', $paperId)
             ->where('exam_question_id', '=', $questionId)
             ->delete();

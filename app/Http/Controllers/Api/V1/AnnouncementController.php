@@ -16,7 +16,6 @@ class AnnouncementController extends Controller
      */
     public function __construct()
     {
-        // 設定 middleware
         $this->middleware('auth:admin', ['except' => ['index', 'show']]);
     }
 

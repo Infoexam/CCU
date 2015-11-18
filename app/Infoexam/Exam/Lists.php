@@ -3,6 +3,7 @@
 namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
+use App\Infoexam\General\Category;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lists extends Entity
@@ -15,6 +16,13 @@ class Lists extends Entity
      * @var string
      */
     protected $table = 'exam_lists';
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['paper_id', 'apply_type_id', 'subject_id'];
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +40,26 @@ class Lists extends Entity
      * @var array
      */
     protected $dates = ['began_at', 'started_at', 'deleted_at'];
+
+    /**
+     * 取得該測驗的報名類型（大四專屬、統一預約等等）
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function apply()
+    {
+        return $this->belongsTo(Category::class, 'apply_type_id');
+    }
+
+    /**
+     * 取得該測驗的測驗類型（學科應用、術科軟體等等）
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subject()
+    {
+        return $this->belongsTo(Category::class, 'subject_id');
+    }
 
     /**
      * 取得該測驗的試卷

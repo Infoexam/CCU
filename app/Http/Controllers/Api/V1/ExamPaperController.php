@@ -13,7 +13,6 @@ class ExamPaperController extends Controller
      */
     public function __construct()
     {
-        // 設定 middleware
         $this->middleware('auth:admin');
     }
 
@@ -52,7 +51,7 @@ class ExamPaperController extends Controller
      */
     public function show($id)
     {
-        $paper = Paper::findOrFail($id, ['id', 'name', 'remark']);
+        $paper = Paper::findOrFail($id, ['id', 'name', 'remark', 'automatic']);
 
         return response()->json($paper);
     }

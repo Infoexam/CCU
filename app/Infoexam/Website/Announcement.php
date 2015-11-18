@@ -17,11 +17,11 @@ class Announcement extends Entity
     protected $table = 'announcements';
 
     /**
-     * 未登入或非管理員帳號需隱藏的欄位
+     * 非管理員帳號需隱藏的欄位
      *
      * @var array
      */
-    protected $guestOrNotAdminHidden = ['id'];
+    protected $notAdminHidden = ['id'];
 
     /**
      * The attributes that are mass assignable.

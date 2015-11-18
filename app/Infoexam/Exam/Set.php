@@ -26,11 +26,11 @@ class Set extends Entity
     protected $hidden = ['category_id'];
 
     /**
-     * 未登入或非管理員帳號需隱藏的欄位
+     * 非管理員帳號需隱藏的欄位
      *
      * @var array
      */
-    protected $guestOrNotAdminHidden = ['enable', 'category'];
+    protected $notAdminHidden = ['enable', 'category'];
 
     /**
      * The attributes that are mass assignable.

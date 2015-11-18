@@ -38,7 +38,7 @@ abstract class Controller extends BaseController
             // 如果 key 為數字，代表值為索引，否則值為預設值
             list($k, $v) = is_int($key) ? [$value, null] : [$key, $value];
 
-            $model->setAttribute($k, $request->input($k, $v));
+            $model->setAttribute($k, $request->has($k) ? $request->input($k) : $v);
         }
 
         return $model->save();

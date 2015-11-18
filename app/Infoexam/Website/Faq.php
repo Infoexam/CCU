@@ -17,6 +17,13 @@ class Faq extends Entity
     protected $table = 'faqs';
 
     /**
+     * 非管理員帳號需隱藏的欄位
+     *
+     * @var array
+     */
+    protected $notAdminHidden = ['id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

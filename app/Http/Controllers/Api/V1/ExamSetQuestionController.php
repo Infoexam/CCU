@@ -20,7 +20,6 @@ class ExamSetQuestionController extends Controller
      */
     public function __construct()
     {
-        // 設定 middleware
         $this->middleware('auth:admin', ['except' => ['index']]);
     }
 
@@ -35,6 +34,8 @@ class ExamSetQuestionController extends Controller
         $set = Set::with(['questions' => function (HasMany $relation) {
             $relation->getQuery()->with(['difficulty'])->getQuery()
                 ->select(['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
+        }, 'questions.options' => function (HasMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
         }])->findOrFail($setId, ['id', 'name']);
 
         return response()->json($set);
@@ -49,6 +50,9 @@ class ExamSetQuestionController extends Controller
      */
     public function store(Requests\ExamSetQuestionRequest $request, $setId)
     {
+        // 確認題庫存在
+        Set::findOrFail($setId, ['id']);
+
         // 新增題目
         $question = Question::create([
             'exam_set_id' => $setId,

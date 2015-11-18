@@ -26,9 +26,6 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
         $router->get('sso', ['as' => 'sso', 'uses' => 'AuthController@sso']);
     });
 
-    $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
-    $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
-
     $router->group(['prefix' => 'exam'], function (Router $router) {
         $router->get('sets/all-questions', ['as' => 'api.v1.exam.sets.allQuestions', 'uses' => 'ExamSetController@allQuestions']);
         $router->resource('sets', 'ExamSetController', ['except' => ['create', 'edit']]);
@@ -36,5 +33,16 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
         $router->resource('papers', 'ExamPaperController', ['except' => ['create', 'edit']]);
         $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'edit']]);
+
+        $router->resource('lists', 'ExamListController', ['except' => ['create', 'edit']]);
+        $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit']]);
     });
+
+    $router->get('users/search', ['as' => 'api.v1.users.search', 'uses' => 'UserController@search']);
+    $router->resource('users', 'UserController', ['only' => ['store', 'show', 'update']]);
+
+    $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
+    $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
+
+    $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
 });

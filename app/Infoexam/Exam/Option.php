@@ -18,6 +18,20 @@ class Option extends Entity
     protected $table = 'exam_options';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['exam_question_id'];
+
+    /**
+     * 非管理員帳號需隱藏的欄位
+     *
+     * @var array
+     */
+    protected $notAdminHidden = ['id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

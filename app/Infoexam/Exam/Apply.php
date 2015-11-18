@@ -3,6 +3,8 @@
 namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
+use App\Infoexam\General\Category;
+use App\Infoexam\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apply extends Entity
@@ -17,6 +19,13 @@ class Apply extends Entity
     protected $table = 'exam_applies';
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['user_id', 'exam_list_id', 'apply_type_id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,6 +38,33 @@ class Apply extends Entity
      * @var array
      */
     protected $dates = ['paid_at', 'deleted_at'];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['applied'];
+
+    /**
+     * 取得該報名的使用者
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * 取得該報名的報名方式（管理員 or 學生自行報名）
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function applied()
+    {
+        return $this->belongsTo(Category::class, 'apply_type_id');
+    }
 
     /**
      * 取得該報名的測驗結果

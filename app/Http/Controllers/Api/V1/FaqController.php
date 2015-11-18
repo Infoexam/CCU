@@ -13,7 +13,6 @@ class FaqController extends Controller
      */
     public function __construct()
     {
-        // 設定 middleware
         $this->middleware('auth:admin', ['except' => ['index']]);
     }
 
@@ -24,7 +23,7 @@ class FaqController extends Controller
      */
     public function index()
     {
-        $faqs = Faq::all(['question', 'answer']);
+        $faqs = Faq::all(['id', 'question', 'answer']);
 
         return response()->json($faqs);
     }
@@ -52,7 +51,7 @@ class FaqController extends Controller
      */
     public function show($id)
     {
-        $faq = Faq::findOrFail($id);
+        $faq = Faq::findOrFail($id, ['id', 'question', 'answer']);
 
         return response()->json($faq);
     }

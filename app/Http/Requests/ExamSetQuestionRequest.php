@@ -19,7 +19,7 @@ class ExamSetQuestionRequest extends Request
             'question.image' => 'array',
             'option' => 'required|array',
             'explanation' => 'max:1000|string',
-            'difficulty_id' => 'required',
+            'difficulty_id' => 'required|exists:categories,id,category,exam.difficulty',
             'multiple' => 'required|boolean',
             'answer' => 'required|array',
         ];

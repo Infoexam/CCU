@@ -8,11 +8,11 @@ use Eloquent;
 class Entity extends Eloquent
 {
     /**
-     * 未登入或非管理員帳號需隱藏的欄位
+     * 非管理員帳號需隱藏的欄位
      *
      * @var array
      */
-    protected $guestOrNotAdminHidden = [];
+    protected $notAdminHidden = [];
 
     /**
      * Get the table name of this model.
@@ -57,7 +57,7 @@ class Entity extends Eloquent
     public function setAdditionalHiddenAttributes()
     {
         if (Auth::guest() || ! Auth::user()->hasRole(['admin'])) {
-            $this->addHidden($this->guestOrNotAdminHidden);
+            $this->addHidden($this->notAdminHidden);
         }
     }
 }

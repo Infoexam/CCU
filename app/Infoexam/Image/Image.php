@@ -29,6 +29,13 @@ class Image extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['imageable_id', 'imageable_type'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
