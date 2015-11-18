@@ -25,9 +25,17 @@ class Authenticate
         array_pop($roles);
 
         if (null === ($user = Auth::user())) {
-            throw new UnauthorizedHttpException('Unauthorized');
+            $e = new UnauthorizedHttpException('Unauthorized');
         } else if (count($roles) && ! $user->hasRole($roles)) {
-            throw new AccessDeniedHttpException;
+            $e = new AccessDeniedHttpException;
+        }
+
+        if (isset($e)) {
+            if ($request->ajax()) {
+                throw $e;
+            }
+
+            return redirect()->guest(route('home', ['signIn' => true]));
         }
 
         return $next($request);

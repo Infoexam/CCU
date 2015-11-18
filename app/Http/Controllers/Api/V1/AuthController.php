@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         Authenticate::rehashPasswordIfNeeded(Auth::user(), $request->input('password'));
 
-        return $this->ok();
+        return $this->ok(['intended' => session()->pull('url.intended')]);
     }
 
     /**
