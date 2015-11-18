@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Agent;
 use Carbon\Carbon;
 use Closure;
+use Cookie;
 use Hash;
 
 class PreprocessConnection
@@ -22,8 +23,15 @@ class PreprocessConnection
         Hash::setRounds(12);
 
         // set environment and carbon default language
-        $userAcceptLanguages = Agent::languages();
         $lan = 'en';
+
+        if ($request->has('lan')) {
+            $userAcceptLanguages = [$request->input('lan')];
+        } else if ($request->hasCookie('locale')) {
+            $userAcceptLanguages = [$request->cookie('locale')];
+        } else {
+            $userAcceptLanguages = Agent::languages();
+        }
 
         foreach (['zh-TW', 'zh-tw', 'zh'] as $zh) {
             if (in_array($zh, $userAcceptLanguages)) {
@@ -34,6 +42,12 @@ class PreprocessConnection
         app()->setLocale($lan);
         Carbon::setLocale($lan);
 
-        return $next($request);
+        /** @var $response \Illuminate\Http\Response */
+
+        $response = $next($request);
+
+        $response->withCookie(Cookie::forever('locale', $lan));
+
+        return $response;
     }
 }
