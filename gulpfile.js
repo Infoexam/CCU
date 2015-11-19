@@ -21,6 +21,9 @@ elixir(function(mix) {
         'admin/components',
         'admin/router.js'
     ], 'resources/assets/js/compiled/admin.js')
+        .sass([
+            'app.scss'
+        ])
         .browserify('compiled/admin.js');
 
     if ('true' === process.env.BROWSER_SYNC) {

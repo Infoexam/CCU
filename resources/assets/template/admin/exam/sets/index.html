@@ -13,7 +13,7 @@
         <tr v-for="set in sets">
             <td><a v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
             <td>{{ set.category.name }}</td>
-            <td>{{ set.enable }}</td>
+            <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
             <td></td>
             <td></td>
             <td></td>
@@ -24,11 +24,11 @@
     </tbody>
 </table>
 
-<ul class="pagination">
-    <li v-bind:class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
+<ul class="pagination center-align">
+    <li :class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
         <a href="#!/" @click.prevent="paginate(0)"><i class="material-icons">chevron_left</i></a>
     </li>
-    <li v-bind:class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
+    <li :class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
         <a href="#!/" @click.prevent="paginate(1)"><i class="material-icons">chevron_right</i></a>
     </li>
 </ul>

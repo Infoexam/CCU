@@ -29,4 +29,6 @@ return [
         'log' => 'Logs',
     ],
 
+    'copyright' => '國立中正大學',
+
 ];

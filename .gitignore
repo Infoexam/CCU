@@ -2,8 +2,8 @@
 /node_modules
 /.idea
 /public/build
-/public/js
-/public/css
+/public/js/*
+/public/css/*
 Homestead.yaml
 Homestead.json
 .env
