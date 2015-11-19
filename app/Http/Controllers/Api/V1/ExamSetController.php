@@ -24,7 +24,7 @@ class ExamSetController extends Controller
      */
     public function index()
     {
-        $sets = Set::with(['category'])->latest()->get(['id', 'name', 'category_id', 'enable']);
+        $sets = Set::with(['category'])->latest()->paginate(10, ['id', 'name', 'category_id', 'enable']);
 
         return response()->json($sets);
     }
