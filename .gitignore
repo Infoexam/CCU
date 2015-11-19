@@ -1,9 +1,13 @@
 /vendor
 /node_modules
 /.idea
+
 /public/build
 /public/js/*
+!/public/js/.gitkeep
 /public/css/*
+!/public/css/.gitkeep
+
 Homestead.yaml
 Homestead.json
 .env
