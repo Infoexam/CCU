@@ -17,11 +17,13 @@ elixir.config.sourcemaps = false;
 
 elixir(function(mix) {
     mix.scripts([
+        'general.js',
         'admin/main.js',
         'admin/components',
         'admin/router.js'
     ], 'resources/assets/js/compiled/admin.js')
         .scripts([
+            'general.js',
             'student/main.js',
             'student/components',
             'student/router.js'

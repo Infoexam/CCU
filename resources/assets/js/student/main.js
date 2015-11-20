@@ -1,15 +1,5 @@
-"use strict";
-
-/* Vanilla JS and jQuery */
 (function ($) {
     $(function() {
-        $(".button-collapse").sideNav();
-
-        // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
-        if (-1 !== location.search.indexOf('signIn=1')) {
-            $('#sign-in-modal').openModal();
-        }
-
         $.i18n.init({
             detectLngQS: 'lang',
             cookieName: 'locale',
@@ -19,13 +9,11 @@
             $('html').i18n();
         });
     });
+
+    $(window).load(function () {
+        // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
+        if (-1 !== location.search.indexOf('signIn=1')) {
+            setTimeout(function() {$('#sign-in-modal').openModal();}, 50);
+        }
+    });
 })(jQuery);
-
-/* Vue.js */
-Vue.use(VueResource);
-Vue.use(VueRouter);
-
-Vue.http.headers.common['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
-
-var routerComponents = {};
-var router = new VueRouter();

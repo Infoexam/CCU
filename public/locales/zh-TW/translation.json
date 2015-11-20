@@ -2,6 +2,10 @@
     "auth": {
         "username": "登入",
         "password": "密碼",
-        "signIn": "登入"
-    }
+        "signIn": "登入",
+
+        "failed": "帳號或密碼錯誤"
+    },
+
+    "tokenMismatch": "出了點狀況，請重新整理網頁！"
 }

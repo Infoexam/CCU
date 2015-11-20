@@ -4,7 +4,7 @@
         <h4 class="center-align" data-i18n="auth.signIn"></h4>
 
         <div class="row">
-            <form id="sign-in-form" class="col s12">
+            <form id="sign-in-form" class="col s12" @submit.prevent="signIn()">
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
@@ -23,6 +23,6 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn waves-effect waves-light" type="submit" form="sign-in-form" @click.prevent="signIn()" data-i18n="auth.signIn"></button>
+        <button class="btn waves-effect waves-light" type="submit" form="sign-in-form" data-i18n="auth.signIn"></button>
     </div>
 </div>

@@ -11,9 +11,9 @@ routerComponents.home = Vue.extend({
                 username: this.username,
                 password: this.password
             }, function (data, status, request) {
-                window.location.href = (null !== data.Intended) ? data.Intended : '/';
+                window.location.href = data.Intended || '/';
             }).error(function (data, status, request) {
-                Materialize.toast(data.errors.auth, 3000, 'red');
+                Materialize.toast($.i18n.t((422 === status) ? 'auth.failed' : 'tokenMismatch'), 3500, 'red');
             });
         }
     }

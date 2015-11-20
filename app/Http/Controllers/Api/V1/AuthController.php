@@ -14,13 +14,13 @@ class AuthController extends Controller
      * 登入
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function signIn(Request $request)
     {
         if (! Auth::attempt($request->only(['username', 'password']))
             && ! Authenticate::attemptUsingCenter($request->input('username'), $request->input('password'))) {
-            return response()->json(['errors' => ['auth' => trans('auth.failed')]], 422);
+            return response('', 422);
         }
 
         Authenticate::rehashPasswordIfNeeded(Auth::user(), $request->input('password'));
