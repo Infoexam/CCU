@@ -1,5 +1,3 @@
-var router = new VueRouter();
-
 router.map({
     '/': {
         name: 'home',

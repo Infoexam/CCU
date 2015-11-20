@@ -10,9 +10,9 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth:admin', ['only' => 'admin']);
+        $this->middleware('auth:admin', ['only' => 'admin']);
 
-        //$this->middleware('auth', ['only' => 'exam']);
+        $this->middleware('auth', ['only' => 'exam']);
     }
 
     /**

@@ -35,6 +35,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.17/vue-resource.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.6/vue-router.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/1.11.1/i18next.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.min.js" defer></script>
         @yield('scripts')
     </body>
 </html>

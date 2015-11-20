@@ -29,5 +29,10 @@ class UsersTableSeeder extends Seeder
 
             $user->roles()->sync(is_int($r) ? [$r] : $r->all());
         });
+
+        factory(User::class)->create([
+            'username' => 'test',
+            'password' => bcrypt('test'),
+        ])->roles()->sync([1]);
     }
 }

@@ -14,7 +14,7 @@ class AuthController extends Controller
      * 登入
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function signIn(Request $request)
     {
@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         Authenticate::rehashPasswordIfNeeded(Auth::user(), $request->input('password'));
 
-        return $this->ok(['intended' => session()->pull('url.intended')]);
+        return response()->json(['Intended' => session()->pull('url.intended')]);
     }
 
     /**

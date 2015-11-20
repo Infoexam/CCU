@@ -13,10 +13,6 @@ return [
     |
     */
 
-    'signIn' => '登入',
-    'username' => '帳號',
-    'password' => '密碼',
-
     'failed' => '帳號或密碼錯誤',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
