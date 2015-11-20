@@ -18,7 +18,7 @@ class CreateExamListsTable extends Migration
             $table->timestamp('began_at');
             $table->tinyInteger('duration')->unsigned();
             $table->string('room', 8);
-            $table->integer('paper_id')->unsigned();
+            $table->integer('paper_id')->unsigned()->nullable();
             $table->integer('apply_type_id')->unsigned();
             $table->integer('subject_id')->unsigned();
             $table->tinyInteger('std_maximum_num')->unsigned();

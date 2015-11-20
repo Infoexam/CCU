@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'log' => 'daily',
+    'log' => env('APP_LOG', 'daily'),
 
     /*
     |--------------------------------------------------------------------------
@@ -144,8 +144,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\SftpServiceProvider::class,
 
+        Intervention\Image\ImageServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
@@ -197,7 +198,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Imager'     => Intervention\Image\Facades\Image::class,
 
     ],
 

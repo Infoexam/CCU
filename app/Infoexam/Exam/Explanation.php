@@ -17,6 +17,13 @@ class Explanation extends Entity
     protected $table = 'exam_explanations';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['exam_question_id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

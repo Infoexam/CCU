@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 'sftp',
+    'cloud' => 's3',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,32 +45,21 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root'   => env('FILESYSTEM_LOCAL_ROOT', storage_path('app')),
         ],
 
         'ftp' => [
             'driver'   => 'ftp',
-            'host'     => 'ftp.example.com',
-            'username' => 'your-username',
-            'password' => 'your-password',
+            'host'     => env('FTP_HOST'),
+            'username' => env('FTP_USERNAME'),
+            'password' => env('FTP_PASSWORD'),
 
             // Optional FTP Settings...
-            // 'port'     => 21,
-            // 'root'     => '',
-            // 'passive'  => true,
-            // 'ssl'      => true,
-            // 'timeout'  => 30,
-        ],
-
-        'sftp' => [
-            'driver'   => 'sftp',
-            'host' => env('FILESYSTEM_SFTP_HOST'),
-            'port' => env('FILESYSTEM_SFTP_PORT', 22),
-            'username' => env('FILESYSTEM_SFTP_USERNAME'),
-            'password' => env('FILESYSTEM_SFTP_PASSWORD'),
-            'private_key' => env('FILESYSTEM_SFTP_PRIVATE_KEY'),
-            'root' => env('FILESYSTEM_SFTP_ROOT', '/'),
-            'timeout' => env('FILESYSTEM_SFTP_TIMEOUT', 10),
+            'port'     => env('FTP_PORT', 21),
+            'root'     => env('FTP_ROOT', '/'),
+            'passive'  => env('FTP_PASSIVE', true),
+            'ssl'      => env('FTP_SSL', true),
+            'timeout'  => 60,
         ],
 
         's3' => [

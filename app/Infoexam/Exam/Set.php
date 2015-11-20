@@ -4,6 +4,7 @@ namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\General\Category;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Set extends Entity
@@ -16,6 +17,20 @@ class Set extends Entity
      * @var string
      */
     protected $table = 'exam_sets';
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['category_id'];
+
+    /**
+     * 非管理員帳號需隱藏的欄位
+     *
+     * @var array
+     */
+    protected $notAdminHidden = ['enable', 'category'];
 
     /**
      * The attributes that are mass assignable.
@@ -59,5 +74,23 @@ class Set extends Entity
     public function options()
     {
         return $this->hasManyThrough(Option::class, Question::class, 'exam_set_id', 'exam_question_id');
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Set $set) {
+            foreach ($set->load(['questions' => function (HasMany $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'exam_set_id']);
+            }])->getRelation('questions') as $question) {
+                $question->delete();
+            }
+        });
     }
 }

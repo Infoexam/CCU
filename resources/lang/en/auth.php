@@ -13,6 +13,10 @@ return [
     |
     */
 
+    'signIn' => '登入',
+    'username' => '帳號',
+    'password' => '密碼',
+
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

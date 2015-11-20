@@ -85,9 +85,9 @@ $factory->define(\App\Infoexam\Exam\Lists::class, function (\Faker\Generator $fa
         'began_at' => $faker->dateTime,
         'duration' => random_int(30, 90),
         'room' => random_int(100, 999),
-        'paper_id' => \App\Infoexam\Paper\Paper::all()->random()->getAttribute('id'),
-        'apply_type_id' => 1,
-        'subject_id' => 2,
+        'paper_id' => \App\Infoexam\Exam\Paper::all()->random()->getAttribute('id'),
+        'apply_type_id' => Category::where('category', '=', 'exam.apply')->get()->random()->getAttribute('id'),
+        'subject_id' => Category::where('category', '=', 'exam.subject')->get()->random()->getAttribute('id'),
         'std_maximum_num' => random_int(10, 50),
     ];
 });
@@ -95,7 +95,7 @@ $factory->define(\App\Infoexam\Exam\Lists::class, function (\Faker\Generator $fa
 $factory->define(\App\Infoexam\Exam\Apply::class, function (\Faker\Generator $faker) {
     return [
         'user_id' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
-        'apply_type_id' => 1,
+        'apply_type_id' => Category::where('category', '=', 'exam.applied')->get()->random()->getAttribute('id'),
         'paid_at' => random_int(0, 1) ? $faker->dateTime : null,
     ];
 });
@@ -110,7 +110,7 @@ $factory->define(\App\Infoexam\Exam\Result::class, function (\Faker\Generator $f
 /**
  * papers table
  */
-$factory->define(\App\Infoexam\Paper\Paper::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Paper::class, function (\Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'remark' => $faker->sentence,

@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'lifetime' => 10080,
+    'lifetime' => 120,
 
     'expire_on_close' => false,
 
@@ -148,6 +148,6 @@ return [
     |
     */
 
-    'secure' => false,
+    'secure' => env('WEBSITE_HTTPS', false),
 
 ];

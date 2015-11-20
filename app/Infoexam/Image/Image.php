@@ -3,6 +3,7 @@
 namespace App\Infoexam\Image;
 
 use App\Infoexam\Core\Entity;
+use Storage;
 
 class Image extends Entity
 {
@@ -28,11 +29,18 @@ class Image extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['imageable_id', 'imageable_type'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['uploaded_at', 'hash', 'mime_type', 'imageable_id', 'imageable_type'];
+    protected $fillable = ['uploaded_at', 'hash', 'extension', 'imageable_id', 'imageable_type'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -47,5 +55,25 @@ class Image extends Entity
     public function imageable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (Image $image) {
+            list($t, $h, $e) = [
+                $image->getAttribute('uploaded_at')->timestamp,
+                $image->getAttribute('hash'),
+                $image->getAttribute('extension')
+            ];
+
+            Storage::disk('local')->delete([img_path($t, $h, $e, false, false), img_path($t, $h, $e, true, false)]);
+        });
     }
 }
