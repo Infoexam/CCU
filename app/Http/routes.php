@@ -43,6 +43,11 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
     $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
     $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
+    $router->group(['prefix' => 'ip-rules'], function (Router $router) {
+        $router->get('/', ['as' => 'api.v1.ip-rules.index', 'uses' => 'IpRuleController@index']);
+        $router->post('/', ['as' => 'api.v1.ip-rules.store', 'uses' => 'IpRuleController@store']);
+        $router->delete('/', ['as' => 'api.v1.ip-rules.destroy', 'uses' => 'IpRuleController@destroy']);
+    });
 
     $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
 });
