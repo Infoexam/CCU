@@ -21,10 +21,16 @@ elixir(function(mix) {
         'admin/components',
         'admin/router.js'
     ], 'resources/assets/js/compiled/admin.js')
+        .scripts([
+            'student/main.js',
+            'student/components',
+            'student/router.js'
+        ], 'resources/assets/js/compiled/student.js')
         .sass([
             'app.scss'
         ])
-        .browserify('compiled/admin.js');
+        .browserify('compiled/admin.js')
+        .browserify('compiled/student.js');
 
     if ('true' === process.env.BROWSER_SYNC) {
         mix.browserSync({

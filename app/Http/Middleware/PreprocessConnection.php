@@ -25,8 +25,8 @@ class PreprocessConnection
         // set environment and carbon default language
         $lan = 'en';
 
-        if ($request->has('lan')) {
-            $userAcceptLanguages = [$request->input('lan')];
+        if ($request->has('lang')) {
+            $userAcceptLanguages = [strstr($request->input('lang'), '/', true)];
         } else if ($request->hasCookie('locale')) {
             $userAcceptLanguages = [$request->cookie('locale')];
         } else {
@@ -46,7 +46,7 @@ class PreprocessConnection
 
         $response = $next($request);
 
-        $response->withCookie(Cookie::forever('locale', $lan));
+        $response->withCookie(Cookie::forever('locale', $lan, null, null, false, false));
 
         return $response;
     }

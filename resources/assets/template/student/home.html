@@ -1,0 +1,28 @@
+<!-- Sign In Modal -->
+<div id="sign-in-modal" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align" data-i18n="auth.signIn"></h4>
+
+        <div class="row">
+            <form id="sign-in-form" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="username" v-model="username" type="text" class="validate" required>
+                        <label for="username" data-i18n="auth.username"></label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">enhanced_encryption</i>
+                        <input id="password" v-model="password" type="password" class="validate" required>
+                        <label for="password" data-i18n="auth.password"></label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light" type="submit" form="sign-in-form" @click.prevent="signIn()" data-i18n="auth.signIn"></button>
+    </div>
+</div>

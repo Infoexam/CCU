@@ -15,4 +15,4 @@ router.map({
     }
 });
 
-router.start(Vue.extend({}), '#infoexam-admin');
+router.start(Vue.extend({}), '#infoexam');
