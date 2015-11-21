@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Infoexam\General\Config;
 use Cache;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,11 @@ class IpRuleController extends Controller
     public function __destruct()
     {
         Cache::tags('config')->forever('ipRules', $this->ipRules);
+
+        Config::updateOrCreate(['key' => 'ipRules'], [
+            'key' => 'ipRules',
+            'value' => serialize($this->ipRules),
+        ]);
     }
 
     /**
