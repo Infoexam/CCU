@@ -46,10 +46,14 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
     $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
     $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
-    $router->group(['prefix' => 'ip-rules'], function (Router $router) {
-        $router->get('/', ['as' => 'api.v1.ip-rules.index', 'uses' => 'IpRuleController@index']);
-        $router->post('/', ['as' => 'api.v1.ip-rules.store', 'uses' => 'IpRuleController@store']);
-        $router->delete('/', ['as' => 'api.v1.ip-rules.destroy', 'uses' => 'IpRuleController@destroy']);
+
+    $router->group(['as' => 'api.v1.'], function (Router $router) {
+        $router->get('ip-rules', ['as' => 'ip-rules.index', 'uses' => 'IpRuleController@index']);
+        $router->post('ip-rules', ['as' => 'ip-rules.store', 'uses' => 'IpRuleController@store']);
+        $router->delete('ip-rules', ['as' => 'ip-rules.destroy', 'uses' => 'IpRuleController@destroy']);
+
+        $router->get('website-maintenance', ['as' => 'website-maintenance.show', 'uses' => 'WebsiteMaintenanceController@show@show']);
+        $router->patch('website-maintenance', ['as' => 'website-maintenance.update', 'uses' => 'WebsiteMaintenanceController@update']);
     });
 
     $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);

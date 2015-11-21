@@ -42,6 +42,15 @@ class Lists extends Entity
     protected $dates = ['began_at', 'started_at', 'deleted_at'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'allow_apply' => 'boolean',
+    ];
+
+    /**
      * 取得該測驗的報名類型（大四專屬、統一預約等等）
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -31,6 +31,26 @@ class Paper extends Entity
     protected $dates = ['deleted_at'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'automatic' => 'boolean',
+    ];
+
+    /**
+     * 如果 remark 為空字串，即轉換為 null
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setRemarkAttribute($value)
+    {
+        $this->attributes['remark'] = empty($value) ? null : $value;
+    }
+
+    /**
      * 取得使用該試卷的測驗
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -49,21 +69,6 @@ class Paper extends Entity
     {
         return $this->belongsToMany(Question::class, 'exam_paper_exam_question', 'exam_paper_id', 'exam_question_id')
             ->withPivot(['id']);
-    }
-
-    /**
-     * Save a new model and return the instance.
-     *
-     * @param  array  $attributes
-     * @return static
-     */
-    public static function create(array $attributes = [])
-    {
-        if (empty($attributes['remark'])) {
-            $attributes['remark'] = null;
-        }
-
-        return parent::create($attributes);
     }
 
     /**

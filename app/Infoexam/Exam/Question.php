@@ -48,6 +48,15 @@ class Question extends Entity
     protected $dates = ['deleted_at'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'multiple' => 'boolean',
+    ];
+
+    /**
      * The relations to eager load on every query.
      *
      * @var array

@@ -28,6 +28,15 @@ class Result extends Entity
     protected $dates = ['signed_in_at', 'submitted_at'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'allow_re_sign_in' => 'boolean',
+    ];
+
+    /**
      * 取得該測驗結果的報名資料
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

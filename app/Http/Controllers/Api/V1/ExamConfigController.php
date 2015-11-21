@@ -24,7 +24,7 @@ class ExamConfigController extends Controller
      */
     public function show()
     {
-        $examConfig = Cache::tags('config')->get('examConfig', collect());
+        $examConfig = Cache::tags('config')->get('exam', collect());
 
         return response()->json($examConfig);
     }
@@ -39,10 +39,10 @@ class ExamConfigController extends Controller
     {
         $examConfig = collect($request->only(['allowRoom', 'passedScore', 'apply']));
 
-        Cache::tags('config')->forever('examConfig', $examConfig);
+        Cache::tags('config')->forever('exam', $examConfig);
 
-        Config::updateOrCreate(['key' => 'examConfig'], [
-            'key' => 'examConfig',
+        Config::updateOrCreate(['key' => 'exam'], [
+            'key' => 'exam',
             'value' => serialize($examConfig),
         ]);
 

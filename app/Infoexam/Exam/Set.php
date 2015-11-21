@@ -47,6 +47,15 @@ class Set extends Entity
     protected $dates = ['deleted_at'];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'enable' => 'boolean',
+    ];
+
+    /**
      * 取得該題庫的分類（學科、術科等）
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
