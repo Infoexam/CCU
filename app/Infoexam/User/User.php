@@ -25,7 +25,7 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $hidden = [
-        'roles', 'password', 'remember_token',
+        'password', 'remember_token',
         'social_security_number', 'gender_id', 'department_id', 'grade_id',
         'created_at', 'updated_at'
     ];
@@ -35,7 +35,7 @@ class User extends Entity implements AuthenticatableContract
      *
      * @var array
      */
-    protected $notAdminHidden = ['id', 'test_count'];
+    protected $notAdminHidden = ['id', 'test_count', 'roles'];
 
     /**
      * The attributes that are mass assignable.

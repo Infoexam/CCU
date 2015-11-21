@@ -47,15 +47,15 @@ class IpRuleController extends Controller
     /**
      * 新增或更新 IP 規則
      *
-     * @param Request $request
+     * @param Requests\IpRuleRequest $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function store(Request $request)
+    public function store(Requests\IpRuleRequest $request)
     {
         $this->ipRules->offsetSet($request->input('ip'), [
-            'student' => boolval($request->input('rule.student')),
-            'admin' => boolval($request->input('rule.admin')),
-            'exam' => boolval($request->input('rule.exam')),
+            'student' => boolval($request->input('rules.student')),
+            'admin' => boolval($request->input('rules.admin')),
+            'exam' => boolval($request->input('rules.exam')),
         ]);
 
         return $this->ok();

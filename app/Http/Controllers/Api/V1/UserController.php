@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -64,7 +65,9 @@ class UserController extends Controller
     {
         // 檢查是否為查詢自己帳號，如為管理原則直接通過檢查
         if ($request->user()->hasRole(['admin'])) {
-            $user = User::where('username', '=', $username)->firstOrFail();
+            $user = User::with(['roles' => function (BelongsToMany $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'name']);
+            }])->where('username', '=', $username)->firstOrFail();
         } else if ($request->user()->getAttribute('username') !== $username) {
             throw new AccessDeniedHttpException;
         } else {
@@ -87,6 +90,8 @@ class UserController extends Controller
      */
     public function update(Requests\UserRequest $request, $username)
     {
+        /** @var $user User */
+
         $user = User::with(['certificate'])->where('username', '=', $username)->firstOrFail();
 
         // 更新密碼、姓名、信箱
@@ -97,11 +102,16 @@ class UserController extends Controller
         // 更新免費次數
         foreach ($request->input('free', []) as $key => $value) {
             foreach ($user->getRelation('certificate') as $certificate) {
+                /** @var $certificate \App\Infoexam\User\Certificate */
+
                 if ($certificate->getAttribute('id') === $key) {
                     $certificate->setAttribute('free', $value);
                 }
             }
         }
+
+        // 更新帳號所屬角色（身份）
+        $user->roles()->sync($request->input('roles', []));
 
         // 儲存所有資料到資料庫
         $user->push();
