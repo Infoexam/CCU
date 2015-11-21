@@ -13,7 +13,7 @@
         "m6web/firewall": "~1.0",
         "paragonie/random_compat": "~1.1",
         "predis/predis": "~1.0",
-        "zizaco/entrust": "~1.4"
+        "zizaco/entrust": "~1.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~2.0",
