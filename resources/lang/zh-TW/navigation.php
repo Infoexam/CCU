@@ -2,6 +2,9 @@
 
 return [
 
+    'announcement' => '訊息公告',
+    'practice' => '線上練習',
+
     'account' => [
         '/' => '帳號系統',
         'info' => '學生資料',

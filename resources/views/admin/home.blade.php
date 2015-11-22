@@ -11,33 +11,12 @@
 
             <!-- Desktop Menu -->
             <ul class="right hide-on-med-and-down">
-                <li>
-                    <a class="dropdown-button" href="#!/" @click.prevent data-beloworigin="true" data-activates="nav-dropdown-account">
-                        <span>{{ trans('navigation.account./') }}</span><i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-button" href="#!/" @click.prevent data-beloworigin="true" data-activates="nav-dropdown-testing">
-                        <span>{{ trans('navigation.testing./') }}</span><i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-button" href="#!/" @click.prevent data-beloworigin="true" data-activates="nav-dropdown-exam">
-                        <span>{{ trans('navigation.exam./') }}</span><i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-button" href="#!/" @click.prevent data-beloworigin="true" data-activates="nav-dropdown-website">
-                        <span>{{ trans('navigation.website./') }}</span><i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
+                @include('admin._navigation')
             </ul>
 
             <!-- Mobile Menu -->
             <ul class="side-nav" id="nav-mobile-menu-icon">
-                <li><a href="badges.html">Components</a></li>
-                <li><a href="collapsible.html">Javascript</a></li>
-                <li><a href="mobile.html">Mobile</a></li>
+                @include('admin._navigation')
             </ul>
         </div>
     </nav>
