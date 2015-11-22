@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         <tr v-for="set in sets">
-            <td><a class="flow-text" v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
+            <td><a v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
             <td><span data-i18n="exam.set.{{ set.category.name }}"></span></td>
             <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
             <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">add</i></a></td>
@@ -26,9 +26,9 @@
 
 <ul class="pagination center-align">
     <li :class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
-        <a href="#!/" @click.prevent="paginate(0)"><i class="material-icons">chevron_left</i></a>
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(0)">chevron_left</i></a>
     </li>
     <li :class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
-        <a href="#!/" @click.prevent="paginate(1)"><i class="material-icons">chevron_right</i></a>
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(1)">chevron_right</i></a>
     </li>
 </ul>

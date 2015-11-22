@@ -22,7 +22,7 @@
         <footer class="container page-footer blue accent-2">
             <div class="footer-copyright">
                 <div class="container">
-                    <span>{{ trans('navigation.copyright') }} © 2015</span>
+                    <span><a href="http://www.ccu.edu.tw/" target="_blank">{{ trans('navigation.copyright') }}</a> © 2015</span>
                     <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
                 </div>
             </div>

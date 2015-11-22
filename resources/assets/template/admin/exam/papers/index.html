@@ -1,0 +1,34 @@
+<table class="bordered highlight centered responsive-table">
+    <thead>
+        <tr>
+            <th>試卷名稱</th>
+            <th>備　　註</th>
+            <th>自動產生</th>
+            <th>編輯題目</th>
+            <th>編輯試卷</th>
+            <th>刪除試卷</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="paper in papers">
+            <td><a v-link="{name: 'exam.papers.show', params: {id: paper.id}}">{{ paper.name }}</a></td>
+            <td>{{ paper.remark }}</td>
+            <td><i class="material-icons" :class="[paper.automatic ? 'green-text' : 'red-text']">{{ paper.automatic ? 'check' : 'close' }}</i></td>
+            <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(paper.id, $index)"><i class="material-icons">delete</i></a></td>
+        </tr>
+        <tr v-show="! papers.length">
+            <td colspan="6">尚未建立試卷</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="pagination center-align">
+    <li :class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(0)">chevron_left</i></a>
+    </li>
+    <li :class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(1)">chevron_right</i></a>
+    </li>
+</ul>

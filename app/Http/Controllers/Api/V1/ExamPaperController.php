@@ -24,7 +24,7 @@ class ExamPaperController extends Controller
      */
     public function index()
     {
-        $papers = Paper::latest()->get(['id', 'name', 'remark', 'automatic']);
+        $papers = Paper::orderBy('automatic')->latest()->paginate(10, ['id', 'name', 'remark', 'automatic']);
 
         return response()->json($papers);
     }
