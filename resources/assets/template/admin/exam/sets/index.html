@@ -18,7 +18,7 @@
             <td><a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
             <td><a class="btn-floating waves-effect waves-light red" @click="destroy(set.id, $index)"><i class="material-icons">delete</i></a></td>
         </tr>
-        <tr v-show="!sets">
+        <tr v-show="! sets.length">
             <td colspan="6">尚未建立題庫</td>
         </tr>
     </tbody>
