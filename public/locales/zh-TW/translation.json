@@ -7,5 +7,19 @@
         "failed": "帳號或密碼錯誤"
     },
 
+    "action": {
+        "delete": {
+            "success": "刪除成功",
+            "failed": "刪除失敗"
+        }
+    },
+
+    "exam": {
+        "set": {
+            "theory": "學科",
+            "technology": "術科"
+        }
+    },
+
     "tokenMismatch": "出了點狀況，請重新整理網頁！"
 }

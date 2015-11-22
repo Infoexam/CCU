@@ -11,12 +11,12 @@
     </thead>
     <tbody>
         <tr v-for="set in sets">
-            <td><a v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
-            <td>{{ set.category.name }}</td>
+            <td><a class="flow-text" v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
+            <td><span data-i18n="exam.set.{{ set.category.name }}"></span></td>
             <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">add</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(set.id, $index)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr v-show="!sets">
             <td colspan="6">尚未建立題庫</td>

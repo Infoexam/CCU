@@ -7,5 +7,20 @@
         "failed": "These credentials do not match our records."
     },
 
+    "action": {
+        "delete": {
+            "success": "Delete successful.",
+            "failed": "Delete failed."
+        }
+    },
+
+    "exam": {
+        "set": {
+            "theory": "Theory",
+            "technology": "Technology"
+        }
+    },
+
+
     "tokenMismatch": "Oops! Please refresh the page."
 }
