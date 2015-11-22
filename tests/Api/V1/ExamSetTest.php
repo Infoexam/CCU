@@ -47,7 +47,7 @@ class ExamSetTest extends TestCase
         // 未登入下新增題庫
         Auth::logout();
         $this->call('POST', $route);
-        $this->assertResponseStatus(403);
+        $this->assertResponseStatus(401);
 
         // 一般帳號新增題庫
         Auth::loginUsingId($userNormal->getAttribute('id'));
@@ -104,7 +104,7 @@ class ExamSetTest extends TestCase
         // 未登入下更新題庫
         Auth::logout();
         $this->call('PATCH', $route);
-        $this->assertResponseStatus(403);
+        $this->assertResponseStatus(401);
 
         Auth::loginUsingId($user->getAttribute('id'));
 
