@@ -54,6 +54,8 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
         $router->get('website-maintenance', ['as' => 'website-maintenance.show', 'uses' => 'WebsiteMaintenanceController@show@show']);
         $router->patch('website-maintenance', ['as' => 'website-maintenance.update', 'uses' => 'WebsiteMaintenanceController@update']);
+
+        $router->delete('images', ['as' => 'image.destroy', 'uses' => 'ImageController@destroy']);
     });
 
     $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);

@@ -3,6 +3,7 @@
 namespace App\Infoexam\Core;
 
 use Auth;
+use Carbon\Carbon;
 use Eloquent;
 
 class Entity extends Eloquent
@@ -59,5 +60,41 @@ class Entity extends Eloquent
         if (Auth::guest() || ! Auth::user()->hasRole(['admin'])) {
             $this->addHidden($this->notAdminHidden);
         }
+    }
+
+    /**
+     * 將 created at 轉換成可閱讀文字
+     *
+     * @param string $value
+     * @return array
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->parsingDateAttribute($value);
+    }
+
+    /**
+     * 將 updated at 轉換成可閱讀文字
+     *
+     * @param string $value
+     * @return array
+     */
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->parsingDateAttribute($value);
+    }
+
+    /**
+     * Implement parsing.
+     *
+     * @param string $value
+     * @return array
+     */
+    protected function parsingDateAttribute($value)
+    {
+        return [
+            'time' => $value,
+            'human' => Carbon::parse($value)->diffForHumans(Carbon::now())
+        ];
     }
 }

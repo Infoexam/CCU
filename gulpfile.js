@@ -1,6 +1,10 @@
-var elixir = require('laravel-elixir');
-
 require('dotenv').load();
+
+if ('true' === process.env.DISABLE_GULP_NOTIFY) {
+    process.env.DISABLE_NOTIFIER = true;
+}
+
+var elixir = require('laravel-elixir');
 
 /*
  |--------------------------------------------------------------------------

@@ -15,7 +15,7 @@ class AnnouncementRequest extends Request
     {
         $rules = [
             'heading' => 'required|max:190|unique:announcements,heading',
-            'link' => 'url|mix:1|max:190',
+            'link' => 'url|min:1|max:190',
             'content' => 'required|max:1000',
             'image' => 'array',
         ];
@@ -24,9 +24,11 @@ class AnnouncementRequest extends Request
             $rules['heading'] .= ',' . $this->route('announcements');
         }
 
-        if (is_array($this->input('image'))) {
-            foreach (array_keys($this->input('image', [])) as $key) {
-                $rules["image.{$key}"] = 'image';
+        if ($this->hasFile('image')) {
+            if (is_array($this->file('image'))) {
+                foreach (array_keys($this->file('image')) as $key) {
+                    $rules["image.{$key}"] = 'image';
+                }
             }
         }
 

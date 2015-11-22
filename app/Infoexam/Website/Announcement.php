@@ -3,6 +3,7 @@
 namespace App\Infoexam\Website;
 
 use App\Infoexam\Core\Entity;
+use App\Infoexam\Image\Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Announcement extends Entity
@@ -36,4 +37,14 @@ class Announcement extends Entity
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * 取得該題目的圖片
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

@@ -128,16 +128,16 @@ class Upload
      */
     protected function moveToStorage(UploadedFile $file, Image $image)
     {
-        list($t, $h, $e) = $fInfo = [
-            'timestamp' => $image->getAttribute('uploaded_at')->timestamp,
-            'hash' => $image->getAttribute('hash'),
-            'extension' => $file->guessExtension(),
+        list($t, $h, $e) = [
+            $image->getAttribute('uploaded_at')->timestamp,
+            $image->getAttribute('hash'),
+            $file->guessExtension(),
         ];
 
         $this->createDirectoryIfNotExists("{$this->dirPath}/" . substr($t, 0, 3));
 
         // 儲存圖片
-        $this->storage->put(img_path($t, $h, $e, false, false), $file->getRealPath());
+        $this->storage->put(img_path($t, $h, $e, false, false), file_get_contents($file->getRealPath()));
 
         // 儲存縮圖
         Imager::make($file->getRealPath())->resize(480, 320, function (Constraint $constraint) {

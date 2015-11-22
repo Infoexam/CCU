@@ -16,5 +16,15 @@ routerComponents.home = Vue.extend({
                 Materialize.toast($.i18n.t((422 === status) ? 'auth.failed' : 'tokenMismatch'), 3500, 'red');
             });
         }
+    },
+
+    ready: function () {
+        // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
+        if (-1 !== location.search.indexOf('signIn=1')) {
+            setTimeout(function() {
+                $('#sign-in-modal').openModal();
+                $('#username').focus();
+            }, 50);
+        }
     }
 });

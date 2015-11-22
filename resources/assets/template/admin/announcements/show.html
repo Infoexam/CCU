@@ -1,0 +1,16 @@
+<h3>{{ announcement.heading }}</h3>
+
+<blockquote>
+    <pre class="flow-text">{{ announcement.content }}</pre>
+
+    <div class="flow-text" v-if="announcement.link">
+        <br>
+        <span>相關連結：</span><a href="{{ announcement.link }}" target="_blank">{{ announcement.link }}</a>
+    </div>
+</blockquote>
+
+<div class="row">
+    <div class="col s12 m6 l6" v-for="image in announcement.images">
+        <img class="materialboxed" width="500" :src="image.link.original">
+    </div>
+</div>

@@ -4,7 +4,7 @@
 </ul>
 
 <ul id="nav-dropdown-testing-{{ $device }}" class="dropdown-content">
-    <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.testing.list') }}</a></li>
+    <li><a v-link="{name: 'exam.lists.index'}">{{ trans('navigation.testing.list') }}</a></li>
     <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.testing.grade') }}</a></li>
 </ul>
 
@@ -14,9 +14,9 @@
 </ul>
 
 <ul id="nav-dropdown-website-{{ $device }}" class="dropdown-content">
-    <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.website.announcement') }}</a></li>
-    <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.website.maintenance') }}</a></li>
-    <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.website.ip') }}</a></li>
+    <li><a v-link="{name: 'announcements.index'}">{{ trans('navigation.website.announcement') }}</a></li>
+    <li><a v-link="{name: 'website-maintenance.index'}">{{ trans('navigation.website.maintenance') }}</a></li>
+    <li><a v-link="{name: 'ip-rules.index'}">{{ trans('navigation.website.ip') }}</a></li>
     <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.website.faq') }}</a></li>
     <li><a v-link="{name: 'exam.sets.index'}">{{ trans('navigation.website.log') }}</a></li>
 </ul>

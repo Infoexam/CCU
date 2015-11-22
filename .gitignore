@@ -3,6 +3,7 @@ node_modules/
 .idea/
 
 public/build/
+public/images/
 public/js/admin.js
 public/js/student.js
 public/css/*

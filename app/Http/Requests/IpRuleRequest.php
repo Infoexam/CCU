@@ -18,9 +18,9 @@ class IpRuleRequest extends Request
             'ip_address' => 'ip',
             'ip_mask' => 'in:8,16,24,32',
             'rules' => 'required|array',
-            'rules.student' => 'required|boolean',
-            'rules.admin' => 'required|boolean',
-            'rules.exam' => 'required|boolean',
+            'rules.student' => 'boolean',
+            'rules.admin' => 'boolean',
+            'rules.exam' => 'boolean',
         ];
     }
 

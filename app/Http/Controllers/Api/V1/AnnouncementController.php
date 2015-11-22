@@ -26,7 +26,7 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::latest()->paginate(10, ['heading', 'created_at', 'updated_at']);
+        $announcements = Announcement::latest()->paginate(10, ['id', 'heading', 'created_at', 'updated_at']);
 
         return response()->json($announcements);
     }
@@ -35,7 +35,7 @@ class AnnouncementController extends Controller
      * 新增公告
      *
      * @param Requests\AnnouncementRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function store(Requests\AnnouncementRequest $request)
     {
@@ -51,7 +51,7 @@ class AnnouncementController extends Controller
      */
     public function show($heading)
     {
-        $announcement = Announcement::where('heading', '=', $heading)
+        $announcement = Announcement::with(['images'])->where('heading', '=', $heading)
             ->firstOrFail(['id', 'heading', 'link', 'content', 'created_at', 'updated_at']);
 
         return response()->json($announcement);
@@ -62,7 +62,7 @@ class AnnouncementController extends Controller
      *
      * @param Requests\AnnouncementRequest $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function update(Requests\AnnouncementRequest $request, $id)
     {
@@ -75,10 +75,14 @@ class AnnouncementController extends Controller
      * @param Model $announcement
      * @param Request $request
      * @param array $attributes
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function storeOrUpdate(Model $announcement, Request $request, array $attributes = [])
     {
+        if (str_contains($request->input('heading'), ['/'])) {
+            return response()->json(['heading' => 'Heading can\'t contain "/".'], 422);
+        }
+
         parent::storeOrUpdate($announcement, $request, ['heading', 'link', 'content']);
 
         if ($request->hasFile('image')) {
