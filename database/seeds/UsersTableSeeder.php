@@ -1,5 +1,7 @@
 <?php
 
+use App\Infoexam\User\Certificate;
+use App\Infoexam\User\Role;
 use App\Infoexam\User\User;
 use Illuminate\Database\Seeder;
 
@@ -12,10 +14,10 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = \App\Infoexam\User\Role::all()->pluck('id');
+        $roles = Role::all()->pluck('id');
 
         factory(User::class, random_int(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificate()->save(factory(\App\Infoexam\User\Certificate::class)->make());
+            $user->certificate()->save(factory(Certificate::class)->make());
 
             $r = $roles->random(random_int(1, $roles->count()));
 
@@ -23,16 +25,20 @@ class UsersTableSeeder extends Seeder
         });
 
         factory(User::class, 'passed', random_int(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificate()->save(factory(\App\Infoexam\User\Certificate::class)->make());
+            $user->certificate()->save(factory(Certificate::class)->make());
 
             $r = $roles->random(random_int(1, $roles->count()));
 
             $user->roles()->sync(is_int($r) ? [$r] : $r->all());
         });
 
-        factory(User::class)->create([
-            'username' => 'test',
-            'password' => bcrypt('test'),
-        ])->roles()->sync([1]);
+        if (app()->environment(['local', 'testing'])) {
+            if (! User::where('username', '=', 'test')->exists()) {
+                factory(User::class)->create([
+                    'username' => 'test',
+                    'password' => bcrypt('test'),
+                ])->roles()->sync($roles->all());
+            }
+        }
     }
 }
