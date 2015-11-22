@@ -11,9 +11,10 @@
             detectLngQS: 'lang',
             cookieName: 'locale',
             fallbackLng: false,
-            lngWhitelist: ['en', 'zh-TW']
+            lngWhitelist: ['en', 'zh-TW'],
+            resGetPath: '/locales/__ns__-__lng__.json'
         }, function() {
-            $('html').i18n();
+            $('[data-i18n]').i18n();
         });
 
         // https://github.com/uzairfarooq/arrive
