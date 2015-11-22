@@ -13,4 +13,8 @@ router.map({
     }
 });
 
+router.redirect({
+    '*': '/'
+});
+
 router.start(Vue.extend({}), '#infoexam');
