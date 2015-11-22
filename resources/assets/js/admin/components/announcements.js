@@ -124,8 +124,9 @@ routerComponents.announcements = {
                 data.append('heading', this.form.heading);
                 data.append('link', this.form.link || '');
                 data.append('content', this.form.content);
+                data.append('_method', 'PATCH');
 
-                this.$http.patch('/api/v1/announcements', data, function (data, status, request) {
+                this.$http.post('/api/v1/announcements/' + this.form.id, data, function (data, status, request) {
                     Materialize.toast($.i18n.t('action.update.success'), 3500, 'green');
 
                     router.go({name: 'announcements.show', params: {heading: this.form.heading}});
@@ -147,7 +148,7 @@ routerComponents.announcements = {
                     uploaded_at: this.form.images[index].uploaded_at,
                     hash: this.form.images[index].hash
                 }, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
+                    Materialize.toast($.i18n.t('action.delete.success'), 3500, 'orange');
 
                     this.form.images.splice(index, 1);
                 });
