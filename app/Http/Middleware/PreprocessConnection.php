@@ -8,6 +8,7 @@ use Closure;
 use Cookie;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PreprocessConnection
 {
@@ -30,6 +31,12 @@ class PreprocessConnection
         Carbon::setLocale($locale);
 
         // 處理不支援的瀏覽器
+        $agent = $this->getBrowserAndVersion();
+
+        // todo 可以增加設定來決定是否要啟用瀏覽器檢查
+        if ($this->isUnsupportedBrowser($agent)) {
+            // redirect to error page
+        }
 
         /** @var $response \Illuminate\Http\Response */
 
@@ -75,5 +82,37 @@ class PreprocessConnection
         }
 
         return Agent::languages();
+    }
+
+    /**
+     * 取得使用者的瀏覽器以及版本
+     *
+     * @param string $agent
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getBrowserAndVersion($agent = '')
+    {
+        $agent = empty($agent) ? Agent::getUserAgent() : $agent;
+
+        return collect([
+            'browser' => Agent::browser($agent),
+            'version' => Agent::version(Agent::browser($agent)),
+        ]);
+    }
+
+    /**
+     * 判斷是否為不支援的瀏覽器或版本
+     *
+     * @param Collection $agent
+     * @return bool
+     */
+    protected function isUnsupportedBrowser(Collection $agent)
+    {
+        switch (true) {
+            case ('IE' === $agent->get('browser')) && ($agent->get('version') < 11):
+                return true;
+        }
+
+        return false;
     }
 }
