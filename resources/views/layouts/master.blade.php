@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
     <body id="infoexam">
-        <header class="container">
+        <header>
             @yield('header')
         </header>
 
@@ -19,7 +19,7 @@
             <!-- End of Router View -->
         </main>
 
-        <footer class="container page-footer blue accent-2">
+        <footer class="indigo darken-3 page-footer">
             <div class="footer-copyright">
                 <div class="container">
                     <span><a href="http://www.ccu.edu.tw/" target="_blank">{{ trans('navigation.copyright') }}</a> © 2015</span>

@@ -6,7 +6,6 @@
             <th>題庫啟用</th>
             <th>新增題目</th>
             <th>編輯題庫</th>
-            <th>刪除題庫</th>
         </tr>
     </thead>
     <tbody>
@@ -14,9 +13,11 @@
             <td><a v-link="{name: 'exam.sets.show', params: {id: set.id}}">{{ set.name }}</a></td>
             <td><span data-i18n="exam.set.{{ set.category.name }}"></span></td>
             <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
-            <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">add</i></a></td>
-            <td><a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
-            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(set.id, $index)"><i class="material-icons">delete</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light green"><i class="material-icons">add</i></a></td>
+            <td>
+                <a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+                <a class="btn-floating waves-effect waves-light red" @click="destroy(set.id, $index)"><i class="material-icons">delete</i></a>
+            </td>
         </tr>
         <tr v-show="! sets.length">
             <td colspan="6">尚未建立題庫</td>

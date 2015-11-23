@@ -2,7 +2,7 @@
 
 @section('header')
     <nav>
-        <div class="nav-wrapper blue accent-2">
+        <div class="nav-wrapper indigo darken-3">
             <!-- Logo -->
             <a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>
 
