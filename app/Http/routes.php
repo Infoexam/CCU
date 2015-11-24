@@ -65,6 +65,12 @@ $router->post('deploy', function () {
     $data = json_decode(Request::getContent());
 
     if (null !== $data && env('GITHUB_WEBHOOK_SECRET') === $data->{'hook'}->{'config'}->{'secret'}) {
+        Log::info('Github ping', ['auth' => 'success']);
+
         Artisan::call('deploy');
+    } else {
+        Log::notice('Github ping', ['auth' => 'failed']);
     }
+
+    return response('');
 });
