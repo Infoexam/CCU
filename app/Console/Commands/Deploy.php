@@ -38,9 +38,9 @@ class Deploy extends Command
     {
         $this->call('down');
 
-        $this->externalCommand('composer install -o');
+        $this->externalCommand('/usr/local/bin/composer install -o');
 
-        $this->externalCommand('gulp --production');
+        $this->externalCommand('/usr/local/bin/gulp --production');
 
         $this->call('migrate', ['--force' => true]);
 
