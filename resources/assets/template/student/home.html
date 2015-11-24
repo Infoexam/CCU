@@ -23,6 +23,6 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn waves-effect waves-light" type="submit" form="sign-in-form" data-i18n="auth.signIn"></button>
+        <button @click.prevent="signInSubmit()" class="btn waves-effect waves-light" type="submit" form="sign-in-form" data-i18n="auth.signIn"></button>
     </div>
 </div>

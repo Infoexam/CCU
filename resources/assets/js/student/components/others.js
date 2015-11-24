@@ -6,6 +6,10 @@ routerComponents.home = Vue.extend({
     },
 
     methods: {
+        signInSubmit: function () {
+            this.signIn();
+        },
+
         signIn: function () {
             this.$http.post('/api/v1/auth/sign-in', {
                 username: this.username,
