@@ -60,3 +60,11 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
     $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
 });
+
+$router->post('deploy', function () {
+    $data = json_decode(Request::getContent());
+
+    if (null !== $data && env('GITHUB_WEBHOOK_SECRET') === $data->{'hook'}->{'config'}->{'secret'}) {
+        Artisan::call('deploy');
+    }
+});
