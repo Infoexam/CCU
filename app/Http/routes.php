@@ -62,14 +62,14 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 });
 
 $router->post('deploy', function () {
-    $data = json_decode(Request::getContent());
+    list($algo, $hash) = explode('=', Request::header('X-Hub-Signature'), 2);
 
-    if (null !== $data && env('GITHUB_WEBHOOK_SECRET') === $data->{'hook'}->{'config'}->{'secret'}) {
+    if ($hash !== hash_hmac($algo, Request::getContent(), env('GITHUB_WEBHOOK_SECRET'))) {
+        Log::notice('Github ping', ['auth' => 'failed', 'ip' => Request::ip()]);
+    } else {
         Log::info('Github ping', ['auth' => 'success']);
 
         Artisan::call('deploy');
-    } else {
-        Log::notice('Github ping', ['auth' => 'failed']);
     }
 
     return response('');
