@@ -80,6 +80,30 @@ class Deploy extends Command
      */
     protected function vendorsUpdate()
     {
+        $this->composerUpdate();
+
+        $this->npmUpdate();
+
+        $scripts = File::files(public_path('js'));
+
+        if (false !== ($index = array_search(public_path('js/arrive.min.js'), $scripts))) {
+            array_splice($scripts, $index, 1);
+        }
+
+        File::delete(array_merge(
+            File::files(base_path('resources/assets/js/compiled')),
+            File::files(public_path('css')),
+            $scripts
+        ));
+
+        $this->externalCommand('gulp --production');
+    }
+
+    /**
+     * composer related update
+     */
+    protected function composerUpdate()
+    {
         if ($this->isModified(base_path('composer.lock'))) {
             // 取得 composer 路徑
             $path = trim($this->externalCommand('which composer'));
@@ -108,12 +132,16 @@ class Deploy extends Command
                 }
             }
         }
+    }
 
+    /**
+     * npm related update
+     */
+    protected function npmUpdate()
+    {
         if ($this->isModified(base_path('package.json'))) {
             $this->externalCommand('npm install');
         }
-
-        $this->externalCommand('gulp --production');
     }
 
     /**
