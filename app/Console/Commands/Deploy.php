@@ -43,11 +43,12 @@ class Deploy extends Command
     {
         $this->call('down');
 
-        $this->call('route:clear');
-
-        $this->call('config:clear');
-
         if (! $this->option('self-call')) {
+
+            $this->call('route:clear');
+
+            $this->call('config:clear');
+
             if (! $this->pull()) {
                 $this->call('up');
 
