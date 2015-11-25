@@ -12,12 +12,14 @@ class AppendAdditionalHeaders
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
-     *
-     * @todo Content-Security-Policy header
      */
     public function handle($request, Closure $next)
     {
+        $csp = "default-src 'none'; script-src 'self' 'unsafe-eval' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com ajax.googleapis.com; style-src 'self' 'unsafe-inline' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com fonts.googleapis.com; img-src 'self' https:; font-src https: cdnjs.cloudflare.com fonts.gstatic.com; connect-src 'self'";
+
         $headers = [
+            'Content-Security-Policy' => $csp,
+            'X-Content-Security-Policy' => $csp,
             'X-Content-Type-Options' => 'nosniff',
             'X-Frame-Options' => 'sameorigin',
             'X-XSS-Protection' => '1; mode=block',
