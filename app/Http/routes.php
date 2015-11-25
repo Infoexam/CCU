@@ -64,12 +64,12 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 $router->post('deploy', function () {
     list($algo, $hash) = explode('=', Request::header('X-Hub-Signature'), 2);
 
-    if ($hash !== hash_hmac($algo, Request::getContent(), env('GITHUB_WEBHOOK_SECRET'))) {
+    if (! hash_equals($hash, hash_hmac($algo, Request::getContent(), env('GITHUB_WEBHOOK_SECRET')))) {
         Log::notice('Github ping', ['auth' => 'failed', 'ip' => Request::ip()]);
     } else {
         Log::info('Github ping', ['auth' => 'success']);
 
-        Artisan::call('deploy');
+        Artisan::queue('deploy');
     }
 
     return response('');

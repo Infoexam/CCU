@@ -36,3 +36,30 @@ if (! function_exists('img_path')) {
         return "{$prefixDir}/{$filename}";
     }
 }
+
+if (! function_exists('hash_equals')) {
+    /**
+     * Compare two strings in constant time.
+     *
+     * @link https://developer.wordpress.org/reference/functions/hash_equals/
+     * @param string $a
+     * @param string $b
+     * @return bool
+     */
+    function hash_equals($a, $b) {
+        $a_length = strlen($a);
+
+        if ($a_length !== strlen($b)) {
+            return false;
+        }
+
+        $result = 0;
+
+        // Do not attempt to "optimize" this.
+        for ( $i = 0; $i < $a_length; $i++ ) {
+            $result |= ord( $a[ $i ] ) ^ ord( $b[ $i ] );
+        }
+
+        return $result === 0;
+    }
+}
