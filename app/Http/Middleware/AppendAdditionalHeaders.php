@@ -25,6 +25,10 @@ class AppendAdditionalHeaders
             'X-XSS-Protection' => '1; mode=block',
         ];
 
+        if (env('APP_DEBUG', false)) {
+            unset($headers['Content-Security-Policy'], $headers['X-Content-Security-Policy']);
+        }
+
         if ($request->secure() || env('WEBSITE_HTTPS', false)) {
             $headers['Strict-Transport-Security'] = 'max-age=15552000; preload';
 
