@@ -44,4 +44,25 @@ class HomeController extends Controller
     {
         //
     }
+
+    /**
+     * 自動化佈署
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deploy(Request $request)
+    {
+        list($algo, $hash) = explode('=', $request->header('X-Hub-Signature'), 2);
+
+        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), env('GITHUB_WEBHOOK_SECRET')))) {
+            \Log::notice('Github Webhook', ['auth' => 'failed', 'ip' => $request->ip()]);
+        } else {
+            \Log::info('Github Webhook', ['auth' => 'success', 'ip' => $request->ip()]);
+
+            \Artisan::queue('deploy');
+        }
+
+        return $this->ok();
+    }
 }

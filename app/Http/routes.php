@@ -18,6 +18,7 @@ use Illuminate\Routing\Router;
 $router->get('/', ['as' => 'home', 'uses' => 'HomeController@student']);
 $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
 $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
+$router->post('deploy', ['uses' => 'HomeController@deploy']);
 
 $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {
     $router->group(['prefix' => 'auth', 'as' => 'api.v1.auth.'], function (Router $router) {
@@ -59,18 +60,4 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
     });
 
     $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
-});
-
-$router->post('deploy', function () {
-    list($algo, $hash) = explode('=', Request::header('X-Hub-Signature'), 2);
-
-    if (! hash_equals($hash, hash_hmac($algo, Request::getContent(), env('GITHUB_WEBHOOK_SECRET')))) {
-        Log::notice('Github ping', ['auth' => 'failed', 'ip' => Request::ip()]);
-    } else {
-        Log::info('Github ping', ['auth' => 'success']);
-
-        Artisan::queue('deploy');
-    }
-
-    return response('');
 });

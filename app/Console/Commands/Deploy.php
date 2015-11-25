@@ -43,6 +43,10 @@ class Deploy extends Command
     {
         $this->call('down');
 
+        $this->call('route:clear');
+
+        $this->call('config:clear');
+
         if (! $this->option('self-call')) {
             if (! $this->pull()) {
                 $this->call('up');
@@ -54,6 +58,10 @@ class Deploy extends Command
         $this->vendorsUpdate();
 
         $this->migrate();
+
+        $this->call('route:cache');
+
+        $this->call('config:cache');
 
         $this->call('up');
 
