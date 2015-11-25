@@ -7,6 +7,7 @@ use Cache;
 use Carbon\Carbon;
 use File;
 use Illuminate\Console\Command;
+use Log;
 use Symfony\Component\Process\Process;
 
 class Deploy extends Command
@@ -53,6 +54,8 @@ class Deploy extends Command
         $this->migrate();
 
         $this->call('up');
+
+        Log::info('Github Webhook', ['status' => 'update successfully']);
     }
 
     /**
