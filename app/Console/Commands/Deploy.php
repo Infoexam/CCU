@@ -41,10 +41,12 @@ class Deploy extends Command
      */
     public function handle()
     {
-        if (! $this->option('self-call')) {
-            $this->call('down');
+        $this->call('down');
 
+        if (! $this->option('self-call')) {
             if (! $this->pull()) {
+                $this->call('up');
+
                 return;
             }
         }
