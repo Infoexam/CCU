@@ -8,9 +8,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr v-for = 'set in sets'>
-			<td>{{set.name}}</td>
-			<td>hello</td>
+		<tr>
+			<td>{{sets.name}}</td>
+			<td>{{sets.category.category}}</td>
+			<td>{{sets.enable}}</td>
+			<td>{{sets.category.remark}}</td>
 		</tr>
 	</tbody>
 </table>
