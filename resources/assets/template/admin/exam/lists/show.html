@@ -1,0 +1,33 @@
+<table>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Code</th>
+			<th>Began_at</th>
+			<th>Duration</th>
+			<th>room</th>
+			<th>報名人數</th>
+			<th>Std_test_num</th>
+			<th>Allow_apply</th>
+			<th>Started_at</th>
+			<th>Paper_name</th>
+			<th>Apply_name</th>
+			<th>Subject_name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<td>{{sets.id}}</td>
+		<td>{{sets.code}}</td>
+		<td>{{sets.began_at}}</td>
+		<td>{{sets.duration}}</td>
+		<td>{{sets.room}}</td>
+		<td>{{sets.std_apply_num}}  / {{sets.std_maximum_num}}</td>
+		<td>{{sets.std_test_num}}</td>
+		<td>{{sets.allow_apply}}</td>
+		<td>{{sets.started_at}}</td>
+		<td>{{sets.paper.name}}</td>
+		<td>{{sets.apply.name}}</td>
+		<td>{{sets.subject.name}}</td>
+	</tbody>
+
+</table>
