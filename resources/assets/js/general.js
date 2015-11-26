@@ -33,10 +33,6 @@
     });
 })(jQuery);
 
-/* Vue.js */
-Vue.use(VueResource);
-Vue.use(VueRouter);
-
 // add X-XSRF-TOKEN to xhr
 Vue.http.headers.common['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
 

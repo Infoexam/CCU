@@ -24,7 +24,7 @@ routerComponents.home = Vue.extend({
 
     ready: function () {
         // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
-        if (-1 !== location.search.indexOf('signIn=1')) {
+        if (undefined !== this.$route.query.signIn) {
             setTimeout(function() {
                 $('#sign-in-modal').openModal();
                 $('#username').focus();
