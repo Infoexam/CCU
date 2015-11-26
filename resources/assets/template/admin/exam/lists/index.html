@@ -1,0 +1,37 @@
+<table class = "bordered highlight centered responsive-table">
+	<thead>
+		<tr>
+			<th>Code</th>
+			<th>Began_at</th>
+			<th>Duration</th>
+			<th>Room</th>
+			<th>Std_maximum_num</th>
+			<th>Std_apply_num</th>
+			<th>Allow_apply</th>
+			<th>Apply_name</th>
+			<th>Subject_name</th>
+		</tr>
+	</thead>	
+	<tbody>
+		<tr v-for = "set in sets">
+			<td><a v-link="{name: 'exam.lists.show', params: {id: set.code}}">{{ set.code }}</a></td>
+			<td>{{set.began_at}}</td>
+			<td>{{set.duration}}</td>
+			<td>{{set.room}}</td>
+			<td>{{set.std_maximum_num}}</td>
+			<td>{{set.std_apply_num}}</td>
+			<td>{{set.allow_apply}}</td>
+			<td>{{set.apply.name}}</td>
+			<td>{{set.subject.name}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<ul class="pagination center-align">
+    <li :class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(0)">chevron_left</i></a>
+    </li>
+    <li :class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(1)">chevron_right</i></a>
+    </li>
+</ul>

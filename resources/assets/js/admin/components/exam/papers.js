@@ -43,6 +43,16 @@ routerComponents.exam.papers = {
     }),
 
     show: Vue.extend({
-        template: require('../../template/admin/exam/papers/show.html')
+        template: require('../../template/admin/exam/papers/show.html') , 
+        data: function() {
+           return {papers: {}};     
+        } ,
+        ready: function() {
+            var url = '/api/v1/exam/papers/' + this.$route.params.id;
+            this.$http.get(url , function (data , status , request){
+                    this.$set('papers' , data);
+            });
+        }
     })
+
 };

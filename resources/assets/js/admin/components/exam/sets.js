@@ -16,14 +16,12 @@ routerComponents.exam.sets = {
                     url = this.pagination[next ? 'next_page_url' : 'prev_page_url'];
                 }
 
-                if ('string' === typeof url) {
-                    this.$http.get(url, function (data, status, request) {
+                this.$http.get(url, function (data, status, request) {
                         this.$set('sets', data.data);
 
                         delete data.data;
                         this.$set('pagination', data);
                     });
-                }
             },
 
             destroy: function (id, index) {
@@ -43,6 +41,17 @@ routerComponents.exam.sets = {
     }),
 
     show: Vue.extend({
-        template: require('../../template/admin/exam/sets/show.html')
+        template: require('../../template/admin/exam/sets/show.html') , 
+        data: function() {
+            return { sets: {} };
+        } , 
+        ready: function() {
+            var url = '/api/v1/exam/sets/' + this.$route.params.id;
+            this.$http.get(url , function (data , status , request){
+                    this.$set('sets' , data);
+            });
+
+        }
+
     })
 };
