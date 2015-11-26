@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use Artisan;
 use Cache;
 use Carbon\Carbon;
 use File;
@@ -17,7 +16,7 @@ class Deploy extends Command
      *
      * @var string
      */
-    protected $signature = 'deploy {--self-call}';
+    protected $signature = 'deploy';
 
     /**
      * The console command description.
@@ -43,18 +42,13 @@ class Deploy extends Command
     {
         $this->call('down');
 
-        if (! $this->option('self-call')) {
+        $this->call('route:clear');
 
-            $this->call('route:clear');
+        $this->call('config:clear');
 
-            $this->call('config:clear');
+        $this->call('clear-compiled');
 
-            if (! $this->pull()) {
-                $this->call('up');
-
-                return;
-            }
-        }
+        $this->externalCommand('git pull');
 
         $this->vendorsUpdate();
 
@@ -64,27 +58,13 @@ class Deploy extends Command
 
         $this->call('config:cache');
 
+        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
+            $this->call('queue:restart');
+        }
+
         $this->call('up');
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
-    }
-
-    /**
-     * Git pull 後判斷佈署檔案是否有更動過，如有，則呼叫自己以執行新的佈署架構
-     *
-     * @return bool
-     */
-    protected function pull()
-    {
-        $this->externalCommand('git pull');
-
-        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
-            Artisan::queue('deploy', ['--self-call' => true]);
-
-            return false;
-        }
-
-        return true;
     }
 
     /**
