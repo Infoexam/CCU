@@ -3,34 +3,37 @@ routerComponents.announcements = {
         template: require('../../template/admin/announcements/index.html'),
 
         data: function () {
-            return {announcements: [], pagination: {}};
+            return {
+                announcements: [],
+                pagination: {}
+            };
         },
 
         methods: {
             paginate: function (next) {
-                var url;
+                var url = '/api/v1/announcements';
 
-                if ('undefined' === typeof next) {
-                    url = '/api/v1/announcements';
-                } else {
+                if ('undefined' !== typeof next) {
                     url = this.pagination[next ? 'next_page_url' : 'prev_page_url'];
                 }
 
+                var vm = this;
+
                 if ('string' === typeof url) {
                     this.$http.get(url, function (data, status, request) {
-                        this.announcements = data.data;
+                        vm.announcements = data.data;
 
                         delete data.data;
-                        this.pagination = data;
+                        vm.pagination = data;
                     });
                 }
             },
 
-            destroy: function (id, index) {
-                this.$http.delete('/api/v1/announcements/' + id, function (data, status, request) {
+            deleteAccnouncement: function (announcement) {
+                this.$http.delete('/api/v1/announcements/' + announcement.id, function (data, status, request) {
                     Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
 
-                    this.announcements.splice(index, 1);
+                    this.announcements.$remove(announcement);
                 }).error(function (data, status, request) {
                     Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
                 });
