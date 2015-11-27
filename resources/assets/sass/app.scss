@@ -1,5 +1,5 @@
 * {
-    font-family: Microsoft JhengHei;
+  font-family: Microsoft JhengHei, Monospace;
 }
 
 html {
@@ -12,4 +12,9 @@ body {
 
 main {
   margin-top: 20px !important;
+}
+
+.wrap-text {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 }
