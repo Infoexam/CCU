@@ -1,3 +1,7 @@
+* {
+  font-family: Microsoft JhengHei, Monospace;
+}
+
 html {
   overflow-y: scroll !important;
 }
@@ -8,4 +12,9 @@ body {
 
 main {
   margin-top: 20px !important;
+}
+
+.wrap-text {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 }

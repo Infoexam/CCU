@@ -1,12 +1,11 @@
-<table class="bordered highlight centered responsive-table">
+<table class="striped highlight centered responsive-table">
     <thead>
         <tr>
             <th>IP 位址</th>
             <th>一般頁面</th>
             <th>考試頁面</th>
             <th>後台頁面</th>
-            <th>編　　輯</th>
-            <th>刪　　除</th>
+            <th>編輯/刪除</th>
         </tr>
     </thead>
     <tbody>
@@ -15,8 +14,10 @@
             <td><i class="material-icons" :class="[rule.student ? 'green-text' : 'red-text']">{{ rule.student ? 'check' : 'close' }}</i></td>
             <td><i class="material-icons" :class="[rule.exam ? 'green-text' : 'red-text']">{{ rule.exam ? 'check' : 'close' }}</i></td>
             <td><i class="material-icons" :class="[rule.admin ? 'green-text' : 'red-text']">{{ rule.admin ? 'check' : 'close' }}</i></td>
-            <td><a class="btn-floating waves-effect waves-light orange" @click="edit($key)"><i class="material-icons">edit</i></a></td>
-            <td><a class="btn-floating waves-effect waves-light red" @click="destroy($key)"><i class="material-icons">delete</i></a></td>
+            <td>
+                <a class="btn-floating waves-effect waves-light orange" @click="edit($key)"><i class="material-icons">edit</i></a>
+                <a class="btn-floating waves-effect waves-light red" @click="destroy($key)"><i class="material-icons">delete</i></a>
+            </td>
         </tr>
         <tr v-show="isEmptyObject(ipRules)">
             <td colspan="6">尚無 IP 規則限制</td>

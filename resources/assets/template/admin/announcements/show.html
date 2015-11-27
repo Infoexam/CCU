@@ -1,9 +1,9 @@
 <h3>{{ announcement.heading }}</h3>
 
 <blockquote>
-    <pre class="flow-text">{{ announcement.content }}</pre>
+    <pre class="flow-text wrap-text">{{ announcement.content }}</pre>
 
-    <div class="flow-text" v-if="announcement.link">
+    <div class="flow-text wrap-text" v-if="announcement.link">
         <br>
         <span>相關連結：</span><a href="{{ announcement.link }}" target="_blank">{{ announcement.link }}</a>
     </div>
