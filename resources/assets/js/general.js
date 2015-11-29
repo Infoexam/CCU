@@ -21,12 +21,15 @@
         $(document).arrive('[data-i18n]', function() {
             $(this).i18n();
         });
+
         $(document).arrive('.tooltipped', function() {
             $(this).tooltip({delay: 50});
         });
+
         $(document).arrive('input#input_text, textarea#textarea1', function() {
             $(this).characterCounter();
         });
+
         $(document).arrive('.materialboxed', function() {
             $(this).materialbox();
         });

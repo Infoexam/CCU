@@ -15,24 +15,21 @@ class AppendAdditionalHeaders
      */
     public function handle($request, Closure $next)
     {
-        $csp = "default-src 'none'; script-src 'self' 'unsafe-eval' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com ajax.googleapis.com; style-src 'self' 'unsafe-inline' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com fonts.googleapis.com; img-src 'self' https:; font-src https: cdnjs.cloudflare.com fonts.gstatic.com; connect-src 'self'";
-
         $headers = [
-            'Content-Security-Policy' => $csp,
-            'X-Content-Security-Policy' => $csp,
             'X-Content-Type-Options' => 'nosniff',
             'X-Frame-Options' => 'sameorigin',
             'X-XSS-Protection' => '1; mode=block',
         ];
 
-        if (env('APP_DEBUG', false)) {
-            unset($headers['Content-Security-Policy'], $headers['X-Content-Security-Policy']);
+        // 如果為 debug 模式或未設置 CSP，則略過
+        if (! config('app.debug') && ! empty($csp = env('CSP'))) {
+            $headers['Content-Security-Policy'] = $headers['X-Content-Security-Policy'] = $csp;
         }
 
         if ($request->secure() || env('WEBSITE_HTTPS', false)) {
-            $headers['Strict-Transport-Security'] = 'max-age=15552000; preload';
+            $headers['Strict-Transport-Security'] = 'max-age=15552000; preload;';
 
-            if (null !== ($pins = env('PUBLIC_KEY_PINS')) && strlen($pins) > 0) {
+            if (! empty($pins = env('PUBLIC_KEY_PINS'))) {
                 $publicKeyPins = '';
 
                 foreach (explode(',', $pins) as $pin) {
@@ -40,6 +37,14 @@ class AppendAdditionalHeaders
                 }
 
                 $headers['Public-Key-Pins'] = "{$publicKeyPins} max-age=600;";
+            }
+
+            if (! empty(env('HTTPS_INCLUDE_SUB_DOMAINS'))) {
+                $headers['Strict-Transport-Security'] .= ' includeSubDomains;';
+
+                if (isset($headers['Public-Key-Pins'])) {
+                    $headers['Public-Key-Pins'] .= ' includeSubDomains;';
+                }
             }
 
             if (! $request->secure()) {

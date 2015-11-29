@@ -30,7 +30,7 @@
 
         <!-- Loading JavaScript Sources -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.17/vue-resource.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.7/vue-router.min.js" defer></script>
