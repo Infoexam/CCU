@@ -114,7 +114,7 @@ class ExamListController extends Controller
      */
     public function destroy($code)
     {
-        Lists::where('code', '=', $code)->whereNotNull('started_at')->firstOrFail(['id'])->delete();
+        Lists::where('code', '=', $code)->whereNull('started_at')->firstOrFail(['id'])->delete();
 
         return $this->ok();
     }
