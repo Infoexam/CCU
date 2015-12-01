@@ -12,7 +12,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \App\Http\Middleware\AppendAdditionalHeaders::class,
+        \Bepsvpt\LaravelSecurityHeader\SecurityHeaderMiddleware::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \App\Http\Middleware\Firewalls::class,
         \App\Http\Middleware\EncryptCookies::class,
