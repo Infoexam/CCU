@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\User\Auth as Authenticate;
+use App\Infoexam\User\User;
 use Auth;
+use DOMDocument;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -42,9 +45,42 @@ class AuthController extends Controller
 
     /**
      * 單一入口登入
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function sso()
+    public function sso(Request $request)
     {
-        //
+        if (null !== env('SSO_URL') && $request->has(['miXd', 'ticket'])) {
+            $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
+
+            if (false !== $username && null !== ($user = User::where('username', '=', $username)->first())) {
+                Auth::loginUsingId($user->getAttribute('id'));
+            }
+        }
+
+        return redirect()->home();
+    }
+
+    /**
+     * SSO Auth
+     *
+     * @param string $miXd
+     * @param string $ticket
+     * @return bool|string
+     */
+    protected function ssoAuth($miXd, $ticket)
+    {
+        $response = (new Client())->get(env('SSO_URL'), ['query' => ['cid' => $miXd, 'ticket' => $ticket]]);
+
+        $dom = new DOMDocument();
+
+        if ($dom->loadXML(preg_replace('/<enter.*time>/', '', $response->getBody()->getContents()))
+            && false !== ($data = simplexml_import_dom($dom))
+            && ('Y' === (string) $data->sess_alive)) {
+            return (string) $data->person_id;
+        }
+
+        return false;
     }
 }
