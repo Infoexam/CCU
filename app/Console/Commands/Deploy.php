@@ -48,7 +48,7 @@ class Deploy extends Command
 
         $this->call('clear-compiled');
 
-        $this->externalCommand('git pull');
+//        $this->externalCommand('git pull'); // move to composer install
 
         $this->vendorsUpdate();
 
@@ -118,7 +118,7 @@ class Deploy extends Command
                 }
 
                 // 執行 package 更新
-                $this->externalCommand("{$path} install -o");
+                $this->externalCommand("git pull; {$path} install -o");
 
                 // 如是用暫存目錄，則更新完後將暫存目錄移除
                 if (isset($dir)) {
