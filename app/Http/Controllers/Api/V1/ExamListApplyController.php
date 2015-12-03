@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controolers\Api\ApiController;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Apply;
+use App\Infoexam\Exam\ApplyService;
 use App\Infoexam\Exam\Lists;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class ExamListApplyController extends Controller
+class ExamListApplyController extends ApiController
 {
     public function __construct()
     {
@@ -30,14 +32,20 @@ class ExamListApplyController extends Controller
         return response()->json($list->getRelation('applies'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ApplyService $applyService)
     {
-        //
+        if (! $applyService->create($request)->success()) {
+            return $this->setErrors($applyService->getErrors())->responseWithErrors();
+        }
+
+        return $this->setStatus(Response::HTTP_CREATED)->response();
     }
 
     public function show($listCode, $id)
     {
-        //
+        $apply = Apply::find($id);
+
+        return response()->json($apply);
     }
 
     public function update(Request $request, $listCode, $id)
@@ -45,8 +53,12 @@ class ExamListApplyController extends Controller
         //
     }
 
-    public function destroy($listCode, $id)
+    public function destroy($listCode, $id, ApplyService $applyService)
     {
-        //
+        if ($applyService->destroy($id)->success()) {
+            return $this->setErrors($applyService->getErrors())->responseWithErrors();
+        }
+
+        return $this->response();
     }
 }

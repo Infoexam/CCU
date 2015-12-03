@@ -37,6 +37,7 @@ $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router
 
         $router->resource('lists', 'ExamListController', ['except' => ['create', 'edit']]);
         $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit']]);
+        $router->resource('lists.results', 'ExamListResultController', ['only' => ['index', 'update']]);
 
         $router->get('configs', ['as' => 'api.v1.exam.configs.show', 'uses' => 'ExamConfigController@show']);
         $router->patch('configs', ['as' => 'api.v1.exam.configs.update', 'uses' => 'ExamConfigController@update']);
