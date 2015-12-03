@@ -3,6 +3,7 @@
 namespace App\Infoexam\General;
 
 use App\Infoexam\Core\Entity;
+use Cache;
 
 class Category extends Entity
 {
@@ -33,4 +34,32 @@ class Category extends Entity
      * @var array
      */
     protected $fillable = ['category', 'name', 'remark'];
+
+    /**
+     * @param string $category
+     * @param array $options
+     * @return \Illuminate\Database\Eloquent\Collection|static[]|int
+     */
+    public static function getCategories($category = '', array $options = [])
+    {
+        /** @var $categories \Illuminate\Database\Eloquent\Collection|static[] */
+
+        $categories = Cache::remember('categoriesTable', static::MINUTES_PER_WEEK, function () {
+            return static::all();
+        });
+
+        if (empty($category)) {
+            return $categories;
+        }
+
+        $categories = $categories->filter(function ($item) use ($category, $options) {
+            /** @var $item Category */
+
+            $filter = $item->getAttribute('category') === $category;
+
+            return isset($options['name']) ? ($filter && $item->getAttribute('name') === $options['name']) : $filter;
+        });
+
+        return isset($options['firstId']) ? $categories->first()->getAttribute('id') : $categories;
+    }
 }
