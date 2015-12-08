@@ -15,7 +15,7 @@
             <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
             <td><a class="btn-floating waves-effect waves-light green"><i class="material-icons">add</i></a></td>
             <td>
-                <a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+                <a v-link="{name: 'exam.sets.edit', params: {id: set.id}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a>
                 <a class="btn-floating waves-effect waves-light red" @click="destroy(set.id, $index)"><i class="material-icons">delete</i></a>
             </td>
         </tr>
@@ -33,3 +33,7 @@
         <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(1)">chevron_right</i></a>
     </li>
 </ul>
+
+<div class="fixed-action-btn">
+    <a v-link="{name: 'exam.sets.create'}" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
+</div>

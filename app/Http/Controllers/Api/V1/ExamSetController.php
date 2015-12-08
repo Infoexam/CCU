@@ -37,7 +37,7 @@ class ExamSetController extends Controller
      */
     public function store(Requests\ExamSetRequest $request)
     {
-        $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable']);
+        $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable' => false]);
 
         return $this->ok();
     }

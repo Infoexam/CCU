@@ -47,6 +47,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
+        if (! preg_match('/^\d+$/', $id)) {
+            return response()->json(Category::getCategories(str_replace('-', '.', $id)));
+        }
+
         return response()->json(Category::findOrFail($id));
     }
 

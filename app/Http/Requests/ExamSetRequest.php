@@ -16,7 +16,7 @@ class ExamSetRequest extends Request
         return [
             'name' => 'required|max:32',
             'category_id' => 'required|exists:categories,id,category,exam.category',
-            'enable' => 'required|boolean',
+            'enable' => 'boolean',
         ];
     }
 }

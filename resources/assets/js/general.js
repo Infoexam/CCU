@@ -30,6 +30,10 @@
             $(this).characterCounter();
         });
 
+        $(document).arrive('select', function() {
+            $(this).material_select();
+        });
+
         $(document).arrive('.materialboxed', function() {
             $(this).materialbox();
         });

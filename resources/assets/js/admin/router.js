@@ -8,9 +8,17 @@ router.map({
         name: 'exam.sets.index',
         component: routerComponents.exam.sets.index
     },
+    '/exam/sets/create': {
+        name: 'exam.sets.create',
+        component: routerComponents.exam.sets.create
+    },
     '/exam/sets/:id': {
         name: 'exam.sets.show',
         component: routerComponents.exam.sets.show
+    },
+    '/exam/sets/:id/edit': {
+        name: 'exam.sets.edit',
+        component: routerComponents.exam.sets.edit
     },
 
     '/exam/papers': {
