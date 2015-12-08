@@ -30,13 +30,15 @@ routerComponents.exam.sets = {
             },
 
             destroy: function (id, index) {
-                this.$http.delete('/api/v1/exam/sets/' + id, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
+                if (confirm('確定要刪除？')) {
+                    this.$http.delete('/api/v1/exam/sets/' + id, function (data, status, request) {
+                        Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
 
-                    this.sets.splice(index, 1);
-                }).error(function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
-                });
+                        this.sets.splice(index, 1);
+                    }).error(function (data, status, request) {
+                        Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
+                    });
+                }
             }
         },
 
