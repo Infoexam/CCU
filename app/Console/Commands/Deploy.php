@@ -48,8 +48,6 @@ class Deploy extends Command
 
         $this->call('clear-compiled');
 
-//        $this->externalCommand('git pull'); // move to composer install
-
         $this->vendorsUpdate();
 
         $this->migrate();
@@ -98,7 +96,9 @@ class Deploy extends Command
      */
     protected function composerUpdate()
     {
-        if ($this->isModified(base_path('composer.lock'))) {
+        if (! $this->isModified(base_path('composer.lock'))) {
+            $this->externalCommand('git pull');
+        } else {
             // 取得 composer 路徑
             $path = trim($this->externalCommand('which composer'));
 
