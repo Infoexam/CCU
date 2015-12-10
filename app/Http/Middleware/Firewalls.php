@@ -28,6 +28,8 @@ class Firewalls
 
         // 初始化設定
         switch ($request->segment(1)) {
+            case 'api':
+                return $next($request);
             case 'admin':
             case 'exam':
                 $rule = [

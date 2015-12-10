@@ -26,7 +26,7 @@ class Authenticate
 
         if (null === ($user = Auth::user())) {
             $e = new UnauthorizedHttpException('Unauthorized');
-        } else if (count($roles) && ! $user->hasRole($roles)) {
+        } else if (! empty($roles) && ! $user->hasRole($roles)) {
             $e = new AccessDeniedHttpException;
         }
 
