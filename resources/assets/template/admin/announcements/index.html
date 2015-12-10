@@ -9,12 +9,12 @@
     </thead>
     <tbody>
         <tr v-for="announcement in announcements">
-            <td><a v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
-            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
-            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
+            <td class="wrap-text"><a v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
+            <td class="wrap-text"><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
+            <td class="wrap-text"><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
             <td>
-                <a v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a>
-                <a class="btn-floating waves-effect waves-light red" @click="deleteAccnouncement(announcement)"><i class="material-icons">delete</i></a>
+                <a v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
+                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="deleteAccnouncement(announcement)"><i class="material-icons">delete</i></a>
             </td>
         </tr>
         <tr v-show="! announcements.length">

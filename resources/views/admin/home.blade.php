@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('header')
-    <nav class="indigo darken-3">
-        <div class="nav-wrapper container indigo darken-3">
+    <nav class="grey">
+        <div class="nav-wrapper container grey">
             <!-- Logo -->
             <a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>
 

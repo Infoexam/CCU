@@ -26,7 +26,7 @@
             @show
         </main>
 
-        <footer class="indigo darken-3 page-footer">
+        <footer class="page-footer grey">
             <div class="footer-copyright">
                 <div class="container">
                     <span><a href="http://www.ccu.edu.tw/" target="_blank">{{ trans('navigation.copyright') }}</a> © 2015</span>
