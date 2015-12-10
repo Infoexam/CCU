@@ -5,10 +5,8 @@ node_modules/
 public/build/
 public/images
 public/images/
-public/js/admin.js
-public/js/student.js
-public/css/*
-!public/css/.gitkeep
+public/js/
+public/css/
 
 Homestead.yaml
 Homestead.json
