@@ -19,9 +19,11 @@
         </header>
 
         <main class="container">
-            <!-- Begin of Router View -->
-            <router-view></router-view>
-            <!-- End of Router View -->
+            @section('main')
+                <!-- Begin of Router View -->
+                <router-view></router-view>
+                <!-- End of Router View -->
+            @show
         </main>
 
         <footer class="indigo darken-3 page-footer">

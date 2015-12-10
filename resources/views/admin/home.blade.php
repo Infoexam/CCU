@@ -25,6 +25,12 @@
     @include('admin._nav_dropdown', ['device' => 'mobile'])
 @endsection
 
+@section('main')
+    @include('layouts.breadcrumbs')
+
+    @parent
+@endsection
+
 @section('scripts')
     <script src="{{ asset('js/admin.js') }}" defer></script>
 @endsection
