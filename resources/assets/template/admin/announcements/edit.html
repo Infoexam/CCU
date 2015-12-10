@@ -3,21 +3,21 @@
         <div class="row">
             <div class="input-field col s12">
                 <input v-model="form.heading" id="heading" type="text" class="validate" length="190" required>
-                <label for="heading">公告標題</label>
+                <label class="active" for="heading">公告標題</label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
                 <input v-model="form.link" id="link" type="url" class="validate" length="190">
-                <label for="link">相關連結</label>
+                <label :class="{active: form.link}" for="link">相關連結</label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
                 <textarea v-model="form.content" id="content" class="materialize-textarea" length="1000" autofocus required></textarea>
-                <label for="content">公告內容</label>
+                <label class="active" for="content">公告內容</label>
             </div>
         </div>
 

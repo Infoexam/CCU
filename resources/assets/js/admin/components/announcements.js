@@ -163,8 +163,7 @@ routerComponents.announcements = {
                 this.form = data;
 
                 setTimeout(function() {
-                    $('input').focus();
-                    $('textarea').focus().trigger('autoresize');
+                    $('textarea').trigger('autoresize');
                 }, 50);
             }).error(function (data, status, request) {
                 if (404 === status) {
