@@ -2,21 +2,44 @@
     <form class="col s12" enctype="multipart/form-data" @submit.prevent="update()">
         <div class="row">
             <div class="input-field col s12">
-                <input v-model="form.heading" id="heading" type="text" class="validate" length="190" required>
+                <input
+                    v-model="form.heading"
+                    id="heading"
+                    type="text"
+                    class="validate"
+                    length="190"
+                    maxlength="190"
+                    required
+                >
                 <label class="active" for="heading">公告標題</label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
-                <input v-model="form.link" id="link" type="url" class="validate" length="190">
+                <input
+                    v-model="form.link"
+                    id="link"
+                    type="url"
+                    class="validate"
+                    length="190"
+                    maxlength="190"
+                >
                 <label :class="{active: form.link}" for="link">相關連結</label>
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
-                <textarea v-model="form.content" id="content" class="materialize-textarea" length="1000" autofocus required></textarea>
+                <textarea
+                    v-model="form.content"
+                    id="content"
+                    class="materialize-textarea"
+                    length="1000"
+                    maxlength="1000"
+                    autofocus
+                    required
+                ></textarea>
                 <label class="active" for="content">公告內容</label>
             </div>
         </div>
@@ -24,15 +47,24 @@
         <div class="file-field input-field">
             <div class="btn">
                 <span>圖片</span>
-                <input v-el:form-image id="form-image" type="file" accept="image/*" multiple>
+                <input
+                    v-el:form-image
+                    type="file"
+                    accept="image/*"
+                    multiple
+                >
             </div>
             <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                <input
+                    type="text"
+                    class="file-path validate"
+                    placeholder="Upload one or more files"
+                >
             </div>
         </div>
 
         <div class="center-align">
-            <button class="btn waves-effect waves-light" type="submit">
+            <button type="submit" class="btn waves-effect waves-light">
                 <span>更新</span>
                 <i class="material-icons right">send</i>
             </button>
@@ -42,5 +74,8 @@
 
 <div v-for="image in form.images">
     <img class="materialboxed" width="500" :src="image.link.original">
-    <a class="btn-floating waves-effect waves-light red" @click="destroyImage($index)"><i class="material-icons">delete</i></a>
+
+    <a class="btn-floating waves-effect waves-light red" @click="destroyImage(image)">
+        <i class="material-icons">delete</i>
+    </a>
 </div>

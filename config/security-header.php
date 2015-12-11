@@ -14,7 +14,7 @@ return [
      * Reference: https://developer.mozilla.org/en-US/docs/Web/Security/CSP
      */
     'csp' => [
-        'rule' => "default-src 'none'; script-src 'self' 'unsafe-eval' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com ajax.googleapis.com; style-src 'self' 'unsafe-inline' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com fonts.googleapis.com; img-src 'self' https:; font-src https: cdnjs.cloudflare.com fonts.gstatic.com; connect-src 'self'",
+        'rule' => "default-src 'none'; script-src 'self' 'unsafe-eval' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com ajax.googleapis.com; style-src 'self' 'unsafe-inline' https: cdn-infoexam.ccu.edu.tw cdnjs.cloudflare.com fonts.googleapis.com; img-src 'self' https: data:; font-src https: cdnjs.cloudflare.com fonts.gstatic.com; connect-src 'self'",
 
         /*
          * The URIs that should be excluded to add CSP header.

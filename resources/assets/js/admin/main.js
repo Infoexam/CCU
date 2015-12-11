@@ -1,1 +1,70 @@
 routerComponents.exam = {};
+
+(function(Vue, $, Materialize){
+    Vue.mixin({
+        methods: {
+            httpSuccessHandler: function (data, status, options) {
+                switch (status) {
+                    case 200:
+                        switch (options.action) {
+                            case 'update':
+                                this.toastSuccess($.i18n.t('action.update.success')).routerGo(options);
+                                return;
+                            case 'delete':
+                                this.toast($.i18n.t('action.delete.success'), 'orange');
+                                return;
+                        }
+                        return;
+                    case 201: this.created(options); return;
+                }
+            },
+
+            created: function (options) {
+                this.toastSuccess($.i18n.t('action.create.success')).routerGo(options);
+            },
+
+            httpErrorHandler: function (data, status, options) {
+                switch (status) {
+                    case 404: this.notFound(options); return;
+                    case 422: this.unprocessableEntity(data); return;
+                }
+            },
+
+            notFound: function (options) {
+                this.toastError('Page Not Found!').routerGo(options);
+            },
+
+            unprocessableEntity: function (data) {
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        this.toastError(data[key]);
+                    }
+                }
+            },
+
+            toastSuccess: function (message) {
+                return this.toast(message, 'green');
+            },
+
+            toastError: function (message) {
+                return this.toast(message, 'red');
+            },
+
+            toast: function (message, style, duration) {
+                Materialize.toast(message, duration || 3500, style);
+
+                return this;
+            },
+
+            routerGo: function (options) {
+                router.go({name: options.name, params: options.params || {}});
+            },
+
+            async: function (expression) {
+                setTimeout(function() {
+                    eval(expression);
+                }, 0);
+            }
+        }
+    });
+})(Vue, jQuery, Materialize);

@@ -1,177 +1,169 @@
-routerComponents.announcements = {
-    index: Vue.extend({
-        template: require('../../template/admin/announcements/index.html'),
-
-        data: function () {
-            return {
-                announcements: [],
-                pagination: {}
-            };
-        },
-
+(function (Vue, routerComponents) {
+    var mixin = {
         methods: {
-            paginate: function (next) {
-                var url = '/api/v1/announcements';
+            getFormData: function (form, files, patch) {
+                var result = new FormData;
 
-                if ('undefined' !== typeof next) {
-                    url = this.pagination[next ? 'next_page_url' : 'prev_page_url'];
+                for (var key in files) {
+                    if (files.hasOwnProperty(key)) {
+                        result.append('image[]', files[key]);
+                    }
                 }
 
-                var vm = this;
+                result.append('heading', form.heading);
+                result.append('link', form.link || '');
+                result.append('content', form.content);
 
-                if ('string' === typeof url) {
-                    this.$http.get(url, function (data, status, request) {
-                        vm.announcements = data.data;
+                if (true === patch) {
+                    result.append('_method', 'PATCH');
+                }
 
-                        delete data.data;
-                        vm.pagination = data;
+                return result;
+            }
+        }
+    };
+
+    routerComponents.announcements = {
+        index: Vue.extend({
+            template: require('../../template/admin/announcements/index.html'),
+
+            data: function () {
+                return {
+                    announcements: [],
+                    pagination: {}
+                };
+            },
+
+            methods: {
+                paginate: function (next) {
+                    var url = '/api/v1/announcements',
+                        vm = this;
+
+                    if ('undefined' !== typeof next) {
+                        url = this.pagination[next ? 'next_page_url' : 'prev_page_url'];
+                    }
+
+                    if ('string' === typeof url) {
+                        this.$http.get(url, function (data, status, request) {
+                            vm.announcements = data.data;
+
+                            delete data.data;
+                            vm.pagination = data;
+                        });
+                    }
+                },
+
+                destroyAnnouncement: function (announcement) {
+                    var vm = this;
+
+                    this.$http.delete('/api/v1/announcements/' + announcement.id, function (data, status, request) {
+                        vm.httpSuccessHandler(data, status, {action: 'delete'});
+                        vm.announcements.$remove(announcement);
                     });
                 }
             },
 
-            deleteAccnouncement: function (announcement) {
-                this.$http.delete('/api/v1/announcements/' + announcement.id, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
-
-                    this.announcements.$remove(announcement);
-                }).error(function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
-                });
+            ready: function () {
+                this.paginate();
             }
-        },
+        }),
 
-        ready: function () {
-            this.paginate();
-        }
-    }),
+        show: Vue.extend({
+            template: require('../../template/admin/announcements/show.html'),
 
-    create: Vue.extend({
-        template: require('../../template/admin/announcements/create.html'),
-
-        data: function () {
-            return {form: {}};
-        },
-
-        methods: {
-            store: function () {
-                var data = new FormData(),
-                    files = this.$els.formImage.files;
-
-                for(var key in files){
-                    if (files.hasOwnProperty(key)) {
-                        data.append('image['+key+']', files[key]);
-                    }
-                }
-
-                data.append('heading', this.form.heading);
-                data.append('link', this.form.link || '');
-                data.append('content', this.form.content);
-
-                this.$http.post('/api/v1/announcements', data, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.create.success'), 3500, 'green');
-
-                    router.go({name: 'announcements.show', params: {heading: this.form.heading}});
-                }).error(function (data, status, request) {
-                    if (422 === status) {
-                        for (var key in data) {
-                            if (data.hasOwnProperty(key)) {
-                                Materialize.toast(data[key], 3500, 'red');
-                            }
-                        }
-                    } else {
-                        Materialize.toast($.i18n.t('action.create.failed'), 3500, 'red');
-                    }
-                });
-            }
-        }
-    }),
-
-    show: Vue.extend({
-        template: require('../../template/admin/announcements/show.html'),
-
-        data: function () {
-            return {announcement: {}};
-        },
-
-        ready: function () {
-            this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
-                this.announcement = data;
-            }).error(function (data, status, request) {
-                if (404 === status) {
-                    Materialize.toast('404 Not Found', 3500, 'red');
-
-                    router.go({name: 'announcements.index'});
-                }
-            });
-        }
-    }),
-
-    edit: Vue.extend({
-        template: require('../../template/admin/announcements/edit.html'),
-
-        data: function () {
-            return {form: {}};
-        },
-
-        methods: {
-            update: function () {
-                var data = new FormData(),
-                    files = this.$els.formImage.files;
-
-                for(var key in files){
-                    if (files.hasOwnProperty(key)) {
-                        data.append('image['+key+']', files[key]);
-                    }
-                }
-
-                data.append('heading', this.form.heading);
-                data.append('link', this.form.link || '');
-                data.append('content', this.form.content);
-                data.append('_method', 'PATCH');
-
-                this.$http.post('/api/v1/announcements/' + this.form.id, data, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.update.success'), 3500, 'green');
-
-                    router.go({name: 'announcements.show', params: {heading: this.form.heading}});
-                }).error(function (data, status, request) {
-                    if (422 === status) {
-                        for (var key in data) {
-                            if (data.hasOwnProperty(key)) {
-                                Materialize.toast(data[key], 3500, 'red');
-                            }
-                        }
-                    } else {
-                        Materialize.toast($.i18n.t('action.update.failed'), 3500, 'red');
-                    }
-                });
+            data: function () {
+                return {
+                    announcement: {}
+                };
             },
 
-            destroyImage: function (index) {
-                this.$http.delete('/api/v1/images', {
-                    uploaded_at: this.form.images[index].uploaded_at,
-                    hash: this.form.images[index].hash
-                }, function (data, status, request) {
-                    Materialize.toast($.i18n.t('action.delete.success'), 3500, 'orange');
+            ready: function () {
+                var vm = this;
 
-                    this.form.images.splice(index, 1);
+                this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
+                    vm.$set('announcement', data);
+                }).error(function (data, status, request) {
+                    vm.httpErrorHandler(data, status, {name: 'announcements.index'});
                 });
             }
-        },
+        }),
 
-        ready: function () {
-            this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
-                this.form = data;
+        create: Vue.extend({
+            template: require('../../template/admin/announcements/create.html'),
 
-                setTimeout(function() {
-                    $('textarea').trigger('autoresize');
-                }, 50);
-            }).error(function (data, status, request) {
-                if (404 === status) {
-                    Materialize.toast('404 Not Found', 3500, 'red');
+            data: function () {
+                return {
+                    form: {}
+                };
+            },
 
-                    route.go({name: 'announcements.index'});
+            mixins: [mixin],
+
+            methods: {
+                store: function () {
+                    var vm = this;
+
+                    this.$http.post('/api/v1/announcements', this.getFormData(this.form, this.$els.formImage.files, false), function (data, status, request) {
+                        vm.httpSuccessHandler(data, status, {
+                            name: 'announcements.show',
+                            params: {heading: vm.form.heading}
+                        });
+                    }).error(function (data, status, request) {
+                        vm.httpErrorHandler(data, status);
+                    });
                 }
-            });
-        }
-    })
-};
+            }
+        }),
+
+        edit: Vue.extend({
+            template: require('../../template/admin/announcements/edit.html'),
+
+            data: function () {
+                return {
+                    form: {}
+                };
+            },
+
+            mixins: [mixin],
+
+            methods: {
+                update: function () {
+                    var vm = this;
+
+                    this.$http.post('/api/v1/announcements/' + this.form.id, this.getFormData(this.form, this.$els.formImage.files, true), function (data, status, request) {
+                        vm.httpSuccessHandler(data, status, {
+                            action: 'update',
+                            name: 'announcements.show',
+                            params: {heading: vm.form.heading}
+                        });
+                    }).error(function (data, status, request) {
+                        vm.httpErrorHandler(data, status);
+                    });
+                },
+
+                destroyImage: function (image) {
+                    var vm = this;
+
+                    this.$http.delete('/api/v1/images', {
+                        uploaded_at: image.uploaded_at,
+                        hash: image.hash
+                    }, function (data, status, request) {
+                        vm.httpSuccessHandler(data, status, {action: 'delete'});
+                        vm.form.images.$remove(image);
+                    });
+                }
+            },
+
+            ready: function () {
+                var vm = this;
+
+                this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
+                    vm.$set('form', data);
+                    async("$('textarea').trigger('autoresize')");
+                }).error(function (data, status, request) {
+                    vm.httpErrorHandler(data, status, {name: 'announcements.index'});
+                });
+            }
+        })
+    };
+})(Vue, routerComponents);

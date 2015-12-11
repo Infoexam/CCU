@@ -5,7 +5,7 @@
 
     <div class="flow-text wrap-text" v-if="announcement.link">
         <br>
-        <span>相關連結：</span><a href="{{ announcement.link }}" target="_blank">{{ announcement.link }}</a>
+        <span>相關連結：</span><a :href="announcement.link" target="_blank">{{ announcement.link }}</a>
     </div>
 </blockquote>
 

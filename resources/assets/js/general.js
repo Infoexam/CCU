@@ -26,7 +26,7 @@
             $(this).tooltip({delay: 50});
         });
 
-        $(document).arrive('input#input_text, textarea#textarea1', function() {
+        $(document).arrive('input[length], textarea[length]', function() {
             $(this).characterCounter();
         });
 
