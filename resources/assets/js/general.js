@@ -18,22 +18,27 @@
         });
 
         // https://github.com/uzairfarooq/arrive
+
         $(document).arrive('[data-i18n]', function() {
             $(this).i18n();
         });
 
+        // http://materializecss.com/dialogs.html#tooltip
         $(document).arrive('.tooltipped', function() {
             $(this).tooltip({delay: 50});
         });
 
+        // http://materializecss.com/forms.html#character-counter
         $(document).arrive('input[length], textarea[length]', function() {
             $(this).characterCounter();
         });
 
+        // http://materializecss.com/forms.html#select
         $(document).arrive('select', function() {
             $(this).material_select();
         });
 
+        // http://materializecss.com/media.html#materialbox
         $(document).arrive('.materialboxed', function() {
             $(this).materialbox();
         });
@@ -41,7 +46,12 @@
 })(jQuery);
 
 // add X-XSRF-TOKEN to xhr
+// http://laravel.com/docs/5.1/routing#csrf-protection
 Vue.http.headers.common['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
 
 var router = new VueRouter();
 var routerComponents = {};
+
+if (-1 !== window.location.pathname.indexOf('/admin')) {
+    routerComponents.exam = {};
+}

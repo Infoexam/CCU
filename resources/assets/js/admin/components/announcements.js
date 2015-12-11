@@ -159,7 +159,7 @@
 
                 this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
                     vm.$set('form', data);
-                    async("$('textarea').trigger('autoresize')");
+                    vm.async("$('textarea').trigger('autoresize')");
                 }).error(function (data, status, request) {
                     vm.httpErrorHandler(data, status, {name: 'announcements.index'});
                 });

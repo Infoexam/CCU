@@ -4,17 +4,31 @@
         <h4 class="center-align" data-i18n="auth.signIn"></h4>
 
         <div class="row">
-            <form id="sign-in-form" class="col s12" @submit.prevent="signIn()">
+            <form class="col s12">
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        <input id="username" v-model="username" type="text" class="validate" required>
+                        <input
+                            v-model="username"
+                            @keyup.enter="signIn()"
+                            id="username"
+                            type="text"
+                            class="validate"
+                            required
+                        >
                         <label for="username" data-i18n="auth.username"></label>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">enhanced_encryption</i>
-                        <input id="password" v-model="password" type="password" class="validate" required>
+                        <input
+                            v-model="password"
+                            @keyup.enter="signIn()"
+                            id="password"
+                            type="password"
+                            class="validate"
+                            required
+                        >
                         <label for="password" data-i18n="auth.password"></label>
                     </div>
                 </div>
@@ -23,6 +37,11 @@
     </div>
 
     <div class="modal-footer">
-        <button @click.prevent="signInSubmit()" class="btn waves-effect waves-light" type="submit" form="sign-in-form" data-i18n="auth.signIn"></button>
+        <button
+            @click.prevent="signIn()"
+            type="submit"
+            class="btn waves-effect waves-light"
+            data-i18n="auth.signIn"
+        ></button>
     </div>
 </div>

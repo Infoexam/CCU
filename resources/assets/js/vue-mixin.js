@@ -1,5 +1,3 @@
-routerComponents.exam = {};
-
 (function(Vue, $, Materialize){
     Vue.mixin({
         methods: {
@@ -8,7 +6,12 @@ routerComponents.exam = {};
                     case 200:
                         switch (options.action) {
                             case 'update':
-                                this.toastSuccess($.i18n.t('action.update.success')).routerGo(options);
+                                this.toastSuccess($.i18n.t('action.update.success'));
+
+                                if (options.hasOwnProperty('name')) {
+                                    this.routerGo(options);
+                                }
+
                                 return;
                             case 'delete':
                                 this.toast($.i18n.t('action.delete.success'), 'orange');
@@ -64,6 +67,25 @@ routerComponents.exam = {};
                 setTimeout(function() {
                     eval(expression);
                 }, 0);
+            },
+
+            clone: function (target) {
+                return JSON.parse(JSON.stringify(target));
+            },
+
+            empty: function (target) {
+                switch (typeof target) {
+                    case 'object':
+                        return (Object === target.constructor)
+                            ? (0 === Object.keys(target).length)
+                            : target.length;
+                    case 'string':
+                        return target.length;
+                    case 'number':
+                        return 0 === target;
+                    default:
+                        return false;
+                }
             }
         }
     });

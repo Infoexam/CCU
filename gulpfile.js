@@ -19,16 +19,16 @@ var elixir = require('laravel-elixir');
 
 elixir.config.sourcemaps = false;
 
-elixir(function(mix) {
+elixir(function (mix) {
     mix.scripts([
         'general.js',
-        'admin/main.js',
+        'vue-mixin.js',
         'admin/components',
         'admin/router.js'
     ], 'resources/assets/js/compiled/admin.js')
         .scripts([
             'general.js',
-            'student/main.js',
+            'vue-mixin.js',
             'student/components',
             'student/router.js'
         ], 'resources/assets/js/compiled/student.js')

@@ -19,7 +19,7 @@
                 <a class="btn-floating waves-effect waves-light red" @click="destroy($key)"><i class="material-icons">delete</i></a>
             </td>
         </tr>
-        <tr v-show="isEmptyObject(ipRules)">
+        <tr v-show="empty(ipRules)">
             <td colspan="6">尚無 IP 規則限制</td>
         </tr>
     </tbody>
