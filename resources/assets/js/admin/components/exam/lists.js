@@ -3,7 +3,10 @@ routerComponents.exam.lists = {
         template: require('../../template/admin/exam/lists/index.html') ,
 
         data: function () {
-            return {lists: [], pagination: {}};
+            return {
+                            lists: [] , 
+                            pagination: {}
+                        };
         },
 
         methods: {
@@ -25,7 +28,7 @@ routerComponents.exam.lists = {
                 this.$http.delete('/api/v1/exam/lists/' + id, function (data, status, request) {
                     Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
 
-                    this.papers.splice(index, 1);
+                    this.lists.splice(index, 1);
                 }).error(function (data, status, request) {
                     Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
                 });
