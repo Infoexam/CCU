@@ -135,6 +135,17 @@
                     };
                 },
 
+                methods: {
+                    destroy: function (question) {
+                        var vm = this;
+
+                        this.$http.delete('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + question.id, function (data, status, request) {
+                            vm.httpSuccessHandler(data, status, {action: 'delete'});
+                            vm.sets.questions.$remove(question);
+                        });
+                    }
+                },
+
                 created: function() {
                     var vm = this;
 
@@ -174,6 +185,13 @@
                         data.answers = answers;
 
                         vm.$set('question', data);
+                    }).error(function (data, status, request) {
+                        vm.httpErrorHandler(data, status, {
+                            name: 'exam.sets.questions.index',
+                            params: {
+                                id: vm.$route.params.id
+                            }
+                        });
                     });
                 }
             }),

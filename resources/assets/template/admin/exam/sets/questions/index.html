@@ -16,7 +16,7 @@
             <td>{{ question.multiple }}</td>
             <td>
                 <a v-link="{name: 'exam.sets.questions.edit', params: {id: sets.id, question: question.id}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
-                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(announcement)"><i class="material-icons">delete</i></a>
+                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(question)"><i class="material-icons">delete</i></a>
             </td>
         </tr>
     </tbody>
