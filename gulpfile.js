@@ -47,4 +47,10 @@ elixir(function (mix) {
     if ('true' === process.env.PHP_UNIT) {
         mix.phpUnit();
     }
+
+    if (('development' === process.env.APP_ENV) && (undefined !== process.env.FILESYSTEM_LOCAL_ROOT)) {
+        mix.copy('public/css', process.env.FILESYSTEM_LOCAL_ROOT + '/css');
+        mix.copy('public/js', process.env.FILESYSTEM_LOCAL_ROOT + '/js');
+        mix.copy('public/locales', process.env.FILESYSTEM_LOCAL_ROOT + '/locales');
+    }
 });

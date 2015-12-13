@@ -76,16 +76,10 @@ class Deploy extends Command
 
         $this->npmUpdate();
 
-        $scripts = File::files(public_path('js'));
-
-        if (false !== ($index = array_search(public_path('js/arrive.min.js'), $scripts))) {
-            array_splice($scripts, $index, 1);
-        }
-
         File::delete(array_merge(
             File::files(base_path('resources/assets/js/compiled')),
             File::files(public_path('css')),
-            $scripts
+            File::files(public_path('js'))
         ));
 
         $this->externalCommand('gulp --production');
