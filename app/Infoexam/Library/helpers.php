@@ -1,5 +1,22 @@
 <?php
 
+if (! function_exists('_asset')) {
+    /**
+     * Generate an asset path for the application.
+     *
+     * @param string $path
+     * @param bool|null $secure
+     * @return string
+     */
+    function _asset($path, $secure = null) {
+        if (! app()->environment('production') || empty($cdn = env('CDN_URL'))) {
+            return asset($path, $secure);
+        }
+
+        return "{$cdn}/{$path}";
+    }
+}
+
 if (! function_exists('img_src')) {
     /**
      * 取得圖片網址

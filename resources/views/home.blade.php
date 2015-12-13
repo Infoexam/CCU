@@ -23,5 +23,5 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/student.js') }}" defer></script>
+    <script src="{{ _asset('js/student.js') }}" defer></script>
 @endsection
