@@ -2,20 +2,38 @@
     <form class="col s12" @submit.prevent="store()">
         <div class="row">
             <div class="input-field col s12">
-                <input v-model="form.name" id="name" type="text" class="validate" length="255" autofocus required>
+                <input
+                    v-model="form.name"
+                    id="name"
+                    type="text"
+                    class="validate"
+                    length="255"
+                    maxlength="255"
+                    autofocus
+                    required
+                >
                 <label for="name">題庫名稱</label>
             </div>
 
             <div class="col s12">
                 <label for="category">題庫類別</label>
-                <select v-model="form.category_id" id="category" class="browser-default" required>
+                <select
+                    v-model="form.category_id"
+                    id="category"
+                    class="browser-default"
+                    required
+                >
                     <option v-for="category in categories" value="{{ category.id }}">{{ category.name }}</option>
                 </select>
             </div>
 
             <div class="col s12">
                 <p>
-                    <input v-model="form.enable" type="checkbox" id="enable">
+                    <input
+                        v-model="form.enable"
+                        id="enable"
+                        type="checkbox"
+                    >
                     <label for="enable">題庫啟用</label>
                 </p>
             </div>

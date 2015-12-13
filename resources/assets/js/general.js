@@ -49,8 +49,8 @@
 // http://laravel.com/docs/5.1/routing#csrf-protection
 Vue.http.headers.common['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
 
-var router = new VueRouter();
-var routerComponents = {};
+var router = new VueRouter(),
+    routerComponents = {};
 
 if (-1 !== window.location.pathname.indexOf('/admin')) {
     routerComponents.exam = {};

@@ -46,7 +46,7 @@
                 }
             },
 
-            ready: function () {
+            created: function () {
                 var vm = this;
 
                 this.$http.get('/api/v1/ip-rules', function (data, status, request) {

@@ -45,15 +45,15 @@
 
                     if ('string' === typeof url) {
                         this.$http.get(url, function (data, status, request) {
-                            vm.announcements = data.data;
+                            vm.$set('announcements', data.data);
 
                             delete data.data;
-                            vm.pagination = data;
+                            vm.$set('pagination', data);
                         });
                     }
                 },
 
-                destroyAnnouncement: function (announcement) {
+                destroy: function (announcement) {
                     var vm = this;
 
                     this.$http.delete('/api/v1/announcements/' + announcement.id, function (data, status, request) {
@@ -63,7 +63,7 @@
                 }
             },
 
-            ready: function () {
+            created: function () {
                 this.paginate();
             }
         }),
@@ -77,7 +77,7 @@
                 };
             },
 
-            ready: function () {
+            created: function () {
                 var vm = this;
 
                 this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {

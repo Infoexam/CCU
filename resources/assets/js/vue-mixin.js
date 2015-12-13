@@ -34,6 +34,8 @@
             },
 
             notFound: function (options) {
+                options.name = options.name || 'home';
+
                 this.toastError('Page Not Found!').routerGo(options);
             },
 
@@ -78,9 +80,9 @@
                     case 'object':
                         return (Object === target.constructor)
                             ? (0 === Object.keys(target).length)
-                            : target.length;
+                            : (0 === target.length);
                     case 'string':
-                        return target.length;
+                        return 0 === target.length;
                     case 'number':
                         return 0 === target;
                     default:

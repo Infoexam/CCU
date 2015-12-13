@@ -95,10 +95,12 @@ router.map({
 });
 
 router.afterEach(function (transition) {
-    var matches = transition.to.matched, i;
+    var matches = transition.to.matched,
+        except = ['home', 'not-found'],
+        i;
 
     for (i = 0, router.app.breadcrumbs = []; i < matches.length; ++i) {
-        if (matches[i].handler.hasOwnProperty('name') && 'home' !== matches[i].handler.name) {
+        if (matches[i].handler.hasOwnProperty('name') && -1 === except.indexOf(matches[i].handler.name)) {
             router.app.breadcrumbs.push({
                 name: matches[i].handler.name,
                 params: matches[i].params
