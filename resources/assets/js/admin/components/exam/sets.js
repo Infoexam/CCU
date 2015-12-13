@@ -197,11 +197,23 @@
             }),
 
             create: Vue.extend({
-                template: require('../../template/admin/exam/sets/questions/create.html')
+                template: require('../../template/admin/exam/sets/questions/create.html'),
+
+                data: function () {
+                    return {
+                        form: {}
+                    }
+                }
             }),
 
             edit: Vue.extend({
-                template: require('../../template/admin/exam/sets/questions/edit.html')
+                template: require('../../template/admin/exam/sets/questions/edit.html'),
+
+                data: function () {
+                    return {
+                        form: {}
+                    }
+                }
             })
         }
     };
