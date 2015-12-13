@@ -1,0 +1,37 @@
+<table>
+    <tbody>
+        <tr>
+            <th>題目</th>
+            <td>
+                <span>{{ question.content }}</span>
+                <img class="materialboxed" width="500" v-for="image in question.images" :src="image.link.original">
+            </td>
+        </tr>
+        <tr v-for="option in question.options">
+            <th>選項 {{ $index + 1 }}</th>
+            <td>
+                <span>{{ option.content }}</span>
+                <img class="materialboxed" width="500" v-for="image in option.images" :src="image.link.original">
+            </td>
+        </tr>
+        <tr>
+            <th>解析</th>
+            <td>
+                <span v-if="null === question.explanation">-</span>
+                <span v-else="">{{ question.explanation.content }}</span>
+            </td>
+        </tr>
+        <tr>
+            <th>難度</th>
+            <td>{{ question.difficulty.name }}</td>
+        </tr>
+        <tr>
+            <th>多選</th>
+            <td>{{ question.multiple }}</td>
+        </tr>
+        <tr>
+            <th>答案</th>
+            <td>{{ question.answers }}</td>
+        </tr>
+    </tbody>
+</table>

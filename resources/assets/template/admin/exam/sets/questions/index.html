@@ -1,0 +1,23 @@
+<h2>{{ sets.name }}</h2>
+
+<table class="striped highlight centered responsive-table">
+    <thead>
+        <tr>
+            <th>題目</th>
+            <th>難度</th>
+            <th>多選</th>
+            <th>編輯/刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="question in sets.questions">
+            <td><a v-link="{name: 'exam.sets.questions.show', params: {id: sets.id, question: question.id}}">{{ question.content }}</a></td>
+            <td>{{ question.difficulty.name }}</td>
+            <td>{{ question.multiple }}</td>
+            <td>
+                <a v-link="{name: 'exam.sets.questions.edit', params: {id: sets.id, question: question.id}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
+                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(announcement)"><i class="material-icons">delete</i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>

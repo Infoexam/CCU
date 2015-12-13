@@ -58,26 +58,6 @@
             }
         }),
 
-        show: Vue.extend({
-            template: require('../../template/admin/exam/sets/show.html'),
-
-            data: function() {
-                return {
-                    sets: {
-                        category: {}
-                    }
-                };
-            },
-
-            created: function() {
-                var vm = this;
-
-                this.$http.get('/api/v1/exam/sets/' + this.$route.params.id, function (data, status, request) {
-                    vm.$set('sets', data);
-                });
-            }
-        }),
-
         create: Vue.extend({
             template: require('../../template/admin/exam/sets/create.html'),
 
@@ -141,6 +121,70 @@
                     vm.$set('form', data);
                 });
             }
-        })
+        }),
+
+        questions: {
+            index: Vue.extend({
+                template: require('../../template/admin/exam/sets/questions/index.html'),
+
+                data: function() {
+                    return {
+                        sets: {
+                            questions: []
+                        }
+                    };
+                },
+
+                created: function() {
+                    var vm = this;
+
+                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions', function (data, status, request) {
+                        vm.$set('sets', data);
+                    });
+                }
+            }),
+
+            show: Vue.extend({
+                template: require('../../template/admin/exam/sets/questions/show.html'),
+
+                data: function() {
+                    return {
+                        question: {
+                            difficulty: {},
+                            explanation: null,
+                            answers: []
+                        }
+                    };
+                },
+
+                created: function() {
+                    var vm = this;
+
+                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + this.$route.params.question, function (data, status, request) {
+                        var answers = [];
+
+                        for (var i in data.options) {
+                            if (data.options.hasOwnProperty(i)) {
+                                if (data.answers.indexOf(data.options[i].id)) {
+                                    answers.push(parseInt(i) + 1);
+                                }
+                            }
+                        }
+
+                        data.answers = answers;
+
+                        vm.$set('question', data);
+                    });
+                }
+            }),
+
+            create: Vue.extend({
+                template: require('../../template/admin/exam/sets/questions/create.html')
+            }),
+
+            edit: Vue.extend({
+                template: require('../../template/admin/exam/sets/questions/edit.html')
+            })
+        }
     };
 })(Vue, routerComponents);
