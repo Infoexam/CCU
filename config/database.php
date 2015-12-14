@@ -75,6 +75,17 @@ return [
             'schema'   => 'public',
         ],
 
+        'receipt' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_RECEIPT_HOST', 'localhost'),
+            'database' => env('DB_RECEIPT_DATABASE', 'forge'),
+            'username' => env('DB_RECEIPT_USERNAME', 'forge'),
+            'password' => env('DB_RECEIPT_PASSWORD', ''),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
             'host'     => env('DB_HOST', 'localhost'),
