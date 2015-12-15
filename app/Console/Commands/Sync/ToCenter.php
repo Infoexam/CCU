@@ -28,6 +28,19 @@ class ToCenter extends Sync
         //
     }
 
+    /**
+     * 取得遠端資料
+     *
+     * @return array
+     */
+    protected function getRemoteData()
+    {
+        // TODO: Implement getRemoteData() method.
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $data
+     */
     protected function syncData($data)
     {
         // TODO: Implement syncData() method.

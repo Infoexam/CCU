@@ -60,6 +60,16 @@ class User extends Entity implements AuthenticatableContract
     }
 
     /**
+     * 取得該使用者的收據資訊
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
+    }
+
+    /**
      * 取得該使用者的性別
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

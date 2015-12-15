@@ -44,7 +44,7 @@ class Department extends Sync
      */
     public function handle()
     {
-        $departments = collect($this->getDepartments());
+        $departments = collect($this->getRemoteData());
 
         $this->departments = Category::getCategories('user.department');
 
@@ -54,6 +54,8 @@ class Department extends Sync
 
         Cache::forget('categoriesTable');
 
+        $this->printResult();
+
         return $this->analysis;
     }
 
@@ -62,7 +64,7 @@ class Department extends Sync
      *
      * @return array
      */
-    protected function getDepartments()
+    protected function getRemoteData()
     {
         return $this->trimData(DB::connection('elearn')->table('unit')->get());
     }
@@ -71,7 +73,7 @@ class Department extends Sync
     /**
      * 同步資料
      *
-     * @param $departments
+     * @param \Illuminate\Support\Collection $departments
      */
     protected function syncData($departments)
     {

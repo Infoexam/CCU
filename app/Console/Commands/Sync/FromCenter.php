@@ -52,7 +52,7 @@ class FromCenter extends Sync
      */
     public function handle()
     {
-        $accounts = collect($this->getAccounts());
+        $accounts = collect($this->getRemoteData());
 
         $this->accounts = User::with(['department', 'grade'])->get();
 
@@ -60,7 +60,8 @@ class FromCenter extends Sync
 
         $this->syncData($accounts);
 
-        dd($this->analysis);
+        $this->printResult();
+
         return $this->analysis;
     }
 
@@ -69,7 +70,7 @@ class FromCenter extends Sync
      *
      * @return array
      */
-    protected function getAccounts()
+    protected function getRemoteData()
     {
         $db = DB::connection('elearn')->table('std_info');
 
@@ -84,7 +85,7 @@ class FromCenter extends Sync
     /**
      * 同步資料
      *
-     * @param $accounts
+     * @param \Illuminate\Support\Collection $accounts
      */
     protected function syncData($accounts)
     {

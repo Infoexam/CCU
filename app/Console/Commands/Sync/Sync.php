@@ -36,17 +36,36 @@ abstract class Sync extends Command
     {
         foreach ($data as $datum) {
             foreach ($datum as $key => $value) {
-                $datum->$key = trim($value);
+                $datum->$key = (null === $value) ? null : trim($value);
             }
         }
 
         return $data;
     }
 
+    protected function printResult()
+    {
+        $this->getOutput()->writeln("<info>Total: {$this->analysis['total']}</info>");
+        $this->getOutput()->writeln(
+            "<info>Success: {$this->analysis['success']}</info> | " .
+            "<comment>Not Affect: {$this->analysis['notAffect']}</comment> | " .
+            "<error>Fail: {$this->analysis['fail']}</error>"
+        );
+        $this->getOutput()->writeln("<comment>Create: {$this->analysis['created']}/{$this->analysis['create']}</comment>");
+        $this->getOutput()->writeln("<comment>Update: {$this->analysis['updated']}/{$this->analysis['update']}</comment>");
+    }
+
+    /**
+     * 取得遠端資料
+     *
+     * @return array
+     */
+    abstract protected function getRemoteData();
+
     /**
      * 同步資料
      *
-     * @param $data
+     * @param \Illuminate\Support\Collection $data
      */
     abstract protected function syncData($data);
 }

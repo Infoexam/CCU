@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Console\Commands\Sync;
+
+use App\Infoexam\General\Category;
+use App\Infoexam\User\Receipt as ReceiptEntity;
+use App\Infoexam\User\User;
+use Carbon\Carbon;
+use DB;
+
+class Receipt extends Sync
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'sync:receipt';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = '更新收據資料';
+
+    /**
+     * Create a new command instance.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $receipts = collect($this->getRemoteData());
+
+        $this->analysis['total'] = $receipts->count();
+
+        $this->syncData($receipts);
+
+        $this->printResult();
+
+        return $this->analysis;
+    }
+
+    /**
+     * 取得收據資料
+     *
+     * @return array
+     */
+    protected function getRemoteData()
+    {
+        $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
+            ->where('receipt_date', '=', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
+            ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
+            ->where('acc5_cd', '=', '422Y-300')
+            ->get();
+
+        return $this->trimData($receipts);
+    }
+
+    /**
+     * 同步資料
+     *
+     * @param \Illuminate\Support\Collection $receipts
+     */
+    protected function syncData($receipts)
+    {
+        $this->analysis['create'] = $receipts->count();
+
+        foreach ($receipts as $receipt) {
+            /** @var User $user */
+            $user = User::where('username', '=', $this->getStudentId($receipt))->first();
+
+            if (null === $user) {
+                $this->userNotFound($user);
+
+                ++$this->analysis['fail'];
+            } else if (! ReceiptEntity::where('receipt_no', '=', $receipt->receipt_no)->exists()) {
+                $success = $user->receipts()->save(new ReceiptEntity([
+                    'receipt_no' => $receipt->receipt_no,
+                    'receipt_date' => $receipt->receipt_date,
+                    'category_id' => $this->getCategoryId($receipt),
+                ]));
+
+                $success ? ++$this->analysis['created'] : ++$this->analysis['fail'];
+            }
+        }
+    }
+
+    /**
+     * 取得該收據的使用者學號
+     *
+     * @param $receipt
+     * @return string
+     */
+    protected function getStudentId($receipt)
+    {
+        return mb_substr($receipt->payer_name, mb_strpos($receipt->payer_name, ':') + 1, 9);
+    }
+
+    protected function userNotFound($user)
+    {
+        // TODO: Log error
+    }
+
+    /**
+     * 取得對應類別id
+     *
+     * @param $receipt
+     * @return int
+     */
+    protected function getCategoryId($receipt)
+    {
+        switch (true) {
+            case str_contains($receipt->note, '學科'):
+                return Category::getCategories('exam.category', ['name' => 'theory', 'firstId' => true]);
+            case str_contains($receipt->note, '術科'):
+                return Category::getCategories('exam.category', ['name' => 'technology', 'firstId' => true]);
+            default :
+                return Category::getCategories('error', ['name' => 'general', 'firstId' => true]);
+        }
+    }
+}

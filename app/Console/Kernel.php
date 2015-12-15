@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Sync\FromCenter::class,
         \App\Console\Commands\Sync\ToCenter::class,
         \App\Console\Commands\Sync\Department::class,
+        \App\Console\Commands\Sync\Receipt::class,
     ];
 
     /**
@@ -27,6 +28,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->command('sync:receipt')->dailyAt('02:00')->withoutOverlapping();
     }
 }
