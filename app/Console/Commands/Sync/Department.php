@@ -20,7 +20,7 @@ class Department extends Sync
      *
      * @var string
      */
-    protected $description = '更新系所代碼資料';
+    protected $description = '更新本地資料庫的系所代碼資料';
 
     /**
      * Local database departments.

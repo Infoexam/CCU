@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\Sync;
 
-class ToCenter extends Sync
+class Certificate extends Sync
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sync:to-center {student_id? : 學號}';
+    protected $signature = 'sync:certificate {student_id? : 學號}';
 
     /**
      * The console command description.

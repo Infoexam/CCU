@@ -10,21 +10,21 @@ use Hash;
 use Illuminate\Support\Collection;
 use stdClass;
 
-class FromCenter extends Sync
+class Account extends Sync
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sync:from-center {student_id? : 學號}';
+    protected $signature = 'sync:account {student_id? : 學號}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '將帳號資料同步到本地資料庫';
+    protected $description = '將中心的帳號資料同步到本地資料庫';
 
     /**
      * Local database accounts.

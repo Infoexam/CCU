@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Deploy::class,
-        \App\Console\Commands\Sync\FromCenter::class,
-        \App\Console\Commands\Sync\ToCenter::class,
+        \App\Console\Commands\Sync\Account::class,
+        \App\Console\Commands\Sync\Certificate::class,
         \App\Console\Commands\Sync\Department::class,
         \App\Console\Commands\Sync\Receipt::class,
     ];
