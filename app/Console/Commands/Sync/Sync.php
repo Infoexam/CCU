@@ -43,6 +43,11 @@ abstract class Sync extends Command
         return $data;
     }
 
+    /**
+     * 輸出結果
+     *
+     * @return void
+     */
     protected function printResult()
     {
         $this->getOutput()->writeln("<info>Total: {$this->analysis['total']}</info>");
