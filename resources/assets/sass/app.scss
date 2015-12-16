@@ -14,17 +14,6 @@ main {
   margin-top: 20px !important;
 }
 
-.cursor {
-  &-pointer {
-    cursor: pointer;
-    user-select: none;
-  }
-}
-
-.collapsible-accordion {
-  background-color: #FFF;
-}
-
 .dropdown-button {
   display: inline-block;
 }
@@ -44,10 +33,24 @@ main {
 }
 
 .breadcrumb {
-  &:before {
-    color: #000 !important;  
-  }
+  display: inline-block;
+  vertical-align: top;
   color: #000 !important;
+  font-size: 1.5em;
+  &:before {
+    color: #000 !important;
+  }
+  &:nth-child(2) {
+    &:before {
+      content:"" !important;
+    }
+  }
+}
+
+.breadcrumb-navi {
+  font-size: 2.5em;
+  height: 64px;
+  line-height: 64px;
 }
 
 @media screen and (max-width: 600px) {
