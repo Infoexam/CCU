@@ -26,7 +26,7 @@ main {
 }
 
 .dropdown-button {
-    display: inline-block;
+  display: inline-block;
 }
 
 .wrap-text {
@@ -34,10 +34,30 @@ main {
   white-space: pre-wrap !important;
 }
 
-.breadnav {
-    box-shadow: none;
+.nowrap-text {
+  word-wrap: unset !important;
+  white-space: nowrap !important;
 }
 
-.breadcrumbs {
-    
+.breadnav {
+  box-shadow: none;
+}
+
+.breadcrumb {
+  &:before {
+    color: #000 !important;  
+  }
+  color: #000 !important;
+}
+
+@media screen and (max-width: 600px) {
+    .reponsive-heading-width {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 992px) {
+    .reponsive-heading-width {
+        width: 50%;
+    }
 }
