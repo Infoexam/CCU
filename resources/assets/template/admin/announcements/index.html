@@ -14,10 +14,10 @@
             <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
             <td>
                 <a v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
-                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroyAnnouncement(announcement)"><i class="material-icons">delete</i></a>
+                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(announcement)"><i class="material-icons">delete</i></a>
             </td>
         </tr>
-        <tr v-show="! announcements.length">
+        <tr v-show="empty(announcements)">
             <td colspan="5">尚無公告</td>
         </tr>
     </tbody>
