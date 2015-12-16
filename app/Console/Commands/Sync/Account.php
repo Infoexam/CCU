@@ -7,7 +7,6 @@ use App\Infoexam\User\Certificate;
 use App\Infoexam\User\User;
 use DB;
 use Hash;
-use Illuminate\Support\Collection;
 use stdClass;
 
 class Account extends Sync
@@ -52,7 +51,7 @@ class Account extends Sync
      */
     public function handle()
     {
-        $accounts = collect($this->getRemoteData());
+        $accounts = $this->getRemoteData();
 
         $this->accounts = User::with(['department', 'grade'])->get();
 
@@ -66,9 +65,9 @@ class Account extends Sync
     }
 
     /**
-     * 取得中心帳號
+     * 取得中心帳號資料
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getRemoteData()
     {
@@ -79,20 +78,21 @@ class Account extends Sync
             $db->where('std_no', '=', $this->argument('student_id'));
         }
 
-        return $this->trimData($db->get());
+        return collect($this->trimData($db->get()));
     }
 
     /**
      * 同步資料
      *
      * @param \Illuminate\Support\Collection $accounts
+     * @return void
      */
     protected function syncData($accounts)
     {
         $groups = $this->groupAccounts($accounts);
 
-        $this->updateAccounts($groups->get('needUpdate'));
-        $this->createAccounts($groups->get('notExists'));
+        $this->updateAccounts($groups['needUpdate']);
+        $this->createAccounts($groups['notExists']);
 
         $this->analysis['success'] = $this->analysis['created'] + $this->analysis['updated'];
     }
@@ -101,7 +101,7 @@ class Account extends Sync
      * 將帳號分成 不存在 和 需更新 兩個群組
      *
      * @param $accounts
-     * @return Collection
+     * @return array
      */
     protected function groupAccounts($accounts)
     {
@@ -121,7 +121,7 @@ class Account extends Sync
             }
         }
 
-        return collect($groups);
+        return $groups;
     }
 
     /**
@@ -135,10 +135,10 @@ class Account extends Sync
     {
         switch (false) {
             //case Hash::check($account->user_pass, $user->getAttribute('password')): // 極花效能
-            case $user->getAttribute('name') === trim($account->name):
-            case $user->getAttribute('email') === trim($account->email):
-            case $user->getAttribute('class') === trim($account->now_class):
-            case $user->getRelation('department')->getAttribute('name') === trim($account->deptcd):
+            case $user->getAttribute('name') === $account->name:
+            case $user->getAttribute('email') === $account->email:
+            case $user->getAttribute('class') === $account->now_class:
+            case $user->getRelation('department')->getAttribute('name') === $account->deptcd:
             case isset($this->gradesTable[$account->now_grade]):
             case $user->getRelation('grade')->getAttribute('name') === ($this->gradesTable[$account->now_grade]):
                 return true;
@@ -151,15 +151,18 @@ class Account extends Sync
      * 創建帳號
      *
      * @param array $accounts
+     * @return void
      */
     protected function createAccounts(array $accounts = [])
     {
         $this->analysis['create'] = count($accounts);
 
+        $categories = Category::getCategories('exam.category');
+
         foreach ($accounts as $account) {
             $user = User::create(array_merge(['username' => $account->std_no], $this->commonFields($account)));
 
-            foreach (Category::getCategories('exam.category') as $category) {
+            foreach ($categories as $category) {
                 $user->certificate()->save(new Certificate(['category_id' => $category->getAttribute('id')]));
             }
 
@@ -171,15 +174,16 @@ class Account extends Sync
      * 更新帳號資料
      *
      * @param array $accounts
+     * @return void
      */
     protected function updateAccounts(array $accounts = [])
     {
         $this->analysis['update'] = count($accounts);
 
         foreach ($accounts as $account) {
-            $success = User::where('username', '=', $account->std_no)->update($this->commonFields($account));
-
-            $success ? ++$this->analysis['updated'] : ++$this->analysis['fail'];
+            User::where('username', '=', $account->std_no)->update($this->commonFields($account))
+                ? ++$this->analysis['updated']
+                : ++$this->analysis['fail'];
         }
     }
 

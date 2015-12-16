@@ -40,11 +40,11 @@ class Department extends Sync
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return array
      */
     public function handle()
     {
-        $departments = collect($this->getRemoteData());
+        $departments = $this->getRemoteData();
 
         $this->departments = Category::getCategories('user.department');
 
@@ -62,11 +62,11 @@ class Department extends Sync
     /**
      * 取得系所代碼資料
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getRemoteData()
     {
-        return $this->trimData(DB::connection('elearn')->table('unit')->get());
+        return collect($this->trimData(DB::connection('elearn')->table('unit')->get()));
     }
 
 
@@ -74,6 +74,7 @@ class Department extends Sync
      * 同步資料
      *
      * @param \Illuminate\Support\Collection $departments
+     * @return void
      */
     protected function syncData($departments)
     {

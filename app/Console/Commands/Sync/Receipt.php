@@ -35,11 +35,11 @@ class Receipt extends Sync
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return array
      */
     public function handle()
     {
-        $receipts = collect($this->getRemoteData());
+        $receipts = $this->getRemoteData();
 
         $this->analysis['total'] = $receipts->count();
 
@@ -53,7 +53,7 @@ class Receipt extends Sync
     /**
      * 取得收據資料
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     protected function getRemoteData()
     {
@@ -63,13 +63,14 @@ class Receipt extends Sync
             ->where('acc5_cd', '=', '422Y-300')
             ->get();
 
-        return $this->trimData($receipts);
+        return collect($this->trimData($receipts));
     }
 
     /**
      * 同步資料
      *
      * @param \Illuminate\Support\Collection $receipts
+     * @return void
      */
     protected function syncData($receipts)
     {
@@ -81,16 +82,14 @@ class Receipt extends Sync
 
             if (null === $user) {
                 $this->userNotFound($user);
-
-                ++$this->analysis['fail'];
             } else if (! ReceiptEntity::where('receipt_no', '=', $receipt->receipt_no)->exists()) {
-                $success = $user->receipts()->save(new ReceiptEntity([
+                $user->receipts()->save(new ReceiptEntity([
                     'receipt_no' => $receipt->receipt_no,
                     'receipt_date' => $receipt->receipt_date,
                     'category_id' => $this->getCategoryId($receipt),
-                ]));
-
-                $success ? ++$this->analysis['created'] : ++$this->analysis['fail'];
+                ]))
+                    ? ++$this->analysis['created']
+                    : ++$this->analysis['fail'];
             }
         }
     }
@@ -108,6 +107,8 @@ class Receipt extends Sync
 
     protected function userNotFound($user)
     {
+        ++$this->analysis['fail'];
+
         // TODO: Log error
     }
 

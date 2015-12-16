@@ -63,7 +63,7 @@ abstract class Sync extends Command
     /**
      * 取得遠端資料
      *
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     abstract protected function getRemoteData();
 
@@ -71,6 +71,7 @@ abstract class Sync extends Command
      * 同步資料
      *
      * @param \Illuminate\Support\Collection $data
+     * @return void
      */
     abstract protected function syncData($data);
 }
