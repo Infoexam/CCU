@@ -2,7 +2,9 @@
     <h3 class="card-content">{{ announcement.heading }}</h3>
     
     <div class="card-content">
-        <pre class="wrap-text">{{ announcement.content }}</pre>
+        <blockquote>
+            <pre class="wrap-text">{{ announcement.content }}</pre>
+        </blockquote>
     </div>
 
     <div class="card-content wrap-text" v-if="announcement.link">
