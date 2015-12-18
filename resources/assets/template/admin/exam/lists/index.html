@@ -1,6 +1,6 @@
 <table class = "striped highlight centered responsive-table">
 	<thead>
-		<tr>
+		<tr class="reponsive-table-heading">
 			<th>Code</th>
 			<th>考試起始時間</th>
 			<th>考試時間</th>
@@ -14,6 +14,7 @@
 		</tr>
 	</thead>	
 	<tbody>
+<<<<<<< Updated upstream
 		<tr v-for = "list in lists">
 			<td><a v-link="{name: 'exam.lists.show', params: {id: list.code}}">{{ list.code }}</a></td>
 			<td>{{list.began_at}}</td>
@@ -25,6 +26,18 @@
 			<td>{{list.subject.name}}</td>
 			<td><a  class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
 			 <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
+=======
+		<tr class="reponsive-table-body" v-for = "set in sets">
+			<td><a v-link="{name: 'exam.lists.show', params: {id: set.code}}">{{ set.code }}</a></td>
+			<td>{{set.began_at}}</td>
+			<td>{{set.duration}}</td>
+			<td>{{set.room}}</td>
+			<td>{{set.std_maximum_num}}</td>
+			<td>{{set.std_apply_num}}</td>
+			<td>{{set.allow_apply}}</td>
+			<td>{{set.apply.name}}</td>
+			<td>{{set.subject.name}}</td>
+>>>>>>> Stashed changes
 		</tr>
 	</tbody>
 </table>

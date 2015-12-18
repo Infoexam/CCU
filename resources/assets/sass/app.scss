@@ -80,23 +80,41 @@ footer {
   line-height: 64px;
   vertical-align: middle;
   transform: rotate(90deg);
+  user-select: none;
+}
+
+.reponsive-table-heading {
+  th {
+    word-wrap: unset !important;
+    white-space: nowrap !important;
+  }
 }
 
 @media screen and (max-width: 600px) {
-  .reponsive-heading-width {
-    width: 100%;
+  .reponsive-table-heading {
+    th {
+      height: 3em;
+    }
   }
-  .reponsive-heading-height {
-    height: 3em;
+  .reponsive-table-body {
+    width: 100%;
+    td {
+      height: 3em;
+    }
   }
 }
 
 @media screen and (min-width: 601px) and (max-width: 992px) {
-  .reponsive-heading-width {
-    width: 50%;
+  .reponsive-table-heading {
+    th {
+      height: 5em;
+    }
   }
-  .reponsive-heading-height {
-    height: 5em;
+  .reponsive-table-body {
+    width: 50%;
+    td {
+      height: 5em;
+    }
   }
 }
 
