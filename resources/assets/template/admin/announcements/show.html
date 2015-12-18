@@ -1,9 +1,9 @@
 <div class="card">
-    <h3 class="card-content">{{ announcement.heading }}</h3>
+    <h4 class="card-content">{{ announcement.heading }}</h4>
     
     <div class="card-content">
         <blockquote>
-            <pre class="wrap-text">{{ announcement.content }}</pre>
+            <p class="wrap-text">{{ announcement.content }}</p>
         </blockquote>
     </div>
 
@@ -15,7 +15,7 @@
     
     <div class="card-content row">
         <div class="col s12 m6 l6" v-for="image in announcement.images">
-            <img class="materialboxed" width="500" :src="image.link.original">
+            <img class="materialboxed" width="100%" :src="image.link.original">
         </div>
     </div>
 </div>

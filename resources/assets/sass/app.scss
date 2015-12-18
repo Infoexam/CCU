@@ -45,11 +45,11 @@ main {
 
 .breadcrumb {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
   color: #0d47a1 !important;
   font-size: 1.5em;
   &:before {
-    color: #0d47a1 !important;
+    color: #000 !important;
   }
   &:nth-child(2) {
     &:before {
@@ -62,6 +62,8 @@ main {
   font-size: 2.5em;
   height: 64px;
   line-height: 64px;
+  vertical-align: middle;
+  transform: rotate(90deg);
 }
 
 @media screen and (max-width: 600px) {
