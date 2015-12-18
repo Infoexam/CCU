@@ -55,6 +55,10 @@ router.map({
             '/:id': {
                 name: 'exam.papers.show',
                 component: routerComponents.exam.papers.show
+            },
+            '/:id/edit' : {
+                name:'exam.papers.edit',
+                component:routerComponents.exam.papers.edit
             }
         }
     },
@@ -69,6 +73,10 @@ router.map({
             '/:id': {
                 name: 'exam.lists.show',
                 component: routerComponents.exam.lists.show
+            },
+            '/:id/edit' : {
+                name:'exam.lists.edit',
+                component: routerComponents.exam.lists.edit
             }
         }
     },
