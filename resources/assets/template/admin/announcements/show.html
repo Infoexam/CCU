@@ -9,8 +9,8 @@
 
     <div class="card-content wrap-text">
         <span v-if="announcement.link">相關連結：<a :href="announcement.link" target="_blank">{{ announcement.link }}</a></span>
-        <span>最後更新：{{ announcement.updated_at.human }}</span>
-        <span>發布時間：{{ announcement.created_at.human }}</span>
+        <span>最後更新：{{ announcement.updated_at.time }}</span>
+        <span>發布時間：{{ announcement.created_at.time }}</span>
     </div>
     
     <div class="card-content row">
