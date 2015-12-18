@@ -23,7 +23,7 @@
 			<td>{{list.allow_apply}}</td>
 			<td>{{list.apply.name}}</td>
 			<td>{{list.subject.name}}</td>
-			<td><a  class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+			<td><a  v-link="{name: 'exam.lists.edit', params: {id: list.code}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
 			 <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
 		</tr>
 	</tbody>

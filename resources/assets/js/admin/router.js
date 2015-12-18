@@ -52,6 +52,10 @@ router.map({
             '/': {
                 component: routerComponents.exam.papers.index
             },
+            'create': {
+                name: 'exam.papers.create' , 
+                component: routerComponents.exam.papers.create
+            },
             '/:id': {
                 name: 'exam.papers.show',
                 component: routerComponents.exam.papers.show
