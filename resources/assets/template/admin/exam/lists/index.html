@@ -1,45 +1,32 @@
 <table class = "striped highlight centered responsive-table">
-	<thead>
-		<tr class="reponsive-table-heading">
-			<th>Code</th>
-			<th>考試起始時間</th>
-			<th>考試時間</th>
-			<th>考試地點</th>
-			<th>報名人數</th>
-			<th>Allow_apply</th>
-			<th>Apply_name</th>
-			<th>Subject_name</th>
-			<th>編輯</th>
-			<th>刪除</th>
-		</tr>
-	</thead>	
-	<tbody>
-<<<<<<< Updated upstream
-		<tr v-for = "list in lists">
-			<td><a v-link="{name: 'exam.lists.show', params: {id: list.code}}">{{ list.code }}</a></td>
-			<td>{{list.began_at}}</td>
-			<td>{{list.duration}}</td>
-			<td>{{list.room}}</td>
-			<td>{{list.std_apply_num}}/{{list.std_maximum_num}}</td>
-			<td>{{list.allow_apply}}</td>
-			<td>{{list.apply.name}}</td>
-			<td>{{list.subject.name}}</td>
-			<td><a  class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
-			 <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
-=======
-		<tr class="reponsive-table-body" v-for = "set in sets">
-			<td><a v-link="{name: 'exam.lists.show', params: {id: set.code}}">{{ set.code }}</a></td>
-			<td>{{set.began_at}}</td>
-			<td>{{set.duration}}</td>
-			<td>{{set.room}}</td>
-			<td>{{set.std_maximum_num}}</td>
-			<td>{{set.std_apply_num}}</td>
-			<td>{{set.allow_apply}}</td>
-			<td>{{set.apply.name}}</td>
-			<td>{{set.subject.name}}</td>
->>>>>>> Stashed changes
-		</tr>
-	</tbody>
+    <thead>
+        <tr class="reponsive-table-heading">
+            <th>Code</th>
+            <th>考試起始時間</th>
+            <th>考試時間</th>
+            <th>考試地點</th>
+            <th>報名人數</th>
+            <th>Allow_apply</th>
+            <th>Apply_name</th>
+            <th>Subject_name</th>
+            <th>編輯</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="list in lists" class="reponsive-table-body">
+            <td><a v-link="{name: 'exam.lists.show', params: {id: list.code}}">{{ list.code }}</a></td>
+            <td>{{list.began_at}}</td>
+            <td>{{list.duration}}</td>
+            <td>{{list.room}}</td>
+            <td>{{list.std_apply_num}}/{{list.std_maximum_num}}</td>
+            <td>{{list.allow_apply}}</td>
+            <td>{{list.apply.name}}</td>
+            <td>{{list.subject.name}}</td>
+            <td><a  class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
+        </tr>
+    </tbody>
 </table>
 
 <ul class="pagination center-align">
