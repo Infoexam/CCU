@@ -42,6 +42,17 @@
         $(document).arrive('.materialboxed', function() {
             $(this).materialbox();
         });
+
+        // 行動版點擊選單列連結時，需觸發移除覆蓋事件
+        $(document).on('click', '#nav-mobile-menu a[href]', function () {
+            var overlay = document.getElementById('sidenav-overlay');
+
+            if (null !== overlay) {
+                overlay.click();
+
+                $('#nav-mobile-menu a.active:not([href])').click();
+            }
+        });
     });
 })(jQuery);
 
