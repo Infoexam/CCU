@@ -23,7 +23,7 @@ class Account extends Sync
      *
      * @var string
      */
-    protected $description = '將中心的帳號資料同步到本地資料庫';
+    protected $description = '將中心帳號資料同步到本地資料庫';
 
     /**
      * Local database accounts.

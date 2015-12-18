@@ -19,7 +19,7 @@ class Certificate extends Sync
      *
      * @var string
      */
-    protected $description = '將測驗資料同步到中心資料庫';
+    protected $description = '將本地測驗資料同步到中心資料庫';
 
     /**
      * 本地資料庫帳號資料
