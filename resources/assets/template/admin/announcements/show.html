@@ -3,19 +3,19 @@
     
     <div class="card-content">
         <blockquote>
-            <p class="wrap-text">{{ announcement.content }}</p>
+            <p class="flow-text wrap-text">{{ announcement.content }}</p>
         </blockquote>
     </div>
 
     <div class="card-content wrap-text">
         <span v-if="announcement.link">相關連結：<a :href="announcement.link" target="_blank">{{ announcement.link }}</a></span>
-        <span>最後更新：{{ announcement.updated_at.time }}</span>
-        <span>發布時間：{{ announcement.created_at.time }}</span>
+        <span>最後更新：{{ announcement.updated_at.human }}</span>
+        <span>發布時間：{{ announcement.created_at.human }}</span>
     </div>
     
     <div class="card-content row">
         <div class="col s12 m6 l6" v-for="image in announcement.images">
-            <img class="materialboxed" width="100%" :src="image.link.original">
+            <img class="materialboxed show-img" :src="image.link.original">
         </div>
     </div>
 </div>

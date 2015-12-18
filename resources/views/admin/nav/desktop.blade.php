@@ -1,7 +1,7 @@
 <nav class="indigo darken-1">
     <div class="nav-wrapper container indigo darken-1">
         <!-- Logo -->
-        <a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>
+        <!--<a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>-->
 
         <!-- Mobile Menu Icon -->
         <a data-activates="nav-mobile-menu" class="button-collapse cursor-pointer">

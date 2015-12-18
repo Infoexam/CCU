@@ -21,6 +21,15 @@ main {
   }
 }
 
+.side-nav {
+  a {
+    height: 44px;
+  }
+  .collapsible li ,a {
+    line-height: 44px;
+  }
+}
+
 .collapsible-accordion {
   background-color: #FFF;
 }
@@ -82,4 +91,9 @@ main {
   .reponsive-heading-height {
     height: 5em;
   }
+}
+
+.show-img {
+  width: 100%;
+  padding: 0.4rem 0.75rem;
 }
