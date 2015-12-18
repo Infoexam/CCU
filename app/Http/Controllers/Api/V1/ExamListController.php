@@ -94,7 +94,7 @@ class ExamListController extends Controller
         ]);
 
         try {
-            $this->storeOrUpdate($list, $request, [
+            parent::storeOrUpdate($list, $request, [
                 'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id', 'std_maximum_num'
             ]);
 
