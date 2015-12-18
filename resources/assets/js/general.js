@@ -27,6 +27,9 @@
         $(document).arrive('.tooltipped', function() {
             $(this).tooltip({delay: 50});
         });
+        $(document).leave('.tooltipped', function() {
+            $(this).tooltip('remove');
+        });
 
         // http://materializecss.com/forms.html#character-counter
         $(document).arrive('input[length], textarea[length]', function() {
