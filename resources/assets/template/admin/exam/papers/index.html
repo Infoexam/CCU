@@ -15,7 +15,7 @@
             <td>{{ paper.remark }}</td>
             <td><i class="material-icons" :class="[paper.automatic ? 'green-text' : 'red-text']">{{ paper.automatic ? 'check' : 'close' }}</i></td>
             <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">edit</i></a></td>
-            <td><a class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+            <td><a v-link="{name: 'exam.papers.edit', params: {id: paper.id}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
             <td><a class="btn-floating waves-effect waves-light red" @click="destroy(paper.id, $index)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr v-show="! papers.length">

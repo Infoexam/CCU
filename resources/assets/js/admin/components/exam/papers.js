@@ -53,6 +53,50 @@ routerComponents.exam.papers = {
                     this.$set('papers' , data);
             });
         }
+    }),
+
+    edit: Vue.extend({
+        template: require('../../template/admin/exam/papers/edit.html'),
+
+        data: function () {
+            return {
+                form: {},
+                categories: []
+            };
+        },
+
+        methods: {
+            patch: function () {
+                
+                this.$http.patch('/api/v1/exam/papers/' + this.$route.params.id, this.form, function (data, status, request) {
+                    Materialize.toast($.i18n.t('action.update.success'), 3500, 'green');
+
+                    router.go({name: 'exam.papers.index'});
+                }).error(function (data, status, request) {
+                    if (422 === status) {
+                        for (var key in data) {
+                            if (data.hasOwnProperty(key)) {
+                                Materialize.toast(data[key], 3500, 'red');
+                            }
+                        }
+                    } else {
+                        Materialize.toast($.i18n.t('action.update.failed'), 3500, 'red');
+                    }
+                });
+            }
+        },
+
+        ready: function() {
+            this.$http.get('/api/v1/exam/papers/' + this.$route.params.id, function (data, status, request) {
+                
+
+                this.$set('form', data);
+            });
+
+            this.$http.get('/api/v1/categories/exam-category', function (data, status, request) {
+                this.$set('categories', data);
+            });
+        }
     })
 
 };

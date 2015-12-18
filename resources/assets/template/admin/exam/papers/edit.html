@@ -1,0 +1,29 @@
+<div class="row">
+    <form class="col s12" @submit.prevent="patch()">
+        <div class="row">
+
+            <div class="input-field col s12">
+                <input v-model="form.id" id="id" type="text" class="validate" length="255" autofocus required>
+                <label class="active" for="id">試卷ID</label>
+            </div>
+
+            <div class="input-field col s12">
+                <input v-model="form.name" id="name" type="text" class="validate" length="255" autofocus required>
+                <label class="active" for="name">試卷名稱</label>
+            </div>
+
+            <div class="input-field col s12">
+                <input v-model="form.remark" id="remark" type="text" class="validate" length="255" autofocus required>
+                <label class="active" for="remark">試卷備註</label>
+            </div>
+
+        </div>
+
+        <div class="center-align">
+            <button class="btn waves-effect waves-light" type="submit">
+                <span>更新</span>
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
