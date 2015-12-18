@@ -73,7 +73,10 @@
 
             data: function () {
                 return {
-                    announcement: {}
+                    announcement: {
+                        created_at: {},
+                        updated_at: {}
+                    }
                 };
             },
 
