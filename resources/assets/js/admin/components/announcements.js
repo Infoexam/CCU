@@ -44,11 +44,11 @@
                     }
 
                     if ('string' === typeof url) {
-                        this.$http.get(url, function (data, status, request) {
-                            vm.$set('announcements', data.data);
+                        this.$http.get(url).then(function (response) {
+                            vm.$set('announcements', response.data.data);
 
-                            delete data.data;
-                            vm.$set('pagination', data);
+                            delete response.data.data;
+                            vm.$set('pagination', response.data);
                         });
                     }
                 },
@@ -56,8 +56,8 @@
                 destroy: function (announcement) {
                     var vm = this;
 
-                    this.$http.delete('/api/v1/announcements/' + announcement.id, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {action: 'delete'});
+                    this.$http.delete('/api/v1/announcements/' + announcement.id).then(function (response) {
+                        vm.httpSuccessHandler(response, {action: 'delete'});
                         vm.announcements.$remove(announcement);
                     });
                 }
@@ -83,10 +83,10 @@
             created: function () {
                 var vm = this;
 
-                this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
-                    vm.$set('announcement', data);
-                }).error(function (data, status, request) {
-                    vm.httpErrorHandler(data, status, {name: 'announcements.index'});
+                this.$http.get('/api/v1/announcements/' + this.$route.params.heading).then(function (response) {
+                    vm.$set('announcement', response.data);
+                }, function (response) {
+                    vm.httpErrorHandler(response, {name: 'announcements.index'});
                 });
             }
         }),
@@ -106,13 +106,13 @@
                 store: function () {
                     var vm = this;
 
-                    this.$http.post('/api/v1/announcements', this.getFormData(this.form, this.$els.formImage.files, false), function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {
+                    this.$http.post('/api/v1/announcements', this.getFormData(this.form, this.$els.formImage.files, false)).then(function (response) {
+                        vm.httpSuccessHandler(response, {
                             name: 'announcements.show',
                             params: {heading: vm.form.heading}
                         });
-                    }).error(function (data, status, request) {
-                        vm.httpErrorHandler(data, status);
+                    }, function (response) {
+                        vm.httpErrorHandler(response);
                     });
                 }
             }
@@ -133,14 +133,14 @@
                 update: function () {
                     var vm = this;
 
-                    this.$http.post('/api/v1/announcements/' + this.form.id, this.getFormData(this.form, this.$els.formImage.files, true), function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {
+                    this.$http.post('/api/v1/announcements/' + this.form.id, this.getFormData(this.form, this.$els.formImage.files, true)).then(function (response) {
+                        vm.httpSuccessHandler(response, {
                             action: 'update',
                             name: 'announcements.show',
                             params: {heading: vm.form.heading}
                         });
-                    }).error(function (data, status, request) {
-                        vm.httpErrorHandler(data, status);
+                    }, function (response) {
+                        vm.httpErrorHandler(response);
                     });
                 },
 
@@ -150,8 +150,8 @@
                     this.$http.delete('/api/v1/images', {
                         uploaded_at: image.uploaded_at,
                         hash: image.hash
-                    }, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {action: 'delete'});
+                    }).then(function (response) {
+                        vm.httpSuccessHandler(response, {action: 'delete'});
                         vm.form.images.$remove(image);
                     });
                 }
@@ -160,11 +160,11 @@
             ready: function () {
                 var vm = this;
 
-                this.$http.get('/api/v1/announcements/' + this.$route.params.heading, function (data, status, request) {
-                    vm.$set('form', data);
+                this.$http.get('/api/v1/announcements/' + this.$route.params.heading).then(function (response) {
+                    vm.$set('form', response.data);
                     vm.async("$('textarea').trigger('autoresize')");
-                }).error(function (data, status, request) {
-                    vm.httpErrorHandler(data, status, {name: 'announcements.index'});
+                }, function (response) {
+                    vm.httpErrorHandler(response, {name: 'announcements.index'});
                 });
             }
         })

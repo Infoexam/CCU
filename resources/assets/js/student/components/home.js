@@ -16,10 +16,10 @@ routerComponents.home = Vue.extend({
                 this.$http.post('/api/v1/auth/sign-in', {
                     username: this.username,
                     password: this.password
-                }, function (data, status, request) {
-                    window.location.href = data.Intended || '/';
-                }).error(function (data, status, request) {
-                    vm.toastError($.i18n.t((422 === status) ? 'auth.failed' : 'tokenMismatch'));
+                }).then(function (response) {
+                    window.location.href = response.data.Intended || '/';
+                }, function (response) {
+                    vm.toastError($.i18n.t((422 === response.status) ? 'auth.failed' : 'tokenMismatch'));
                 });
             }
         }

@@ -4,38 +4,39 @@ routerComponents.exam.lists = {
 
         data: function () {
             return {
-                            lists: [] , 
-                            pagination: {}
-                        };
+                lists: [] ,
+                pagination: {}
+            };
         },
 
         methods: {
             paginate: function (next) {
                 var url;
+
                 if ('undefined' === typeof next) {
                     url = '/api/v1/exam/lists';
                 } else {
                     url = this.pagination[next ? 'next_page_url' : 'prev_page_url'];
                 }
-                    this.$http.get(url, function (data, status, request) {
-                        this.$set('lists', data.data);
-                        delete data.data;
-                        this.$set('pagination', data);
-                    });
+
+                this.$http.get(url).then(function (response) {
+                    this.$set('lists', response.data.data);
+                    delete response.data.data;
+                    this.$set('pagination', response.data);
+                });
             },
 
             destroy: function (id, index) {
-                this.$http.delete('/api/v1/exam/lists/' + id, function (data, status, request) {
+                this.$http.delete('/api/v1/exam/lists/' + id).then(function (response) {
                     Materialize.toast($.i18n.t('action.delete.success'), 3500, 'green');
 
                     this.lists.splice(index, 1);
-                }).error(function (data, status, request) {
+                }, function (response) {
                     Materialize.toast($.i18n.t('action.delete.failed'), 3500, 'red');
+
                 });
             }
-
         },
-
 
         ready: function () {
             this.paginate();
@@ -47,12 +48,14 @@ routerComponents.exam.lists = {
         template: require('../../template/admin/exam/lists/show.html') , 
 
         data: function() {
-            return { lists: {} };
-        } , 
+            return {
+                lists: {}
+            };
+        } ,
+
         ready: function() {
-            var url = '/api/v1/exam/lists/' + this.$route.params.id;
-            this.$http.get(url , function (data , status , request){
-                    this.$set('lists' , data);
+            this.$http.get('/api/v1/exam/lists/' + this.$route.params.id).then(function (response) {
+                this.$set('lists' , response.data);
             });
         }
     }),
@@ -70,44 +73,32 @@ routerComponents.exam.lists = {
 
         methods: {
             patch: function () {
-
-                this.$http.patch('/api/v1/exam/lists/' + this.$route.params.id, this.form, function (data, status, request) {
-                    
-                    Materialize.toast($.i18n.t('action.update.success'), 3500, 'green');
-
-                    router.go({name: 'exam.lists.index'});
-                }).error(function (data, status, request) {
-                    if (422 === status) {
-                        for (var key in data) {
-                            if (data.hasOwnProperty(key)) {
-                                Materialize.toast(data[key], 3500, 'red');
-                            }
-                        }
-                    } else {
-                        Materialize.toast($.i18n.t('action.update.failed'), 3500, 'red');
-                    }
+                this.$http.patch('/api/v1/exam/lists/' + this.$route.params.id, this.form).then(function (response) {
+                    this.httpSuccessHandler(response, {name: 'exam.lists.index'})
+                }, function (response) {
+                    this.httpErrorHandler(response);
                 });
             }
         },
 
         ready: function() {
-            this.$http.get('/api/v1/exam/lists/' + this.$route.params.id, function (data, status, request) {
-                data.apply_id = data.apply.id;
-                data.subject_id = data.subject.id;
+            this.$http.get('/api/v1/exam/lists/' + this.$route.params.id).then(function (response) {
+                this.$set('categories_apply', response.data);
 
-                this.$set('form', data);
+                response.data.apply_id = response.data.apply.id;
+                response.data.subject_id = response.data.subject.id;
+
+                this.$set('form', response.data);
             });
 
-            this.$http.get('/api/v1/categories/exam-apply', function (data, status, request) {
-                this.$set('categories_apply', data);
+
+            this.$http.get('/api/v1/categories/exam-apply').then(function (response) {
+                this.$set('categories_apply', response.data);
             });
 
-            this.$http.get('/api/v1/categories/exam-subject' , function (data , status , request) {
-                this.$set('categories_subject' , data);
+            this.$http.get('/api/v1/categories/exam-subject').then(function (response) {
+                this.$set('categories_subject', response.data);
             });
         }
     })
-
-
-
 };

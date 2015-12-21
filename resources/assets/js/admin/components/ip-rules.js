@@ -29,8 +29,8 @@
                     this.$http.post('/api/v1/ip-rules', {
                         ip: this.form.ip,
                         rules: this.form.rules
-                    }, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {action: 'update'});
+                    }).then(function (response) {
+                        vm.httpSuccessHandler(response.data, status, {action: 'update'});
                         Vue.set(vm.ipRules, vm.form.ip, vm.form.rules);
                         vm.form = {ip: '', rules: {student: true}};
                     });
@@ -39,8 +39,8 @@
                 destroy: function (key) {
                     var vm = this;
 
-                    this.$http.delete('/api/v1/ip-rules', {ip: key}, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {action: 'delete'});
+                    this.$http.delete('/api/v1/ip-rules', {ip: key}).then(function (response) {
+                        vm.httpSuccessHandler(response.data, status, {action: 'delete'});
                         Vue.delete(vm.ipRules, key);
                     });
                 }
@@ -49,8 +49,8 @@
             created: function () {
                 var vm = this;
 
-                this.$http.get('/api/v1/ip-rules', function (data, status, request) {
-                    vm.ipRules = vm.empty(data) ? {} : data;
+                this.$http.get('/api/v1/ip-rules').then(function (response) {
+                    vm.ipRules = vm.empty(response.data) ? {} : response.data;
                 });
             }
         })

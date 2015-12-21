@@ -1,8 +1,8 @@
 (function(Vue, $, Materialize){
     Vue.mixin({
         methods: {
-            httpSuccessHandler: function (data, status, options) {
-                switch (status) {
+            httpSuccessHandler: function (response, options) {
+                switch (response.status) {
                     case 200:
                         switch (options.action) {
                             case 'update':
@@ -26,10 +26,10 @@
                 this.toastSuccess($.i18n.t('action.create.success')).routerGo(options);
             },
 
-            httpErrorHandler: function (data, status, options) {
-                switch (status) {
+            httpErrorHandler: function (response, options) {
+                switch (response.status) {
                     case 404: this.notFound(options); return;
-                    case 422: this.unprocessableEntity(data); return;
+                    case 422: this.unprocessableEntity(response.data); return;
                 }
             },
 

@@ -3,8 +3,8 @@
         created: function () {
             var vm = this;
 
-            this.$http.get('/api/v1/categories/exam-category', function (data, status, request) {
-                vm.$set('categories', data);
+            this.$http.get('/api/v1/categories/exam-category').then(function (response) {
+                vm.$set('categories', response.data);
             });
         }
     };
@@ -30,11 +30,11 @@
                     }
 
                     if ('string' === typeof  url) {
-                        this.$http.get(url, function (data, status, request) {
-                            vm.$set('sets', data.data);
+                        this.$http.get(url).then(function (response) {
+                            vm.$set('sets', response.data.data);
 
-                            delete data.data;
-                            vm.$set('pagination', data);
+                            delete response.data.data;
+                            vm.$set('pagination', response.data);
                         });
                     }
                 },
@@ -43,11 +43,11 @@
                     if (confirm('確定要刪除？')) {
                         var vm = this;
 
-                        this.$http.delete('/api/v1/exam/sets/' + sets.id, function (data, status, request) {
-                            vm.httpSuccessHandler(data, status, {action: 'delete'});
+                        this.$http.delete('/api/v1/exam/sets/' + sets.id).then(function (response) {
+                            vm.httpSuccessHandler(response, {action: 'delete'});
                             vm.sets.$remove(sets);
-                        }).error(function (data, status, request) {
-                            vm.httpErrorHandler(data, status);
+                        }, function (response) {
+                            vm.httpErrorHandler(response);
                         });
                     }
                 }
@@ -74,12 +74,12 @@
                 store: function () {
                     var vm = this;
 
-                    this.$http.post('/api/v1/exam/sets', this.form, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {
+                    this.$http.post('/api/v1/exam/sets', this.form).then(function (response) {
+                        vm.httpSuccessHandler(response, {
                             name: 'exam.sets.index'
                         });
-                    }).error(function (data, status, request) {
-                        vm.httpErrorHandler(data, status);
+                    }, function (response) {
+                        vm.httpErrorHandler(response);
                     });
                 }
             }
@@ -101,14 +101,14 @@
                 patch: function () {
                     var vm = this;
 
-                    this.$http.patch('/api/v1/exam/sets/' + this.$route.params.id, this.form, function (data, status, request) {
-                        vm.httpSuccessHandler(data, status, {
+                    this.$http.patch('/api/v1/exam/sets/' + this.$route.params.id, this.form).then(function (response) {
+                        vm.httpSuccessHandler(response, {
                             action: 'update',
                             name: 'exam.sets.show',
                             params: {id: vm.$route.params.id}
                         });
-                    }).error(function (data, status, request) {
-                        vm.httpErrorHandler(data, status);
+                    }, function (response) {
+                        vm.httpErrorHandler(response);
                     });
                 }
             },
@@ -116,9 +116,9 @@
             created: function () {
                 var vm = this;
 
-                this.$http.get('/api/v1/exam/sets/' + this.$route.params.id, function (data, status, request) {
-                    data.category_id = data.category.id;
-                    vm.$set('form', data);
+                this.$http.get('/api/v1/exam/sets/' + this.$route.params.id).then(function (response) {
+                    response.data.category_id = response.data.category.id;
+                    vm.$set('form', response.data);
                 });
             }
         }),
@@ -139,8 +139,8 @@
                     destroy: function (question) {
                         var vm = this;
 
-                        this.$http.delete('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + question.id, function (data, status, request) {
-                            vm.httpSuccessHandler(data, status, {action: 'delete'});
+                        this.$http.delete('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + question.id).then(function (response) {
+                            vm.httpSuccessHandler(response, {action: 'delete'});
                             vm.sets.questions.$remove(question);
                         });
                     }
@@ -149,8 +149,8 @@
                 created: function() {
                     var vm = this;
 
-                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions', function (data, status, request) {
-                        vm.$set('sets', data);
+                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions').then(function (response) {
+                        vm.$set('sets', response.data);
                     });
                 }
             }),
@@ -171,22 +171,22 @@
                 created: function() {
                     var vm = this;
 
-                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + this.$route.params.question, function (data, status, request) {
+                    this.$http.get('/api/v1/exam/sets/' + this.$route.params.id + '/questions/' + this.$route.params.question).then(function (response) {
                         var answers = [];
 
-                        for (var i in data.options) {
-                            if (data.options.hasOwnProperty(i)) {
-                                if (data.answers.indexOf(data.options[i].id)) {
+                        for (var i in response.data.options) {
+                            if (response.data.options.hasOwnProperty(i)) {
+                                if (response.data.answers.indexOf(response.data.options[i].id)) {
                                     answers.push(parseInt(i) + 1);
                                 }
                             }
                         }
 
-                        data.answers = answers;
+                        response.data.answers = answers;
 
-                        vm.$set('question', data);
-                    }).error(function (data, status, request) {
-                        vm.httpErrorHandler(data, status, {
+                        vm.$set('question', response.data);
+                    }, function (response) {
+                        vm.httpErrorHandler(response, {
                             name: 'exam.sets.questions.index',
                             params: {
                                 id: vm.$route.params.id
