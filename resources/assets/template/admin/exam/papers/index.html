@@ -1,6 +1,6 @@
 <table class="striped highlight centered responsive-table">
     <thead>
-        <tr>
+        <tr class="reponsive-table-heading">
             <th>試卷名稱</th>
             <th>備　　註</th>
             <th>自動產生</th>
@@ -9,14 +9,14 @@
             <th>刪除試卷</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="reponsive-table-body">
         <tr v-for="paper in papers">
             <td><a v-link="{name: 'exam.papers.show', params: {id: paper.id}}">{{ paper.name }}</a></td>
             <td>{{ paper.remark }}</td>
             <td><i class="material-icons" :class="[paper.automatic ? 'green-text' : 'red-text']">{{ paper.automatic ? 'check' : 'close' }}</i></td>
-            <td><a class="btn-floating waves-effect waves-light light-blue"><i class="material-icons">edit</i></a></td>
-            <td><a v-link="{name: 'exam.papers.edit', params: {id: paper.id}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
-            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(paper.id, $index)"><i class="material-icons">delete</i></a></td>
+            <td><a class="btn waves-effect waves-light light-blue"><i class="material-icons">add</i></a></td>
+            <td><a v-link="{name: 'exam.papers.edit', params: {id: paper.id}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(paper.id, $index)"><i class="material-icons">delete</i></a></td>
         </tr>
         <tr v-show="! papers.length">
             <td colspan="6">尚無試卷</td>

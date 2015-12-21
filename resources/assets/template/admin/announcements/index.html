@@ -1,23 +1,22 @@
 <table class="striped highlight centered responsive-table">
     <thead>
-        <tr>
-            <th class="reponsive-heading-height">公告標題</th>
-            <th class="nowrap-text reponsive-heading-height">最後更新</th>
-            <th class="nowrap-text reponsive-heading-height">發佈時間</th>
-            <th class="nowrap-text reponsive-heading-height">編輯/刪除</th>
+        <tr class="reponsive-table-heading">
+            <th>公告標題</th>
+            <th>最後更新</th>
+            <th>發佈時間</th>
+            <th>編輯公告</th>
+            <th>刪除公告</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="reponsive-heading-width" v-for="announcement in announcements">
-            <td class="reponsive-heading-height"><a class="truncate" v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
-            <td class="reponsive-heading-height"><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
-            <td class="reponsive-heading-height"><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
-            <td class="reponsive-heading-height">
-                <a v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}" class="btn waves-effect waves-light light-green"><i class="material-icons">edit</i></a>
-                <a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroyAnnouncement(announcement)"><i class="material-icons">delete</i></a>
-            </td>
+        <tr class="reponsive-table-body" v-for="announcement in announcements">
+            <td><a class="truncate" v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
+            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
+            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
+            <td><a class="btn waves-effect waves-light light-green" v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(announcement)"><i class="material-icons">delete</i></a></td>
         </tr>
-        <tr v-show="! announcements.length">
+        <tr v-show="empty(announcements)">
             <td colspan="5">尚無公告</td>
         </tr>
     </tbody>

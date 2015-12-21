@@ -1,4 +1,5 @@
 <table class = "striped highlight centered responsive-table">
+<<<<<<< HEAD
 	<thead>
 		<tr>
 			<th>Code</th>
@@ -27,6 +28,36 @@
 			 <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
 		</tr>
 	</tbody>
+=======
+    <thead>
+        <tr class="reponsive-table-heading">
+            <th>Code</th>
+            <th>考試起始時間</th>
+            <th>考試時間</th>
+            <th>考試地點</th>
+            <th>報名人數</th>
+            <th>Allow_apply</th>
+            <th>Apply_name</th>
+            <th>Subject_name</th>
+            <th>編輯</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="list in lists" class="reponsive-table-body">
+            <td><a v-link="{name: 'exam.lists.show', params: {id: list.code}}">{{ list.code }}</a></td>
+            <td>{{list.began_at}}</td>
+            <td>{{list.duration}}</td>
+            <td>{{list.room}}</td>
+            <td>{{list.std_apply_num}}/{{list.std_maximum_num}}</td>
+            <td>{{list.allow_apply}}</td>
+            <td>{{list.apply.name}}</td>
+            <td>{{list.subject.name}}</td>
+            <td><a  class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
+            <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list.code, $index)"><i class="material-icons">delete</i></a></td>
+        </tr>
+    </tbody>
+>>>>>>> 50b4ce1440dbb1cb4ed3f4d02494ae2f8d4cde45
 </table>
 
 <ul class="pagination center-align">
