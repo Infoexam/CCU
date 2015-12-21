@@ -1,6 +1,6 @@
 <table class="striped highlight centered responsive-table">
     <thead>
-        <tr>
+        <tr class="reponsive-table-heading">
             <th>題庫名稱</th>
             <th>題庫類別</th>
             <th>題庫啟用</th>
@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="set in sets">
+        <tr class="reponsive-table-body" v-for="set in sets">
             <td><a v-link="{name: 'exam.sets.questions.index', params: {id: set.id}}">{{ set.name }}</a></td>
             <td><span data-i18n="exam.set.{{ set.category.name }}"></span></td>
             <td><i class="material-icons" :class="[set.enable ? 'green-text' : 'red-text']">{{ set.enable ? 'check' : 'close' }}</i></td>
