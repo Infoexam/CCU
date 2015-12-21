@@ -14,9 +14,9 @@
             <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
             <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
             <td><a class="btn waves-effect waves-light light-green" v-link="{name: 'announcements.edit', params: {heading: announcement.heading}}"><i class="material-icons">edit</i></a></td>
-            <td><a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroyAnnouncement(announcement)"><i class="material-icons">delete</i></a></td>
+            <td><a class="btn waves-effect waves-light deep-orange lighten-1" @click="destroy(announcement)"><i class="material-icons">delete</i></a></td>
         </tr>
-        <tr v-show="! announcements.length">
+        <tr v-show="empty(announcements)">
             <td colspan="5">尚無公告</td>
         </tr>
     </tbody>
