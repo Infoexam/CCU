@@ -9,7 +9,7 @@ if (! function_exists('_asset')) {
      * @return string
      */
     function _asset($path, $secure = null) {
-        if (! app()->environment('production') || empty($cdn = env('CDN_URL'))) {
+        if (! app()->environment('production') || empty($cdn = config('infoexam.CDN_URL'))) {
             return asset($path, $secure);
         }
 
@@ -31,7 +31,7 @@ if (! function_exists('img_src')) {
         $prefixDir = substr($timestamp, 0, 3);
         $filename = "{$timestamp}-{$hash}" . ($thumbnail ? '-s' : '') . ".{$extension}";
 
-        return env('CDN_URL', '') . "/images/{$prefixDir}/{$filename}";
+        return config('infoexam.CDN_URL') . "/images/{$prefixDir}/{$filename}";
     }
 }
 

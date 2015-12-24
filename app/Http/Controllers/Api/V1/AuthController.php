@@ -51,7 +51,7 @@ class AuthController extends Controller
      */
     public function sso(Request $request)
     {
-        if (null !== env('SSO_URL') && $request->has(['miXd', 'ticket'])) {
+        if (null !== config('infoexam.SSO_URL') && $request->has(['miXd', 'ticket'])) {
             $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
 
             if (false !== $username && null !== ($user = User::where('username', '=', $username)->first())) {
@@ -71,7 +71,7 @@ class AuthController extends Controller
      */
     protected function ssoAuth($miXd, $ticket)
     {
-        $response = (new Client())->get(env('SSO_URL'), ['query' => ['cid' => $miXd, 'ticket' => $ticket]]);
+        $response = (new Client())->get(config('infoexam.SSO_URL'), ['query' => ['cid' => $miXd, 'ticket' => $ticket]]);
 
         $dom = new DOMDocument();
 

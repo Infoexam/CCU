@@ -115,13 +115,13 @@ class Deploy extends Command
                 }
 
                 // 如 home 目錄尚未設置，則指定為暫存目錄
-                if (empty(env('COMPOSER_HOME', ''))) {
+                if (empty($dir = config('infoexam.COMPOSER_HOME'))) {
                     $dir = sys_get_temp_dir() . '/composer-' . str_random(8);
 
                     File::makeDirectory($dir);
-
-                    putenv("COMPOSER_HOME={$dir}");
                 }
+
+                putenv("COMPOSER_HOME={$dir}");
 
                 // 執行 package 更新
                 $this->externalCommand("git pull; {$path} install -o");
