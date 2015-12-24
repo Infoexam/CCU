@@ -52,13 +52,13 @@ class Deploy extends Command
 
         $this->call('config:cache');
 
-        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
-            $this->call('queue:restart');
-        }
-
         $this->call('up');
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
+
+        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
+            $this->call('queue:restart');
+        }
     }
 
     /**
