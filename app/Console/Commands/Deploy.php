@@ -48,9 +48,7 @@ class Deploy extends Command
 
         $this->migrate();
 
-        $this->call('route:cache');
-
-        $this->call('config:cache');
+        $this->setupCache();
 
         $this->call('up');
 
@@ -75,6 +73,20 @@ class Deploy extends Command
         $this->call('view:clear');
 
         $this->call('clear-compiled');
+    }
+
+    /**
+     * 設置快取
+     *
+     * @return void
+     */
+    protected function setupCache()
+    {
+        $this->call('route:cache');
+
+        $this->call('config:cache');
+
+        $this->call('optimize');
     }
 
     /**
@@ -116,7 +128,7 @@ class Deploy extends Command
 
                 // 如 home 目錄尚未設置，則指定為暫存目錄
                 if (empty($dir = config('infoexam.COMPOSER_HOME'))) {
-                    $dir = sys_get_temp_dir() . '/composer-' . str_random(8);
+                    $dir = sys_get_temp_dir() . '/composer-temp-dir';
 
                     File::makeDirectory($dir);
                 }
@@ -125,11 +137,6 @@ class Deploy extends Command
 
                 // 執行 package 更新
                 $this->externalCommand("git pull; {$path} install -o");
-
-                // 如是用暫存目錄，則更新完後將暫存目錄移除
-                if (isset($dir)) {
-                    File::deleteDirectory($dir);
-                }
             }
         }
     }

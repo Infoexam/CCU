@@ -45,8 +45,6 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "php -r \"@unlink(getcwd() . '/bootstrap/cache/services.php');\"",
-            "php -r \"@unlink(getcwd() . '/bootstrap/cache/services.json');\"",
             "php artisan clear-compiled",
             "php artisan optimize"
         ],
