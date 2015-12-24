@@ -13,11 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Deploy::class,
-        \App\Console\Commands\Sync\Account::class,
-        \App\Console\Commands\Sync\Certificate::class,
-        \App\Console\Commands\Sync\Department::class,
-        \App\Console\Commands\Sync\Receipt::class,
+        Commands\Deploy::class,
+        Commands\Sync\Account::class,
+        Commands\Sync\Certificate::class,
+        Commands\Sync\Department::class,
+        Commands\Sync\Receipt::class,
     ];
 
     /**

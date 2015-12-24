@@ -42,11 +42,7 @@ class Deploy extends Command
     {
         $this->call('down');
 
-        $this->call('route:clear');
-
-        $this->call('config:clear');
-
-        $this->call('clear-compiled');
+        $this->clearCache();
 
         $this->vendorsUpdate();
 
@@ -63,6 +59,22 @@ class Deploy extends Command
         $this->call('up');
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
+    }
+
+    /**
+     * 清除快取
+     *
+     * @return void
+     */
+    protected function clearCache()
+    {
+        $this->call('route:clear');
+
+        $this->call('config:clear');
+
+        $this->call('view:clear');
+
+        $this->call('clear-compiled');
     }
 
     /**
