@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1;
 
 use App\Http\Requests\Request;
 use App\Infoexam\General\Category;
+use Carbon\Carbon;
 
 class ExamListRequest extends Request
 {
@@ -14,12 +15,13 @@ class ExamListRequest extends Request
      */
     public function rules()
     {
-        $theories = Category::where('category', '=', 'exam.subject')
+        $theories = Category::where('category', 'exam.subject')
             ->where('name', 'like', '%theory')
             ->get(['id'])
             ->implode('id', ',');
 
         return [
+            'code' => 'required|unique:exam_lists,code',
             'began_at' => 'required|date',
             'duration' => 'required|min:1|max:255',
             'room' => 'required',
@@ -28,5 +30,17 @@ class ExamListRequest extends Request
             'subject_id' => 'required|exists:categories,id,category,exam.subject',
             'std_maximum_num' => 'required|max:255',
         ];
+    }
+
+    /**
+     * Override or append request inputs.
+     *
+     * @return void
+     */
+    protected function overrideInputs()
+    {
+        $this->merge([
+            'code' => Carbon::parse($this->input('began_at'))->format('YmdH') . $this->input('room'),
+        ]);
     }
 }

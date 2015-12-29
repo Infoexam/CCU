@@ -69,7 +69,7 @@ class Upload
     protected function store()
     {
         // 因圖片為 Polymorphic Relations，所以 id 及 type 為必要資訊
-        if (! isset($this->imageable['id']) || ! isset($this->imageable['type'])) {
+        if (! isset($this->imageable['id']) || ! isset($this->imageable['type']) || empty($this->files)) {
             return;
         }
 

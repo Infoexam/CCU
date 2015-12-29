@@ -2,39 +2,83 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Infoexam\User\Auth as Authenticate;
 use App\Infoexam\User\User;
 use Auth;
+use DB;
 use DOMDocument;
 use GuzzleHttp\Client;
+use Hash;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     /**
      * 登入
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function signIn(Request $request)
     {
         if (! Auth::attempt($request->only(['username', 'password']))
-            && ! Authenticate::attemptUsingCenter($request->input('username'), $request->input('password'))) {
-            return response('', 422);
+            && ! $this->attemptCenter($request->input('username'), $request->input('password'))) {
+            return $this->setMessages(['Invalid username or password.'])->responseUnprocessableEntity();
         }
 
-        Authenticate::rehashPasswordIfNeeded(Auth::user(), $request->input('password'));
+        $this->refreshPassword(Auth::user(), $request->input('password'));
 
-        return response()->json(['Intended' => session()->pull('url.intended')]);
+        return $this->setHeaders(['Intended' => session()->pull('url.intended')])->responseOk();
+    }
+
+    /**
+     * 嘗試從中心伺服器登入
+     *
+     * @param string $username
+     * @param string $password
+     * @return bool
+     */
+    protected function attemptCenter($username, $password)
+    {
+        if (! app()->environment(['production', 'development'])) {
+            return false;
+        }
+
+        /*
+         * 1. 確認本地帳號存在
+         * 2. 中心驗證帳號
+         */
+        if (is_null($user = User::where('username', $username)->first(['id', 'password']))) {
+            return false;
+        } else if (is_null($new = DB::connection('elearn')->table('std_info')
+                ->where('std_no', $username)->where('user_pass', $password)->first(['user_pass']))) {
+            return false;
+        }
+
+        // 登入並更新本地密碼
+        Auth::loginUsingId($user->getAttribute('id'))->update(['password' => bcrypt($new->user_pass)]);
+
+        return true;
+    }
+
+    /**
+     * 如果需要，則重新 hash 密碼
+     *
+     * @param User $user
+     * @param string $password
+     */
+    protected function refreshPassword(User $user, $password)
+    {
+        if (Hash::needsRehash($user->getAttribute('password'))) {
+            $user->update([
+                'password' => bcrypt($password),
+            ]);
+        }
     }
 
     /**
      * 登出
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function signOut()
     {
@@ -51,10 +95,10 @@ class AuthController extends Controller
      */
     public function sso(Request $request)
     {
-        if (null !== config('infoexam.SSO_URL') && $request->has(['miXd', 'ticket'])) {
+        if (! is_null(config('infoexam.SSO_URL')) && $request->has(['miXd', 'ticket'])) {
             $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
 
-            if (false !== $username && null !== ($user = User::where('username', '=', $username)->first())) {
+            if (false !== $username && ! is_null($user = User::where('username', $username)->first())) {
                 Auth::loginUsingId($user->getAttribute('id'));
             }
         }

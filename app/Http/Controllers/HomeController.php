@@ -63,6 +63,6 @@ class HomeController extends Controller
             \Artisan::queue('deploy');
         }
 
-        return $this->ok();
+        return response()->json('', 200);
     }
 }

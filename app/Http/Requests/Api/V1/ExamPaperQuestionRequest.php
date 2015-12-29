@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1;
 
 use App\Http\Requests\Request;
 
-class FaqRequest extends Request
+class ExamPaperQuestionRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,8 @@ class FaqRequest extends Request
     public function rules()
     {
         return [
-            'question' => 'required|max:255',
-            'answer' => 'required|max:255',
+            'questions' => 'required|array',
+            'questions.*' => 'required|integer|exists:exam_questions,id',
         ];
     }
 }

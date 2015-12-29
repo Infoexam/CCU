@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1;
 
 use App\Http\Requests\Request;
 
@@ -24,6 +24,11 @@ class IpRuleRequest extends Request
         ];
     }
 
+    /**
+     * Override or append request inputs.
+     *
+     * @return void
+     */
     protected function overrideInputs()
     {
         $ip = explode('/', $this->input('ip', ''));

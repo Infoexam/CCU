@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\CategoryRequest;
 use App\Infoexam\General\Category;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
     /**
      * CategoryController constructor.
@@ -23,62 +22,82 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(Category::all());
+        return $this->setData(Category::all())->responseOk();
     }
 
     /**
      * 新增 Category
      *
-     * @param Requests\CategoryRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\CategoryRequest $request)
+    public function store(CategoryRequest $request)
     {
-        $this->storeOrUpdate(new Category(), $request, ['category', 'name', 'remark']);
+        $category = $this->storeOrUpdate(new Category(), $request, ['category', 'name', 'remark']);
 
-        return $this->ok();
+        if (! $category->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($category)->responseCreated();
     }
 
     /**
      * 顯示指定 Category 資料
      *
-     * @param int $id
+     * @param string $category
+     * @param string $name
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show($category, $name = '')
     {
-        if (! preg_match('/^\d+$/', $id)) {
-            return response()->json(Category::getCategories(str_replace('-', '.', $id)));
-        }
-
-        return response()->json(Category::findOrFail($id));
+        return $this->setData(Category::getCategories($category, $name))->responseOk();
     }
 
     /**
      * 更新指定 Category 資料
      *
-     * @param Requests\CategoryRequest $request
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param CategoryRequest $request
+     * @param string $category
+     * @param string $name
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\CategoryRequest $request, $id)
+    public function update(CategoryRequest $request, $category, $name)
     {
-        $this->storeOrUpdate(Category::findOrFail($id), $request, ['category', 'name', 'remark']);
+        $category = Category::where('category', $category)->where('name', $name)->first();
 
-        return $this->ok();
+        if (is_null($category)) {
+            return $this->responseNotFound();
+        }
+
+        $category = $this->storeOrUpdate($category, $request, ['category', 'name', 'remark']);
+
+        if (! $category->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($category)->responseOk();
     }
+
 
     /**
      * 刪除指定 Category 資料
      *
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $category
+     * @param string $name
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($category, $name)
     {
-        Category::findOrFail($id)->delete();
+        $category = Category::where('category', $category)->where('name', $name)->first();
 
-        return $this->ok();
+        if (is_null($category)) {
+            return $this->responseNotFound();
+        }
+
+        $category->delete();
+
+        return $this->responseOk();
     }
 }

@@ -29,10 +29,12 @@ use Illuminate\Routing\Router;
 */
 
 $router->group(['middleware' => ['web']], function (Router $router) {
-    $router->get('/', ['as' => 'home', 'uses' => 'HomeController@student']);
-    $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
-    $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
-    $router->post('deploy', ['uses' => 'HomeController@deploy']);
+    $router->group(['middleware' => ['header']], function (Router $router) {
+        $router->get('/', ['as' => 'home', 'uses' => 'HomeController@student']);
+        $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
+        $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
+        $router->post('deploy', ['uses' => 'HomeController@deploy']);
+    });
 
     $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {
         $router->group(['prefix' => 'auth', 'as' => 'api.v1.auth.'], function (Router $router) {
@@ -74,6 +76,12 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->delete('images', ['as' => 'image.destroy', 'uses' => 'ImageController@destroy']);
         });
 
-        $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
+        $router->group(['prefix' => 'categories'], function (Router $router) {
+            $router->get('/', ['uses' => 'CategoryController@index']);
+            $router->post('/', ['uses' => 'CategoryController@store']);
+            $router->get('{categories}/{name?}', ['uses' => 'CategoryController@show']);
+            $router->patch('{categories}/{name}', ['uses' => 'CategoryController@update']);
+            $router->delete('{categories}/{name}', ['uses' => 'CategoryController@destroy']);
+        });
     });
 });

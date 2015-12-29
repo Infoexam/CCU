@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamConfigRequest;
 use App\Infoexam\General\Config;
 use Cache;
 
-class ExamConfigController extends Controller
+class ExamConfigController extends ApiController
 {
     /**
      * ExamConfigController constructor.
@@ -24,18 +23,16 @@ class ExamConfigController extends Controller
      */
     public function show()
     {
-        $examConfig = Cache::tags('config')->get('exam', collect());
-
-        return response()->json($examConfig);
+        return $this->setData(Cache::tags('config')->get('exam', collect()))->responseOk();
     }
 
     /**
      * 更新測驗設定
      *
-     * @param Requests\ExamConfigRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param ExamConfigRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\ExamConfigRequest $request)
+    public function update(ExamConfigRequest $request)
     {
         $examConfig = collect($request->only(['allowRoom', 'passedScore', 'apply']));
 
@@ -46,6 +43,6 @@ class ExamConfigController extends Controller
             'value' => serialize($examConfig),
         ]);
 
-        return $this->ok();
+        return $this->responseOk();
     }
 }

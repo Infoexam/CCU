@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamSetQuestionRequest;
 use App\Infoexam\Exam\Explanation;
 use App\Infoexam\Exam\Option;
 use App\Infoexam\Exam\Question;
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class ExamSetQuestionController extends Controller
+class ExamSetQuestionController extends ApiController
 {
     /**
      * ExamSetQuestionController constructor.
@@ -31,27 +30,38 @@ class ExamSetQuestionController extends Controller
      */
     public function index($setId)
     {
-        $set = Set::with(['questions' => function (HasMany $relation) {
-            $relation->getQuery()->with(['difficulty'])->getQuery()
-                ->select(['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
-        }, 'questions.options' => function (HasMany $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
-        }])->findOrFail($setId, ['id', 'name']);
+        $set = Set::find($setId, ['id', 'name']);
 
-        return response()->json($set);
+        if (is_null($set)) {
+            return $this->responseNotFound();
+        }
+
+        $set->load([
+            'questions' => function (HasMany $relation) {
+                $relation->getQuery()->with(['difficulty'])->getQuery()
+                ->select(['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
+            },
+            'questions.options' => function (HasMany $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
+            }
+        ]);
+
+        return $this->setData($set)->responseOk();
     }
 
     /**
      * 新增題目
      *
-     * @param Requests\ExamSetQuestionRequest $request
+     * @param ExamSetQuestionRequest $request
      * @param int $setId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\ExamSetQuestionRequest $request, $setId)
+    public function store(ExamSetQuestionRequest $request, $setId)
     {
         // 確認題庫存在
-        Set::findOrFail($setId, ['id']);
+        if (is_null(Set::find($setId, ['id']))) {
+            return $this->responseNotFound();
+        }
 
         // 新增題目
         $question = Question::create([
@@ -67,8 +77,8 @@ class ExamSetQuestionController extends Controller
         }
 
         // 新增圖片（如果有的話）
-        if (count($request->input('question.image', []))) {
-            new Upload($request->input('question.image'), [
+        if ($request->hasFile('question.image')) {
+            new Upload($request->file('question.image'), [
                 'id' => $question->getAttribute('id'),
                 'type' => Question::class
             ]);
@@ -83,7 +93,7 @@ class ExamSetQuestionController extends Controller
             }
         }
 
-        return $this->ok();
+        return $this->setData($question)->responseCreated();
     }
 
     /**
@@ -95,32 +105,43 @@ class ExamSetQuestionController extends Controller
      */
     public function show($setId, $questionId)
     {
-        $question = Question::with(['options' => function (HasMany $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
-        }, 'difficulty', 'explanation' => function (HasOne $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
-        }, 'answers', 'set' => function (BelongsTo $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'name']);
-        }])
-            ->where('exam_set_id', '=', $setId)
-            ->findOrFail($questionId, ['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
+        $question = Question::where('exam_set_id', $setId)
+            ->find($questionId, ['id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
+
+        if (is_null($question)) {
+            return $this->responseNotFound();
+        }
+
+        $question->load([
+            'options' => function (HasMany $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
+            },
+            'difficulty',
+            'explanation' => function (HasOne $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'exam_question_id', 'content']);
+            },
+            'answers',
+            'set' => function (BelongsTo $relation) {
+                $relation->getQuery()->getQuery()->select(['id', 'name']);
+            }
+        ]);
 
         $question->setRelation('answers', $question->getRelation('answers')->pluck('id'));
 
-        return response()->json($question);
+        return $this->setData($question)->responseOk();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Requests\ExamSetQuestionRequest $request
+     * @param ExamSetQuestionRequest $request
      * @param int $setId
      * @param int $questionId
      * @return \Illuminate\Http\Response
      *
      * @todo finish it
      */
-    public function update(Requests\ExamSetQuestionRequest $request, $setId, $questionId)
+    public function update(ExamSetQuestionRequest $request, $setId, $questionId)
     {
         //
     }
@@ -131,12 +152,19 @@ class ExamSetQuestionController extends Controller
      *
      * @param int $setId
      * @param int $questionId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy($setId, $questionId)
     {
-        Question::where('exam_set_id', '=', $setId)->findOrFail($questionId, ['id'])->delete();
+        $question = Question::where('exam_set_id', $setId)->find($questionId, ['id']);
 
-        return $this->ok();
+        if (is_null($question)) {
+            return $this->responseNotFound();
+        }
+
+        $question->delete();
+
+        return $this->responseOk();
     }
 }

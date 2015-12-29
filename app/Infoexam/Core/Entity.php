@@ -61,7 +61,15 @@ class Entity extends Eloquent
      */
     public function setAdditionalHiddenAttributes()
     {
-        if (Auth::guest() || ! Auth::user()->hasRole(['admin'])) {
+        $hidden = session('role_and_permission_for_hidden_attributes');
+
+        if (is_null($hidden)) {
+            $hidden = Auth::guest() || ! Auth::user()->hasRole(['admin']);
+
+            session()->flash('role_and_permission_for_hidden_attributes', $hidden);
+        }
+
+        if ($hidden) {
             $this->addHidden($this->notAdminHidden);
         }
     }

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\UserRequest;
 use App\Infoexam\User\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * UserController constructor.
@@ -34,23 +33,27 @@ class UserController extends Controller
     {
         //
 
-        return response()->json();
+        return $this->responseOk();
     }
 
     /**
      * 新增使用者
      *
-     * @param Requests\UserRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\UserRequest $request)
+    public function store(UserRequest $request)
     {
         // 密碼 hash
         $request->merge(['password' => bcrypt($request->input('password'))]);
 
-        User::create($request->only(['username', 'password', 'name', 'email']));
+        $user = User::create($request->only(['username', 'password', 'name', 'email']));
 
-        return $this->ok();
+        if (! $user->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($user)->responseCreated();
     }
 
     /**
@@ -60,6 +63,8 @@ class UserController extends Controller
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
      * @throws AccessDeniedHttpException
+     *
+     * @todo Code refactoring
      */
     public function show(Request $request, $username)
     {
@@ -67,7 +72,11 @@ class UserController extends Controller
         if ($request->user()->hasRole(['admin'])) {
             $user = User::with(['roles' => function (BelongsToMany $relation) {
                 $relation->getQuery()->getQuery()->select(['id', 'name']);
-            }])->where('username', '=', $username)->firstOrFail();
+            }])->where('username', $username)->first();
+
+            if (is_null($user)) {
+                return $this->responseNotFound();
+            }
         } else if ($request->user()->getAttribute('username') !== $username) {
             throw new AccessDeniedHttpException;
         } else {
@@ -78,21 +87,25 @@ class UserController extends Controller
             $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
         }, 'department', 'gender', 'grade']);
 
-        return response()->json($user);
+        return $this->setData($user)->responseOk();
     }
 
     /**
      * 更新指定使用者資料
      *
-     * @param Requests\UserRequest $request
+     * @param UserRequest $request
      * @param string $username
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @todo Code refactoring
      */
-    public function update(Requests\UserRequest $request, $username)
+    public function update(UserRequest $request, $username)
     {
-        /** @var $user User */
+        $user = User::with(['certificate'])->where('username', $username)->first();
 
-        $user = User::with(['certificate'])->where('username', '=', $username)->firstOrFail();
+        if (is_null($user)) {
+            return $this->responseNotFound();
+        }
 
         // 更新密碼、姓名、信箱
         ! $request->has('password') ?: $user->setAttribute('password', bcrypt($request->input('password')));
@@ -116,6 +129,6 @@ class UserController extends Controller
         // 儲存所有資料到資料庫
         $user->push();
 
-        return $this->ok();
+        return $this->setData($user)->responseOk();
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Infoexam\Image\Image;
 use Illuminate\Http\Request;
 
-class ImageController extends Controller
+class ImageController extends ApiController
 {
     /**
      * ImageController constructor.
@@ -21,16 +19,21 @@ class ImageController extends Controller
      * 刪除指定圖片
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy(Request $request)
     {
-        Image::where('uploaded_at', '=', $request->input('uploaded_at'))
-            ->where('hash', '=', $request->input('hash'))
-            ->firstOrFail()
-            ->delete();
+        $image = Image::where('uploaded_at', $request->input('uploaded_at'))
+            ->where('hash', $request->input('hash'))
+            ->first();
 
-        return $this->ok();
+        if (is_null($image)) {
+            return $this->responseNotFound();
+        }
+
+        $image->delete();
+
+        return $this->responseOk();
     }
 }

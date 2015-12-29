@@ -40,9 +40,9 @@
             },
 
             unprocessableEntity: function (data) {
-                for (var key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        this.toastError(data[key]);
+                for (var key in data.messages) {
+                    if (data.messages.hasOwnProperty(key)) {
+                        this.toastError(data.messages[key]);
                     }
                 }
             },

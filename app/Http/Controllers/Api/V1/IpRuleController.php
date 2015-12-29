@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\IpRuleRequest;
 use App\Infoexam\General\Config;
 use Cache;
 use Illuminate\Http\Request;
 
-class IpRuleController extends Controller
+class IpRuleController extends ApiController
 {
     /**
      * IP 規則表
      *
      * @var \Illuminate\Support\Collection
      */
-    protected $ipRules;
+    private $ipRules;
 
     /**
      * IpRuleController constructor.
@@ -47,16 +46,16 @@ class IpRuleController extends Controller
      */
     public function index()
     {
-        return response()->json($this->ipRules);
+        return $this->setData($this->ipRules)->responseOk();
     }
 
     /**
      * 新增或更新 IP 規則
      *
-     * @param Requests\IpRuleRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param IpRuleRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\IpRuleRequest $request)
+    public function store(IpRuleRequest $request)
     {
         $this->ipRules->offsetSet($request->input('ip'), [
             'student' => boolval($request->input('rules.student')),
@@ -64,19 +63,19 @@ class IpRuleController extends Controller
             'exam' => boolval($request->input('rules.exam')),
         ]);
 
-        return $this->ok();
+        return $this->responseOk();
     }
 
     /**
      * 刪除 IP 規則
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request)
     {
         $this->ipRules->forget($request->input('ip'));
 
-        return $this->ok();
+        return $this->responseOk();
     }
 }

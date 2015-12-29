@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
+use App\Http\Requests\Api\V1\ExamSetRequest;
 use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ExamSetController extends Controller
+class ExamSetController extends ApiController
 {
     /**
      * ExamSetController constructor.
@@ -26,20 +25,24 @@ class ExamSetController extends Controller
     {
         $sets = Set::with(['category'])->latest()->paginate(10, ['id', 'name', 'category_id', 'enable']);
 
-        return response()->json($sets);
+        return $this->setData($sets)->responseOk();
     }
 
     /**
      * 新增題庫
      *
-     * @param Requests\ExamSetRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param ExamSetRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\ExamSetRequest $request)
+    public function store(ExamSetRequest $request)
     {
-        $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable' => false]);
+        $set = $this->storeOrUpdate(new Set(), $request, ['name', 'category_id', 'enable' => false]);
 
-        return $this->ok();
+        if (! $set->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($set)->responseCreated();
     }
 
     /**
@@ -50,23 +53,37 @@ class ExamSetController extends Controller
      */
     public function show($id)
     {
-        $set = Set::with(['category'])->findOrFail($id, ['id', 'name', 'category_id', 'enable']);
+        $set = Set::with(['category'])->find($id, ['id', 'name', 'category_id', 'enable']);
 
-        return response()->json($set);
+        if (is_null($set)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->setData($set)->responseOk();
     }
 
     /**
      * 更新指定題庫資料
      *
-     * @param Requests\ExamSetRequest $request
+     * @param ExamSetRequest $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\ExamSetRequest $request, $id)
+    public function update(ExamSetRequest $request, $id)
     {
-        $this->storeOrUpdate(Set::findOrFail($id), $request, ['name', 'category_id', 'enable']);
+        $set = Set::find($id);
 
-        return $this->ok();
+        if (is_null($set)) {
+            return $this->responseNotFound();
+        }
+
+        $set = $this->storeOrUpdate($set, $request, ['name', 'category_id', 'enable']);
+
+        if (! $set->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($set)->responseOk();
     }
 
     /**
@@ -74,13 +91,19 @@ class ExamSetController extends Controller
      * 相關資料包括：題目
      *
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        Set::findOrFail($id, ['id'])->delete();
+        $set = Set::find($id, ['id']);
 
-        return $this->ok();
+        if (is_null($set)) {
+            return $this->responseNotFound();
+        }
+
+        $set->delete();
+
+        return $this->responseOk();
     }
 
     /**
@@ -92,8 +115,8 @@ class ExamSetController extends Controller
     {
         $set = Set::with(['questions' => function (HasMany $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'exam_set_id', 'content']);
-        }])->where('enable', '=', true)->get(['id', 'name']);
+        }])->where('enable', true)->get(['id', 'name']);
 
-        return response()->json($set);
+        return $this->setData($set)->responseOk();
     }
 }

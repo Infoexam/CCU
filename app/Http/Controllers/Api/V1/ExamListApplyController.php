@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controolers\Api\ApiController;
 use App\Http\Requests;
 use App\Infoexam\Exam\Apply;
 use App\Infoexam\Exam\ApplyService;
@@ -21,6 +20,7 @@ class ExamListApplyController extends ApiController
         $this->middleware('auth', ['except' => 'index']);
     }
 
+    /** @todo Code refactoring */
     public function index($listCode)
     {
         $list = Lists::with(['applies' => function (HasMany $relation) {
@@ -32,15 +32,17 @@ class ExamListApplyController extends ApiController
         return response()->json($list->getRelation('applies'));
     }
 
+    /** @todo Code refactoring */
     public function store(Request $request, ApplyService $applyService)
     {
         if (! $applyService->create($request)->success()) {
             return $this->setErrors($applyService->getErrors())->responseWithErrors();
         }
 
-        return $this->setStatus(Response::HTTP_CREATED)->response();
+        return $this->responseCreated();
     }
 
+    /** @todo Code refactoring */
     public function show($listCode, $id)
     {
         $apply = Apply::find($id);
@@ -48,17 +50,19 @@ class ExamListApplyController extends ApiController
         return response()->json($apply);
     }
 
+    /** @todo Code refactoring */
     public function update(Request $request, $listCode, $id)
     {
         //
     }
 
-    public function destroy($listCode, $id, ApplyService $applyService)
+    /** @todo Code refactoring */
+    public function destroy($code, $id, ApplyService $applyService)
     {
         if ($applyService->destroy($id)->success()) {
             return $this->setErrors($applyService->getErrors())->responseWithErrors();
         }
 
-        return $this->response();
+        return $this->responseOk();
     }
 }

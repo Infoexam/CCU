@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Infoexam\General\Config;
 use Cache;
 use Illuminate\Http\Request;
 
-class WebsiteMaintenanceController extends Controller
+class WebsiteMaintenanceController extends ApiController
 {
     /**
      * WebsiteMaintenanceController constructor.
@@ -25,16 +23,14 @@ class WebsiteMaintenanceController extends Controller
      */
     public function show()
     {
-        $websiteMaintenance = Cache::tags('config')->get('websiteMaintenance', collect());
-
-        return response()->json($websiteMaintenance);
+        return $this->setData(Cache::tags('config')->get('websiteMaintenance', collect()))->responseOk();
     }
 
     /**
      * 更新網站維護設定
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request)
     {
@@ -56,6 +52,6 @@ class WebsiteMaintenanceController extends Controller
             'value' => serialize($websiteMaintenance),
         ]);
 
-        return $this->ok();
+        return $this->responseOk();
     }
 }

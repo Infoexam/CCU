@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamPaperRequest;
 use App\Infoexam\Exam\Paper;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ExamPaperController extends Controller
+class ExamPaperController extends ApiController
 {
     /**
      * ExamPaperController constructor.
@@ -26,20 +26,24 @@ class ExamPaperController extends Controller
     {
         $papers = Paper::orderBy('automatic')->latest()->paginate(10, ['id', 'name', 'remark', 'automatic']);
 
-        return response()->json($papers);
+        return $this->setData($papers)->responseOk();
     }
 
     /**
      * 新增試卷
      *
-     * @param Requests\ExamPaperRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param ExamPaperRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\ExamPaperRequest $request)
+    public function store(ExamPaperRequest $request)
     {
-        $this->storeOrUpdate(new Paper(), $request, ['name', 'remark']);
+        $paper = $this->storeOrUpdate(new Paper(), $request, ['name', 'remark']);
 
-        return $this->ok();
+        if (! $paper->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($paper)->responseCreated();
     }
 
     /**
@@ -50,41 +54,60 @@ class ExamPaperController extends Controller
      */
     public function show($id)
     {
-        $paper = Paper::findOrFail($id, ['id', 'name', 'remark', 'automatic']);
+        $paper = Paper::find($id, ['id', 'name', 'remark', 'automatic']);
 
-        return response()->json($paper);
+        if (is_null($paper)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->setData($paper)->responseOk();
     }
 
     /**
      * 更新指定試卷資料
      *
-     * @param Requests\ExamPaperRequest $request
+     * @param ExamPaperRequest $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\ExamPaperRequest $request, $id)
+    public function update(ExamPaperRequest $request, $id)
     {
-        $this->storeOrUpdate(Paper::findOrFail($id), $request, ['name', 'remark']);
+        $paper = Paper::find($id);
 
-        return $this->ok();
+        if (is_null($paper)) {
+            return $this->responseNotFound();
+        }
+
+        $paper = $this->storeOrUpdate($paper, $request, ['name', 'remark']);
+
+        if (! $paper->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($paper)->responseOk();
     }
 
     /**
      * 刪除指定試卷，如已有測驗使用該試卷，則無法刪除
      *
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy($id)
     {
         $paper = Paper::with(['_lists' => function (HasMany $relation) {
             $relation->getQuery()->getQuery()->select(['paper_id']);
-        }])->findOrFail($id, ['id']);
+        }])->find($id, ['id']);
 
-        if ($paper->getRelation('_lists')->count()) {
-            return response()->json(['errors' => ['delete' => 'alreadyUsed']], 422);
+        if (is_null($paper)) {
+            return $this->responseNotFound();
+        } else if ($paper->getRelation('_lists')->count()) {
+            return $this->setMessages(['delete' => 'alreadyUsed'])->responseUnprocessableEntity();
         }
 
-        return $this->ok();
+        $paper->delete();
+
+        return $this->responseOk();
     }
 }

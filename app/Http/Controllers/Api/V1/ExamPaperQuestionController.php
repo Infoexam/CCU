@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamPaperQuestionRequest;
 use App\Infoexam\Exam\Paper;
 use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
-class ExamPaperQuestionController extends Controller
+class ExamPaperQuestionController extends ApiController
 {
     /**
      * ExamPaperQuestionController constructor.
@@ -30,34 +29,44 @@ class ExamPaperQuestionController extends Controller
      */
     public function index(Request $request, $paperId)
     {
-        $paper = Paper::with(['questions' => function (BelongsToMany $relation) {
-            $relation->getQuery()->with(['difficulty'])->getQuery()
+        $paper = Paper::find($paperId, ['id', 'name']);
+
+        if (is_null($paper)) {
+            return $this->responseNotFound();
+        }
+
+        $paper->load(['questions' => function (BelongsToMany $relation) {
+            $relation->getQuery()
+                ->with(['difficulty'])
+                ->getQuery()
                 ->select(['exam_questions.id', 'content', 'difficulty_id', 'multiple']);
-        }])->findOrFail($paperId, ['id', 'name']);
+        }]);
 
         if ($request->has('onlyId')) {
             $paper = $paper->getRelation('questions')->pluck('id');
         }
 
-        return response()->json($paper);
+        return $this->setData($paper)->responseOk();
     }
 
     /**
      * 更新試卷題目
      *
-     * @param Request $request
+     * @param ExamPaperQuestionRequest $request
      * @param int $paperId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request, $paperId)
+    public function store(ExamPaperQuestionRequest $request, $paperId)
     {
-        if (! is_array($questions = $request->input('questions', []))) {
-            $questions = [$questions];
+        $paper = Paper::find($paperId, ['id']);
+
+        if (is_null($paper)) {
+            return $this->responseNotFound();
         }
 
-        Paper::findOrFail($paperId, ['id'])->questions()->sync($questions);
+        $paper->questions()->sync($request->input('questions'));
 
-        return $this->ok();
+        return $this->responseOk();
     }
 
     /**
@@ -65,15 +74,21 @@ class ExamPaperQuestionController extends Controller
      *
      * @param int $paperId
      * @param int $questionId
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($paperId, $questionId)
     {
-        DB::table('exam_paper_exam_question')
-            ->where('exam_paper_id', '=', $paperId)
-            ->where('exam_question_id', '=', $questionId)
-            ->delete();
+        $question = DB::table('exam_paper_exam_question')
+            ->where('exam_paper_id', $paperId)
+            ->where('exam_question_id', $questionId)
+            ->first();
 
-        return $this->ok();
+        if (is_null($question)) {
+            return $this->responseNotFound();
+        }
+
+        $question->delete();
+
+        return $this->responseOk();
     }
 }
