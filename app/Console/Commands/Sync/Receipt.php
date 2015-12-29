@@ -122,11 +122,11 @@ class Receipt extends Sync
     {
         switch (true) {
             case str_contains($receipt->note, '學科'):
-                return Category::getCategories('exam.category', ['name' => 'theory', 'firstId' => true]);
+                return Category::getCategories('exam.category', 'theory', true);
             case str_contains($receipt->note, '術科'):
-                return Category::getCategories('exam.category', ['name' => 'technology', 'firstId' => true]);
+                return Category::getCategories('exam.category', 'technology', true);
             default :
-                return Category::getCategories('error', ['name' => 'general', 'firstId' => true]);
+                return Category::getCategories('error', 'general', true);
         }
     }
 }

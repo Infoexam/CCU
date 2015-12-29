@@ -3,11 +3,14 @@
 namespace App\Infoexam\Core;
 
 use Auth;
+use Cache;
 use Carbon\Carbon;
 use Eloquent;
 
 class Entity extends Eloquent
 {
+    const MINUTES_QUARTER_DAY = 360;
+    const MINUTES_HALF_DAY = 720;
     const MINUTES_PER_DAY = 1440;
     const MINUTES_PER_WEEK = 10080;
     const MINUTES_PER_MONTH = 40320;
@@ -30,48 +33,27 @@ class Entity extends Eloquent
     }
 
     /**
-     * Convert the model instance to JSON.
-     *
-     * @param int  $options
-     * @return string
-     */
-    public function toJson($options = 0)
-    {
-        $this->setAdditionalHiddenAttributes();
-
-        return parent::toJson($options);
-    }
-
-    /**
      * Convert the model instance to an array.
      *
      * @return array
      */
     public function toArray()
     {
-        $this->setAdditionalHiddenAttributes();
+        $hidden = true;
 
-        return parent::toArray();
-    }
+        if (! Auth::guest()) {
+            $key = Auth::user()->getAttribute('id') . ':admin';
 
-    /**
-     * 未登入或非管理員帳號時增加額外需隱藏的欄位
-     *
-     * @return void
-     */
-    public function setAdditionalHiddenAttributes()
-    {
-        $hidden = session('role_and_permission_for_hidden_attributes');
-
-        if (is_null($hidden)) {
-            $hidden = Auth::guest() || ! Auth::user()->hasRole(['admin']);
-
-            session()->flash('role_and_permission_for_hidden_attributes', $hidden);
+            $hidden = ! Cache::tags('user_role')->remember($key, 5, function () {
+                return Auth::user()->hasRole(['admin']);
+            });
         }
 
         if ($hidden) {
             $this->addHidden($this->notAdminHidden);
         }
+
+        return parent::toArray();
     }
 
     /**

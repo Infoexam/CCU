@@ -195,23 +195,18 @@ class Account extends Sync
      */
     protected function commonFields(stdClass $account)
     {
+        $gradeName = isset($this->gradesTable[$account->now_grade])
+            ? $this->gradesTable[$account->now_grade]
+            : 'deferral';
+
         return [
             'password' => bcrypt($account->user_pass),
             'name' => $account->name,
             'email' => $account->email,
             'social_security_number' => $account->id_num,
-            'gender_id' => Category::getCategories('user.gender', [
-                'name' => ('F' == $account->sex) ? 'female' : 'male',
-                'firstId' => true,
-            ]),
-            'department_id' => Category::getCategories('user.department', [
-                'name' => $account->deptcd,
-                'firstId' => true,
-            ]),
-            'grade_id' => Category::getCategories('user.grade', [
-                'name' => isset($this->gradesTable[$account->now_grade]) ? $this->gradesTable[$account->now_grade] : 'deferral',
-                'firstId' => true,
-            ]),
+            'gender_id' => Category::getCategories('user.gender', ('F' == $account->sex) ? 'female' : 'male', true),
+            'department_id' => Category::getCategories('user.department', $account->deptcd, true),
+            'grade_id' => Category::getCategories('user.grade', $gradeName, true),
             'class' => $account->now_class,
         ];
     }
