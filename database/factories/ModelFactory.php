@@ -13,19 +13,23 @@
 
 use App\Infoexam\General\Category;
 
+/** @var $factory \Illuminate\Database\Eloquent\Factory */
+
 /**
  * users and certificates table
  */
-$factory->define(App\Infoexam\User\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Infoexam\User\User::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'username' => $faker->userName,
         'password' => bcrypt(str_random(10)),
         'name' => $faker->name,
         'email' => $faker->email,
         'social_security_number' => str_random(10),
-        'gender_id' => Category::where('category', '=', 'user.gender')->get()->random()->getAttribute('id'),
-        'department_id' => Category::where('category', '=', 'user.department')->get()->random()->getAttribute('id'),
-        'grade_id' => Category::where('category', '=', 'user.grade')->get()->random()->getAttribute('id'),
+        'gender_id' => Category::getCategories('user.gender')->random()->getAttribute('id'),
+        'department_id' => Category::getCategories('user.department')->random()->getAttribute('id'),
+        'grade_id' => Category::getCategories('user.grade')->random()->getAttribute('id'),
         'class' => random_int(0, 1) ? 'A' : 'B',
         'test_count' => $faker->numberBetween(0, 100),
         'passed_score' => null,
@@ -33,16 +37,20 @@ $factory->define(App\Infoexam\User\User::class, function (Faker\Generator $faker
     ];
 });
 
-$factory->defineAs(App\Infoexam\User\User::class, 'passed', function (Faker\Generator $faker) use ($factory) {
+$factory->defineAs(App\Infoexam\User\User::class, 'passed', function () use ($factory) {
+    $faker = Faker\Factory::create('zh_TW');
+
     return array_merge($factory->raw(App\Infoexam\User\User::class), [
         'passed_score' => $faker->numberBetween(0, 100),
         'passed_at' => $faker->dateTime
     ]);
 });
 
-$factory->define(App\Infoexam\User\Certificate::class, function (Faker\Generator $faker) {
+$factory->define(App\Infoexam\User\Certificate::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
-        'category_id' => Category::where('category', '=', 'exam.category')->get()->random()->getAttribute('id'),
+        'category_id' => Category::getCategories('exam.category')->random()->getAttribute('id'),
         'score' => random_int(0, 100),
     ];
 });
@@ -51,56 +59,69 @@ $factory->define(App\Infoexam\User\Certificate::class, function (Faker\Generator
  * exam_sets, exam_questions, exam_options, exam_explanations,
  * exam_lists, exam_applies and exam_results tables
  */
-$factory->define(\App\Infoexam\Exam\Set::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Set::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'name' => $faker->name,
-        'category_id' => Category::where('category', '=', 'exam.category')->get()->random()->getAttribute('id'),
+        'category_id' => Category::getCategories('exam.category')->random()->getAttribute('id'),
         'enable' => random_int(0, 1),
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Question::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Question::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
-        'content' => $faker->paragraph,
-        'difficulty_id' => Category::where('category', '=', 'exam.difficulty')->get()->random()->getAttribute('id'),
+        'content' => $faker->realText(120),
+        'difficulty_id' => Category::getCategories('exam.difficulty')->random()->getAttribute('id'),
         'multiple' => random_int(0, 1),
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Option::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Option::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
     return [
-        'content' => $faker->paragraph,
+        'content' => $faker->realText(120),
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Explanation::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Explanation::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
-        'content' => $faker->paragraph,
+        'content' => $faker->realText(120),
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Lists::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Lists::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'code' => str_random(13),
         'began_at' => $faker->dateTime,
         'duration' => random_int(30, 90),
         'room' => random_int(100, 999),
         'paper_id' => \App\Infoexam\Exam\Paper::all()->random()->getAttribute('id'),
-        'apply_type_id' => Category::where('category', '=', 'exam.apply')->get()->random()->getAttribute('id'),
-        'subject_id' => Category::where('category', '=', 'exam.subject')->get()->random()->getAttribute('id'),
+        'apply_type_id' => Category::getCategories('exam.apply')->random()->getAttribute('id'),
+        'subject_id' => Category::getCategories('exam.subject')->random()->getAttribute('id'),
         'std_maximum_num' => random_int(10, 50),
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Apply::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Apply::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'user_id' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
-        'apply_type_id' => Category::where('category', '=', 'exam.applied')->get()->random()->getAttribute('id'),
+        'apply_type_id' => Category::getCategories('exam.applied')->random()->getAttribute('id'),
         'paid_at' => random_int(0, 1) ? $faker->dateTime : null,
     ];
 });
 
-$factory->define(\App\Infoexam\Exam\Result::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Result::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'score' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
         'signed_in_at' => $faker->dateTime,
@@ -110,10 +131,12 @@ $factory->define(\App\Infoexam\Exam\Result::class, function (\Faker\Generator $f
 /**
  * papers table
  */
-$factory->define(\App\Infoexam\Exam\Paper::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Exam\Paper::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
         'name' => $faker->name,
-        'remark' => $faker->sentence,
+        'remark' => $faker->realText(16),
         'automatic' => random_int(0, 1),
     ];
 });
@@ -121,17 +144,21 @@ $factory->define(\App\Infoexam\Exam\Paper::class, function (\Faker\Generator $fa
 /**
  * announcements and faqs table
  */
-$factory->define(\App\Infoexam\Website\Announcement::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Website\Announcement::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
-        'heading' => $faker->sentence . str_random(4),
+        'heading' => $faker->realText(16) . str_random(4),
         'link' => random_int(0, 1) ? $faker->url : null,
-        'content' => $faker->paragraph,
+        'content' => $faker->realText(120),
     ];
 });
 
-$factory->define(\App\Infoexam\Website\Faq::class, function (\Faker\Generator $faker) {
+$factory->define(\App\Infoexam\Website\Faq::class, function () {
+    $faker = Faker\Factory::create('zh_TW');
+
     return [
-        'question' => $faker->sentence,
-        'answer' => $faker->sentence,
+        'question' => $faker->realText(32),
+        'answer' => $faker->realText(64),
     ];
 });
