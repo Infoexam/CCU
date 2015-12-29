@@ -2,6 +2,7 @@
 
 namespace App\Infoexam\Exam;
 
+use App\Infoexam\General\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -41,11 +42,23 @@ class ApplyService
         return $this;
     }
 
-    public function destroy($id)
+    /**
+     * Delete apply
+     *
+     * @param Request $request
+     * @param string $code
+     * @param int $id
+     * @return $this
+     * @throws \Exception
+     */
+    public function destroy(Request $request, $code, $id)
     {
         $apply = Apply::with(['_list'])->find($id);
 
-        if (null === $apply) {
+        if (! $request->user()->hasRole(['admin'])
+            && $request->user()->getAttribute('id') !== $apply->getAttribute('user_id')) {
+            $this->appendErrors('permission_deny');
+        } else if (is_null($apply) || $apply->getRelation('_list')->getAttribute('code') !== $code) {
             $this->appendErrors('invalid_apply_id');
         } else if (Carbon::now()->diffInDays($apply->getRelation('_list')->getAttribute('began_at')) <= 1) {
             $this->appendErrors('too_late_to_cancel');
@@ -64,7 +77,7 @@ class ApplyService
      */
     protected function setList($code)
     {
-        $this->list = Lists::where('code', '=', $code)->first();
+        $this->list = Lists::where('code', $code)->first();
 
         if (! $this->listExists()) {
             $this->appendErrors('invalid_list_code');
@@ -80,10 +93,12 @@ class ApplyService
      */
     public function listExists()
     {
-        return null !== $this->list && $this->list->exists;
+        return ! is_null($this->list) && $this->list->exists;
     }
 
     /**
+     * Check list is valid.
+     *
      * @return bool
      */
     protected function isListValid()
@@ -108,10 +123,11 @@ class ApplyService
      */
     protected function store(Request $request)
     {
-        $this->list->applies()->save(new Apply([
-            'user_id' => $request->user()->getAttribute('id'),
-            'apply_type_id' => '24',    // todo: fix
-        ]));
+        list($u, $a) = $request->user()->hasRole(['admin'])
+            ? [$request->input('user_id'), Category::getCategories('exam.applied', 'admin', true)]
+            : [$request->user()->getAttribute('id'), Category::getCategories('exam.applied', 'user', true)];
+
+        $this->list->applies()->save(new Apply(['user_id' => $u, 'apply_type_id' => $a]));
     }
     
     /**

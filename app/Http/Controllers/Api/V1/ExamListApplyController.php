@@ -9,10 +9,12 @@ use App\Infoexam\Exam\Lists;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class ExamListApplyController extends ApiController
 {
+    /**
+     * ExamListApplyController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth:admin', ['only' => ['index']]);
@@ -20,47 +22,74 @@ class ExamListApplyController extends ApiController
         $this->middleware('auth', ['except' => 'index']);
     }
 
-    /** @todo Code refactoring */
-    public function index($listCode)
+    /**
+     * 取得測驗報名資料
+     *
+     * @param string $code
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index($code)
     {
         $list = Lists::with(['applies' => function (HasMany $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'user_id', 'exam_list_id', 'apply_type_id', 'paid_at']);
         }, 'applies.user' => function (BelongsTo $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'username', 'name']);
-        }])->where('code', '=', $listCode)->firstOrFail(['id', 'code']);
+        }])->where('code', $code)->first(['id', 'code']);
 
-        return response()->json($list->getRelation('applies'));
+        if (is_null($list)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->setData($list->getRelation('applies'))->responseOk();
     }
 
-    /** @todo Code refactoring */
+    /**
+     * 測驗報名
+     *
+     * @param Request $request
+     * @param ApplyService $applyService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request, ApplyService $applyService)
     {
         if (! $applyService->create($request)->success()) {
-            return $this->setErrors($applyService->getErrors())->responseWithErrors();
+            return $this->setMessages($applyService->getErrors())->responseUnprocessableEntity();
         }
 
         return $this->responseCreated();
     }
 
-    /** @todo Code refactoring */
-    public function show($listCode, $id)
+    /**
+     * 查看報名資料
+     *
+     * @param string $code
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($code, $id)
     {
         $apply = Apply::find($id);
 
-        return response()->json($apply);
+        if (is_null($apply)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->setData($apply)->responseOk();
     }
 
-    /** @todo Code refactoring */
-    public function update(Request $request, $listCode, $id)
+    /**
+     * 刪除報名資料
+     *
+     * @param Request $request
+     * @param string $code
+     * @param int $id
+     * @param ApplyService $applyService
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Request $request, $code, $id, ApplyService $applyService)
     {
-        //
-    }
-
-    /** @todo Code refactoring */
-    public function destroy($code, $id, ApplyService $applyService)
-    {
-        if ($applyService->destroy($id)->success()) {
-            return $this->setErrors($applyService->getErrors())->responseWithErrors();
+        if ($applyService->destroy($request, $code, $id)->success()) {
+            return $this->setMessages($applyService->getErrors())->responseUnprocessableEntity();
         }
 
         return $this->responseOk();

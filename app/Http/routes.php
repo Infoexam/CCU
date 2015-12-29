@@ -52,7 +52,7 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'edit']]);
 
             $router->resource('lists', 'ExamListController', ['except' => ['create', 'edit']]);
-            $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit']]);
+            $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit', 'update']]);
             $router->resource('lists.results', 'ExamListResultController', ['only' => ['index', 'update']]);
 
             $router->get('configs', ['as' => 'api.v1.exam.configs.show', 'uses' => 'ExamConfigController@show']);
