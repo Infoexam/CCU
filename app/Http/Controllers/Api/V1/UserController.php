@@ -63,8 +63,6 @@ class UserController extends ApiController
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
      * @throws AccessDeniedHttpException
-     *
-     * @todo Code refactoring
      */
     public function show(Request $request, $username)
     {
@@ -96,8 +94,6 @@ class UserController extends ApiController
      * @param UserRequest $request
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @todo Code refactoring
      */
     public function update(UserRequest $request, $username)
     {
@@ -113,13 +109,11 @@ class UserController extends ApiController
         ! $request->has('email') ?: $user->setAttribute('email', $request->input('email'));
 
         // 更新免費次數
-        foreach ($request->input('free', []) as $key => $value) {
-            foreach ($user->getRelation('certificate') as $certificate) {
-                /** @var $certificate \App\Infoexam\User\Certificate */
+        foreach ($user->getRelation('certificate') as $certificate) {
+            $value = $request->input('free.' . $certificate->getAttribute('id'));
 
-                if ($certificate->getAttribute('id') === $key) {
-                    $certificate->setAttribute('free', $value);
-                }
+            if (! is_null($value)) {
+                $certificate->setAttribute('free', $value);
             }
         }
 
