@@ -13,7 +13,7 @@ class EntrustSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['admin', 'developer', 'invigilator', 'student'];
+        $roles = ['admin', 'developer', 'invigilator', 'undergraduate', 'graduate'];
 
         $permissions = ['sign-in', 'create-announcement', 'create-test', 'create-paper'];
 
