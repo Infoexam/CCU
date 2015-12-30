@@ -27,7 +27,22 @@ class AuthController extends ApiController
 
         $this->refreshPassword(Auth::user(), $request->input('password'));
 
-        return $this->setHeaders(['Intended' => session()->pull('url.intended')])->responseOk();
+
+        return $this->setHeaders(['Intended' => $this->getIntended()])->responseOk();
+    }
+
+    /**
+     * Get intended url
+     *
+     * @return string
+     */
+    protected function getIntended()
+    {
+        if (Auth::user()->hasRole(['admin'])) {
+            return route('home.admin');
+        }
+
+        return session()->pull('url.intended');
     }
 
     /**
