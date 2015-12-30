@@ -1,4 +1,4 @@
-<ul id="nav-mobile-menu" class="side-nav">
+<ul id="nav-mobile-menu" class="side-nav fixed">
     <li class="no-padding">
         <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
             <li class="bold">

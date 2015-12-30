@@ -11,13 +11,25 @@ body {
 }
 
 header {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 footer {
-    margin-top: 30px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  margin-top: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+@media screen and (max-width: 992px) {
+  header ,main ,footer {
+    padding-left: 0px;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  header ,main ,footer {
+    padding-left: 240px;
+  }
 }
 
 .cursor {
@@ -114,6 +126,14 @@ footer {
     width: 50%;
     td {
       height: 5em;
+    }
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .reponsive-table-body {
+    td:first-child {
+      max-width: 20em;
     }
   }
 }

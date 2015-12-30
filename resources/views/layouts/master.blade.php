@@ -18,12 +18,14 @@
             @yield('header')
         </header>
 
-        <main class="container">
+        <main>
+            <div class="container">
             @section('main')
                 <!-- Begin of Router View -->
                 <router-view></router-view>
                 <!-- End of Router View -->
             @show
+            <div>
         </main>
 
         <footer class="indigo darken-1">
