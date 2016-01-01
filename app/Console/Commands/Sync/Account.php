@@ -4,9 +4,9 @@ namespace App\Console\Commands\Sync;
 
 use App\Infoexam\General\Category;
 use App\Infoexam\User\Certificate;
+use App\Infoexam\User\Role;
 use App\Infoexam\User\User;
 use DB;
-use Hash;
 use stdClass;
 
 class Account extends Sync
@@ -134,7 +134,6 @@ class Account extends Sync
     protected function shouldUpdate(User $user, $account)
     {
         switch (false) {
-            //case Hash::check($account->user_pass, $user->getAttribute('password')): // 極花效能
             case $user->getAttribute('name') === $account->name:
             case $user->getAttribute('email') === $account->email:
             case $user->getAttribute('class') === $account->now_class:
@@ -157,14 +156,18 @@ class Account extends Sync
     {
         $this->analysis['create'] = count($accounts);
 
-        $categories = Category::getCategories('exam.category');
+        $certificates = Category::getCategories('exam.category')->map(function (Category $category) {
+            return new Certificate(['category_id' => $category->getAttribute('id')]);
+        });
+
+        $role = Role::where('name', 'undergraduate')->first();
 
         foreach ($accounts as $account) {
             $user = User::create(array_merge(['username' => $account->std_no], $this->commonFields($account)));
 
-            foreach ($categories as $category) {
-                $user->certificate()->save(new Certificate(['category_id' => $category->getAttribute('id')]));
-            }
+            $user->certificate()->saveMany($certificates);
+
+            $user->roles()->save($role);
 
             $user->exists ? ++$this->analysis['created'] : ++$this->analysis['fail'];
         }
