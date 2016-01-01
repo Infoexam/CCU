@@ -173,7 +173,7 @@ class Certificate extends Sync
 
         foreach ($users as $user) {
             DB::connection('elearn')->table('certificates')
-                ->where('username', '=', $user->getAttribute('username'))
+                ->where('username', $user->getAttribute('username'))
                 ->update($this->commonFields($user))
                 ? ++$this->analysis['updated']
                 : ++$this->analysis['fail'];

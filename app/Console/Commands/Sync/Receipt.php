@@ -58,9 +58,9 @@ class Receipt extends Sync
     protected function getRemoteData()
     {
         $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
-            ->where('receipt_date', '=', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
+            ->where('receipt_date', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
             ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
-            ->where('acc5_cd', '=', '422Y-300')
+            ->where('acc5_cd', '422Y-300')
             ->get();
 
         return collect($this->trimData($receipts));
@@ -78,11 +78,11 @@ class Receipt extends Sync
 
         foreach ($receipts as $receipt) {
             /** @var User $user */
-            $user = User::where('username', '=', $this->getStudentId($receipt))->first();
+            $user = User::where('username', $this->getStudentId($receipt))->first();
 
             if (null === $user) {
                 $this->userNotFound($user);
-            } else if (! ReceiptEntity::where('receipt_no', '=', $receipt->receipt_no)->exists()) {
+            } else if (! ReceiptEntity::where('receipt_no', $receipt->receipt_no)->exists()) {
                 $user->receipts()->save(new ReceiptEntity([
                     'receipt_no' => $receipt->receipt_no,
                     'receipt_date' => $receipt->receipt_date,

@@ -75,7 +75,7 @@ class Account extends Sync
 
         // 指定帳號
         if (null !== $this->argument('student_id')) {
-            $db->where('std_no', '=', $this->argument('student_id'));
+            $db->where('std_no', $this->argument('student_id'));
         }
 
         return collect($this->trimData($db->get()));
@@ -184,7 +184,7 @@ class Account extends Sync
         $this->analysis['update'] = count($accounts);
 
         foreach ($accounts as $account) {
-            User::where('username', '=', $account->std_no)->update($this->commonFields($account))
+            User::where('username', $account->std_no)->update($this->commonFields($account))
                 ? ++$this->analysis['updated']
                 : ++$this->analysis['fail'];
         }
