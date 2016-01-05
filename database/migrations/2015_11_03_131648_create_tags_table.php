@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('name', 64);
             $table->integer('taggable_id')->unsigned();
-            $table->string('taggable_type');
+            $table->string('taggable_type', 190);
 
             $table->index('name');
             $table->index('taggable_id');

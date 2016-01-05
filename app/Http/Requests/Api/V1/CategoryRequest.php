@@ -24,13 +24,13 @@ class CategoryRequest extends Request
         return [
             'category' => [
                 'required',
-                'max:32',
+                'max:48',
                 'regex:/^[\w\.]+$/',
                 "unique:categories,category,{$category},category,name,{$name}",
             ],
             'name' => [
                 'required',
-                'max:192',
+                'max:96',
                 'regex:/^[\w\.]+$/',
             ],
             'remark' => 'max:255',

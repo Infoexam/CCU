@@ -17,7 +17,7 @@ class UserRequest extends Request
             'username' => 'required|max:32|unique:users,username',
             'password' => 'required|confirmed|min:6',
             'name' => 'required|max:32',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:128',
             'free' => 'required|array',
             'free.*' => 'required|integer',
         ];

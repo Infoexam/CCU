@@ -30,7 +30,7 @@ $factory->define(App\Infoexam\User\User::class, function () {
         'gender_id' => Category::getCategories('user.gender')->random()->getAttribute('id'),
         'department_id' => Category::getCategories('user.department')->random()->getAttribute('id'),
         'grade_id' => Category::getCategories('user.grade')->random()->getAttribute('id'),
-        'class' => random_int(0, 1) ? 'A' : 'B',
+        'class' => mt_rand(0, 1) ? 'A' : 'B',
         'test_count' => $faker->numberBetween(0, 100),
         'passed_score' => null,
         'passed_at' => null,
@@ -51,7 +51,7 @@ $factory->define(App\Infoexam\User\Certificate::class, function () {
 
     return [
         'category_id' => Category::getCategories('exam.category')->random()->getAttribute('id'),
-        'score' => random_int(0, 100),
+        'score' => mt_rand(0, 100),
     ];
 });
 
@@ -65,7 +65,7 @@ $factory->define(\App\Infoexam\Exam\Set::class, function () {
     return [
         'name' => $faker->name,
         'category_id' => Category::getCategories('exam.category')->random()->getAttribute('id'),
-        'enable' => random_int(0, 1),
+        'enable' => mt_rand(0, 1),
     ];
 });
 
@@ -75,7 +75,7 @@ $factory->define(\App\Infoexam\Exam\Question::class, function () {
     return [
         'content' => $faker->realText(120),
         'difficulty_id' => Category::getCategories('exam.difficulty')->random()->getAttribute('id'),
-        'multiple' => random_int(0, 1),
+        'multiple' => mt_rand(0, 1),
     ];
 });
 
@@ -100,12 +100,12 @@ $factory->define(\App\Infoexam\Exam\Lists::class, function () {
     return [
         'code' => str_random(13),
         'began_at' => $faker->dateTime,
-        'duration' => random_int(30, 90),
-        'room' => random_int(100, 999),
+        'duration' => mt_rand(30, 90),
+        'room' => mt_rand(100, 999),
         'paper_id' => \App\Infoexam\Exam\Paper::all()->random()->getAttribute('id'),
         'apply_type_id' => Category::getCategories('exam.apply')->random()->getAttribute('id'),
         'subject_id' => Category::getCategories('exam.subject')->random()->getAttribute('id'),
-        'std_maximum_num' => random_int(10, 50),
+        'std_maximum_num' => mt_rand(10, 50),
     ];
 });
 
@@ -115,7 +115,7 @@ $factory->define(\App\Infoexam\Exam\Apply::class, function () {
     return [
         'user_id' => \App\Infoexam\User\User::all()->random()->getAttribute('id'),
         'apply_type_id' => Category::getCategories('exam.applied')->random()->getAttribute('id'),
-        'paid_at' => random_int(0, 1) ? $faker->dateTime : null,
+        'paid_at' => mt_rand(0, 1) ? $faker->dateTime : null,
     ];
 });
 
@@ -137,7 +137,7 @@ $factory->define(\App\Infoexam\Exam\Paper::class, function () {
     return [
         'name' => $faker->name,
         'remark' => $faker->realText(16),
-        'automatic' => random_int(0, 1),
+        'automatic' => mt_rand(0, 1),
     ];
 });
 
@@ -149,7 +149,7 @@ $factory->define(\App\Infoexam\Website\Announcement::class, function () {
 
     return [
         'heading' => $faker->realText(16) . str_random(4),
-        'link' => random_int(0, 1) ? $faker->url : null,
+        'link' => mt_rand(0, 1) ? $faker->url : null,
         'content' => $faker->realText(120),
     ];
 });

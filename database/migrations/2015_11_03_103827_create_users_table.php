@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
             $table->rememberToken();
             $table->string('name', 32);
-            $table->string('email');
+            $table->string('email', 128);
             $table->char('social_security_number', 10)->default('_infoexam_');
             $table->integer('gender_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();

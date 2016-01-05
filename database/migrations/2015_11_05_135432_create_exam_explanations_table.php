@@ -13,9 +13,6 @@ class CreateExamExplanationsTable extends Migration
     public function up()
     {
         Schema::create('exam_explanations', function (Blueprint $table) {
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->increments('id');
             $table->integer('exam_question_id')->unsigned();
             $table->string('content', 1000);

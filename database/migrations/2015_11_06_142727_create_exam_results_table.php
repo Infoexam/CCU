@@ -16,7 +16,7 @@ class CreateExamResultsTable extends Migration
             $table->increments('id');
             $table->integer('exam_apply_id')->unsigned();
             $table->decimal('score', 6, 3)->nullable();
-            $table->string('log', 65536)->nullable();
+            $table->string('log', 32768)->nullable();
             $table->boolean('allow_re_sign_in')->default(false);
             $table->timestamp('signed_in_at');
             $table->timestamp('submitted_at')->nullable();

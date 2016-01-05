@@ -13,9 +13,6 @@ class CreateExamQuestionsTable extends Migration
     public function up()
     {
         Schema::create('exam_questions', function (Blueprint $table) {
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->increments('id');
             $table->integer('exam_set_id')->unsigned();
             $table->string('content', 1000);
