@@ -9,7 +9,7 @@
         </a>
 
         <!-- Desktop Menu -->
-        <!--<ul class="right hide-on-med-and-down">
+        <ul class="right hide-on-med-and-down">
             <li>
                 <a class="dropdown-button cursor-pointer" data-beloworigin="true" data-activates="nav-dropdown-account">
                     <span>{{ trans('navigation.account./') }}</span><i class="material-icons right">arrow_drop_down</i>
@@ -31,7 +31,7 @@
                 </a>
             </li>
 
-        </ul>-->
+        </ul>
     </div>
 </nav>
 

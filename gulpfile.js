@@ -33,7 +33,8 @@ elixir(function (mix) {
             'student/router.js'
         ], 'resources/assets/js/compiled/student.js')
         .sass([
-            'app.scss'
+            'app.scss',
+            'admin.scss'
         ])
         .browserify('compiled/admin.js')
         .browserify('compiled/student.js');

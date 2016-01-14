@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  background: #FAFAFA;
+  background: #F3F6F8 none repeat scroll 0% 0%;
 }
 
 header {
@@ -20,14 +20,18 @@ footer {
   padding-bottom: 50px;
 }
 
+main {
+  margin-top: 64px;
+}
+
 @media screen and (max-width: 992px) {
-  header ,main ,footer {
+  main ,footer {
     padding-left: 0;
   }
 }
 
 @media screen and (min-width: 993px) {
-  header ,main ,footer {
+  main ,footer {
     padding-left: 240px;
   }
 }

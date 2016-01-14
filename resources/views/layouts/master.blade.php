@@ -28,7 +28,7 @@
             <div>
         </main>
 
-        <footer class="indigo darken-1">
+        <footer class="indigo darken-2">
             <div class="container">
                 <span><a href="http://www.ccu.edu.tw/" target="_blank">{{ trans('navigation.copyright') }}</a> © 2015</span>
                 <a class="grey-text text-lighten-4 right" href="#!">More Links</a>

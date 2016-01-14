@@ -1,10 +1,7 @@
 @extends('layouts.master')
 
 @section('header')
-    <!-- Desktop Navigation -->
-    @include('admin.nav.desktop')
-
-    <!-- Mobile Navigation -->
+    <!-- Navigation -->
     @include('admin.nav.mobile')
 @endsection
 
