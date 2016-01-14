@@ -30,6 +30,10 @@
   z-index: 999;
 }
 
+.sidebar-item.v-link-active {
+  background: #DDD none repeat scroll 0% 0% !important;
+}
+
 .sidebar-menu {
   display: block;
 

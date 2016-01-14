@@ -6,8 +6,6 @@
 @endsection
 
 @section('main')
-    @include('layouts.breadcrumbs')
-
     @parent
 @endsection
 
