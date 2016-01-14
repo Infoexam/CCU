@@ -1,0 +1,49 @@
+.collection, .collection-header, .collection-item {
+  border: none !important;
+}
+
+.logo-icons {
+  height: 64px !important;
+  line-height: 64px !important;
+}
+
+
+.admin-nav {
+  position: fixed;
+  top: 0px;
+  box-shadow: none !important;
+  border-bottom: 1px solid #5C6BC0;
+  z-index: 999;
+}
+
+.sidebar {
+  position: fixed;
+  margin: 0;
+  padding: 0px;
+  background: #FFF none repeat scroll 0% 0% !important;
+  width: 240px;
+  height: calc(100vh - 64px);
+  overflow: auto;
+  top: 64px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 999;
+}
+
+.sidebar-menu {
+  display: block;
+
+  .sidebar-head {
+    display: block;
+    font-size: 12px;
+  }
+  
+  .sidebar-item {
+    display: block;
+
+    a {
+      display: block;
+      padding: 7px 0px 7px 30px;
+    }
+  }
+}
