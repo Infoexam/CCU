@@ -12,6 +12,8 @@ return [
 
     'composer_home' => env('COMPOSER_HOME', ''),
 
+    'composer_path' => env('COMPOSER_PATH'),
+
     'image_dir' => env('IMAGE_DIR', public_path('assets/images')),
 
     'static_url' => env('STATIC_URL', ''),

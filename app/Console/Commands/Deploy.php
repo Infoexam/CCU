@@ -99,7 +99,7 @@ class Deploy extends Command
     protected function composerUpdate()
     {
         // 取得 composer 路徑
-        $path = trim($this->externalCommand('which composer'));
+        $path = config('infoexam.composer_path');
 
         if (! empty($path)) {
             // 如果超過 15 天未更新，則先更新 composer 本身
