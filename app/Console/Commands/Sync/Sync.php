@@ -19,14 +19,6 @@ abstract class Sync extends Command
     ];
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * 跳脫空白字元
      *
      * @param array $data
@@ -36,7 +28,7 @@ abstract class Sync extends Command
     {
         foreach ($data as $datum) {
             foreach ($datum as $key => $value) {
-                $datum->$key = (null === $value) ? null : trim($value);
+                $datum->$key = (is_null($value)) ? null : trim($value);
             }
         }
 

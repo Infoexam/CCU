@@ -30,14 +30,6 @@ class Department extends Sync
     protected $departments;
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return array

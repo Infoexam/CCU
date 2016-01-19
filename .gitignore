@@ -1,6 +1,5 @@
 vendor/
 node_modules/
-.idea/
 
 public/build/
 public/images
@@ -11,5 +10,3 @@ public/css/
 Homestead.yaml
 Homestead.json
 .env
-_ide_helper.php
-.phpstorm.meta.php

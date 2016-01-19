@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\V1\AnnouncementRequest;
-use App\Infoexam\Image\Upload;
 use App\Infoexam\Website\Announcement;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -88,6 +87,8 @@ class AnnouncementController extends ApiController
      */
     public function storeOrUpdate(Model $announcement, Request $request, array $attributes = [])
     {
+        /** @var Announcement $announcement */
+
         $announcement = parent::storeOrUpdate($announcement, $request, ['heading', 'link', 'content']);
 
         if (! $announcement->exists) {
@@ -95,10 +96,7 @@ class AnnouncementController extends ApiController
         }
 
         if ($request->hasFile('image')) {
-            new Upload($request->file('image'), [
-                'id' => $announcement->getAttribute('id'),
-                'type' => Announcement::class,
-            ]);
+            $announcement->uploadImages($request->file('image'));
         }
 
         $this->setData($announcement);

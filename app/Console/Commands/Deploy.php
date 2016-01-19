@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use File;
 use Illuminate\Console\Command;
 use Log;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class Deploy extends Command
@@ -44,7 +45,7 @@ class Deploy extends Command
 
         $this->clearCache();
 
-        $this->vendorsUpdate();
+        $this->composerUpdate();
 
         $this->migrate();
 
@@ -54,7 +55,7 @@ class Deploy extends Command
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
 
-        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
+        if ($this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php')))) {
             $this->call('queue:restart');
         }
     }
@@ -90,65 +91,45 @@ class Deploy extends Command
     }
 
     /**
-     * 更新 vendors
-     *
-     * @return void
-     */
-    protected function vendorsUpdate()
-    {
-        $this->composerUpdate();
-
-        $this->npmUpdate();
-
-        File::delete(array_merge(
-            File::files(base_path('resources/assets/js/compiled')),
-            File::files(public_path('css')),
-            File::files(public_path('js'))
-        ));
-
-        $this->externalCommand('gulp --production');
-    }
-
-    /**
      * composer related update
      */
     protected function composerUpdate()
     {
-        if (! $this->isModified(base_path('composer.lock'))) {
-            $this->externalCommand('git pull');
-        } else {
-            // 取得 composer 路徑
-            $path = trim($this->externalCommand('which composer'));
+        // 取得 composer 路徑
+        $path = trim($this->externalCommand('which composer'));
 
-            if (! empty($path)) {
-                // 如果超過 15 天未更新，則先更新 composer 本身
-                if (Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
-                    $this->externalCommand("{$path} self-update");
-                }
-
-                // 如 home 目錄尚未設置，則指定為暫存目錄
-                if (empty($dir = config('infoexam.COMPOSER_HOME'))) {
-                    $dir = sys_get_temp_dir() . '/composer-temp-dir';
-
-                    File::makeDirectory($dir);
-                }
-
-                putenv("COMPOSER_HOME={$dir}");
-
-                // 執行 package 更新
-                $this->externalCommand("git pull; {$path} install -o");
+        if (! empty($path)) {
+            // 如果超過 15 天未更新，則先更新 composer 本身
+            if (Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
+                $this->externalCommand("{$path} self-update");
             }
+
+            // 設置 composer home 目錄
+            $this->setComposerHome();
+
+            // 執行 package 更新
+            $this->externalCommand("git pull; {$path} install -o");
         }
     }
 
     /**
-     * npm related update
+     * 設置 composer home 環境變數
+     *
+     * @return void
      */
-    protected function npmUpdate()
+    protected function setComposerHome()
     {
-        if ($this->isModified(base_path('package.json'))) {
-            $this->externalCommand('npm install');
+        $dir = config('infoexam.COMPOSER_HOME');
+
+        if (empty($dir)) {
+            $dir = file_build_path(sys_get_temp_dir(), 'composer-temp-dir');
+
+            if (! File::exists($dir)) {
+                File::makeDirectory($dir);
+            }
         }
+
+        putenv("COMPOSER_HOME={$dir}");
     }
 
     /**
@@ -166,7 +147,7 @@ class Deploy extends Command
         $process->run();
 
         if ( ! $process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
         return $process->getOutput();

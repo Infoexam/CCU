@@ -7,7 +7,6 @@ use App\Infoexam\Exam\Explanation;
 use App\Infoexam\Exam\Option;
 use App\Infoexam\Exam\Question;
 use App\Infoexam\Exam\Set;
-use App\Infoexam\Image\Upload;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -78,10 +77,7 @@ class ExamSetQuestionController extends ApiController
 
         // 新增圖片（如果有的話）
         if ($request->hasFile('question.image')) {
-            new Upload($request->file('question.image'), [
-                'id' => $question->getAttribute('id'),
-                'type' => Question::class
-            ]);
+            $question->uploadImages($request->file('question.image'));
         }
 
         // 新增選項
@@ -89,7 +85,7 @@ class ExamSetQuestionController extends ApiController
             $temp = $question->options()->save(new Option(['content' => $option['content']]));
 
             if (isset($option['image'])) {
-                new Upload($option['image'], ['id' => $temp->getAttribute('id'), 'type' => Option::class]);
+                $temp->uploadImages($option['image']);
             }
         }
 

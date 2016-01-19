@@ -5,12 +5,14 @@ namespace App\Infoexam\Exam;
 use App\Infoexam\Core\Entity;
 use App\Infoexam\General\Category;
 use App\Infoexam\Image\Image;
+use App\Infoexam\Image\UploadTrait;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Entity
 {
     use SoftDeletes;
+    use UploadTrait;
 
     /**
      * The database table used by the model.

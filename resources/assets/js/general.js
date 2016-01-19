@@ -12,7 +12,7 @@
             cookieName: 'locale',
             fallbackLng: false,
             lngWhitelist: ['en', 'zh-TW'],
-            resGetPath: '/locales/__ns__-__lng__.json'
+            resGetPath: '/assets/locales/__ns__-__lng__.json'
         }, function() {
             $('[data-i18n]').i18n();
         });

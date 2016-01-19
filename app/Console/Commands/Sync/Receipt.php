@@ -25,14 +25,6 @@ class Receipt extends Sync
     protected $description = '更新本地資料庫的收據資料';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return array

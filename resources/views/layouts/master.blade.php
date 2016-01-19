@@ -42,7 +42,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.5.1/vue-resource.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.7/vue-router.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/1.11.1/i18next.min.js" defer></script>
-        <script src="https://cdn-infoexam.ccu.edu.tw/ajax/libs/arrive/2.3.0/arrive.min.js" defer></script>
+        <script src="https://static-infoexam.ccu.edu.tw/ajax/libs/arrive/2.3.0/arrive.min.js" defer></script>
         @yield('scripts')
     </body>
 </html>
