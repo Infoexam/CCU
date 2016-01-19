@@ -111,7 +111,7 @@ class Deploy extends Command
             $this->setComposerHome();
 
             // 執行 package 更新
-            $this->externalCommand("git pull; {$path} install -o");
+            $this->externalCommand("git pull; {$path} install --no-dev -o");
         }
     }
 
