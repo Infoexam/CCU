@@ -55,7 +55,7 @@ class HomeController extends Controller
     {
         list($algo, $hash) = explode('=', $request->header('X-Hub-Signature'), 2);
 
-        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.GITHUB_WEBHOOK_SECRET')))) {
+        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.github_webhook_secret')))) {
             \Log::notice('Github Webhook', ['auth' => 'failed', 'ip' => $request->ip()]);
         } else {
             \Log::info('Github Webhook', ['auth' => 'success', 'ip' => $request->ip()]);

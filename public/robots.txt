@@ -4,7 +4,4 @@ Disallow: /admin
 Disallow: /exam/
 Disallow: /exam
 Disallow: /api/
-Disallow: /css/
-Disallow: /js/
-Disallow: /images/
-Disallow: /locales/
+Disallow: /assets/

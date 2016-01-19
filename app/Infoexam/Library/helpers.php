@@ -9,11 +9,17 @@ if (! function_exists('_asset')) {
      * @return string
      */
     function _asset($path, $secure = null) {
-        if (! app()->environment('production') || empty($cdn = config('infoexam.static_url'))) {
+        $env = app()->environment();
+
+        if (! in_array($env, ['production', 'development'])) {
             return asset($path, $secure);
         }
 
-        return "{$cdn}/{$path}";
+        $path = explode('/', $path);
+
+        array_splice($path, 1, 0, ('production' === $env) ? \App\Infoexam\Core\Entity::VERSION : 'dev');
+
+        return config('infoexam.static_url') . "/assets/" . implode('/', $path);
     }
 }
 

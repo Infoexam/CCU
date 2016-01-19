@@ -16,6 +16,11 @@ class Entity extends Eloquent
     const MINUTES_PER_MONTH = 40320;
 
     /**
+     * Infoexam Version
+     */
+    const VERSION = '0.0.1';
+
+    /**
      * 非管理員帳號需隱藏的欄位
      *
      * @var array

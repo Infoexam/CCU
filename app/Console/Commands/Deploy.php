@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Infoexam\Core\Entity;
 use Cache;
 use Carbon\Carbon;
 use File;
@@ -48,6 +49,8 @@ class Deploy extends Command
         $this->composerUpdate();
 
         $this->migrate();
+
+        $this->copyAssets();
 
         $this->setupCache();
 
@@ -119,7 +122,7 @@ class Deploy extends Command
      */
     protected function setComposerHome()
     {
-        $dir = config('infoexam.COMPOSER_HOME');
+        $dir = config('infoexam.composer_home');
 
         if (empty($dir)) {
             $dir = file_build_path(sys_get_temp_dir(), 'composer-temp-dir');
@@ -167,6 +170,25 @@ class Deploy extends Command
 
             $this->call('migrate', ['--force' => true]);
         }
+    }
+
+    /**
+     * 複製 assets 到 static 資料夾
+     *
+     * @return void
+     */
+    protected function copyAssets()
+    {
+        $targetDir = config('infoexam.assets_dir');
+
+        if (empty($targetDir)) {
+            return;
+        }
+
+        $version = config('app.env') === 'production' ? Entity::VERSION : 'dev';
+
+        File::copyDirectory(public_path(file_build_path('assets', 'css')), file_build_path($targetDir, 'css', $version));
+        File::copyDirectory(public_path(file_build_path('assets', 'js')), file_build_path($targetDir, 'js', $version));
     }
 
     /**
