@@ -9,17 +9,16 @@
             <!-- Mobile Menu Icon -->
             <a v-link="{name: 'home'}" data-activates="nav-mobile-menu-icon" class="button-collapse"><i class="material-icons" @click.prevent>menu</i></a>
 
-            <!-- Desktop Menu -->
-            <ul class="side-nav">
-                @include('_nav', ['device' => 'desktop'])
-            </ul>
-
-            <!-- Mobile Menu -->
             <ul class="side-nav" id="nav-mobile-menu-icon">
-                @include('_nav', ['device' => 'mobile'])
+                <li><a v-link="{name: 'home'}">{{ trans('navigation.announcement') }}</a></li>
+                <li><a v-link="{name: 'home'}">{{ trans('navigation.practice') }}</a></li>
             </ul>
         </div>
     </nav>
+@endsection
+
+@section('footer')
+    @include('student.footer')
 @endsection
 
 @section('scripts')

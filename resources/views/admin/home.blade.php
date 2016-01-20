@@ -2,11 +2,19 @@
 
 @section('header')
     <!-- Navigation -->
-    @include('admin.nav.mobile')
+    @include('admin.nav.nav')
 @endsection
 
 @section('main')
-    @parent
+    <div class="admin-main">
+        <div class="container">
+            @parent
+        </div>
+    </div>
+@endsection
+
+@section('footer')
+    @include('admin.nav.footer')
 @endsection
 
 @section('scripts')
