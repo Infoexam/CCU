@@ -132,6 +132,7 @@ class Deploy extends Command
             }
         }
 
+        putenv("HOME={$dir}");
         putenv("COMPOSER_HOME={$dir}");
     }
 
