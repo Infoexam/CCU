@@ -102,13 +102,13 @@ class Deploy extends Command
         $path = config('infoexam.composer_path');
 
         if (! empty($path)) {
+            // 設置 composer home 目錄
+            $this->setComposerHome();
+
             // 如果超過 15 天未更新，則先更新 composer 本身
             if (Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
                 $this->externalCommand("{$path} self-update");
             }
-
-            // 設置 composer home 目錄
-            $this->setComposerHome();
 
             // 執行 package 更新
             $this->externalCommand("git pull; {$path} install --no-dev -o");
