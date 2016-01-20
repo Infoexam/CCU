@@ -3,6 +3,7 @@
 namespace App\Infoexam\Image;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait UploadTrait
@@ -62,7 +63,7 @@ trait UploadTrait
             'hash' => random_int(1000000000, 4294967295),
             'extension' => $image->guessExtension(),
             'imageable_id' => $this->getAttribute('id'),
-            'imageable_type' => get_called_class(),
+            'imageable_type' => array_search(get_class($this), Relation::morphMap()) ?: get_class($this),
             'prefix_dir' => substr($now->timestamp, 0, 3),
         ];
     }
