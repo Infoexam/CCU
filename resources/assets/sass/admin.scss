@@ -1,3 +1,11 @@
+.admin-nav {
+  position: fixed;
+  top: 0px;
+  box-shadow: none !important;
+  border-bottom: 1px solid #5C6BC0;
+  z-index: 999;
+}
+
 .admin-main {
   margin-top: 64px;
   padding-top: 30px;
@@ -28,15 +36,6 @@
 .logo-icons {
   height: 64px !important;
   line-height: 64px !important;
-}
-
-
-.admin-nav {
-  position: fixed;
-  top: 0px;
-  box-shadow: none !important;
-  border-bottom: 1px solid #5C6BC0;
-  z-index: 999;
 }
 
 .sidebar {

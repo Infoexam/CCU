@@ -25,7 +25,8 @@ elixir(function (mix) {
         ], 'resources/assets/js/compiled/student.js')
         .sass([
             'app.scss',
-            'admin.scss'
+            'admin.scss',
+            'student.scss'
         ])
         .browserify('compiled/admin.js')
         .browserify('compiled/student.js');
