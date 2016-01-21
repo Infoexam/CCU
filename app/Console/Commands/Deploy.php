@@ -28,12 +28,9 @@ class Deploy extends Command
      */
     protected $description = 'Deploy application';
 
-    /**
-     * Create a new command instance.
-     */
-    public function __construct()
+    public function __destruct()
     {
-        parent::__construct();
+        opcache_reset();
     }
 
     /**
