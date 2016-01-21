@@ -113,7 +113,7 @@ class Deploy extends Command
 
     /**
      * 判斷是否要重新啟動 queue
-     * 
+     *
      * @return bool
      */
     protected function queueNeedRestart()
