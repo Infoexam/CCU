@@ -24,14 +24,12 @@ class CategoriesTableSeeder extends Seeder
             'exam.applied' => ['admin', 'user'],
         ];
 
-        foreach ($static as $key => $value) {
-            if (! Category::where('category', '=', $key)->exists()) {
-                foreach ($value as $item) {
-                    Category::create([
-                        'category' => $key,
-                        'name' => $item,
-                    ]);
-                }
+        foreach ($static as $category => $items) {
+            foreach ($items as $item) {
+                Category::firstOrCreate([
+                    'category' => $category,
+                    'name' => $item
+                ]);
             }
         }
     }

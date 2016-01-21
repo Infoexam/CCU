@@ -18,17 +18,13 @@ class EntrustSeeder extends Seeder
         $permissions = ['sign-in', 'create-announcement', 'create-test', 'create-paper'];
 
         foreach ($permissions as $permission) {
-            if (! Permission::where('name', '=', $permission)->exists()) {
-                Permission::create(['name' => $permission]);
-            }
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         $permissions = Permission::all()->pluck('id');
 
         foreach ($roles as $role) {
-            if (null === ($r = Role::where('name', '=', $role)->first())) {
-                $r = Role::create(['name' => $role]);
-            }
+            $r = Role::firstOrCreate(['name' => $role]);
 
             if ($permissions->count()) {
                 $p = $permissions->random(random_int(1, $permissions->count()));
