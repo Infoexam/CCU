@@ -4,7 +4,10 @@
 (function ($) {
     $(function() {
         // 下拉式選單列
-        $(".button-collapse").sideNav();
+        $('.button-collapse').sideNav();
+
+        // http://materializecss.com/pushpin.html
+        $('.feature-bar').pushpin({top: 94});
 
         // http://i18next.com/
         $.i18n.init({
