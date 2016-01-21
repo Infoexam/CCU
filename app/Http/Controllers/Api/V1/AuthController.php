@@ -20,7 +20,7 @@ class AuthController extends ApiController
      */
     public function signIn(Request $request)
     {
-        if (! Auth::attempt($request->only(['username', 'password']))
+        if (! Auth::attempt($request->only(['username', 'password']), true)
             && ! $this->attemptCenter($request->input('username'), $request->input('password'))) {
             return $this->setMessages(['Invalid username or password.'])->responseUnprocessableEntity();
         }
@@ -70,7 +70,7 @@ class AuthController extends ApiController
         }
 
         // 登入並更新本地密碼
-        Auth::loginUsingId($user->getAttribute('id'))->update(['password' => bcrypt($new->user_pass)]);
+        Auth::loginUsingId($user->getAttribute('id'), true)->update(['password' => bcrypt($new->user_pass)]);
 
         return true;
     }
@@ -114,7 +114,7 @@ class AuthController extends ApiController
             $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
 
             if (false !== $username && ! is_null($user = User::where('username', $username)->first())) {
-                Auth::loginUsingId($user->getAttribute('id'));
+                Auth::loginUsingId($user->getAttribute('id'), true);
             }
         }
 
