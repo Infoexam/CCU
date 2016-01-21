@@ -1,7 +1,7 @@
 .student-nav {
   border-bottom: 1px solid #E9E9E9;
   box-shadow: none;
-  background: #E9EAEA none repeat scroll 0% 0%;
+  background: #757575 none repeat scroll 0% 0%;
 }
 
 .student-main {
@@ -28,7 +28,6 @@
 }
 
 .feature-bar {
-  padding-right: 30px;
   .collection {
     border-radius: 0;
     background-color: transparent !important;
@@ -49,4 +48,8 @@
       }
     }
   }
+}
+
+.feature-bar.pinned {
+  margin-top: 64px;
 }
