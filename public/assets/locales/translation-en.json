@@ -1,4 +1,27 @@
 {
+    "navigation": {
+        "admin": {
+            "account": "帳號系統",
+            "account-info": "學生資料",
+            "account-sync": "資料同步",
+
+            "testing": "測驗系統",
+            "testing-list": "測驗管理",
+            "testing-grade": "成績管理",
+
+            "exam": "題庫系統",
+            "exam-set": "題庫管理",
+            "exam-paper": "試卷管理",
+
+            "website": "網站系統",
+            "website-announcement": "公告管理",
+            "website-maintenance": "維護管理",
+            "website-ip": "IP 限制",
+            "website-faq": "FAQ 管理",
+            "website-log": "Logs"
+        }
+    },
+
     "auth": {
         "username": "Username",
         "password": "Password",
@@ -30,5 +53,6 @@
     },
 
 
-    "tokenMismatch": "Oops! Please refresh the page."
+    "tokenMismatch": "Oops! Please refresh the page.",
+    "copyright": "National Chung Cheng University"
 }
