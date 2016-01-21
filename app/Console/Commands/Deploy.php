@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Infoexam\Core\Entity;
+use Artisan;
 use Cache;
 use Carbon\Carbon;
 use File;
@@ -18,7 +19,7 @@ class Deploy extends Command
      *
      * @var string
      */
-    protected $signature = 'deploy';
+    protected $signature = 'deploy {--isRestart}';
 
     /**
      * The console command description.
@@ -46,7 +47,15 @@ class Deploy extends Command
 
         $this->clearCache();
 
-        $this->composerUpdate();
+        if (! $this->option('isRestart')) {
+            $this->composerUpdate();
+
+            if ($this->queueNeedRestart()) {
+                $this->call('up');
+
+                return;
+            }
+        }
 
         $this->migrate();
 
@@ -57,40 +66,6 @@ class Deploy extends Command
         $this->call('up');
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
-
-        if ($this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php')))) {
-            $this->call('queue:restart');
-        }
-    }
-
-    /**
-     * 清除快取
-     *
-     * @return void
-     */
-    protected function clearCache()
-    {
-        $this->call('route:clear');
-
-        $this->call('config:clear');
-
-        $this->call('view:clear');
-
-        $this->call('clear-compiled');
-    }
-
-    /**
-     * 設置快取
-     *
-     * @return void
-     */
-    protected function setupCache()
-    {
-        $this->call('route:cache');
-
-        $this->call('config:cache');
-
-        $this->call('optimize');
     }
 
     /**
@@ -137,24 +112,23 @@ class Deploy extends Command
     }
 
     /**
-     * 執行外部程式指令
-     *
-     * @param string $command
-     * @return string
+     * 判斷是否要重新啟動 queue
+     * 
+     * @return bool
      */
-    protected function externalCommand($command)
+    protected function queueNeedRestart()
     {
-        $process = new Process($command);
+        switch (true) {
+            case 'production' === config('app.env'):
+            case $this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php'))):
+                $this->call('queue:restart');
 
-        $process->setWorkingDirectory(base_path());
+                Artisan::queue('deploy', ['--isRestart' => true]);
 
-        $process->run();
-
-        if ( ! $process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
+                return true;
+            default :
+                return false;
         }
-
-        return $process->getOutput();
     }
 
     /**
@@ -190,6 +164,57 @@ class Deploy extends Command
 
         File::copyDirectory(public_path(file_build_path('assets', 'css')), file_build_path($targetDir, 'css', $version));
         File::copyDirectory(public_path(file_build_path('assets', 'js')), file_build_path($targetDir, 'js', $version));
+    }
+
+    /**
+     * 清除快取
+     *
+     * @return void
+     */
+    protected function clearCache()
+    {
+        $this->call('route:clear');
+
+        $this->call('config:clear');
+
+        $this->call('view:clear');
+
+        $this->call('clear-compiled');
+    }
+
+    /**
+     * 設置快取
+     *
+     * @return void
+     */
+    protected function setupCache()
+    {
+        $this->call('route:cache');
+
+        $this->call('config:cache');
+
+        $this->call('optimize');
+    }
+
+    /**
+     * 執行外部程式指令
+     *
+     * @param string $command
+     * @return string
+     */
+    protected function externalCommand($command)
+    {
+        $process = new Process($command);
+
+        $process->setWorkingDirectory(base_path());
+
+        $process->run();
+
+        if ( ! $process->isSuccessful()) {
+            throw new RuntimeException($process->getErrorOutput());
+        }
+
+        return $process->getOutput();
     }
 
     /**
