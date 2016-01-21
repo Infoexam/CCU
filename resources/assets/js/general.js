@@ -7,7 +7,7 @@
         $('.button-collapse').sideNav();
 
         // http://materializecss.com/pushpin.html
-        $('.feature-bar').pushpin({top: 94});
+        $('.feature-bar').pushpin({offset: 94});
 
         // http://i18next.com/
         $.i18n.init({
