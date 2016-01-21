@@ -26,7 +26,7 @@ class User extends Entity implements AuthenticatableContract
      */
     protected $hidden = [
         'password', 'remember_token',
-        'social_security_number', 'gender_id', 'department_id', 'grade_id',
+        'ssn', 'gender_id', 'department_id', 'grade_id',
         'created_at', 'updated_at'
     ];
 
@@ -44,7 +44,7 @@ class User extends Entity implements AuthenticatableContract
      */
     protected $fillable = [
         'username', 'password', 'email',
-        'name', 'social_security_number', 'gender_id',
+        'name', 'ssn', 'gender_id',
         'department_id', 'grade_id', 'class',
         'test_count', 'passed_score', 'passed_at'
     ];

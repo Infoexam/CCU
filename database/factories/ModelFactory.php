@@ -26,7 +26,7 @@ $factory->define(App\Infoexam\User\User::class, function () {
         'password' => bcrypt(str_random(10)),
         'name' => $faker->name,
         'email' => $faker->email,
-        'social_security_number' => str_random(10),
+        'ssn' => str_random(10),
         'gender_id' => Category::getCategories('user.gender')->random()->getAttribute('id'),
         'department_id' => Category::getCategories('user.department')->random()->getAttribute('id'),
         'grade_id' => Category::getCategories('user.grade')->random()->getAttribute('id'),

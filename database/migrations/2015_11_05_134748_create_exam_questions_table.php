@@ -14,9 +14,9 @@ class CreateExamQuestionsTable extends Migration
     {
         Schema::create('exam_questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('exam_set_id')->unsigned();
+            $table->unsignedInteger('exam_set_id');
             $table->string('content', 1000);
-            $table->integer('difficulty_id')->unsigned();
+            $table->unsignedInteger('difficulty_id');
             $table->boolean('multiple');
             $table->timestamps();
             $table->softDeletes();

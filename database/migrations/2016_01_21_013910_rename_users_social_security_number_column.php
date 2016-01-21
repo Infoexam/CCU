@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRemarkColumnToCategoriesTable extends Migration
+class RenameUsersSocialSecurityNumberColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddRemarkColumnToCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->string('remark', 190)->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('social_security_number', 'ssn');
         });
     }
 
@@ -24,8 +24,8 @@ class AddRemarkColumnToCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('remark');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('ssn', 'social_security_number');
         });
     }
 }

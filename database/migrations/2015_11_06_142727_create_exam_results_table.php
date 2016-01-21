@@ -14,7 +14,7 @@ class CreateExamResultsTable extends Migration
     {
         Schema::create('exam_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('exam_apply_id')->unsigned();
+            $table->unsignedInteger('exam_apply_id');
             $table->decimal('score', 6, 3)->nullable();
             $table->string('log', 32768)->nullable();
             $table->boolean('allow_re_sign_in')->default(false);

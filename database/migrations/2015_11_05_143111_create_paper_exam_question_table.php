@@ -14,8 +14,8 @@ class CreatePaperExamQuestionTable extends Migration
     {
         Schema::create('paper_exam_question', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('paper_id')->unsigned();
-            $table->integer('exam_question_id')->unsigned();
+            $table->unsignedInteger('paper_id');
+            $table->unsignedInteger('exam_question_id');
 
             $table->unique(['paper_id', 'exam_question_id']);
 

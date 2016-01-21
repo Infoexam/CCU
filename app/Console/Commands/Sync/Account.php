@@ -206,7 +206,7 @@ class Account extends Sync
             'password' => bcrypt($account->user_pass),
             'name' => $account->name,
             'email' => $account->email,
-            'social_security_number' => $account->id_num,
+            'ssn' => $account->id_num,
             'gender_id' => Category::getCategories('user.gender', ('F' == $account->sex) ? 'female' : 'male', true),
             'department_id' => Category::getCategories('user.department', $account->deptcd, true),
             'grade_id' => Category::getCategories('user.grade', $gradeName, true),

@@ -43,7 +43,9 @@ class AppServiceProvider extends ServiceProvider
     protected function setMorphMap()
     {
         Relation::morphMap([
-            'announcement' => \App\Infoexam\Website\Announcement::class
+            'announcement' => \App\Infoexam\Website\Announcement::class,
+            'exam-question' => \App\Infoexam\Exam\Question::class,
+            'exam-option' => \App\Infoexam\Exam\Option::class,
         ]);
 
         return $this;

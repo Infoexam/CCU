@@ -14,7 +14,7 @@ class CreateExamExplanationsTable extends Migration
     {
         Schema::create('exam_explanations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('exam_question_id')->unsigned();
+            $table->unsignedInteger('exam_question_id');
             $table->string('content', 1000);
             $table->timestamps();
             $table->softDeletes();
