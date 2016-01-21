@@ -86,7 +86,7 @@ class Deploy extends Command
             }
 
             // 執行 package 更新
-            $this->externalCommand("git pull; {$path} install --no-dev -o");
+            $this->externalCommand("git pull; {$path} install --no-scripts --no-dev -o");
         }
     }
 
@@ -121,6 +121,7 @@ class Deploy extends Command
         switch (true) {
             case 'production' === config('app.env'):
             case $this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php'))):
+            case $this->isModified(base_path('composer.lock')):
                 $this->call('queue:restart');
 
                 Artisan::queue('deploy', ['--isRestart' => true]);
@@ -193,6 +194,7 @@ class Deploy extends Command
 
         $this->call('config:cache');
 
+        $this->call('clear-compiled');
         $this->call('optimize');
     }
 
