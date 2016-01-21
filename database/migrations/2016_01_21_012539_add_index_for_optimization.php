@@ -36,12 +36,14 @@ class AddIndexForOptimization extends Migration
             $table->dropIndex('categories_name_index');
         });
 
-        Schema::table('certificates', function (Blueprint $table) {
-            $table->dropIndex('certificates_category_id_index');
-        });
+        if ('mysql' !== config('database.default')) {
+            Schema::table('certificates', function (Blueprint $table) {
+                $table->dropIndex('certificates_category_id_index');
+            });
 
-        Schema::table('exam_results', function (Blueprint $table) {
-            $table->dropIndex('exam_results_exam_apply_id_index');
-        });
+            Schema::table('exam_results', function (Blueprint $table) {
+                $table->dropIndex('exam_results_exam_apply_id_index');
+            });
+        }
     }
 }
