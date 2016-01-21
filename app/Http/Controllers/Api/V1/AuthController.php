@@ -110,7 +110,7 @@ class AuthController extends ApiController
      */
     public function sso(Request $request)
     {
-        if (! is_null(config('infoexam.SSO_URL')) && $request->has(['miXd', 'ticket'])) {
+        if (! is_null(config('infoexam.sso_url')) && $request->has(['miXd', 'ticket'])) {
             $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
 
             if (false !== $username && ! is_null($user = User::where('username', $username)->first())) {
@@ -130,7 +130,7 @@ class AuthController extends ApiController
      */
     protected function ssoAuth($miXd, $ticket)
     {
-        $response = (new Client())->get(config('infoexam.SSO_URL'), ['query' => ['cid' => $miXd, 'ticket' => $ticket]]);
+        $response = (new Client())->get(config('infoexam.sso_url'), ['query' => ['cid' => $miXd, 'ticket' => $ticket]]);
 
         $dom = new DOMDocument();
 

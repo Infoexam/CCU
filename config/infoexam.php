@@ -2,9 +2,9 @@
 
 return [
 
-    'SSO_URL' => env('SSO_URL'),
+    'sso_url' => env('SSO_URL'),
 
-    'FIREWALL_ON' => env('FIREWALL_ON', false),
+    'firewall_on' => env('FIREWALL_ON', false),
 
     'github_webhook_secret' => env('GITHUB_WEBHOOK_SECRET'),
 

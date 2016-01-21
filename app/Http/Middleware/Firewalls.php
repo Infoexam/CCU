@@ -18,7 +18,7 @@ class Firewalls
      */
     public function handle($request, Closure $next)
     {
-        if (! config('infoexam.FIREWALL_ON')) {
+        if (! config('infoexam.firewall_on')) {
             return $next($request);
         }
 
