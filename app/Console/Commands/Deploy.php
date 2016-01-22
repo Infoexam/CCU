@@ -36,9 +36,7 @@ class Deploy extends Command
      */
     public function handle()
     {
-        $this->call('down');
-
-        $this->clearCache();
+        $this->down();
 
         if (! $this->option('isRestart')) {
             $this->composerUpdate();
@@ -54,9 +52,7 @@ class Deploy extends Command
 
         $this->copyAssets();
 
-        $this->setupCache();
-
-        $this->call('up');
+        $this->up();
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
     }
@@ -161,14 +157,40 @@ class Deploy extends Command
     }
 
     /**
+     * Put the application into maintenance mode
+     *
+     * @return void
+     */
+    protected function down()
+    {
+        (new Client())->get(route('opcache-reset'));
+
+        $this->clearCache();
+
+        $this->call('down');
+    }
+
+    /**
+     * Bring the application out of maintenance mode
+     *
+     * @return void
+     */
+    protected function up()
+    {
+        $this->call('up');
+
+        $this->setupCache();
+
+        (new Client())->get(route('opcache-reset'));
+    }
+
+    /**
      * 清除快取
      *
      * @return void
      */
     protected function clearCache()
     {
-        (new Client())->get(route('opcache-reset'));
-
         $this->call('route:clear');
 
         $this->call('config:clear');
@@ -191,8 +213,6 @@ class Deploy extends Command
 
         $this->call('clear-compiled');
         $this->call('optimize');
-
-        (new Client())->get(route('opcache-reset'));
     }
 
     /**
