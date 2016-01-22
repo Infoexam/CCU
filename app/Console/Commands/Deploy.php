@@ -7,6 +7,7 @@ use Artisan;
 use Cache;
 use Carbon\Carbon;
 use File;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Log;
 use RuntimeException;
@@ -27,11 +28,6 @@ class Deploy extends Command
      * @var string
      */
     protected $description = 'Deploy application';
-
-    public function __destruct()
-    {
-        opcache_reset();
-    }
 
     /**
      * Execute the console command.
@@ -171,6 +167,8 @@ class Deploy extends Command
      */
     protected function clearCache()
     {
+        (new Client())->get(route('opcache-reset'));
+
         $this->call('route:clear');
 
         $this->call('config:clear');
@@ -193,6 +191,8 @@ class Deploy extends Command
 
         $this->call('clear-compiled');
         $this->call('optimize');
+
+        (new Client())->get(route('opcache-reset'));
     }
 
     /**

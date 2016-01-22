@@ -10,6 +10,7 @@ $router->group(['middleware' => ['web']], function (Router $router) {
         $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
         $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
         $router->post('deploy', ['uses' => 'HomeController@deploy']);
+        $router->get('opcache-reset', ['as' => 'opcache-reset', 'uses' => 'HomeController@opcacheReset']);
     });
 
     $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {

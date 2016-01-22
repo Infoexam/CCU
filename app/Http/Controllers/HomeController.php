@@ -65,4 +65,14 @@ class HomeController extends Controller
 
         return response()->json('', 200);
     }
+
+    /**
+     * 清除 opcache
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opcacheReset()
+    {
+        return response()->json(opcache_reset(), 200);
+    }
 }
