@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col m8 l9">
         <div>
             <h5>常用功能</h5>
@@ -20,24 +20,24 @@
                 <div class="col m4 l4">
                     <div class="card">
                         <div class="card-image">
-                          <img src="">
-                          <span class="card-title black-text">預約管理</span>
+                            <img src="">
+                            <span class="card-title black-text">預約管理</span>
                         </div>
                     </div>
                 </div>
                 <div class="col m4 l4">
                     <div class="card">
                         <div class="card-image">
-                          <img src="">
-                          <span class="card-title black-text">測驗練習</span>
+                            <img src="">
+                            <span class="card-title black-text">測驗練習</span>
                         </div>
                     </div>
                 </div>
                 <div class="col m4 l4">
                     <div class="card">
                         <div class="card-image">
-                          <img src="">
-                          <span class="card-title black-text">線上測驗</span>
+                            <img src="">
+                            <span class="card-title black-text">線上測驗</span>
                         </div>
                     </div>
                 </div>
@@ -92,53 +92,5 @@
                 <li>若有其他說明事項將隨時補充或修正之</li>
             </ol>
         </div>
-    </div>
-</div>
-
-<!-- Sign In Modal -->
-<div id="sign-in-modal" class="modal">
-    <div class="modal-content">
-        <h4 class="center-align" data-i18n="auth.signIn"></h4>
-
-        <div class="row">
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input
-                            v-model="username"
-                            @keyup.enter="signIn()"
-                            id="username"
-                            type="text"
-                            class="validate"
-                            required
-                        >
-                        <label for="username" data-i18n="auth.username"></label>
-                    </div>
-
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">enhanced_encryption</i>
-                        <input
-                            v-model="password"
-                            @keyup.enter="signIn()"
-                            id="password"
-                            type="password"
-                            class="validate"
-                            required
-                        >
-                        <label for="password" data-i18n="auth.password"></label>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal-footer">
-        <button
-            @click.prevent="signIn()"
-            type="submit"
-            class="btn waves-effect waves-light"
-            data-i18n="auth.signIn"
-        ></button>
     </div>
 </div>

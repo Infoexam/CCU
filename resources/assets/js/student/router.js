@@ -1,12 +1,18 @@
 router.map({
     '/': {
-        name: 'home',
-        component: routerComponents.home
-    }
-});
+        component: routerComponents.master,
+        subRoutes: {
+            '/': {
+                name: 'home',
+                component: routerComponents.home
+            }
+        }
+    },
 
-router.redirect({
-    '*': '/'
+    '*': {
+        name: 'not-found',
+        component: routerComponents.notFound
+    }
 });
 
 router.start(Vue.extend({}), '#infoexam');

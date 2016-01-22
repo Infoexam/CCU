@@ -14,21 +14,9 @@
         <link rel="stylesheet" href="{{ _asset('css/app.css') }}">
     </head>
     <body id="infoexam">
-        <header>
-            @yield('header')
-        </header>
-
-        <main>
-            @section('main')
-                <!-- Begin of Router View -->
-                <router-view></router-view>
-                <!-- End of Router View -->
-            @show
-        </main>
-
-        <footer>
-            @yield('footer')
-        </footer>
+        <!-- Begin of Router View -->
+        <router-view></router-view>
+        <!-- End of Router View -->
 
         <!-- Loading JavaScript Sources -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" defer></script>

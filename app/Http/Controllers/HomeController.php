@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function student()
     {
-        return view('student.home');
+        return view('student');
     }
 
     /**
@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('admin.home');
+        return view('admin');
     }
 
     /**

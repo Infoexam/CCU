@@ -1,0 +1,94 @@
+<header>
+    <nav class="student-nav">
+        <div class="container">
+            <!-- Logo -->
+            <a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>
+
+            <!-- Mobile Menu Icon -->
+            <a v-link="{name: 'home'}" data-activates="nav-mobile-menu-icon" class="button-collapse"><i class="material-icons" @click.prevent>menu</i></a>
+        </div>
+    </nav>
+</header>
+
+<main class="student-main">
+    <div class="container">
+        <router-view></router-view>
+    </div>
+</main>
+
+<footer>
+    <div class="student-footer grey darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col m6 l6">
+                    <ul>
+                        <li><a class="grey-text text-lighten-4" href="http://www.ccu.edu.tw/" target="_blank">{{ trans('navigation.copyright') }} c 2015</a></li>
+                    </ul>
+                </div>
+                <div class="col m3 l3">
+                    <ul>
+                        <li><h5 class="grey-text text-lighten-4">使用說明</h5></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>應考須知</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>測驗規定</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>測驗說明</a></li>
+                    </ul>
+                </div>
+                <div class="col m3 l3">
+                    <ul>
+                        <li><h5 class="grey-text text-lighten-4">相關連結</h5></li>
+                        <li><a class="grey-text text-lighten-4" href="#!">相關連結1</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!">相關連結2</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Sign In Modal -->
+<div id="sign-in-modal" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align" data-i18n="auth.signIn"></h4>
+
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input
+                            v-model="username"
+                            @keyup.enter="signIn()"
+                            id="username"
+                            type="text"
+                            class="validate"
+                            required
+                        >
+                        <label for="username" data-i18n="auth.username"></label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">enhanced_encryption</i>
+                        <input
+                            v-model="password"
+                            @keyup.enter="signIn()"
+                            id="password"
+                            type="password"
+                            class="validate"
+                            required
+                        >
+                        <label for="password" data-i18n="auth.password"></label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            @click.prevent="signIn()"
+            type="submit"
+            class="btn waves-effect waves-light"
+            data-i18n="auth.signIn"
+        ></button>
+    </div>
+</div>
