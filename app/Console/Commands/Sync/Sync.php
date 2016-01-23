@@ -19,11 +19,6 @@ abstract class Sync extends Command
         'update' => 0, 'updated' => 0,
     ];
 
-    public function __destruct()
-    {
-        Cache::forget('categoriesTable');
-    }
-
     /**
      * 跳脫空白字元
      *
