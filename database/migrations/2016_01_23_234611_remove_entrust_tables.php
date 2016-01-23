@@ -30,7 +30,7 @@ class RemoveEntrustTables extends Migration
         Schema::table('roles', function (Blueprint $table) {
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
         // Create table for storing permissions
@@ -39,7 +39,7 @@ class RemoveEntrustTables extends Migration
             $table->string('name', 190)->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
         });
 
         // Create table for associating permissions to roles (Many-to-Many)

@@ -18,7 +18,7 @@ class CreateReceiptsTable extends Migration
             $table->char('receipt_date', 7);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('category_id');
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->unique('receipt_no');
 

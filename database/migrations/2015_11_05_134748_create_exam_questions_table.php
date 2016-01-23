@@ -18,7 +18,7 @@ class CreateExamQuestionsTable extends Migration
             $table->string('content', 1000);
             $table->unsignedInteger('difficulty_id');
             $table->boolean('multiple');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('exam_set_id');

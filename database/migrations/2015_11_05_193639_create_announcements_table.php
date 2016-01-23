@@ -17,7 +17,7 @@ class CreateAnnouncementsTable extends Migration
             $table->string('heading', 190);
             $table->string('link', 190)->nullable();
             $table->string('content', 1000);
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->unique('heading');

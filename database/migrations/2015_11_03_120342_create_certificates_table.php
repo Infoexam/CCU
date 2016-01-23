@@ -17,7 +17,7 @@ class CreateCertificatesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('category_id');
             $table->decimal('score', 6, 3)->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->unique(['user_id', 'category_id']);
 

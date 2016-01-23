@@ -20,7 +20,7 @@ class CreateExamResultsTable extends Migration
             $table->boolean('allow_re_sign_in')->default(false);
             $table->timestamp('signed_in_at');
             $table->timestamp('submitted_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->index('score');
 

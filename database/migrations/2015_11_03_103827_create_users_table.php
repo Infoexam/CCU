@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->unsignedTinyInteger('test_count')->default(0);
             $table->unsignedTinyInteger('passed_score')->nullable();
             $table->timestamp('passed_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->unique('username');
 

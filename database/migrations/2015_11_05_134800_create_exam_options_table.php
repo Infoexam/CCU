@@ -16,7 +16,7 @@ class CreateExamOptionsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('exam_question_id');
             $table->string('content', 1000);
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('exam_question_id');

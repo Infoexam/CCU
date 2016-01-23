@@ -18,7 +18,7 @@ class CreateExamAppliesTable extends Migration
             $table->unsignedInteger('exam_list_id');
             $table->unsignedInteger('apply_type_id');
             $table->timestamp('paid_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('user_id');

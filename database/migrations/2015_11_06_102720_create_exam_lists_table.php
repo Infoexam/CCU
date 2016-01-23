@@ -26,7 +26,7 @@ class CreateExamListsTable extends Migration
             $table->unsignedTinyInteger('std_test_num')->default(0);
             $table->boolean('allow_apply')->default(false);
             $table->timestamp('started_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->unique('code');

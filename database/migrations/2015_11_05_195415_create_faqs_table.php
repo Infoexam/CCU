@@ -16,7 +16,7 @@ class CreateFaqsTable extends Migration
             $table->increments('id');
             $table->string('question');
             $table->string('answer');
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('deleted_at');
