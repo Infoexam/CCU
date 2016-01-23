@@ -16,22 +16,6 @@ class UsersTableSeeder extends Seeder
     {
         $roles = Role::all()->pluck('id');
 
-        factory(User::class, mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificate()->save(factory(Certificate::class)->make());
-
-            $r = $roles->random(mt_rand(1, $roles->count()));
-
-            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
-        });
-
-        factory(User::class, 'passed', mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificate()->save(factory(Certificate::class)->make());
-
-            $r = $roles->random(mt_rand(1, $roles->count()));
-
-            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
-        });
-
         if (app()->environment(['local', 'testing'])) {
             if (! User::where('username', '=', 'test')->exists()) {
                 factory(User::class)->create([
@@ -40,5 +24,21 @@ class UsersTableSeeder extends Seeder
                 ])->roles()->sync($roles->all());
             }
         }
+
+        factory(User::class, mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
+            $user->certificates()->save(factory(Certificate::class)->make());
+
+            $r = $roles->random(mt_rand(1, $roles->count()));
+
+            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
+        });
+
+        factory(User::class, 'passed', mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
+            $user->certificates()->save(factory(Certificate::class)->make());
+
+            $r = $roles->random(mt_rand(1, $roles->count()));
+
+            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
+        });
     }
 }

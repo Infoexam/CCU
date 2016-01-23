@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Sync;
 
-use Cache;
 use Illuminate\Console\Command;
 
 abstract class Sync extends Command

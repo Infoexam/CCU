@@ -30,7 +30,7 @@ class UserController extends ApiController
      */
     public function search(Request $request)
     {
-        $users = User::with(['department']);
+        $users = User::with(['department'])->orderBy('username');
 
         if ($request->has('username')) {
             $users = $users->where('username', 'like', '%' . $request->input('username') . '%');
@@ -98,7 +98,7 @@ class UserController extends ApiController
             $user = $request->user();
         }
 
-        $user->load(['certificate' => function (HasMany $relation) {
+        $user->load(['certificates' => function (HasMany $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
         }, 'department', 'gender', 'grade']);
 
@@ -114,7 +114,7 @@ class UserController extends ApiController
      */
     public function update(UserRequest $request, $username)
     {
-        $user = User::with(['certificate'])->where('username', $username)->first();
+        $user = User::with(['certificates'])->where('username', $username)->first();
 
         if (is_null($user)) {
             return $this->responseNotFound();
@@ -126,7 +126,7 @@ class UserController extends ApiController
         ! $request->has('email') ?: $user->setAttribute('email', $request->input('email'));
 
         // 更新免費次數
-        foreach ($user->getRelation('certificate') as $certificate) {
+        foreach ($user->getRelation('certificates') as $certificate) {
             $value = $request->input('free.' . $certificate->getAttribute('category_id'));
 
             if (! is_null($value)) {

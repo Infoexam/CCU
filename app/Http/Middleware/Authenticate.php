@@ -24,7 +24,9 @@ class Authenticate
         array_pop($roles);
         array_pop($roles);
 
-        if (null === ($user = Auth::user())) {
+        /** @var \App\Infoexam\User\User|null $user */
+
+        if (null === ($user = Auth::guard()->user())) {
             $e = new UnauthorizedHttpException('Unauthorized');
         } else if (! empty($roles) && ! $user->hasRole($roles)) {
             $e = new AccessDeniedHttpException;

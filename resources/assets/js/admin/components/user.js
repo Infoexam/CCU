@@ -70,9 +70,9 @@
                     var data = vm.clone(response.data),
                         free = {};
 
-                    for (var i in data.certificate) {
-                        if (data.certificate.hasOwnProperty(i)) {
-                            free[data.certificate[i].category.id] = data.certificate[i].free;
+                    for (var i in data.certificates) {
+                        if (data.certificates.hasOwnProperty(i)) {
+                            free[data.certificates[i].category.id] = data.certificates[i].free;
                         }
                     }
 

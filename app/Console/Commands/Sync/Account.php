@@ -6,6 +6,7 @@ use App\Infoexam\General\Category;
 use App\Infoexam\User\Certificate;
 use App\Infoexam\User\Role;
 use App\Infoexam\User\User;
+use Carbon\Carbon;
 use DB;
 use stdClass;
 
@@ -33,6 +34,13 @@ class Account extends Sync
     protected $accounts;
 
     /**
+     * Certificate numbers.
+     *
+     * @var integer
+     */
+    protected $certificatesCount;
+
+    /**
      * 年級對應表
      *
      * @var array
@@ -53,7 +61,9 @@ class Account extends Sync
     {
         $accounts = $this->getRemoteData();
 
-        $this->accounts = User::with(['department', 'grade'])->get();
+        $this->accounts = User::with(['certificates', 'department', 'grade'])->get();
+
+        $this->certificatesCount = Category::getCategories('exam.category')->count();
 
         $this->analysis['total'] = $accounts->count();
 
@@ -107,15 +117,15 @@ class Account extends Sync
     {
         $groups = ['notExists' => [], 'needUpdate' => []];
 
+        $indexes = $this->accounts->pluck('username')->all();
+
         foreach ($accounts as $account) {
-            $exists = $this->accounts->search(function (User $item) use ($account) {
-                return $item->getAttribute('username') === $account->std_no;
-            });
+            $exists = array_search($account->std_no, $indexes);
 
             if (false === $exists) {
                 $groups['notExists'][] = $account;
             } else if ($this->shouldUpdate($this->accounts[$exists], $account)) {
-                $groups['needUpdate'][] = $account;
+                $groups['needUpdate'][] = ['remote' => $account, 'local' => $this->accounts[$exists]];
             } else {
                 ++$this->analysis['notAffect'];
             }
@@ -140,6 +150,7 @@ class Account extends Sync
             case $user->getRelation('department')->getAttribute('name') === $account->deptcd:
             case isset($this->gradesTable[$account->now_grade]):
             case $user->getRelation('grade')->getAttribute('name') === ($this->gradesTable[$account->now_grade]):
+            case $user->getRelation('certificates')->count() === $this->certificatesCount:
                 return true;
             default:
                 return false;
@@ -156,21 +167,43 @@ class Account extends Sync
     {
         $this->analysis['create'] = count($accounts);
 
-        $certificates = Category::getCategories('exam.category')->map(function (Category $category) {
-            return new Certificate(['category_id' => $category->getAttribute('id')]);
-        });
+        $certificates = Category::getCategories('exam.category')->pluck('id')->all();
 
-        $role = Role::where('name', 'undergraduate')->first();
+        $role_id = Role::where('name', 'undergraduate')->first()->getAttribute('id');
+
+        $now = Carbon::now();
+
+        $delayInsert = ['certificates' => [], 'roles' => []];
 
         foreach ($accounts as $account) {
-            $user = User::create(array_merge(['username' => $account->std_no], $this->commonFields($account)));
+            $user = User::create(array_merge([
+                'username' => $account->std_no,
+                'password' => bcrypt($account->user_pass),
+            ], $this->commonFields($account)));
 
-            $user->certificate()->saveMany($certificates);
+            if (! $user->exists) {
+                ++$this->analysis['fail'];
+            } else {
+                ++$this->analysis['created'];
 
-            $user->roles()->save($role);
+                foreach ($certificates as $certificate) {
+                    $delayInsert['certificates'][] = [
+                        'user_id' => $user->getAttribute('id'),
+                        'category_id' => $certificate,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
 
-            $user->exists ? ++$this->analysis['created'] : ++$this->analysis['fail'];
+                $delayInsert['roles'][] = [
+                    'user_id' => $user->getAttribute('id'),
+                    'role_id' => $role_id
+                ];
+            }
         }
+
+        DB::table('certificates')->insert($delayInsert['certificates']);
+        DB::table('role_user')->insert($delayInsert['roles']);
     }
 
     /**
@@ -183,8 +216,21 @@ class Account extends Sync
     {
         $this->analysis['update'] = count($accounts);
 
+        $categoriesId = Category::getCategories('exam.category')->pluck('id')->all();
+
         foreach ($accounts as $account) {
-            User::where('username', $account->std_no)->update($this->commonFields($account))
+            /** @var User $user */
+            $user = $account['local'];
+
+            $certificates = array_map(function ($id) {
+                return new Certificate(['category_id' => $id]);
+            }, array_diff($categoriesId, $user->getRelation('certificates')->pluck('category_id')->all()));
+
+            if (count($certificates) > 0) {
+                $user->certificates()->saveMany($certificates);
+            }
+
+            $user->update($this->commonFields($account['remote']))
                 ? ++$this->analysis['updated']
                 : ++$this->analysis['fail'];
         }
@@ -203,7 +249,6 @@ class Account extends Sync
             : 'deferral';
 
         return [
-            'password' => bcrypt($account->user_pass),
             'name' => $account->name,
             'email' => $account->email,
             'ssn' => $account->id_num,

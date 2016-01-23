@@ -37,7 +37,7 @@ class Certificate extends Sync
     {
         $certificates = $this->getRemoteData();
 
-        $this->users = User::with(['certificate'])->where('username', 'like', '4%')->get();
+        $this->users = User::with(['certificates'])->where('username', 'like', '4%')->get();
 
         $this->analysis['total'] = $this->users->count();
 
@@ -86,7 +86,7 @@ class Certificate extends Sync
         $this->users->transform(function (User $item) {
             $scores = [];
 
-            foreach ($item->getRelation('certificate') as $certificate) {
+            foreach ($item->getRelation('certificates') as $certificate) {
                 $scores[$certificate->getRelation('category')->getAttribute('name')] = $certificate->getAttribute('score');
             }
 

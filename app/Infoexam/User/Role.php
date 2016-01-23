@@ -2,9 +2,9 @@
 
 namespace App\Infoexam\User;
 
-use Zizaco\Entrust\EntrustRole;
+use App\Infoexam\Core\Entity;
 
-class Role extends EntrustRole
+class Role extends Entity
 {
     /**
      * The database table used by the model.
@@ -14,9 +14,16 @@ class Role extends EntrustRole
     protected $table = 'roles';
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'display_name', 'description'];
+    protected $fillable = ['name'];
 }

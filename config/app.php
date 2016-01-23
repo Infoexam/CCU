@@ -162,7 +162,6 @@ return [
         Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -211,7 +210,6 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Imager'     => Intervention\Image\Facades\Image::class,
 
     ],

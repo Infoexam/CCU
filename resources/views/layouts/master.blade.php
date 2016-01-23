@@ -23,7 +23,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.15/vue.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.6.1/vue-resource.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.9/vue-router.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/1.11.2/i18next.min.js" defer></script>
         <script src="https://static-infoexam.ccu.edu.tw/ajax/libs/arrive/2.3.0/arrive.min.js" defer></script>
         @yield('scripts')

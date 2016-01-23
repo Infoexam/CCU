@@ -7,11 +7,10 @@ use App\Infoexam\Exam\Lists;
 use App\Infoexam\General\Category;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Entity implements AuthenticatableContract
 {
-    use Authenticatable, EntrustUserTrait;
+    use Authenticatable;
 
     /**
      * The database table used by the model.
@@ -55,7 +54,7 @@ class User extends Entity implements AuthenticatableContract
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function certificate()
+    public function certificates()
     {
         return $this->hasMany(Certificate::class);
     }
@@ -108,5 +107,36 @@ class User extends Entity implements AuthenticatableContract
     public function _lists()
     {
         return $this->belongsToMany(Lists::class, 'exam_applies', 'user_id', 'exam_list_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * 檢查是否有指定身份
+     *
+     * @param string|array $roles
+     * @return bool
+     */
+    public function hasRole($roles)
+    {
+        if (! is_array($roles)) {
+            $roles = [$roles];
+        }
+
+        $this->load(['roles']);
+
+        foreach ($this->getRelation('roles') as $role) {
+            if (in_array($role->getAttribute('name'), $roles)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
