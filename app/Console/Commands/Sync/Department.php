@@ -76,7 +76,13 @@ class Department extends Sync
             });
 
             if (false !== $exists) {
-                ++$this->analysis['notAffect'];
+                if ($this->departments[$exists]->getAttribute('remark') !== $department->name) {
+                    $this->departments[$exists]->update(['remark' => $department->name]);
+
+                    ++$this->analysis['updated'];
+                } else {
+                    ++$this->analysis['notAffect'];
+                }
             } else {
                 $category = Category::create([
                     'category' => 'user.department',

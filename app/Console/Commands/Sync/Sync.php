@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Sync;
 
+use Cache;
 use Illuminate\Console\Command;
 
 abstract class Sync extends Command
@@ -17,6 +18,11 @@ abstract class Sync extends Command
         'create' => 0, 'created' => 0,
         'update' => 0, 'updated' => 0,
     ];
+
+    public function __destruct()
+    {
+        Cache::forget('categoriesTable');
+    }
 
     /**
      * 跳脫空白字元

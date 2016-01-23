@@ -16,7 +16,7 @@ class CategoriesTableSeeder extends Seeder
             'error' => ['general', 'not-found'],
             'user.gender' => ['male', 'female'],
             'user.grade' => ['freshman', 'sophomore', 'junior', 'senior', 'deferral', 'admin'],
-            'user.department' => ['4104', '4204', '4304' ,'4404' ,'4504'],
+            'user.department' => ['4104', '4106', '4108', '4204', '4304'],
             'exam.category' => ['theory', 'technology'],
             'exam.difficulty' => ['easy', 'middle', 'hard'],
             'exam.subject' => ['app-theory', 'app-tech', 'soft-theory', 'soft-tech'],

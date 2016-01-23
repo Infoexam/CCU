@@ -3,6 +3,7 @@
 namespace App\Infoexam\User;
 
 use App\Infoexam\Core\Entity;
+use App\Infoexam\Exam\Lists;
 use App\Infoexam\General\Category;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -97,5 +98,15 @@ class User extends Entity implements AuthenticatableContract
     public function grade()
     {
         return $this->belongsTo(Category::class, 'grade_id');
+    }
+
+    /**
+     * 取得該使用者所有測驗場次
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function _lists()
+    {
+        return $this->belongsToMany(Lists::class, 'exam_applies', 'user_id', 'exam_list_id');
     }
 }

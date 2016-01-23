@@ -8,6 +8,21 @@ router.map({
                 name: 'home',
                 component: routerComponents.home
             },
+
+            '/users': {
+                name: 'users.index',
+                component: routerParentInstance,
+                subRoutes: {
+                    '/': {
+                        component: routerComponents.user.index
+                    },
+                    '/:user/edit': {
+                        name: 'users.edit',
+                        component: routerComponents.user.edit
+                    }
+                }
+            },
+
             '/exam/sets': {
                 name: 'exam.sets.index',
                 component: routerParentInstance,
@@ -117,14 +132,18 @@ router.map({
             '/ip-rules': {
                 name: 'ip-rules.index',
                 component: routerComponents.ipRules.index
+            },
+
+            '/not-found': {
+                name: 'not-found',
+                component: routerComponents.notFound
             }
         }
-    },
-
-    '*' : {
-        name: 'not-found',
-        component: routerComponents.notFound
     }
+});
+
+router.redirect({
+    '*': '/not-found'
 });
 
 router.start(Vue.extend(), '#infoexam');

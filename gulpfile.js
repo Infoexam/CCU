@@ -11,13 +11,13 @@ if (elixir.config.production) {
 }
 
 elixir(function (mix) {
-    mix.scripts([
+    mix.babel([
         'general.js',
         'vue-mixin.js',
         'admin/components',
         'admin/router.js'
     ], 'resources/assets/js/compiled/admin.js')
-        .scripts([
+        .babel([
             'general.js',
             'vue-mixin.js',
             'student/components',

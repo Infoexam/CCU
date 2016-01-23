@@ -14,16 +14,18 @@ class UserRequest extends Request
     public function rules()
     {
         $rules = [
-            'username' => 'required|max:32|unique:users,username',
-            'password' => 'required|confirmed|min:6',
+            'username' => 'sometimes|required|max:32|unique:users,username',
+            'password' => 'confirmed|min:6',
             'name' => 'required|max:32',
             'email' => 'required|email|max:128',
             'free' => 'required|array',
-            'free.*' => 'required|integer',
+            'free.*' => 'required|integer|digits_between:0,255',
         ];
 
         if ($this->isMethod('PATCH')) {
             $rules['username'] .= ',' . $this->route('username') . ',username';
+        } else {
+            $rules['password'] .= '|required';
         }
 
         return $rules;

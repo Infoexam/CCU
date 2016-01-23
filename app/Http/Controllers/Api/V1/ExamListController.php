@@ -25,12 +25,16 @@ class ExamListController extends ApiController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lists = Lists::with(['apply', 'subject'])->latest('began_at')->paginate(10, [
-            'code', 'began_at', 'duration', 'room', 'apply_type_id', 'subject_id',
-            'std_maximum_num', 'std_apply_num', 'allow_apply',
-        ]);
+        if (! $request->has('code')) {
+            $lists = Lists::with(['apply', 'subject'])->latest('began_at')->paginate(10, [
+                'code', 'began_at', 'duration', 'room', 'apply_type_id', 'subject_id',
+                'std_maximum_num', 'std_apply_num', 'allow_apply',
+            ]);
+        } else {
+            $lists = Lists::orderBy('code', 'desc')->get(['code'])->pluck('code');
+        }
 
         return $this->setData($lists)->responseOk();
     }

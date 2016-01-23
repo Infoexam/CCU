@@ -1,0 +1,93 @@
+<div class="row">
+    <form class="col s12" @submit.prevent="update()">
+        <div class="row">
+            <div class="col s12">
+                <span>學號：{{ user.username }}</span><br>
+                <span>系所：{{ user.department.remark }}</span><br>
+                <span>班別：{{ user.class }}</span><br>
+                <span>年級：{{ user.grade.name }}</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.name"
+                    id="name"
+                    type="text"
+                    required
+                >
+                <label class="active" for="name">姓名</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.email"
+                    id="email"
+                    type="email"
+                    required
+                >
+                <label class="active" for="email">信箱</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.password"
+                    id="password"
+                    type="password"
+                >
+                <label for="password">新密碼</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.password_confirmation"
+                    id="password_confirmation"
+                    type="password"
+                >
+                <label for="password_confirmation">新密碼確認</label>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col s12">
+                <span>測驗次數：{{ user.test_count }}</span><br>
+                <span>通過分數：{{ user.passed_score || '尚未通過' }}</span><br>
+                <span>通過時間：{{ user.passed_at || '尚未通過' }}</span>
+            </div>
+        </div>
+
+        <template v-for="certificate in user.certificate" track-by="$index">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input
+                        v-model="form.free[certificate.category.id]"
+                        id="{{ 'free' + certificate.category.name }}"
+                        type="number"
+                        min="0"
+                        max="255"
+                        required
+                    >
+                    <label class="active" for="{{ 'free' + certificate.category.name }}">{{ certificate.category.name }} 免費次數</label>
+                </div>
+            </div>
+        </template>
+
+        <div class="row">
+            <div class="input-field col s6 l3">
+                <button class="btn waves-effect waves-light" type="submit">
+                    <span>更新</span>
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

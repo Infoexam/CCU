@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\Api\V1\UserRequest;
 use App\Infoexam\User\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
@@ -26,14 +27,30 @@ class UserController extends ApiController
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @todo finish it
      */
     public function search(Request $request)
     {
-        //
+        $users = User::with(['department']);
 
-        return $this->responseOk();
+        if ($request->has('username')) {
+            $users = $users->where('username', 'like', '%' . $request->input('username') . '%');
+        }
+
+        if ($request->has('name')) {
+            $users = $users->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('department')) {
+            $users = $users->where('department_id', $request->input('department'));
+        }
+
+        if ($request->has('code')) {
+            $users = $users->whereHas('_lists', function (Builder $query) use ($request) {
+                $query->where('code', $request->input('code'));
+            });
+        }
+
+        return $this->setData($users->get())->responseOk();
     }
 
     /**
@@ -110,10 +127,10 @@ class UserController extends ApiController
 
         // 更新免費次數
         foreach ($user->getRelation('certificate') as $certificate) {
-            $value = $request->input('free.' . $certificate->getAttribute('id'));
+            $value = $request->input('free.' . $certificate->getAttribute('category_id'));
 
             if (! is_null($value)) {
-                $certificate->setAttribute('free', $value);
+                $certificate->update(['free' => $value]);
             }
         }
 
@@ -121,7 +138,7 @@ class UserController extends ApiController
         $user->roles()->sync($request->input('roles', []));
 
         // 儲存所有資料到資料庫
-        $user->push();
+        $user->save();
 
         return $this->setData($user)->responseOk();
     }
