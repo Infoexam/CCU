@@ -160,7 +160,6 @@ return [
          * Package Service Providers...
          */
         Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
 
     ],
@@ -210,7 +209,6 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
-        'Imager'     => Intervention\Image\Facades\Image::class,
 
     ],
 
