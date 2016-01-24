@@ -19,6 +19,18 @@ abstract class Sync extends Command
     ];
 
     /**
+     * Execute the console command.
+     *
+     * @return array
+     */
+    public function handle()
+    {
+        $this->printResult();
+
+        return $this->analysis;
+    }
+
+    /**
      * 跳脫空白字元
      *
      * @param array $data
@@ -28,7 +40,7 @@ abstract class Sync extends Command
     {
         foreach ($data as $datum) {
             foreach ($datum as $key => $value) {
-                $datum->$key = (is_null($value)) ? null : trim($value);
+                $datum->$key = is_null($value) ? null : trim($value);
             }
         }
 
@@ -52,18 +64,7 @@ abstract class Sync extends Command
         $this->getOutput()->writeln("<comment>Update: {$this->analysis['updated']}/{$this->analysis['update']}</comment>");
     }
 
-    /**
-     * 取得遠端資料
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    abstract protected function getRemoteData();
+    abstract protected function getSourceData();
 
-    /**
-     * 同步資料
-     *
-     * @param \Illuminate\Support\Collection $data
-     * @return void
-     */
-    abstract protected function syncData($data);
+    abstract protected function syncDestinationData($data);
 }

@@ -36,19 +36,17 @@ class Department extends Sync
      */
     public function handle()
     {
-        $departments = $this->getRemoteData();
+        $departments = $this->getSourceData();
 
         $this->departments = Category::getCategories('user.department');
 
         $this->analysis['total'] = $departments->count();
 
-        $this->syncData($departments);
+        $this->syncDestinationData($departments);
 
         Cache::forget('categoriesTable');
 
-        $this->printResult();
-
-        return $this->analysis;
+        return parent::handle();
     }
 
     /**
@@ -56,7 +54,7 @@ class Department extends Sync
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getRemoteData()
+    protected function getSourceData()
     {
         return collect($this->trimData(DB::connection('elearn')->table('unit')->get()));
     }
@@ -68,7 +66,7 @@ class Department extends Sync
      * @param \Illuminate\Support\Collection $departments
      * @return void
      */
-    protected function syncData($departments)
+    protected function syncDestinationData($departments)
     {
         foreach ($departments as $department) {
             $exists = $this->departments->search(function (Category $item) use ($department) {

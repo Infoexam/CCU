@@ -31,15 +31,13 @@ class Receipt extends Sync
      */
     public function handle()
     {
-        $receipts = $this->getRemoteData();
+        $receipts = $this->getSourceData();
 
         $this->analysis['total'] = $receipts->count();
 
-        $this->syncData($receipts);
+        $this->syncDestinationData($receipts);
 
-        $this->printResult();
-
-        return $this->analysis;
+        return parent::handle();
     }
 
     /**
@@ -47,7 +45,7 @@ class Receipt extends Sync
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getRemoteData()
+    protected function getSourceData()
     {
         $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
             ->where('receipt_date', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
@@ -64,7 +62,7 @@ class Receipt extends Sync
      * @param \Illuminate\Support\Collection $receipts
      * @return void
      */
-    protected function syncData($receipts)
+    protected function syncDestinationData($receipts)
     {
         $this->analysis['create'] = $receipts->count();
 

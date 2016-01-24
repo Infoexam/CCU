@@ -35,17 +35,15 @@ class Certificate extends Sync
      */
     public function handle()
     {
-        $certificates = $this->getRemoteData();
+        $certificates = $this->getSourceData();
 
         $this->users = User::with(['certificates'])->where('username', 'like', '4%')->get();
 
         $this->analysis['total'] = $this->users->count();
 
-        $this->syncData($certificates);
+        $this->syncDestinationData($certificates);
 
-        $this->printResult();
-
-        return $this->analysis;
+        return parent::handle();
     }
 
     /**
@@ -53,7 +51,7 @@ class Certificate extends Sync
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getRemoteData()
+    protected function getSourceData()
     {
         return collect(DB::connection('elearn')->table('certificates')->get());
     }
@@ -64,7 +62,7 @@ class Certificate extends Sync
      * @param \Illuminate\Support\Collection $certificates
      * @return void
      */
-    protected function syncData($certificates)
+    protected function syncDestinationData($certificates)
     {
         $this->setScoresAttribute();
 
