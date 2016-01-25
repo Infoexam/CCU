@@ -23,6 +23,7 @@ class ExamListController extends ApiController
     /**
      * 取得所有測驗資訊，一頁 10 筆資料
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -53,24 +54,33 @@ class ExamListController extends ApiController
     /**
      * 查詢指定測驗
      *
+     * @param Request $request
      * @param string $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($code)
+    public function show(Request $request, $code)
     {
-        $list = Lists::where('code', $code)->first();
+        $columns = ['*'];
+
+        if ($request->has('edit')) {
+            $columns = ['id', 'began_at', 'duration', 'room', 'std_maximum_num', 'allow_apply'];
+        }
+
+        $list = Lists::where('code', $code)->first($columns);
 
         if (is_null($list)) {
             return $this->responseNotFound();
         }
 
-        $list->load([
-            'paper' => function (BelongsTo $relation) {
-                $relation->getQuery()->getQuery()->select(['id', 'name']);
-            },
-            'apply',
-            'subject'
-        ]);
+        if (! $request->has('edit')) {
+            $list->load([
+                'paper' => function (BelongsTo $relation) {
+                    $relation->getQuery()->getQuery()->select(['id', 'name']);
+                },
+                'apply',
+                'subject'
+            ]);
+        }
 
         return $this->setData($list)->responseOk();
     }
@@ -90,7 +100,7 @@ class ExamListController extends ApiController
             return $this->responseNotFound();
         }
 
-        return $this->storeOrUpdate($list, $request);
+        return $this->storeOrUpdate($list, $request, ['code', 'began_at', 'duration', 'room', 'std_maximum_num', 'allow_apply']);
     }
 
     /**
@@ -103,8 +113,8 @@ class ExamListController extends ApiController
      */
     public function storeOrUpdate(Model $list, Request $request, array $attributes = [])
     {
-        $list = parent::storeOrUpdate($list, $request, [
-            'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id', 'std_maximum_num'
+        $list = parent::storeOrUpdate($list, $request, $attributes ?: [
+            'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id', 'std_maximum_num', 'allow_apply'
         ]);
 
         if (! $list->exists) {

@@ -28,6 +28,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('sync:receipt')->dailyAt('02:00')->withoutOverlapping();
+        $schedule->command('down')->dailyAt('02:00');
+
+        $schedule->command('sync:department')->monthly()->at('02:05')->evenInMaintenanceMode()->withoutOverlapping();
+        $schedule->command('sync:account')->dailyAt('02:15')->evenInMaintenanceMode()->withoutOverlapping();
+        $schedule->command('sync:receipt')->dailyAt('02:30')->evenInMaintenanceMode()->withoutOverlapping();
+        //$schedule->command('sync:certificate')->dailyAt('02:35')->evenInMaintenanceMode()->withoutOverlapping();
+
+        $schedule->command('up')->dailyAt('03:00');
     }
 }

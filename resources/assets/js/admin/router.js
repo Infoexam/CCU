@@ -23,6 +23,11 @@ router.map({
                 }
             },
 
+            '/exam/configs': {
+                name: 'exam.configs.index',
+                component: routerComponents.exam.configs.index
+            },
+
             '/exam/sets': {
                 name: 'exam.sets.index',
                 component: routerParentInstance,
@@ -91,11 +96,15 @@ router.map({
                     '/': {
                         component: routerComponents.exam.lists.index
                     },
-                    '/:id': {
+                    'create': {
+                        name: 'exam.lists.create' ,
+                        component: routerComponents.exam.lists.create
+                    },
+                    '/:code': {
                         name: 'exam.lists.show',
                         component: routerComponents.exam.lists.show
                     },
-                    '/:id/edit' : {
+                    '/:code/edit' : {
                         name:'exam.lists.edit',
                         component: routerComponents.exam.lists.edit
                     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\Api\V1\ExamSetRequest;
 use App\Infoexam\Exam\Set;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 
 class ExamSetController extends ApiController
 {
@@ -19,11 +20,16 @@ class ExamSetController extends ApiController
     /**
      * 取得所有題庫資料
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sets = Set::with(['category'])->latest()->paginate(10, ['id', 'name', 'category_id', 'enable']);
+        if (! $request->has('all')) {
+            $sets = Set::with(['category'])->latest()->paginate(10, ['id', 'name', 'category_id', 'enable']);
+        } else {
+            $sets = Set::get(['id', 'name']);
+        }
 
         return $this->setData($sets)->responseOk();
     }

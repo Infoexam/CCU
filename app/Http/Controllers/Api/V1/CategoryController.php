@@ -51,7 +51,17 @@ class CategoryController extends ApiController
      */
     public function show($category, $name = '')
     {
-        return $this->setData(Category::getCategories($category, $name))->responseOk();
+        $categories = explode(',', $category);
+
+        if (1 === count($categories)) {
+            $data = Category::getCategories($category, $name);
+        } else {
+            foreach ($categories as $category) {
+                $data[$category] = Category::getCategories($category);
+            }
+        }
+
+        return $this->setData($data)->responseOk();
     }
 
     /**

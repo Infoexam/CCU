@@ -1,0 +1,108 @@
+<div class="row">
+    <form class="col s12" enctype="multipart/form-data" @submit.prevent="update()">
+        <div class="row">
+            <div class="col s12">
+                <label>開放教室</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-214"
+                    type="checkbox"
+                    value="214"
+                >
+                <label for="allowRoom-214">214</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-215"
+                    type="checkbox"
+                    value="215"
+                >
+                <label for="allowRoom-215">215</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-216"
+                    type="checkbox"
+                    value="216"
+                >
+                <label for="allowRoom-216">216</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-217"
+                    type="checkbox"
+                    value="217"
+                >
+                <label for="allowRoom-217">217</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-109"
+                    type="checkbox"
+                    value="109"
+                >
+                <label for="allowRoom-109">109</label>
+
+                <input
+                    v-model="form.allowRoom"
+                    id="allowRoom-110"
+                    type="checkbox"
+                    value="110"
+                >
+                <label for="allowRoom-110">110</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.passedScore"
+                    id="passedScore"
+                    type="number"
+                    class="validate"
+                    min="0"
+                    max="100"
+                    required
+                >
+                <label class="active" for="passedScore">通過分數</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.apply.canCancelDay"
+                    id="canCancelDay"
+                    type="number"
+                    class="validate"
+                    min="0"
+                    required
+                >
+                <label class="active" for="canCancelDay">取消預約天數限制</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.apply.freeApplyGrade"
+                    id="freeApplyGrade"
+                    type="number"
+                    class="validate"
+                    min="1"
+                    max="4"
+                    required
+                >
+                <label class="active" for="freeApplyGrade">免費預約年級限制</label>
+            </div>
+        </div>
+
+        <div class="center-align">
+            <button type="submit" class="btn waves-effect waves-light">
+                <span>更新</span>
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>

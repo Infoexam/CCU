@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -50,11 +51,17 @@ class ApiController extends Controller
      */
     public function storeOrUpdate(Model $model, Request $request, array $attributes = [])
     {
+        $dates = $model->getDates();
+
         foreach ($attributes as $key => $value) {
             // 如果 key 為數字，代表值為索引，否則值為預設值
             list($k, $v) = is_int($key) ? [$value, null] : [$key, $value];
 
-            $model->setAttribute($k, $request->has($k) ? $request->input($k) : $v);
+            if (in_array($k, $dates, true)) {
+                $model->setAttribute($k, $request->has($k) ? Carbon::parse($request->input($k)) : $v);
+            } else {
+                $model->setAttribute($k, $request->has($k) ? $request->input($k) : $v);
+            }
         }
 
         $model->exists = $model->save();

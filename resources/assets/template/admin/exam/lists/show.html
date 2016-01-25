@@ -1,31 +1,30 @@
 <table class="striped highlight centered responsive-table">
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Code</th>
-			<th>Began_at</th>
-			<th>Duration</th>
-			<th>room</th>
-			<th>報名人數</th>
-			<th>Std_test_num</th>
-			<th>Allow_apply</th>
-			<th>Paper_name</th>
-			<th>Apply_name</th>
-			<th>Subject_name</th>
-		</tr>
-	</thead>
-	<tbody>
-		<td>{{lists.id}}</td>
-		<td>{{lists.code}}</td>
-		<td>{{lists.began_at}}</td>
-		<td>{{lists.duration}}</td>
-		<td>{{lists.room}}</td>
-		<td>{{lists.std_apply_num}}  / {{lists.std_maximum_num}}</td>
-		<td>{{lists.std_test_num}}</td>
-		<td>{{lists.allow_apply}}</td>
-		<td>{{lists.paper.name}}</td>
-		<td>{{lists.apply.name}}</td>
-		<td>{{lists.subject.name}}</td>
-	</tbody>
-
+    <thead>
+        <tr>
+            <th>測驗代碼</th>
+            <th>起始時間</th>
+            <th>測驗時間</th>
+            <th>測驗教室</th>
+            <th>報名人數</th>
+            <th>實到人數</th>
+            <th>開放報名</th>
+            <th>試卷名稱</th>
+            <th>報名類型</th>
+            <th>測驗類型</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ list.code }}</td>
+            <td>{{ list.began_at }}</td>
+            <td>{{ list.duration }}</td>
+            <td>{{ list.room }}</td>
+            <td>{{ list.std_apply_num}}  / {{ list.std_maximum_num }}</td>
+            <td>{{ list.std_test_num }}</td>
+            <td>{{ list.allow_apply }}</td>
+            <td><a v-link="{name: 'exam.papers.show', params: {id: list.paper.id}}">{{ list.paper.name  }}</a></td>
+            <td>{{ list.apply.name }}</td>
+            <td>{{ list.subject.name }}</td>
+        </tr>
+    </tbody>
 </table>

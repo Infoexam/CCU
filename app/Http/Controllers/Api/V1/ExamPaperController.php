@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Requests\Api\V1\ExamPaperRequest;
 use App\Infoexam\Exam\Paper;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 
 class ExamPaperController extends ApiController
 {
@@ -20,11 +21,16 @@ class ExamPaperController extends ApiController
     /**
      * 取得所有試卷資料
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $papers = Paper::orderBy('automatic')->latest()->paginate(10, ['id', 'name', 'remark', 'automatic']);
+        if (! $request->has('all')) {
+            $papers = Paper::orderBy('automatic')->latest()->paginate(10, ['id', 'name', 'remark', 'automatic']);
+        } else {
+            $papers = Paper::where('automatic', false)->get(['id', 'name']);
+        }
 
         return $this->setData($papers)->responseOk();
     }

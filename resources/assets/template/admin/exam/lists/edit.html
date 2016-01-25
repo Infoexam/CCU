@@ -1,55 +1,84 @@
 <div class="row">
-    <form class="col s12" @submit.prevent="patch()">
+    <form class="col s12" @submit.prevent="update">
+        <div class="row">
+            <div class="col s12">
+                <label for="began_at">起始時間</label>
+                <input
+                    v-model="form.began_at"
+                    id="began_at"
+                    type="datetime-local"
+                    class="validate"
+                    required
+                >
+            </div>
+        </div>
+
         <div class="row">
             <div class="input-field col s12">
-                <input v-model="form.code" id="code" type="text" class="validate" length="255" autofocus required>
-                <label class="active" for="code">題庫code</label>
+                <input
+                    v-model="form.duration"
+                    id="duration"
+                    type="number"
+                    class="validate"
+                    min="1"
+                    max="255"
+                    required
+                >
+                <label class="active" for="duration">測驗時間</label>
             </div>
+        </div>
 
-            <div class="input-field col s12">
-                <input v-model="form.began_at" id="began_at" type="text" class="validate" length="255" autofocus required>
-                <label class="active" for="began_at">起始時間</label>
-            </div>
-
-            <div class="input-field col s12">
-                <input v-model="form.duration" id="duration" type="text" class="validate" length autofocus required>
-                <label class="active" for="duration">考試時間</label>
-            </div>
-
-            <div class="input-field col s12">
-                <input v-model="form.room" id="room" type="text" class="validate" length autofocus required>
-                <label class="active" for="room">考試地點</label>
-            </div>
-
-            <div class="input-field col s12">
-                <input v-model="form.id" id="id" type="text" class="validate" length autofocus required>
-                <label class="active" for="id">試卷ID</label>
-            </div>
-
+        <div class="row">
             <div class="col s12">
-                <label for="category">報名類型</label>
-                <select v-model="form.apply_id" id="apply_id" class="browser-default" required>
-                    <option v-for="category in categories_apply" value="{{ category.id }}">{{ category.name }}</option>
+                <label for="room">測驗教室</label>
+                <select
+                    v-model="form.room"
+                    id="room"
+                    class="browser-default validate"
+                    required
+                >
+                    <option value="" disabled selected>測驗教室</option>
+                    <template v-for="room in data.rooms">
+                        <option value="{{ room }}">{{ room }}</option>
+                    </template>
                 </select>
             </div>
+        </div>
 
-            <div class="col s12">
-                <label for="category">報名類型</label>
-                <select v-model="form.subject_id" id="subject_id" class="browser-default" required>
-                    <option v-for="category in categories_subject" value="{{ category.id }}">{{ category.name }}</option>
-                </select>
-            </div>
-
+        <div class="row">
             <div class="input-field col s12">
-                <input v-model="form.std_maximum_num" id="std_maximum_num" type="text" class="validate" length autofocus required>
-                <label class="active" for="std_maximum_num">報考人數</label>
+                <input
+                    v-model="form.std_maximum_num"
+                    id="std_maximum_num"
+                    type="number"
+                    class="validate"
+                    min="1"
+                    max="255"
+                    required
+                >
+                <label class="active" for="std_maximum_num">人數限制</label>
             </div>
-            
+        </div>
 
+        <div class="row">
+            <div class="col s12">
+                <div class="switch">
+                    <label>開放報名 </label>
+                    <label>
+                        否
+                        <input
+                            v-model="form.allow_apply"
+                            type="checkbox"
+                        >
+                        <span class="lever"></span>
+                        是
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="center-align">
-            <button class="btn waves-effect waves-light" type="submit">
+            <button type="submit" class="btn waves-effect waves-light">
                 <span>更新</span>
                 <i class="material-icons right">send</i>
             </button>
