@@ -29,7 +29,7 @@ class ExamConfigController extends ApiController
             $config = Config::find('exam');
 
             if (! is_null($config)) {
-                $configs = unserialize($config);
+                $configs = unserialize($config->getAttribute('value'));
             }
         }
 
