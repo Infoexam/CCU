@@ -23,7 +23,17 @@ class ExamConfigController extends ApiController
      */
     public function show()
     {
-        return $this->setData(Cache::tags('config')->get('exam', collect()))->responseOk();
+        $configs = Cache::tags('config')->get('exam', collect());
+
+        if ($configs->isEmpty()) {
+            $config = Config::find('exam');
+
+            if (! is_null($config)) {
+                $configs = unserialize($config);
+            }
+        }
+
+        return $this->setData($configs)->responseOk();
     }
 
     /**
