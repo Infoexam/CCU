@@ -18,7 +18,7 @@ class Entity extends Eloquent
     /**
      * Infoexam Version
      */
-    const VERSION = '0.0.4';
+    const VERSION = '0.0.5';
 
     /**
      * 非管理員帳號需隱藏的欄位
