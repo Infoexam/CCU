@@ -1,14 +1,9 @@
 "use strict";
 
 /* General Vanilla JS and jQuery */
+
 (function ($) {
-    $(function() {
-        // http://materializecss.com/navbar.html
-        $('.button-collapse').sideNav();
-
-        // http://materializecss.com/pushpin.html
-        $('.feature-bar').pushpin({top: 94});
-
+    $(function () {
         // https://i18next.github.io/i18next/
         $.i18n.init({
             detectLngQS: 'lang',
@@ -20,44 +15,40 @@
             $('[data-i18n]').i18n();
         });
 
-        // https://github.com/uzairfarooq/arrive
+        /*
+         * https://github.com/uzairfarooq/arrive
+         */
 
-        $(document).arrive('[data-i18n]', function() {
+        $(document).arrive('[data-i18n]', function () {
             $(this).i18n();
         });
 
+        // http://materializecss.com/navbar.html
+        $(document).arrive('.button-collapse', function () {
+            $(this).sideNav();
+        });
+
+        // http://materializecss.com/pushpin.html
+        $(document).arrive('.feature-bar', function () {
+            $(this).pushpin({top: 94});
+        });
+
         // http://materializecss.com/dialogs.html#tooltip
-        $(document).arrive('.tooltipped', function() {
+        $(document).arrive('.tooltipped', function () {
             $(this).tooltip({delay: 50});
         });
-        $(document).leave('.tooltipped', function() {
+        $(document).leave('.tooltipped', function () {
             $(this).tooltip('remove');
         });
 
         // http://materializecss.com/forms.html#character-counter
-        $(document).arrive('input[length], textarea[length]', function() {
+        $(document).arrive('input[length], textarea[length]', function () {
             $(this).characterCounter();
         });
 
-        // http://materializecss.com/forms.html#select
-        $(document).arrive('select', function() {
-            $(this).material_select();
-        });
-
         // http://materializecss.com/media.html#materialbox
-        $(document).arrive('.materialboxed', function() {
+        $(document).arrive('.materialboxed', function () {
             $(this).materialbox();
-        });
-
-        // 行動版點擊選單列連結時，需觸發移除覆蓋事件
-        $(document).on('click', '#nav-mobile-menu a[href]', function () {
-            var overlay = document.getElementById('sidenav-overlay');
-
-            if (null !== overlay) {
-                overlay.click();
-
-                $('#nav-mobile-menu a.active:not([href])').click();
-            }
         });
     });
 })(jQuery);
@@ -67,8 +58,4 @@
 Vue.http.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift());
 
 var router = new VueRouter(),
-    routerComponents = {};
-
-if (-1 !== window.location.pathname.indexOf('/admin')) {
-    routerComponents.exam = {};
-}
+    routerComponents = {exam: {}};
