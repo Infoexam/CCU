@@ -1,4 +1,4 @@
-(function(Vue, $, Materialize){
+(function (Vue, $, Materialize){
     Vue.mixin({
         methods: {
             httpSuccessHandler: function (response, options) {
@@ -66,7 +66,7 @@
             },
 
             async: function (expression) {
-                setTimeout(function() {
+                setTimeout(function () {
                     eval(expression);
                 }, 0);
             },

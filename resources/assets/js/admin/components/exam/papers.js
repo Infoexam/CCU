@@ -57,6 +57,10 @@ routerComponents.exam.papers = {
         }
     }),
 
+    create: Vue.extend({
+        template: require('../../template/admin/exam/papers/create.html')
+    }),
+
     edit: Vue.extend({
         template: require('../../template/admin/exam/papers/edit.html'),
 
