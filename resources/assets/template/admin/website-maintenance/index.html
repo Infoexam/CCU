@@ -1,0 +1,70 @@
+<div class="row">
+    <form class="col s12" enctype="multipart/form-data" @submit.prevent="update()">
+        <div class="row">
+            <div class="switch">
+                <label>學生頁面維護 </label>
+                <label>
+                    否
+                    <input
+                        v-model="form.student.maintenance"
+                        type="checkbox"
+                    >
+                    <span class="lever"></span>
+                    是
+                </label>
+            </div>
+        </div>
+
+        <div v-show="form.student.maintenance" class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.student.message"
+                    id="student-message"
+                    type="text"
+                    class="validate"
+                    length="64"
+                    maxlength="64"
+                >
+                <label for="student-message">維護訊息</label>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="switch">
+                <label>考試頁面維護 </label>
+                <label>
+                    否
+                    <input
+                        v-model="form.exam.maintenance"
+                        type="checkbox"
+                    >
+                    <span class="lever"></span>
+                    是
+                </label>
+            </div>
+        </div>
+
+        <div v-show="form.exam.maintenance" class="row">
+            <div class="input-field col s12">
+                <input
+                    v-model="form.exam.message"
+                    id="exam-message"
+                    type="text"
+                    class="validate"
+                    length="64"
+                    maxlength="64"
+                >
+                <label for="exam-message">維護訊息</label>
+            </div>
+        </div>
+
+        <div class="center-align">
+            <button type="submit" class="btn waves-effect waves-light">
+                <span>更新</span>
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
