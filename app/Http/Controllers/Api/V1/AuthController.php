@@ -9,6 +9,7 @@ use DOMDocument;
 use GuzzleHttp\Client;
 use Hash;
 use Illuminate\Http\Request;
+use Session;
 
 class AuthController extends ApiController
 {
@@ -20,13 +21,12 @@ class AuthController extends ApiController
      */
     public function signIn(Request $request)
     {
-        if (! Auth::attempt($request->only(['username', 'password']), true)
+        if (! Auth::guard()->attempt($request->only(['username', 'password']), true)
             && ! $this->attemptCenter($request->input('username'), $request->input('password'))) {
             return $this->setMessages(['Invalid username or password.'])->responseUnprocessableEntity();
         }
 
-        $this->refreshPassword(Auth::user(), $request->input('password'));
-
+        $this->refreshPassword(Auth::guard()->user(), $request->input('password'));
 
         return $this->setHeaders(['Intended' => $this->getIntended()])->responseOk();
     }
@@ -38,11 +38,11 @@ class AuthController extends ApiController
      */
     protected function getIntended()
     {
-        if (Auth::user()->hasRole(['admin'])) {
+        if (Auth::guard()->user()->hasRole(['admin'])) {
             return route('home.admin');
         }
 
-        return session()->pull('url.intended');
+        return Session::pull('url.intended');
     }
 
     /**
@@ -70,7 +70,7 @@ class AuthController extends ApiController
         }
 
         // 登入並更新本地密碼
-        Auth::loginUsingId($user->getAttribute('id'), true)->update(['password' => bcrypt($new->user_pass)]);
+        Auth::guard()->loginUsingId($user->getAttribute('id'), true)->update(['password' => bcrypt($new->user_pass)]);
 
         return true;
     }
@@ -97,9 +97,21 @@ class AuthController extends ApiController
      */
     public function signOut()
     {
-        Auth::logout();
+        $this->flushSession();
+
+        Auth::guard()->logout();
 
         return redirect()->home();
+    }
+
+    /**
+     * 清除非框架的 session
+     *
+     * @return void
+     */
+    protected function flushSession()
+    {
+        Session::forget(['url']);
     }
 
     /**
@@ -114,7 +126,7 @@ class AuthController extends ApiController
             $username = $this->ssoAuth($request->input('miXd'), $request->input('ticket'));
 
             if (false !== $username && ! is_null($user = User::where('username', $username)->first())) {
-                Auth::loginUsingId($user->getAttribute('id'), true);
+                Auth::guard()->loginUsingId($user->getAttribute('id'), true);
             }
         }
 
