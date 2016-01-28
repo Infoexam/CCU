@@ -60,4 +60,5 @@ if ('localhost' === window.location.hostname) {
 Vue.http.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift());
 
 var router = new VueRouter(),
-    routerComponents = {exam: {}};
+    routerComponents = {exam: {}},
+    routerParentInstance = Vue.extend({template: '<router-view></router-view>'});

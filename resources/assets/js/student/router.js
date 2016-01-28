@@ -5,6 +5,20 @@ router.map({
             '/': {
                 name: 'home',
                 component: routerComponents.home
+            },
+
+            '/announcements': {
+                name: 'announcements.index',
+                component: routerParentInstance,
+                subRoutes: {
+                    '/': {
+                        component: routerComponents.announcements.index
+                    },
+                    '/:heading': {
+                        name: 'announcements.show',
+                        component: routerComponents.announcements.show
+                    }
+                }
             }
         }
     },

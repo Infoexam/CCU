@@ -55,9 +55,9 @@
             <th>時間</th>
         </thead>
         <tbody>
-            <tr>
-                <td>###</td>
-                <td>###</td>
+            <tr v-for="announcement in announcements | limitBy 5">
+                <td>{{ announcement.heading }}</td>
+                <td>{{ announcement.created_at.time }}</td>
             </tr>
         </tbody>
     </table>

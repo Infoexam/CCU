@@ -1,0 +1,28 @@
+<table class="striped highlight centered responsive-table">
+    <thead>
+        <tr class="reponsive-table-heading">
+            <th>公告標題</th>
+            <th>最後更新</th>
+            <th>發佈時間</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="reponsive-table-body" v-for="announcement in announcements">
+            <td><a class="truncate" v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
+            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.updated_at.time }}">{{ announcement.updated_at.human }}</span></td>
+            <td><span class="tooltipped" data-position="bottom" data-tooltip="{{ announcement.created_at.time }}">{{ announcement.created_at.human }}</span></td>
+        </tr>
+        <tr v-show="empty(announcements)">
+            <td colspan="5">尚無公告</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="pagination center-align">
+    <li :class="[pagination.prev_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(0)">chevron_left</i></a>
+    </li>
+    <li :class="[pagination.next_page_url ? 'waves-effect' : 'disabled']">
+        <a v-link="{name: 'home'}"><i class="material-icons" @click.prevent="paginate(1)">chevron_right</i></a>
+    </li>
+</ul>

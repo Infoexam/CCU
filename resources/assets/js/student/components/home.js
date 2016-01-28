@@ -45,7 +45,21 @@
     });
 
     routerComponents.home = Vue.extend({
-        template: require('../../template/student/home.html')
+        template: require('../../template/student/home.html'),
+
+        data () {
+            return {
+                announcements: []
+            };
+        },
+
+        created () {
+            var vm = this;
+
+            this.$http.get('/api/v1/announcements').then(function (response) {
+                vm.$set('announcements', response.data.data);
+            });
+        }
     });
 
     routerComponents.notFound = Vue.extend({

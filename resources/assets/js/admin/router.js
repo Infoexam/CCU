@@ -1,5 +1,3 @@
-var routerParentInstance = Vue.extend({template: '<router-view></router-view>'});
-
 router.map({
     '/': {
         component: routerComponents.master,
