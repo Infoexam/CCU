@@ -12,7 +12,30 @@
 
 <main class="student-main">
     <div class="container">
-        <router-view></router-view>
+        <div class="row">
+            <div class="col m4 l3 hide-on-small-only" style="min-height: 5px">
+                <div class="feature-bar">
+                    <div class="collection with-header">
+                        <template v-if="$root.signIn">
+                            <a @click="signOut()" class="collection-item" href="#">登出</a>
+                            <a class="collection-item" href="#">個人資料</a>
+                            <a class="collection-item" href="#">預約管理</a>
+                            <a class="collection-item" href="#">測驗練習</a>
+                        </template>
+                        <template v-else>
+                            <a class="collection-header dismissable grey-text text-darken-2">訪客請先<a @click="openSignInModel()" style="margin-left:-15px">登入</a></a>
+                        </template>
+                        <a class="collection-item" href="#">查詢場次</a>
+                        <a class="collection-item" href="#">訊息公告</a>
+                        <a class="collection-item" href="#">常見問題</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col m8 l9">
+                <router-view></router-view>
+            </div>
+        </div>
     </div>
 </main>
 
@@ -51,13 +74,12 @@
         <h4 class="center-align" data-i18n="auth.signIn"></h4>
 
         <div class="row">
-            <form class="col s12">
+            <form class="col s12" @submit.prevent="signIn()">
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
                         <input
-                            v-model="username"
-                            @keyup.enter="signIn()"
+                            v-model="form.username"
                             id="username"
                             type="text"
                             class="validate"
@@ -69,14 +91,17 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix">enhanced_encryption</i>
                         <input
-                            v-model="password"
-                            @keyup.enter="signIn()"
+                            v-model="form.password"
                             id="password"
                             type="password"
                             class="validate"
                             required
                         >
                         <label for="password" data-i18n="auth.password"></label>
+                    </div>
+
+                    <div class="hide">
+                        <button id="sign-in-button" type="submit"></button>
                     </div>
                 </div>
             </form>
@@ -85,8 +110,8 @@
 
     <div class="modal-footer">
         <button
-            @click.prevent="signIn()"
-            type="submit"
+            @click="buttonLink('sign-in-button')"
+            type="button"
             class="btn waves-effect waves-light"
             data-i18n="auth.signIn"
         ></button>

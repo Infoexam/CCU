@@ -7,6 +7,7 @@
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://infoexam.ccu.edu.tw">
         <meta property="og:locale" content="zh_TW">
+        <meta name="sign-in" content="{{ Auth::guard()->check() ?: 0 }}">
         <title>資訊能力測驗系統</title>
         <!-- Loading CSS Sources -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

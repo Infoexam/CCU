@@ -4,8 +4,6 @@
             template: require('../../template/admin/website-maintenance/index.html'),
 
             data () {
-                "use strict";
-
                 return {
                     form: {
                         student: {},
@@ -16,8 +14,6 @@
 
             methods: {
                 update () {
-                    "use strict";
-
                     var vm = this;
 
                     this.$http.patch('/api/v1/website-maintenance', this.form).then(function (response) {
@@ -31,8 +27,6 @@
             },
 
             created () {
-                "use strict";
-
                 var vm = this;
 
                 this.$http.get('/api/v1/website-maintenance').then(function (response) {

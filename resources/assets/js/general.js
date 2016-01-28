@@ -4,6 +4,9 @@
 
 (function ($) {
     $(function () {
+        // http://materializecss.com/pushpin.html
+        $('.feature-bar').pushpin({top: 94});
+
         // https://i18next.github.io/i18next/
         $.i18n.init({
             detectLngQS: 'lang',
@@ -28,11 +31,6 @@
             $(this).sideNav();
         });
 
-        // http://materializecss.com/pushpin.html
-        $(document).arrive('.feature-bar', function () {
-            $(this).pushpin({top: 94});
-        });
-
         // http://materializecss.com/dialogs.html#tooltip
         $(document).arrive('.tooltipped', function () {
             $(this).tooltip({delay: 50});
@@ -52,6 +50,10 @@
         });
     });
 })(jQuery);
+
+if ('localhost' === window.location.hostname) {
+    Vue.config.debug = true;
+}
 
 // add X-XSRF-TOKEN to xhr
 // https://laravel.com/docs/5.2/routing#csrf-protection

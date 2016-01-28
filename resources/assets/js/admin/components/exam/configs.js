@@ -13,8 +13,6 @@ routerComponents.exam.configs = {
 
         methods: {
             update () {
-                "use strict";
-
                 var vm = this;
 
                 this.$http.patch('/api/v1/exam/configs', this.form).then(function (response) {
@@ -26,8 +24,6 @@ routerComponents.exam.configs = {
         },
 
         created () {
-            "use strict";
-
             var vm = this;
 
             this.$http.get('/api/v1/exam/configs').then(function (response) {

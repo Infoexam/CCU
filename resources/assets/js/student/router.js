@@ -15,4 +15,10 @@ router.map({
     }
 });
 
-router.start(Vue.extend({}), '#infoexam');
+router.start(Vue.extend({
+    data () {
+        return {
+            signIn: '1' === document.querySelector('meta[name="sign-in"]').content
+        };
+    }
+}), '#infoexam');

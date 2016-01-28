@@ -70,7 +70,6 @@ routerComponents.exam.lists = {
         template: require('../../template/admin/exam/lists/create.html'),
 
         data () {
-            "use strict";
             return {
                 form: {
                     sets: [],
@@ -83,8 +82,6 @@ routerComponents.exam.lists = {
 
         computed: {
             isTheory () {
-                "use strict";
-
                 var name = '';
 
                 for (var i in this.data['exam.subject']) {
@@ -101,8 +98,6 @@ routerComponents.exam.lists = {
 
         methods: {
             store () {
-                "use strict";
-
                 var vm = this;
 
                 this.$http.post('/api/v1/exam/lists', this.form).then(function (response) {
@@ -117,8 +112,6 @@ routerComponents.exam.lists = {
         },
 
         created () {
-            "use strict";
-
             var vm = this;
 
             this.$http.get('/api/v1/exam/configs').then(function (response) {

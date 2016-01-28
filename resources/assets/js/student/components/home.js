@@ -4,31 +4,35 @@
 
         data () {
             return {
-                username: '',
-                password: ''
+                form: {}
             };
         },
 
         methods: {
             openSignInModel () {
-                "use strict";
-
                 this.async("$('#sign-in-modal').openModal();$('#username').focus();");
             },
 
             signIn () {
-                if (this.username.length && this.password.length) {
-                    var vm = this;
+                var vm = this;
 
-                    this.$http.post('/api/v1/auth/sign-in', {
-                        username: this.username,
-                        password: this.password
-                    }).then(function (response) {
-                        window.location.href = response.headers('intended') || '/';
-                    }, function (response) {
-                        vm.toastError($.i18n.t((422 === response.status) ? 'auth.failed' : 'tokenMismatch'));
-                    });
-                }
+                this.$http.post('/api/v1/auth/sign-in', this.form).then(function (response) {
+                    if (response.headers('intended')) {
+                        location.href = response.headers('intended');
+                    } else {
+                        $('#sign-in-modal').closeModal();
+
+                        this.$root.signIn = true;
+                    }
+                }, function (response) {
+                    vm.toastError($.i18n.t((422 === response.status) ? 'auth.failed' : 'tokenMismatch'));
+                });
+            },
+
+            signOut() {
+                this.$http.get('/api/v1/auth/sign-out').then(function (response) {
+                    this.$root.signIn = false;
+                });
             }
         },
 
