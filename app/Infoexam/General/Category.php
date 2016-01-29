@@ -26,7 +26,7 @@ class Category extends Entity
      *
      * @var array
      */
-    protected $notAdminHidden = ['id', 'category', 'remark'];
+    protected $notAdminHidden = ['id', 'category'];
 
     /**
      * The attributes that are mass assignable.

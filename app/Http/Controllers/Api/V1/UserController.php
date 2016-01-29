@@ -17,9 +17,9 @@ class UserController extends ApiController
      */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'show']);
+        $this->middleware('auth', ['only' => ['account']]);
 
-        $this->middleware('auth:admin', ['except' => ['show']]);
+        $this->middleware('auth:admin', ['except' => ['account']]);
     }
 
     /**
@@ -76,31 +76,20 @@ class UserController extends ApiController
     /**
      * 取得指定使用者資料
      *
-     * @param Request $request
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
-     * @throws AccessDeniedHttpException
      */
-    public function show(Request $request, $username)
+    public function show($username)
     {
-        // 檢查是否為查詢自己帳號，如為管理原則直接通過檢查
-        if ($request->user()->hasRole(['admin'])) {
-            $user = User::with(['roles' => function (BelongsToMany $relation) {
-                $relation->getQuery()->getQuery()->select(['id', 'name']);
-            }])->where('username', $username)->first();
-
-            if (is_null($user)) {
-                return $this->responseNotFound();
-            }
-        } else if ($request->user()->getAttribute('username') !== $username) {
-            throw new AccessDeniedHttpException;
-        } else {
-            $user = $request->user();
-        }
-
-        $user->load(['certificates' => function (HasMany $relation) {
+        $user = User::with(['roles' => function (BelongsToMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'name']);
+        }, 'certificates' => function (HasMany $relation) {
             $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
-        }, 'department', 'gender', 'grade']);
+        }, 'department', 'gender', 'grade'])->where('username', $username)->first();
+
+        if (is_null($user)) {
+            return $this->responseNotFound();
+        }
 
         return $this->setData($user)->responseOk();
     }
@@ -139,6 +128,23 @@ class UserController extends ApiController
 
         // 儲存所有資料到資料庫
         $user->save();
+
+        return $this->setData($user)->responseOk();
+    }
+
+    /**
+     * 取得個人資料
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function account(Request $request)
+    {
+        $user = $request->user();
+
+        $user->load(['certificates' => function (HasMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
+        }, 'department', 'gender', 'grade']);
 
         return $this->setData($user)->responseOk();
     }

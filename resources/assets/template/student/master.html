@@ -18,7 +18,7 @@
                     <div class="collection with-header">
                         <template v-if="$root.signIn">
                             <a @click="signOut()" class="collection-item" href="#">登出</a>
-                            <a class="collection-item" href="#">個人資料</a>
+                            <a class="collection-item" v-link="{name: 'account.index'}">個人資料</a>
                             <a class="collection-item" href="#">預約管理</a>
                             <a class="collection-item" href="#">測驗練習</a>
                         </template>

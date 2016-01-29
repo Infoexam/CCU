@@ -36,6 +36,7 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->patch('configs', ['as' => 'api.v1.exam.configs.update', 'uses' => 'ExamConfigController@update']);
         });
 
+        $router->get('account', ['as' => 'api.v1.account', 'uses' => 'UserController@account']);
         $router->get('users/search', ['as' => 'api.v1.users.search', 'uses' => 'UserController@search']);
         $router->resource('users', 'UserController', ['only' => ['store', 'show', 'update']]);
 

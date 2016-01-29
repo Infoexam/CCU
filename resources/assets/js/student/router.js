@@ -7,6 +7,16 @@ router.map({
                 component: routerComponents.home
             },
 
+            '/account': {
+                name: 'account.index',
+                component: routerParentInstance,
+                subRoutes: {
+                    '/': {
+                        component: routerComponents.account.index
+                    }
+                }
+            },
+
             '/announcements': {
                 name: 'announcements.index',
                 component: routerParentInstance,
