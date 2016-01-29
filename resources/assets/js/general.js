@@ -48,6 +48,11 @@
         $(document).arrive('.materialboxed', function () {
             $(this).materialbox();
         });
+
+        // http://materializecss.com/collapsible.html#intialization
+        $(document).arrive('.collapsible', function () {
+            $(this).collapsible();
+        });
     });
 })(jQuery);
 

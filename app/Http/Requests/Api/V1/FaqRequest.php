@@ -14,8 +14,8 @@ class FaqRequest extends Request
     public function rules()
     {
         return [
-            'question' => 'required|max:255',
-            'answer' => 'required|max:255',
+            'question' => 'required|max:190',
+            'answer' => 'required|max:190',
         ];
     }
 }

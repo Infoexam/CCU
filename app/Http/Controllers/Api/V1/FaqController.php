@@ -44,24 +44,6 @@ class FaqController extends ApiController
         return $this->setData($faq)->responseCreated();
     }
 
-
-    /**
-     * 取得指定 faq 資料
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show($id)
-    {
-        $faq = Faq::find($id, ['id', 'question', 'answer']);
-
-        if (is_null($faq)) {
-            return $this->responseNotFound();
-        }
-
-        return $this->setData($faq)->responseOk();
-    }
-
     /**
      * 更新指定 faq 資料
      *

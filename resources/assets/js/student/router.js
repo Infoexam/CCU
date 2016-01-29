@@ -19,6 +19,16 @@ router.map({
                         component: routerComponents.announcements.show
                     }
                 }
+            },
+
+            '/faqs': {
+                name: 'faqs.index',
+                component: routerParentInstance,
+                subRoutes: {
+                    '/': {
+                        component: routerComponents.faqs.index
+                    }
+                }
             }
         }
     },

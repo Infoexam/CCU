@@ -131,6 +131,16 @@ router.map({
                 }
             },
 
+            '/faqs': {
+                name: 'faqs.index',
+                component: routerParentInstance,
+                subRoutes: {
+                    '/': {
+                        component: routerComponents.faqs.index
+                    }
+                }
+            },
+
             '/website-maintenance': {
                 name: 'website-maintenance.index',
                 component: routerComponents.websiteMaintenance.index

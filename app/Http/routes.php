@@ -40,7 +40,7 @@ $router->group(['middleware' => ['web']], function (Router $router) {
         $router->resource('users', 'UserController', ['only' => ['store', 'show', 'update']]);
 
         $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
-        $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
+        $router->resource('faqs', 'FaqController', ['except' => ['create', 'show', 'edit']]);
 
         $router->group(['as' => 'api.v1.'], function (Router $router) {
             $router->get('ip-rules', ['as' => 'ip-rules.index', 'uses' => 'IpRuleController@index']);

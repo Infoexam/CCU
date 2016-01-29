@@ -23,7 +23,11 @@
             },
 
             created (options) {
-                this.toastSuccess($.i18n.t('action.create.success')).routerGo(options);
+                this.toastSuccess($.i18n.t('action.create.success'));
+
+                if (options && options.hasOwnProperty('name')) {
+                    this.routerGo(options);
+                }
             },
 
             httpErrorHandler (response, options) {
