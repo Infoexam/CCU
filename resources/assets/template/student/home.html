@@ -56,12 +56,12 @@
         </thead>
         <tbody>
             <tr v-for="announcement in announcements | limitBy 5">
-                <td>{{ announcement.heading }}</td>
+                <td><a v-link="{name: 'announcements.show', params: {heading: announcement.heading}}">{{ announcement.heading }}</a></td>
                 <td>{{ announcement.created_at.time }}</td>
             </tr>
         </tbody>
     </table>
-    <div style="text-align:right"><a>查看更多</a></div>
+    <div style="text-align:right"><a v-link="{name: 'announcements.index'}">查看更多</a></div>
 </div>
 
 <div>
