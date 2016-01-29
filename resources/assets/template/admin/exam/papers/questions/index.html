@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         <tr class="reponsive-table-body" v-for="question in paper.questions">
-            <td><a v-link="{name: 'exam.sets.questions.show', params: {id: paper.id, question: question.id}}">{{ question.content }}</a></td>
+            <td><a v-link="{name: 'exam.sets.questions.show', params: {id: question.set.id, question: question.id}}">{{ question.content }}</a></td>
             <td><i class="material-icons" :class="[question.multiple ? 'green-text' : 'red-text']">{{ question.multiple ? 'check' : 'close' }}</i></td>
             <td>{{ question.difficulty.name }}</td>
         </tr>

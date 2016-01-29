@@ -37,9 +37,9 @@ class ExamPaperQuestionController extends ApiController
 
         $paper->load(['questions' => function (BelongsToMany $relation) {
             $relation->getQuery()
-                ->with(['difficulty'])
+                ->with(['difficulty', 'set'])
                 ->getQuery()
-                ->select(['exam_questions.id', 'content', 'difficulty_id', 'multiple']);
+                ->select(['exam_questions.id', 'exam_set_id', 'content', 'difficulty_id', 'multiple']);
         }]);
 
         if ($request->has('onlyId')) {
