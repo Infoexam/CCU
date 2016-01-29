@@ -1,19 +1,27 @@
 <div class="row">
-    <form class="col s12" @submit.prevent="patch()">
+    <form class="col s12" @submit.prevent="update()">
         <div class="row">
-
             <div class="input-field col s12">
-                <input v-model="form.id" id="id" type="text" class="validate" length="255" autofocus required>
-                <label class="active" for="id">試卷ID</label>
-            </div>
-
-            <div class="input-field col s12">
-                <input v-model="form.name" id="name" type="text" class="validate" length="255" autofocus required>
+                <input
+                    v-model="form.name"
+                    id="name"
+                    type="text"
+                    class="validate"
+                    length="64"
+                    maxlength="64"
+                    required
+                >
                 <label class="active" for="name">試卷名稱</label>
             </div>
 
             <div class="input-field col s12">
-                <input v-model="form.remark" id="remark" type="text" class="validate" length="255" autofocus required>
+                <textarea
+                    v-model="form.remark"
+                    id="remark"
+                    class="materialize-textarea validate"
+                    length="190"
+                    maxlength="190"
+                ></textarea>
                 <label class="active" for="remark">試卷備註</label>
             </div>
 

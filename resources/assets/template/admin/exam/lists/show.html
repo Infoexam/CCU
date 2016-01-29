@@ -22,7 +22,14 @@
             <td>{{ list.std_apply_num}}  / {{ list.std_maximum_num }}</td>
             <td>{{ list.std_test_num }}</td>
             <td>{{ list.allow_apply }}</td>
-            <td><a v-link="{name: 'exam.papers.show', params: {id: list.paper.id}}">{{ list.paper.name  }}</a></td>
+            <td>
+                <template v-if="list.paper">
+                    <a v-link="{name: 'exam.papers.questions.index', params: {id: list.paper.id}}">{{ list.paper.name  }}</a>
+                </template>
+                <template v-else>
+                    <span>-</span>
+                </template>
+            </td>
             <td>{{ list.apply.name }}</td>
             <td>{{ list.subject.name }}</td>
         </tr>

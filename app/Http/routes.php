@@ -26,7 +26,7 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->resource('sets.questions', 'ExamSetQuestionController', ['except' => ['create', 'edit']]);
 
             $router->resource('papers', 'ExamPaperController', ['except' => ['create', 'edit']]);
-            $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'edit']]);
+            $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'show', 'edit']]);
 
             $router->resource('lists', 'ExamListController', ['except' => ['create', 'edit']]);
             $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit', 'update']]);

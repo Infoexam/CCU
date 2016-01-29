@@ -76,13 +76,22 @@ router.map({
                         name: 'exam.papers.create' ,
                         component: routerComponents.exam.papers.create
                     },
-                    '/:id': {
-                        name: 'exam.papers.show',
-                        component: routerComponents.exam.papers.show
-                    },
                     '/:id/edit' : {
                         name:'exam.papers.edit',
                         component:routerComponents.exam.papers.edit
+                    },
+                    '/:id/questions': {
+                        name: 'exam.papers.questions.index',
+                        component: routerParentInstance,
+                        subRoutes: {
+                            '/': {
+                                component: routerComponents.exam.papers.questions.index
+                            },
+                            '/edit': {
+                                name: 'exam.papers.questions.edit',
+                                component: routerComponents.exam.papers.questions.edit
+                            }
+                        }
                     }
                 }
             },
