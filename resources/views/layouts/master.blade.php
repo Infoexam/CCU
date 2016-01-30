@@ -23,9 +23,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js" defer></script>
         @if ('production' === config('app.env'))
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.15/vue.min.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.min.js" defer></script>
         @else
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.15/vue.js" defer></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js" defer></script>
         @endif
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js" defer></script>
