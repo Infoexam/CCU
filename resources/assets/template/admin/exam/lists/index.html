@@ -9,6 +9,7 @@
             <th>開放報名</th>
             <th>報名類型</th>
             <th>測驗類別</th>
+            <th>成績管理</th>
             <th>編輯</th>
             <th>刪除</th>
         </tr>
@@ -23,6 +24,7 @@
             <td>{{ list.allow_apply }}</td>
             <td>{{ list.apply.name }}</td>
             <td>{{ list.subject.name }}</td>
+            <td><a v-link="{name: 'exam.lists.results.index', params: {code: list.code}}" class="btn-floating waves-effect waves-light blue"><i class="material-icons">edit</i></a></td>
             <td><a v-link="{name: 'exam.lists.edit', params: {code: list.code}}" class="btn-floating waves-effect waves-light orange"><i class="material-icons">edit</i></a></td>
             <td><a class="btn-floating waves-effect waves-light red" @click="destroy(list)"><i class="material-icons">delete</i></a></td>
         </tr>

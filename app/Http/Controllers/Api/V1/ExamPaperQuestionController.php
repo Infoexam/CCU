@@ -24,8 +24,6 @@ class ExamPaperQuestionController extends ApiController
      * @param Request $request
      * @param int $paperId
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @todo need check
      */
     public function index(Request $request, $paperId)
     {

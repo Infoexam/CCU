@@ -14,20 +14,20 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
         <link rel="stylesheet" href="{{ _asset('css/app.css') }}">
     </head>
-    <body id="infoexam">
-        <!-- Begin of Router View -->
-        <router-view></router-view>
-        <!-- End of Router View -->
+    <body>
+        <div id="infoexam">
+            <router-view></router-view>
+        </div>
 
         <!-- Loading JavaScript Sources -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js" defer></script>
         @if ('production' === config('app.env'))
             <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.15/vue.min.js" defer></script>
         @else
             <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.15/vue.js" defer></script>
         @endif
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.6.1/vue-resource.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/0.7.10/vue-router.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/1.11.2/i18next.min.js" defer></script>
         <script src="https://static-infoexam.ccu.edu.tw/ajax/libs/arrive/2.3.0/arrive.min.js" defer></script>

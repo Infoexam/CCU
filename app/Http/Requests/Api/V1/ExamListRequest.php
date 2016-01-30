@@ -28,8 +28,8 @@ class ExamListRequest extends Request
                 'apply_type_id' => 'required|exists:categories,id,category,exam.apply',
                 'subject_id' => 'required|exists:categories,id,category,exam.subject',
                 'specify_paper' => "required_if:apply_type_id,{$theories}|boolean",
-                'paper_id' => "required_if:specify_paper,1|required_if:apply_type_id,{$theories}|exists:exam_papers,id",
-                'sets' => 'required_if:specify_paper,0|array',
+                'paper_id' => "required_if:specify_paper,true|required_if:apply_type_id,{$theories}|exists:exam_papers,id",
+                'sets' => 'required_if:specify_paper,false|array',
                 'sets.*' => 'exists:exam_sets,id',
             ];
         } else {

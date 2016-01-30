@@ -114,6 +114,15 @@ router.map({
                     '/:code/edit' : {
                         name:'exam.lists.edit',
                         component: routerComponents.exam.lists.edit
+                    },
+                    '/:code/results': {
+                        name: 'exam.lists.results.index',
+                        component: routerParentInstance,
+                        subRoutes: {
+                            '/': {
+                                component: routerComponents.exam.lists.results.index
+                            }
+                        }
                     }
                 }
             },

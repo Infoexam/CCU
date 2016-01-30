@@ -53,6 +53,10 @@
         $(document).arrive('.collapsible', function () {
             $(this).collapsible();
         });
+
+        $(document).arrive('.modal-trigger', function () {
+            $(this).leanModal();
+        });
     });
 })(jQuery);
 

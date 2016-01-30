@@ -3,6 +3,7 @@
 namespace App\Infoexam\Exam;
 
 use App\Infoexam\General\Category;
+use App\Infoexam\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -124,7 +125,7 @@ class ApplyService
     protected function store(Request $request)
     {
         list($u, $a) = $request->user()->hasRole(['admin'])
-            ? [$request->input('user_id'), Category::getCategories('exam.applied', 'admin', true)]
+            ? [User::where('username', $request->input('username'))->first()->getAttribute('id'), Category::getCategories('exam.applied', 'admin', true)]
             : [$request->user()->getAttribute('id'), Category::getCategories('exam.applied', 'user', true)];
 
         $this->list->applies()->save(new Apply(['user_id' => $u, 'apply_type_id' => $a]));

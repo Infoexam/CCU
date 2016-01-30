@@ -16,7 +16,9 @@ class ExamListResultController extends ApiController
      */
     public function index($listCode)
     {
-        $list = Lists::with(['applies', 'applies.result'])->where('code', $listCode)->first();
+        $list = Lists::with(['applies', 'applies.user', 'applies.result'])
+            ->where('code', $listCode)
+            ->first();
 
         if (is_null($list)) {
             return $this->responseNotFound();
@@ -37,7 +39,7 @@ class ExamListResultController extends ApiController
     {
         $result = Result::find($id);
 
-        if (is_null($request)) {
+        if (is_null($result)) {
             return $this->responseNotFound();
         }
 

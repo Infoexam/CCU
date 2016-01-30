@@ -49,19 +49,54 @@ routerComponents.exam.lists = {
 
         data () {
             return {
+                form: {},
                 list: {
                     paper: {},
                     apply: {},
                     subject: {}
-                }
+                },
+                applies: []
             };
-        } ,
+        },
+
+        methods: {
+            create() {
+                var vm = this;
+
+                this.form.code = this.$route.params.code;
+
+                this.$http.post('/api/v1/exam/lists/' + this.$route.params.code + '/applies', this.form).then(function (response) {
+                    vm.httpSuccessHandler(response);
+                    location.reload();
+                }, function (response) {
+                    vm.httpErrorHandler(response);
+                });
+            },
+
+            destroy(apply) {
+                var vm = this;
+
+                this.$http.delete('/api/v1/exam/lists/' + this.$route.params.code + '/applies/' + apply.id).then(function (response) {
+                    vm.httpSuccessHandler(response, {
+                        action: 'delete'
+                    });
+
+                    vm.applies.$remove(apply);
+                }, function (response) {
+                    vm.httpErrorHandler(response);
+                });
+            }
+        },
 
         ready () {
             var vm = this;
 
             this.$http.get('/api/v1/exam/lists/' + this.$route.params.code).then(function (response) {
                 vm.$set('list', response.data);
+            });
+
+            this.$http.get('/api/v1/exam/lists/' + this.$route.params.code + '/applies').then(function (response) {
+                vm.$set('applies', response.data);
             });
         }
     }),
@@ -170,5 +205,57 @@ routerComponents.exam.lists = {
                 vm.$set('data.rooms', response.data.allowRoom);
             });
         }
-    })
+    }),
+
+    results: {
+        index: Vue.extend({
+            template: require('../../template/admin/exam/lists/results/index.html'),
+
+            data() {
+                return {
+                    form: {
+                        score: "0"
+                    },
+                    list: {}
+                };
+            },
+
+            methods: {
+                openModal(result) {
+                    this.form.id = result.id;
+                    this.form.score = result.score;
+
+                    $('#update-score').openModal();
+                },
+
+                update() {
+                    var vm = this;
+
+                    this.$http.patch('/api/v1/exam/lists/' + this.$route.params.code + '/results/' + this.form.id, this.form).then(function (response) {
+                        vm.httpSuccessHandler(response, {
+                            action: 'update'
+                        });
+
+                        for (var i in vm.list.applies) {
+                            if (null !== vm.list.applies[i].result && vm.form.id === vm.list.applies[i].result.id) {
+                                vm.list.applies[i].result.score = vm.form.score;
+
+                                break;
+                            }
+                        }
+                    }, function (response) {
+                        vm.httpErrorHandler(response);
+                    });
+                }
+            },
+
+            created() {
+                var vm = this;
+
+                this.$http.get('/api/v1/exam/lists/' + this.$route.params.code + '/results').then(function (response) {
+                    vm.$set('list', response.data);
+                });
+            }
+        })
+    }
 };

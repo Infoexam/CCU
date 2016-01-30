@@ -53,7 +53,7 @@ class ExamListApplyController extends ApiController
     public function store(Request $request, ApplyService $applyService)
     {
         if (! $applyService->create($request)->success()) {
-            return $this->setMessages($applyService->getErrors())->responseUnprocessableEntity();
+            return $this->setData($applyService->getErrors())->responseUnprocessableEntity();
         }
 
         return $this->responseCreated();
@@ -89,7 +89,7 @@ class ExamListApplyController extends ApiController
     public function destroy(Request $request, $code, $id, ApplyService $applyService)
     {
         if ($applyService->destroy($request, $code, $id)->success()) {
-            return $this->setMessages($applyService->getErrors())->responseUnprocessableEntity();
+            return $this->setData($applyService->getErrors())->responseUnprocessableEntity();
         }
 
         return $this->responseOk();
