@@ -6,9 +6,9 @@
             data () {
                 return {
                     codes: [],
-                    departments: {},
+                    departments: [],
                     form: {},
-                    users: {}
+                    users: []
                 };
             },
 
