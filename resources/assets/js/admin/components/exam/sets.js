@@ -8,7 +8,6 @@
             });
         }
     };
-
     routerComponents.exam.sets = {
         index: Vue.extend({
             template: require('../../template/admin/exam/sets/index.html'),
@@ -201,9 +200,39 @@
 
                 data: function () {
                     return {
-                        form: {}
+                        question:{
+                            content: [],
+                            image: []
+                        },
+                        option :[
+                            {content : [] , image:[]}
+                        ],
+                        explanation: {},
+                        difficulty_id:{},
+                        multiple:{},
+                        answer:[],
+                        c: 1
+                    }
+                },
+
+                mixins: [mixin],
+
+                methods: {
+                    store: function () {
+                        var vm = this;
+
+                        this.$http.post('/api/v1/exam/sets/' + this.$route.params.id + '/questions', this.form).then(function (response) {
+                            alert("test");
+                            vm.httpSuccessHandler(response, {
+                                name: 'exam.sets.index'
+                            });
+                        }, function (response) {
+                            vm.httpErrorHandler(response);
+                        });
                     }
                 }
+
+
             }),
 
             edit: Vue.extend({
@@ -211,7 +240,8 @@
 
                 data: function () {
                     return {
-                        form: {}
+                        form: {
+                        }
                     }
                 }
             })
