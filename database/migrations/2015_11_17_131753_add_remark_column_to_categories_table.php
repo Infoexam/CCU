@@ -13,7 +13,7 @@ class AddRemarkColumnToCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('remark')->nullable();
+            $table->string('remark', 190)->nullable();
         });
     }
 

@@ -4,3 +4,4 @@ Disallow: /admin
 Disallow: /exam/
 Disallow: /exam
 Disallow: /api/
+Disallow: /assets/

@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\UserRequest;
 use App\Infoexam\User\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * UserController constructor.
      */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'show']);
+        $this->middleware('auth', ['only' => ['account']]);
 
-        $this->middleware('auth:admin', ['except' => ['show']]);
+        $this->middleware('auth:admin', ['except' => ['account']]);
     }
 
     /**
@@ -27,72 +27,87 @@ class UserController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     *
-     * @todo finish it
      */
     public function search(Request $request)
     {
-        //
+        $users = User::with(['department'])->orderBy('username');
 
-        return response()->json();
+        if ($request->has('username')) {
+            $users = $users->where('username', 'like', '%' . $request->input('username') . '%');
+        }
+
+        if ($request->has('name')) {
+            $users = $users->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->has('department')) {
+            $users = $users->where('department_id', $request->input('department'));
+        }
+
+        if ($request->has('code')) {
+            $users = $users->whereHas('_lists', function (Builder $query) use ($request) {
+                $query->where('code', $request->input('code'));
+            });
+        }
+
+        return $this->setData($users->get())->responseOk();
     }
 
     /**
      * 新增使用者
      *
-     * @param Requests\UserRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\UserRequest $request)
+    public function store(UserRequest $request)
     {
         // 密碼 hash
         $request->merge(['password' => bcrypt($request->input('password'))]);
 
-        User::create($request->only(['username', 'password', 'name', 'email']));
+        $user = User::create($request->only(['username', 'password', 'name', 'email']));
 
-        return $this->ok();
+        if (! $user->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($user)->responseCreated();
     }
 
     /**
      * 取得指定使用者資料
      *
-     * @param Request $request
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
-     * @throws AccessDeniedHttpException
      */
-    public function show(Request $request, $username)
+    public function show($username)
     {
-        // 檢查是否為查詢自己帳號，如為管理原則直接通過檢查
-        if ($request->user()->hasRole(['admin'])) {
-            $user = User::with(['roles' => function (BelongsToMany $relation) {
-                $relation->getQuery()->getQuery()->select(['id', 'name']);
-            }])->where('username', '=', $username)->firstOrFail();
-        } else if ($request->user()->getAttribute('username') !== $username) {
-            throw new AccessDeniedHttpException;
-        } else {
-            $user = $request->user();
+        $user = User::with(['roles' => function (BelongsToMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'name']);
+        }, 'certificates' => function (HasMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
+        }, 'department', 'gender', 'grade'])->where('username', $username)->first();
+
+        if (is_null($user)) {
+            return $this->responseNotFound();
         }
 
-        $user->load(['certificate' => function (HasMany $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
-        }, 'department', 'gender', 'grade']);
-
-        return response()->json($user);
+        return $this->setData($user)->responseOk();
     }
 
     /**
      * 更新指定使用者資料
      *
-     * @param Requests\UserRequest $request
+     * @param UserRequest $request
      * @param string $username
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\UserRequest $request, $username)
+    public function update(UserRequest $request, $username)
     {
-        /** @var $user User */
+        $user = User::with(['certificates'])->where('username', $username)->first();
 
-        $user = User::with(['certificate'])->where('username', '=', $username)->firstOrFail();
+        if (is_null($user)) {
+            return $this->responseNotFound();
+        }
 
         // 更新密碼、姓名、信箱
         ! $request->has('password') ?: $user->setAttribute('password', bcrypt($request->input('password')));
@@ -100,13 +115,11 @@ class UserController extends Controller
         ! $request->has('email') ?: $user->setAttribute('email', $request->input('email'));
 
         // 更新免費次數
-        foreach ($request->input('free', []) as $key => $value) {
-            foreach ($user->getRelation('certificate') as $certificate) {
-                /** @var $certificate \App\Infoexam\User\Certificate */
+        foreach ($user->getRelation('certificates') as $certificate) {
+            $value = $request->input('free.' . $certificate->getAttribute('category_id'));
 
-                if ($certificate->getAttribute('id') === $key) {
-                    $certificate->setAttribute('free', $value);
-                }
+            if (! is_null($value)) {
+                $certificate->update(['free' => $value]);
             }
         }
 
@@ -114,8 +127,25 @@ class UserController extends Controller
         $user->roles()->sync($request->input('roles', []));
 
         // 儲存所有資料到資料庫
-        $user->push();
+        $user->save();
 
-        return $this->ok();
+        return $this->setData($user)->responseOk();
+    }
+
+    /**
+     * 取得個人資料
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function account(Request $request)
+    {
+        $user = $request->user();
+
+        $user->load(['certificates' => function (HasMany $relation) {
+            $relation->getQuery()->getQuery()->select(['id', 'user_id', 'category_id', 'score', 'free']);
+        }, 'department', 'gender', 'grade']);
+
+        return $this->setData($user)->responseOk();
     }
 }

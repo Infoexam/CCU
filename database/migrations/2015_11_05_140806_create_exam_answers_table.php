@@ -13,8 +13,8 @@ class CreateExamAnswersTable extends Migration
     public function up()
     {
         Schema::create('exam_answers', function (Blueprint $table) {
-            $table->integer('exam_question_id')->unsigned();
-            $table->integer('exam_option_id')->unsigned();
+            $table->unsignedInteger('exam_question_id');
+            $table->unsignedInteger('exam_option_id');
 
             $table->primary(['exam_question_id', 'exam_option_id']);
 

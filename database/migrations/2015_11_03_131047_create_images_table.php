@@ -14,15 +14,14 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->timestamp('uploaded_at');
-            $table->integer('hash')->unsigned();
+            $table->unsignedInteger('hash');
             $table->string('mime_type', 16);
-            $table->integer('imageable_id')->unsigned();
-            $table->string('imageable_type');
+            $table->unsignedInteger('imageable_id');
+            $table->string('imageable_type', 190);
 
             $table->primary(['uploaded_at', 'hash']);
 
-            $table->index('imageable_id');
-            $table->index('imageable_type');
+            $table->index(['imageable_id', 'imageable_type']);
         });
     }
 

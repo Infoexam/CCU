@@ -75,9 +75,10 @@ class Paper extends Entity
      * Update the model in the database.
      *
      * @param  array  $attributes
+     * @param  array  $options
      * @return bool|int
      */
-    public function update(array $attributes = [])
+    public function update(array $attributes = [], array $options = [])
     {
         if (empty($attributes['remark'])) {
             $attributes['remark'] = null;

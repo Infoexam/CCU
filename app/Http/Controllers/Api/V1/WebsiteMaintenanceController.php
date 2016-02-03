@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\WebsiteMaintenanceRequest;
 use App\Infoexam\General\Config;
 use Cache;
-use Illuminate\Http\Request;
 
-class WebsiteMaintenanceController extends Controller
+class WebsiteMaintenanceController extends ApiController
 {
     /**
      * WebsiteMaintenanceController constructor.
@@ -25,29 +23,23 @@ class WebsiteMaintenanceController extends Controller
      */
     public function show()
     {
-        $websiteMaintenance = Cache::tags('config')->get('websiteMaintenance', collect());
+        $default = collect([
+            'student' => ['maintenance' => false, 'message' => ''],
+            'exam' => ['maintenance' => false, 'message' => ''],
+        ]);
 
-        return response()->json($websiteMaintenance);
+        return $this->setData(Cache::tags('config')->get('websiteMaintenance', $default))->responseOk();
     }
 
     /**
      * 更新網站維護設定
      *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param WebsiteMaintenanceRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request)
+    public function update(WebsiteMaintenanceRequest $request)
     {
-        $websiteMaintenance = collect([
-            'student' => [
-                'maintenance' => boolval($request->input('student.maintenance')),
-                'message' => $request->input('student.message'),
-            ],
-            'exam' => [
-                'maintenance' => boolval($request->input('exam.maintenance')),
-                'message' => $request->input('exam.message'),
-            ],
-        ]);
+        $websiteMaintenance = collect($request->all());
 
         Cache::tags('config')->forever('websiteMaintenance', $websiteMaintenance);
 
@@ -56,6 +48,6 @@ class WebsiteMaintenanceController extends Controller
             'value' => serialize($websiteMaintenance),
         ]);
 
-        return $this->ok();
+        return $this->responseOk();
     }
 }

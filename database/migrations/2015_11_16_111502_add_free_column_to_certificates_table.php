@@ -13,7 +13,7 @@ class AddFreeColumnToCertificatesTable extends Migration
     public function up()
     {
         Schema::table('certificates', function (Blueprint $table) {
-            $table->tinyInteger('free')->unsigned()->default(0)->after('score');
+            $table->unsignedTinyInteger('free')->default(0)->after('score');
         });
     }
 

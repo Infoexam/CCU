@@ -14,11 +14,11 @@ class CreateExamAppliesTable extends Migration
     {
         Schema::create('exam_applies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('exam_list_id')->unsigned();
-            $table->integer('apply_type_id')->unsigned();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('exam_list_id');
+            $table->unsignedInteger('apply_type_id');
             $table->timestamp('paid_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('user_id');

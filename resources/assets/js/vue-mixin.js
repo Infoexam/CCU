@@ -1,7 +1,7 @@
-(function(Vue, $, Materialize){
+(function (Vue, $, Materialize){
     Vue.mixin({
         methods: {
-            httpSuccessHandler: function (response, options) {
+            httpSuccessHandler (response, options) {
                 switch (response.status) {
                     case 200:
                         switch (options.action) {
@@ -22,60 +22,64 @@
                 }
             },
 
-            created: function (options) {
-                this.toastSuccess($.i18n.t('action.create.success')).routerGo(options);
+            created (options) {
+                this.toastSuccess($.i18n.t('action.create.success'));
+
+                if (options && options.hasOwnProperty('name')) {
+                    this.routerGo(options);
+                }
             },
 
-            httpErrorHandler: function (response, options) {
+            httpErrorHandler (response, options) {
                 switch (response.status) {
                     case 404: this.notFound(options); return;
                     case 422: this.unprocessableEntity(response.data); return;
                 }
             },
 
-            notFound: function (options) {
+            notFound (options) {
                 options.name = options.name || 'home';
 
                 this.toastError('Page Not Found!').routerGo(options);
             },
 
-            unprocessableEntity: function (data) {
-                for (var key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        this.toastError(data[key]);
+            unprocessableEntity (data) {
+                for (var key in data.messages) {
+                    if (data.messages.hasOwnProperty(key)) {
+                        this.toastError(data.messages[key]);
                     }
                 }
             },
 
-            toastSuccess: function (message) {
+            toastSuccess (message) {
                 return this.toast(message, 'green');
             },
 
-            toastError: function (message) {
+            toastError (message) {
                 return this.toast(message, 'red');
             },
 
-            toast: function (message, style, duration) {
+            toast (message, style, duration) {
                 Materialize.toast(message, duration || 3500, style);
 
                 return this;
             },
 
-            routerGo: function (options) {
+            routerGo (options) {
                 router.go({name: options.name, params: options.params || {}});
             },
 
-            async: function (expression) {
-                setTimeout(function() {
+            async (expression) {
+                setTimeout(function () {
                     eval(expression);
                 }, 0);
             },
 
-            clone: function (target) {
+            clone (target) {
                 return JSON.parse(JSON.stringify(target));
             },
 
-            empty: function (target) {
+            empty (target) {
                 switch (typeof target) {
                     case 'object':
                         return (Object === target.constructor)
@@ -88,6 +92,10 @@
                     default:
                         return false;
                 }
+            },
+
+            buttonLink (target) {
+                document.getElementById(target).click();
             }
         }
     });

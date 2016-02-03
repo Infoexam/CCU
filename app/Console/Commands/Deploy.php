@@ -2,11 +2,15 @@
 
 namespace App\Console\Commands;
 
+use App\Infoexam\Core\Entity;
+use Artisan;
 use Cache;
 use Carbon\Carbon;
 use File;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Log;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class Deploy extends Command
@@ -16,7 +20,7 @@ class Deploy extends Command
      *
      * @var string
      */
-    protected $signature = 'deploy';
+    protected $signature = 'deploy {--isRestart}';
 
     /**
      * The console command description.
@@ -26,37 +30,158 @@ class Deploy extends Command
     protected $description = 'Deploy application';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        $this->call('down');
+        $this->down();
 
-        $this->clearCache();
+        if (! $this->option('isRestart')) {
+            $this->composerUpdate();
 
-        $this->vendorsUpdate();
+            if ($this->queueNeedRestart()) {
+                $this->call('up');
+
+                return;
+            }
+        }
 
         $this->migrate();
 
-        $this->setupCache();
+        $this->copyAssets();
 
-        $this->call('up');
+        $this->up();
 
         Log::info('Github Webhook', ['status' => 'update successfully']);
+    }
 
-        if ($this->isModified(app_path('Console/Commands/Deploy.php'))) {
-            $this->call('queue:restart');
+    /**
+     * composer related update
+     */
+    protected function composerUpdate()
+    {
+        // 取得 composer 路徑
+        $path = config('infoexam.composer_path');
+
+        if (! empty($path)) {
+            // 設置 composer home 目錄
+            $this->setComposerHome();
+
+            // 如果超過 15 天未更新，則先更新 composer 本身
+            if (Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
+                $this->externalCommand("{$path} self-update");
+            }
+
+            // 執行 package 更新
+            $this->externalCommand("git pull; {$path} install --no-scripts --no-dev -o");
         }
+    }
+
+    /**
+     * 設置 composer home 環境變數
+     *
+     * @return void
+     */
+    protected function setComposerHome()
+    {
+        $dir = config('infoexam.composer_home');
+
+        if (empty($dir)) {
+            $dir = file_build_path(sys_get_temp_dir(), 'composer-temp-dir');
+
+            if (! File::exists($dir)) {
+                File::makeDirectory($dir);
+            }
+        }
+
+        putenv("HOME={$dir}");
+        putenv("COMPOSER_HOME={$dir}");
+    }
+
+    /**
+     * 判斷是否要重新啟動 queue
+     *
+     * @return bool
+     */
+    protected function queueNeedRestart()
+    {
+        switch (true) {
+            case 'production' === config('app.env'):
+            case $this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php'))):
+            case $this->isModified(base_path('composer.lock')):
+                $this->call('queue:restart');
+
+                Artisan::queue('deploy', ['--isRestart' => true]);
+
+                return true;
+            default :
+                return false;
+        }
+    }
+
+    /**
+     *  Migrate database.
+     *
+     * @return void
+     */
+    protected function migrate()
+    {
+        $migrations = count(File::files(database_path('migrations')));
+
+        if ($migrations > Cache::tags('deploy')->get('migrations', 0)) {
+            Cache::tags('deploy')->forever('migrations', $migrations);
+
+            $this->call('migrate', ['--force' => true]);
+        }
+    }
+
+    /**
+     * 複製 assets 到 static 資料夾
+     *
+     * @return void
+     */
+    protected function copyAssets()
+    {
+        $targetDir = config('infoexam.assets_dir');
+
+        if (empty($targetDir)) {
+            return;
+        }
+
+        $version = config('app.env') === 'production' ? Entity::VERSION : 'dev';
+
+        File::copyDirectory(public_path(file_build_path('assets', 'css')), file_build_path($targetDir, 'css', $version));
+        File::copyDirectory(public_path(file_build_path('assets', 'js')), file_build_path($targetDir, 'js', $version));
+    }
+
+    /**
+     * Put the application into maintenance mode
+     *
+     * @return void
+     */
+    protected function down()
+    {
+        (new Client())->get(route('opcache-reset'));
+
+        $this->clearCache();
+
+        $this->call('down');
+    }
+
+    /**
+     * Bring the application out of maintenance mode
+     *
+     * @return void
+     */
+    protected function up()
+    {
+        $this->call('up');
+
+        $this->setupCache();
+
+        (new Client())->get(route('opcache-reset'));
     }
 
     /**
@@ -86,69 +211,8 @@ class Deploy extends Command
 
         $this->call('config:cache');
 
+        $this->call('clear-compiled');
         $this->call('optimize');
-    }
-
-    /**
-     * 更新 vendors
-     *
-     * @return void
-     */
-    protected function vendorsUpdate()
-    {
-        $this->composerUpdate();
-
-        $this->npmUpdate();
-
-        File::delete(array_merge(
-            File::files(base_path('resources/assets/js/compiled')),
-            File::files(public_path('css')),
-            File::files(public_path('js'))
-        ));
-
-        $this->externalCommand('gulp --production');
-    }
-
-    /**
-     * composer related update
-     */
-    protected function composerUpdate()
-    {
-        if (! $this->isModified(base_path('composer.lock'))) {
-            $this->externalCommand('git pull');
-        } else {
-            // 取得 composer 路徑
-            $path = trim($this->externalCommand('which composer'));
-
-            if (! empty($path)) {
-                // 如果超過 15 天未更新，則先更新 composer 本身
-                if (Carbon::now()->diffInDays(Carbon::createFromTimestamp(File::lastModified($path))) > 15) {
-                    $this->externalCommand("{$path} self-update");
-                }
-
-                // 如 home 目錄尚未設置，則指定為暫存目錄
-                if (empty($dir = config('infoexam.COMPOSER_HOME'))) {
-                    $dir = sys_get_temp_dir() . '/composer-temp-dir';
-
-                    File::makeDirectory($dir);
-                }
-
-                putenv("COMPOSER_HOME={$dir}");
-
-                // 執行 package 更新
-                $this->externalCommand("git pull; {$path} install -o");
-            }
-        }
-    }
-
-    /**
-     * npm related update
-     */
-    protected function npmUpdate()
-    {
-        if ($this->isModified(base_path('package.json'))) {
-            $this->externalCommand('npm install');
-        }
     }
 
     /**
@@ -166,26 +230,10 @@ class Deploy extends Command
         $process->run();
 
         if ( ! $process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
         return $process->getOutput();
-    }
-
-    /**
-     *  Migrate database.
-     *
-     * @return void
-     */
-    protected function migrate()
-    {
-        $migrations = count(File::files(database_path('migrations')));
-
-        if ($migrations > Cache::tags('deploy')->get('migrations', 0)) {
-            Cache::tags('deploy')->forever('migrations', $migrations);
-
-            $this->call('migrate', ['--force' => true]);
-        }
     }
 
     /**

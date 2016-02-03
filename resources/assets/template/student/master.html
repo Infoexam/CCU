@@ -1,0 +1,119 @@
+<header>
+    <nav class="student-nav">
+        <div class="container">
+            <!-- Logo -->
+            <a v-link="{name: 'home'}" class="brand-logo">Logo Icon</a>
+
+            <!-- Mobile Menu Icon -->
+            <a v-link="{name: 'home'}" data-activates="nav-mobile-menu-icon" class="button-collapse"><i class="material-icons" @click.prevent>menu</i></a>
+        </div>
+    </nav>
+</header>
+
+<main class="student-main">
+    <div class="container">
+        <div class="row">
+            <div class="col m4 l3 hide-on-small-only" style="min-height: 5px">
+                <div class="feature-bar">
+                    <div class="collection with-header">
+                        <template v-if="$root.signIn">
+                            <a @click="signOut()" class="collection-item" href="#">登出</a>
+                            <a class="collection-item" v-link="{name: 'account.index'}">個人資料</a>
+                            <a class="collection-item" href="#">預約管理</a>
+                            <a class="collection-item" href="#">測驗練習</a>
+                        </template>
+                        <template v-else>
+                            <a class="collection-header dismissable grey-text text-darken-2">訪客請先<a @click="openSignInModel()" style="margin-left:-15px">登入</a></a>
+                        </template>
+                        <a class="collection-item" href="#">查詢場次</a>
+                        <a class="collection-item" v-link="{name: 'announcements.index'}">訊息公告</a>
+                        <a class="collection-item" v-link="{name: 'faqs.index'}">常見問題</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col m8 l9">
+                <router-view></router-view>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="student-footer grey darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col m6 l6">
+                    <ul>
+                        <li><a class="grey-text text-lighten-4" href="http://www.ccu.edu.tw/" target="_blank" data-i18n="copyright"></a> © 2015</li>
+                    </ul>
+                </div>
+                <div class="col m3 l3">
+                    <ul>
+                        <li><h5 class="grey-text text-lighten-4">使用說明</h5></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>應考須知</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>測驗規定</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!"><i class="material-icons tiny" style="vertical-align:middle">label_outline</i>測驗說明</a></li>
+                    </ul>
+                </div>
+                <div class="col m3 l3">
+                    <ul>
+                        <li><h5 class="grey-text text-lighten-4">相關連結</h5></li>
+                        <li><a class="grey-text text-lighten-4" href="#!">相關連結1</a></li>
+                        <li><a class="grey-text text-lighten-4" href="#!">相關連結2</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Sign In Modal -->
+<div id="sign-in-modal" class="modal">
+    <div class="modal-content">
+        <h4 class="center-align" data-i18n="auth.signIn"></h4>
+
+        <div class="row">
+            <form class="col s12" @submit.prevent="signIn()">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input
+                            v-model="form.username"
+                            id="username"
+                            type="text"
+                            class="validate"
+                            required
+                        >
+                        <label for="username" data-i18n="auth.username"></label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">enhanced_encryption</i>
+                        <input
+                            v-model="form.password"
+                            id="password"
+                            type="password"
+                            class="validate"
+                            required
+                        >
+                        <label for="password" data-i18n="auth.password"></label>
+                    </div>
+
+                    <div class="hide">
+                        <button id="sign-in-button" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            @click="buttonLink('sign-in-button')"
+            type="button"
+            class="btn waves-effect waves-light"
+            data-i18n="auth.signIn"
+        ></button>
+    </div>
+</div>

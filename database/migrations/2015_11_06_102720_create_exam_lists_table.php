@@ -16,17 +16,17 @@ class CreateExamListsTable extends Migration
             $table->increments('id');
             $table->char('code', 13);
             $table->timestamp('began_at');
-            $table->tinyInteger('duration')->unsigned();
+            $table->unsignedTinyInteger('duration');
             $table->string('room', 8);
-            $table->integer('paper_id')->unsigned()->nullable();
-            $table->integer('apply_type_id')->unsigned();
-            $table->integer('subject_id')->unsigned();
-            $table->tinyInteger('std_maximum_num')->unsigned();
-            $table->tinyInteger('std_apply_num')->unsigned()->default(0);
-            $table->tinyInteger('std_test_num')->unsigned()->default(0);
+            $table->unsignedInteger('paper_id')->nullable();
+            $table->unsignedInteger('apply_type_id');
+            $table->unsignedInteger('subject_id');
+            $table->unsignedTinyInteger('std_maximum_num');
+            $table->unsignedTinyInteger('std_apply_num')->default(0);
+            $table->unsignedTinyInteger('std_test_num')->default(0);
             $table->boolean('allow_apply')->default(false);
             $table->timestamp('started_at')->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->unique('code');

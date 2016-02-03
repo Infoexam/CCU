@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function student()
     {
-        return view('home');
+        return view('student');
     }
 
     /**
@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('admin.home');
+        return view('admin');
     }
 
     /**
@@ -55,7 +55,7 @@ class HomeController extends Controller
     {
         list($algo, $hash) = explode('=', $request->header('X-Hub-Signature'), 2);
 
-        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.GITHUB_WEBHOOK_SECRET')))) {
+        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.github_webhook_secret')))) {
             \Log::notice('Github Webhook', ['auth' => 'failed', 'ip' => $request->ip()]);
         } else {
             \Log::info('Github Webhook', ['auth' => 'success', 'ip' => $request->ip()]);
@@ -63,6 +63,16 @@ class HomeController extends Controller
             \Artisan::queue('deploy');
         }
 
-        return $this->ok();
+        return response()->json('', 200);
+    }
+
+    /**
+     * 清除 opcache
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opcacheReset()
+    {
+        return response()->json(opcache_reset(), 200);
     }
 }

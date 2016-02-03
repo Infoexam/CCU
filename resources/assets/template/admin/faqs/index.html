@@ -1,0 +1,65 @@
+<ul class="collapsible popout" data-collapsible="accordion">
+    <li v-for="faq in faqs">
+        <div class="collapsible-header"><i class="material-icons">question_answer</i>{{ faq.question }}</div>
+        <div class="collapsible-body">
+            <a class="btn-floating waves-effect waves-light orange" @click="openModal(faq)"><i class="material-icons">edit</i></a>
+            <a class="btn-floating waves-effect waves-light red" @click="destroy(faq)"><i class="material-icons">delete</i></a>
+            <p>{{ faq.answer }}</p>
+        </div>
+    </li>
+</ul>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light green" @click="openModal()"><i class="material-icons">add</i></a>
+</div>
+
+<div id="create-or-update" class="modal">
+    <div class="modal-content">
+        <h4>Faq 編輯與新增</h4>
+
+        <div class="row">
+            <form class="col s12" @submit.prevent="createOrUpdate()">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">question_answer</i>
+                        <input
+                            v-model="form.question"
+                            id="question"
+                            type="text"
+                            class="validate"
+                            length="190"
+                            maxlength="190"
+                            required
+                        >
+                        <label for="question">Question</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">translate</i>
+                        <textarea
+                            v-model="form.answer"
+                            id="answer"
+                            class="materialize-textarea validate"
+                            length="190"
+                            maxlength="190"
+                            required
+                        ></textarea>
+                        <label for="answer">Answer</label>
+                    </div>
+
+                    <div class="hide">
+                        <button id="submit-button" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button
+            @click="buttonLink('submit-button')"
+            type="button"
+            class="btn waves-effect waves-light"
+        >更新</button>
+    </div>
+</div>

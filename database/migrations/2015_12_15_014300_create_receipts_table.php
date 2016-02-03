@@ -16,9 +16,9 @@ class CreateReceiptsTable extends Migration
             $table->increments('id');
             $table->string('receipt_no', 16);
             $table->char('receipt_date', 7);
-            $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('category_id');
+            $table->nullableTimestamps();
 
             $table->unique('receipt_no');
 
@@ -39,8 +39,7 @@ class CreateReceiptsTable extends Migration
      */
     public function down()
     {
-        Schema::table('receipts', function(Blueprint $table)
-        {
+        Schema::table('receipts', function(Blueprint $table) {
             $table->dropForeign('receipts_user_id_foreign');
             $table->dropForeign('receipts_category_id_foreign');
         });

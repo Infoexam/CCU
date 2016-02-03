@@ -1,0 +1,22 @@
+<h2>{{ paper.name }}</h2>
+
+<table class="striped highlight centered responsive-table">
+    <thead>
+        <tr class="reponsive-table-heading">
+            <th>題目</th>
+            <th>多選</th>
+            <th>難度</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="reponsive-table-body" v-for="question in paper.questions">
+            <td><a v-link="{name: 'exam.sets.questions.show', params: {id: question.set.id, question: question.id}}">{{ question.content }}</a></td>
+            <td><i class="material-icons" :class="[question.multiple ? 'green-text' : 'red-text']">{{ question.multiple ? 'check' : 'close' }}</i></td>
+            <td>{{ question.difficulty.name }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="fixed-action-btn">
+    <a v-link="{name: 'exam.papers.questions.edit', params: {id: paper.id}}" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">edit</i></a>
+</div>

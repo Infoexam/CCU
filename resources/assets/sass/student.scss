@@ -1,0 +1,57 @@
+.student-nav {
+  border-bottom: 1px solid #E9E9E9;
+  box-shadow: none;
+  background: #757575 none repeat scroll 0% 0%;
+}
+
+.student-main {
+  margin-top: 64px;
+  padding-top: 30px;
+}
+
+@media screen and (max-width: 992px) {
+  .student-main {
+    padding-left: 0;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .student-main {
+    padding-left: 0;
+  }
+}
+
+.student-footer {
+  margin-top: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.feature-bar {
+  margin-top: 120px;
+  .collection {
+    border-radius: 0;
+    background-color: transparent !important;
+    .collection-header {
+      background-color: transparent !important;
+    }
+    .collection-item {
+      position: relative;
+      font-size: 16px;
+      background-color: transparent !important;
+      &:hover:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: #9E9E9E none repeat scroll 0% 0%;
+      }
+    }
+  }
+}
+
+.feature-bar.pinned {
+  margin-top: 184px;
+}

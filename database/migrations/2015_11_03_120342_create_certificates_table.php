@@ -14,10 +14,10 @@ class CreateCertificatesTable extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('category_id');
             $table->decimal('score', 6, 3)->nullable();
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->unique(['user_id', 'category_id']);
 

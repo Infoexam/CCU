@@ -4,11 +4,13 @@ namespace App\Infoexam\Exam;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\Image\Image;
+use App\Infoexam\Image\UploadTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Option extends Entity
 {
     use SoftDeletes;
+    use UploadTrait;
 
     /**
      * The database table used by the model.

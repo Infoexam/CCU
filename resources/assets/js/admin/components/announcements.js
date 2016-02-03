@@ -56,7 +56,7 @@
                 destroy: function (announcement) {
                     var vm = this;
 
-                    this.$http.delete('/api/v1/announcements/' + announcement.id).then(function (response) {
+                    this.$http.delete('/api/v1/announcements/' + announcement.heading).then(function (response) {
                         vm.httpSuccessHandler(response, {action: 'delete'});
                         vm.announcements.$remove(announcement);
                     });
@@ -133,7 +133,7 @@
                 update: function () {
                     var vm = this;
 
-                    this.$http.post('/api/v1/announcements/' + this.form.id, this.getFormData(this.form, this.$els.formImage.files, true)).then(function (response) {
+                    this.$http.post('/api/v1/announcements/' + this.$route.params.heading, this.getFormData(this.form, this.$els.formImage.files, true)).then(function (response) {
                         vm.httpSuccessHandler(response, {
                             action: 'update',
                             name: 'announcements.show',

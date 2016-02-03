@@ -7,32 +7,17 @@ html {
 }
 
 body {
-  background: #FAFAFA;
+  background: #F3F6F8 none repeat scroll 0% 0%;
 }
 
 header {
-    margin-bottom: 30px;
-}
-
-footer {
-    margin-top: 30px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .cursor {
   &-pointer {
     cursor: pointer;
     user-select: none;
-  }
-}
-
-.side-nav {
-  a {
-    height: 44px;
-  }
-  .collapsible li ,a {
-    line-height: 44px;
   }
 }
 
@@ -114,6 +99,14 @@ footer {
     width: 50%;
     td {
       height: 5em;
+    }
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .reponsive-table-body {
+    td:first-child {
+      max-width: 20em;
     }
   }
 }

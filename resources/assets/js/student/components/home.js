@@ -1,34 +1,68 @@
-routerComponents.home = Vue.extend({
-    template: require('../../template/student/home.html'),
+(function (Vue, $, routerComponents) {
+    routerComponents.master = Vue.extend({
+        template: require('../../template/student/master.html'),
 
-    data: function () {
-        return {
-            username: '',
-            password: ''
-        };
-    },
+        data () {
+            return {
+                form: {}
+            };
+        },
 
-    methods: {
-        signIn: function () {
-            if (this.username.length && this.password.length) {
+        methods: {
+            openSignInModel () {
+                this.async("$('#sign-in-modal').openModal();$('#username').focus();");
+            },
+
+            signIn () {
                 var vm = this;
 
-                this.$http.post('/api/v1/auth/sign-in', {
-                    username: this.username,
-                    password: this.password
-                }).then(function (response) {
-                    window.location.href = response.data.Intended || '/';
+                this.$http.post('/api/v1/auth/sign-in', this.form).then(function (response) {
+                    if (response.headers('intended')) {
+                        location.href = response.headers('intended');
+                    } else {
+                        $('#sign-in-modal').closeModal();
+
+                        this.$root.signIn = true;
+                    }
                 }, function (response) {
                     vm.toastError($.i18n.t((422 === response.status) ? 'auth.failed' : 'tokenMismatch'));
                 });
+            },
+
+            signOut() {
+                this.$http.get('/api/v1/auth/sign-out').then(function (response) {
+                    this.$root.signIn = false;
+                });
+            }
+        },
+
+        ready () {
+            // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
+            if (undefined !== this.$route.query.signIn) {
+                this.openSignInModel();
             }
         }
-    },
+    });
 
-    ready: function () {
-        // 判斷是否帶有 signIn 參數，如有則頁面載入後即顯示登入框
-        if (undefined !== this.$route.query.signIn) {
-            this.async("$('#sign-in-modal').openModal();$('#username').focus();");
+    routerComponents.home = Vue.extend({
+        template: require('../../template/student/home.html'),
+
+        data () {
+            return {
+                announcements: []
+            };
+        },
+
+        created () {
+            var vm = this;
+
+            this.$http.get('/api/v1/announcements').then(function (response) {
+                vm.$set('announcements', response.data.data);
+            });
         }
-    }
-});
+    });
+
+    routerComponents.notFound = Vue.extend({
+        template: require('../../template/student/not-found.html')
+    });
+})(Vue, jQuery, routerComponents);

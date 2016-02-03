@@ -2,39 +2,49 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Infoexam\Exam\Lists;
 use App\Infoexam\Exam\Result;
 use Illuminate\Http\Request;
 
-class ExamListResultController extends Controller
+class ExamListResultController extends ApiController
 {
     /**
-     * Display a listing of the resource.
+     * 查詢測驗結果
      *
      * @param string $listCode
      * @return \Illuminate\Http\Response
      */
     public function index($listCode)
     {
-        $list = Lists::with(['applies', 'applies.result'])->where('code', '=', $listCode)->firstOrFail();
+        $list = Lists::with(['applies', 'applies.user', 'applies.result'])
+            ->where('code', $listCode)
+            ->first();
 
-        return response()->json($list);
+        if (is_null($list)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->setData($list)->responseOk();
     }
 
     /**
-     * Update the specified resource in storage.
+     * 更新測驗成績
      *
      * @param \Illuminate\Http\Request $request
-     * @param string $listCode
+     * @param string $code
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $listCode, $id)
+    public function update(Request $request, $code, $id)
     {
-        Result::find($id)->update($request->only(['score']));
+        $result = Result::find($id);
 
-        return $this->ok();
+        if (is_null($result)) {
+            return $this->responseNotFound();
+        }
+
+        $result->update($request->only(['score']));
+
+        return $this->setData($request)->responseOk();
     }
 }

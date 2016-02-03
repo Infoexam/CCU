@@ -4,35 +4,14 @@ use Illuminate\Routing\Router;
 
 /** @var Router $router */
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-//
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
-
 $router->group(['middleware' => ['web']], function (Router $router) {
-    $router->get('/', ['as' => 'home', 'uses' => 'HomeController@student']);
-    $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
-    $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
-    $router->post('deploy', ['uses' => 'HomeController@deploy']);
+    $router->group(['middleware' => ['header']], function (Router $router) {
+        $router->get('/', ['as' => 'home', 'uses' => 'HomeController@student']);
+        $router->get('admin', ['as' => 'home.admin', 'uses' => 'HomeController@admin']);
+        $router->get('exam', ['as' => 'home.exam', 'uses' => 'HomeController@exam']);
+        $router->post('deploy', ['uses' => 'HomeController@deploy']);
+        $router->get('opcache-reset', ['as' => 'opcache-reset', 'uses' => 'HomeController@opcacheReset']);
+    });
 
     $router->group(['prefix' => 'api/v1', 'namespace' => 'Api\V1'], function (Router $router) {
         $router->group(['prefix' => 'auth', 'as' => 'api.v1.auth.'], function (Router $router) {
@@ -47,21 +26,22 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->resource('sets.questions', 'ExamSetQuestionController', ['except' => ['create', 'edit']]);
 
             $router->resource('papers', 'ExamPaperController', ['except' => ['create', 'edit']]);
-            $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'edit']]);
+            $router->resource('papers.questions', 'ExamPaperQuestionController', ['except' => ['create', 'show', 'edit']]);
 
             $router->resource('lists', 'ExamListController', ['except' => ['create', 'edit']]);
-            $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit']]);
+            $router->resource('lists.applies', 'ExamListApplyController', ['except' => ['create', 'edit', 'update']]);
             $router->resource('lists.results', 'ExamListResultController', ['only' => ['index', 'update']]);
 
             $router->get('configs', ['as' => 'api.v1.exam.configs.show', 'uses' => 'ExamConfigController@show']);
             $router->patch('configs', ['as' => 'api.v1.exam.configs.update', 'uses' => 'ExamConfigController@update']);
         });
 
+        $router->get('account', ['as' => 'api.v1.account', 'uses' => 'UserController@account']);
         $router->get('users/search', ['as' => 'api.v1.users.search', 'uses' => 'UserController@search']);
         $router->resource('users', 'UserController', ['only' => ['store', 'show', 'update']]);
 
         $router->resource('announcements', 'AnnouncementController', ['except' => ['create', 'edit']]);
-        $router->resource('faqs', 'FaqController', ['except' => ['create', 'edit']]);
+        $router->resource('faqs', 'FaqController', ['except' => ['create', 'show', 'edit']]);
 
         $router->group(['as' => 'api.v1.'], function (Router $router) {
             $router->get('ip-rules', ['as' => 'ip-rules.index', 'uses' => 'IpRuleController@index']);
@@ -74,6 +54,12 @@ $router->group(['middleware' => ['web']], function (Router $router) {
             $router->delete('images', ['as' => 'image.destroy', 'uses' => 'ImageController@destroy']);
         });
 
-        $router->resource('categories', 'CategoryController', ['except' => ['create', 'edit']]);
+        $router->group(['prefix' => 'categories'], function (Router $router) {
+            $router->get('/', ['uses' => 'CategoryController@index']);
+            $router->post('/', ['uses' => 'CategoryController@store']);
+            $router->get('{categories}/{name?}', ['uses' => 'CategoryController@show']);
+            $router->patch('{categories}/{name}', ['uses' => 'CategoryController@update']);
+            $router->delete('{categories}/{name}', ['uses' => 'CategoryController@destroy']);
+        });
     });
 });

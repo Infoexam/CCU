@@ -14,11 +14,11 @@ class ExamListsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Lists::class, random_int(5, 10))->create()->each(function (Lists $list) {
-            factory(Apply::class, random_int(10, 15))->make()->each(function (Apply $apply) use ($list) {
+        factory(Lists::class, mt_rand(5, 10))->create()->each(function (Lists $list) {
+            factory(Apply::class, mt_rand(10, 15))->make()->each(function (Apply $apply) use ($list) {
                 $list->applies()->save($apply);
 
-                if (random_int(0, 1)) {
+                if (mt_rand(0, 1)) {
                     $apply->result()->save(factory(Result::class)->make());
                 }
             });

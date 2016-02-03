@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\FaqRequest;
 use App\Infoexam\Website\Faq;
 
-class FaqController extends Controller
+class FaqController extends ApiController
 {
     /**
      * FaqController constructor.
@@ -23,64 +23,68 @@ class FaqController extends Controller
      */
     public function index()
     {
-        $faqs = Faq::all(['id', 'question', 'answer']);
-
-        return response()->json($faqs);
+        return $this->setData(Faq::all(['id', 'question', 'answer']))->responseOk();
     }
 
 
     /**
      * 新增 faq
      *
-     * @param Requests\FaqRequest $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function store(Requests\FaqRequest $request)
-    {
-        $this->storeOrUpdate(new Faq(), $request, ['question', 'answer']);
-
-        return $this->ok();
-    }
-
-
-    /**
-     * 取得指定 faq 資料
-     *
-     * @param int $id
+     * @param FaqRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function store(FaqRequest $request)
     {
-        $faq = Faq::findOrFail($id, ['id', 'question', 'answer']);
+        $faq = $this->storeOrUpdate(new Faq(), $request, ['question', 'answer']);
 
-        return response()->json($faq);
+        if (! $faq->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($faq)->responseCreated();
     }
 
     /**
      * 更新指定 faq 資料
      *
-     * @param Requests\FaqRequest $request
+     * @param FaqRequest $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Requests\FaqRequest $request, $id)
+    public function update(FaqRequest $request, $id)
     {
-        $this->storeOrUpdate(Faq::findOrFail($id), $request, ['question', 'answer']);
+        $faq = Faq::find($id);
 
-        return $this->ok();
+        if (is_null($faq)) {
+            return $this->responseNotFound();
+        }
+
+        $faq = $this->storeOrUpdate($faq, $request, ['question', 'answer']);
+
+        if (! $faq->exists) {
+            return $this->responseUnknownError();
+        }
+
+        return $this->setData($faq)->responseOk();
     }
 
     /**
      * 刪除指定 faq
      *
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($id)
     {
-        Faq::findOrFail($id, ['id'])->delete();
+        $faq = Faq::find($id, ['id']);
 
-        return $this->ok();
+        if (is_null($faq)) {
+            return $this->responseNotFound();
+        }
+
+        $faq->delete();
+
+        return $this->responseOk();
     }
 }

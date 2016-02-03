@@ -13,14 +13,11 @@ class CreateAnnouncementsTable extends Migration
     public function up()
     {
         Schema::create('announcements', function (Blueprint $table) {
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->increments('id');
             $table->string('heading', 190);
             $table->string('link', 190)->nullable();
             $table->string('content', 1000);
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->unique('heading');

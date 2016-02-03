@@ -25,29 +25,19 @@ class Receipt extends Sync
     protected $description = '更新本地資料庫的收據資料';
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return array
      */
     public function handle()
     {
-        $receipts = $this->getRemoteData();
+        $receipts = $this->getSourceData();
 
         $this->analysis['total'] = $receipts->count();
 
-        $this->syncData($receipts);
+        $this->syncDestinationData($receipts);
 
-        $this->printResult();
-
-        return $this->analysis;
+        return parent::handle();
     }
 
     /**
@@ -55,12 +45,12 @@ class Receipt extends Sync
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getRemoteData()
+    protected function getSourceData()
     {
         $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
-            ->where('receipt_date', '=', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
+            ->where('receipt_date', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
             ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
-            ->where('acc5_cd', '=', '422Y-300')
+            ->where('acc5_cd', '422Y-300')
             ->get();
 
         return collect($this->trimData($receipts));
@@ -72,17 +62,17 @@ class Receipt extends Sync
      * @param \Illuminate\Support\Collection $receipts
      * @return void
      */
-    protected function syncData($receipts)
+    protected function syncDestinationData($receipts)
     {
         $this->analysis['create'] = $receipts->count();
 
         foreach ($receipts as $receipt) {
             /** @var User $user */
-            $user = User::where('username', '=', $this->getStudentId($receipt))->first();
+            $user = User::where('username', $this->getStudentId($receipt))->first();
 
             if (null === $user) {
                 $this->userNotFound($user);
-            } else if (! ReceiptEntity::where('receipt_no', '=', $receipt->receipt_no)->exists()) {
+            } else if (! ReceiptEntity::where('receipt_no', $receipt->receipt_no)->exists()) {
                 $user->receipts()->save(new ReceiptEntity([
                     'receipt_no' => $receipt->receipt_no,
                     'receipt_date' => $receipt->receipt_date,
@@ -122,11 +112,11 @@ class Receipt extends Sync
     {
         switch (true) {
             case str_contains($receipt->note, '學科'):
-                return Category::getCategories('exam.category', ['name' => 'theory', 'firstId' => true]);
+                return Category::getCategories('exam.category', 'theory', true);
             case str_contains($receipt->note, '術科'):
-                return Category::getCategories('exam.category', ['name' => 'technology', 'firstId' => true]);
+                return Category::getCategories('exam.category', 'technology', true);
             default :
-                return Category::getCategories('error', ['name' => 'general', 'firstId' => true]);
+                return Category::getCategories('error', 'general', true);
         }
     }
 }

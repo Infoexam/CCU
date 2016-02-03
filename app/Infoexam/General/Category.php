@@ -26,7 +26,7 @@ class Category extends Entity
      *
      * @var array
      */
-    protected $notAdminHidden = ['id', 'category', 'remark'];
+    protected $notAdminHidden = ['id', 'category'];
 
     /**
      * The attributes that are mass assignable.
@@ -37,10 +37,11 @@ class Category extends Entity
 
     /**
      * @param string $category
-     * @param array $options
-     * @return \Illuminate\Database\Eloquent\Collection|static[]|int
+     * @param string $name
+     * @param bool $firstId
+     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
      */
-    public static function getCategories($category = '', array $options = [])
+    public static function getCategories($category = '', $name = '', $firstId = false)
     {
         /** @var $categories \Illuminate\Database\Eloquent\Collection|static[] */
 
@@ -52,14 +53,18 @@ class Category extends Entity
             return $categories;
         }
 
-        $categories = $categories->filter(function ($item) use ($category, $options) {
+        $issetName = ! empty($name);
+
+        $categories = $categories->filter(function ($item) use ($category, $issetName, $name) {
             /** @var $item Category */
 
             $filter = $item->getAttribute('category') === $category;
 
-            return isset($options['name']) ? ($filter && $item->getAttribute('name') === $options['name']) : $filter;
+            return $issetName ? ($filter && $item->getAttribute('name') === $name) : $filter;
         });
 
-        return isset($options['firstId']) ? $categories->first()->getAttribute('id') : $categories;
+        return $firstId
+            ? $categories->first()->getAttribute('id')
+            : ($issetName ? $categories->first() : $categories->values());
     }
 }

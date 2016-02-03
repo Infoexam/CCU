@@ -15,12 +15,11 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 64);
-            $table->integer('taggable_id')->unsigned();
-            $table->string('taggable_type');
+            $table->unsignedInteger('taggable_id');
+            $table->string('taggable_type', 190);
 
             $table->index('name');
-            $table->index('taggable_id');
-            $table->index('taggable_type');
+            $table->index(['taggable_id', 'taggable_type']);
         });
     }
 

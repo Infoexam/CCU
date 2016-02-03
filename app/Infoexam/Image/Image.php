@@ -3,8 +3,7 @@
 namespace App\Infoexam\Image;
 
 use App\Infoexam\Core\Entity;
-use Carbon\Carbon;
-use Storage;
+use File;
 
 class Image extends Entity
 {
@@ -78,16 +77,11 @@ class Image extends Entity
      */
     public function getLinkAttribute()
     {
-        list($t, $h, $e) = [
-            Carbon::parse($this->attributes['uploaded_at'])->timestamp,
-            $this->attributes['hash'],
-            $this->attributes['extension'],
-        ];
-
-        return [
-            'original' => img_src($t, $h, $e),
-            'thumbnail' => img_src($t, $h, $e, true),
-        ];
+        return img_src(
+            $this->getAttribute('uploaded_at')->timestamp,
+            $this->getAttribute('hash'),
+            $this->getAttribute('extension')
+        );
     }
 
     /**
@@ -108,13 +102,11 @@ class Image extends Entity
         parent::boot();
 
         static::deleting(function (Image $image) {
-            list($t, $h, $e) = [
+            File::delete(img_path(
                 $image->getAttribute('uploaded_at')->timestamp,
                 $image->getAttribute('hash'),
                 $image->getAttribute('extension')
-            ];
-
-            Storage::disk('local')->delete([img_path($t, $h, $e, false, false), img_path($t, $h, $e, true, false)]);
+            ));
         });
     }
 }

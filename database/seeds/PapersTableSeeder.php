@@ -1,6 +1,7 @@
 <?php
 
 use App\Infoexam\Exam\Paper;
+use App\Infoexam\Exam\Question;
 use Illuminate\Database\Seeder;
 
 class PapersTableSeeder extends Seeder
@@ -12,11 +13,11 @@ class PapersTableSeeder extends Seeder
      */
     public function run()
     {
-        $questions = \App\Infoexam\Exam\Question::all()->pluck('id');
+        $questions = Question::all()->pluck('id');
 
-        factory(Paper::class, random_int(10, 15))->create()->each(function (Paper $paper) use ($questions) {
+        factory(Paper::class, mt_rand(10, 15))->create()->each(function (Paper $paper) use ($questions) {
             if ($questions->count()) {
-                $q = $questions->random(random_int(1, $questions->count()));
+                $q = $questions->random(mt_rand(1, $questions->count()));
 
                 $paper->questions()->sync(is_int($q) ? [$q] : $q->all());
             }

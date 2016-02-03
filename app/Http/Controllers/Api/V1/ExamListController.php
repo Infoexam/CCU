@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamListRequest;
 use App\Infoexam\Exam\Lists;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class ExamListController extends Controller
+class ExamListController extends ApiController
 {
     /**
      * ExamListController constructor.
@@ -26,25 +23,30 @@ class ExamListController extends Controller
     /**
      * 取得所有測驗資訊，一頁 10 筆資料
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lists = Lists::with(['apply', 'subject'])->latest('began_at')->paginate(10, [
-            'code', 'began_at', 'duration', 'room', 'apply_type_id', 'subject_id',
-            'std_maximum_num', 'std_apply_num', 'allow_apply',
-        ]);
+        if (! $request->has('code')) {
+            $lists = Lists::with(['apply', 'subject'])->latest('began_at')->paginate(10, [
+                'code', 'began_at', 'duration', 'room', 'apply_type_id', 'subject_id',
+                'std_maximum_num', 'std_apply_num', 'allow_apply',
+            ]);
+        } else {
+            $lists = Lists::orderBy('code', 'desc')->get(['code'])->pluck('code');
+        }
 
-        return response()->json($lists);
+        return $this->setData($lists)->responseOk();
     }
 
     /**
      * 新增測驗
      *
-     * @param Requests\ExamListRequest $request
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @param ExamListRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\ExamListRequest $request)
+    public function store(ExamListRequest $request)
     {
         return $this->storeOrUpdate(new Lists(), $request);
     }
@@ -52,31 +54,53 @@ class ExamListController extends Controller
     /**
      * 查詢指定測驗
      *
+     * @param Request $request
      * @param string $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show($code)
+    public function show(Request $request, $code)
     {
-        $list = Lists::with(['paper' => function (BelongsTo $relation) {
-            $relation->getQuery()->getQuery()->select(['id', 'name']);
-        }, 'apply', 'subject'])->where('code', '=', $code)->firstOrFail([
-            'id', 'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id',
-            'std_maximum_num', 'std_apply_num', 'std_test_num', 'allow_apply', 'started_at'
-        ]);
+        $columns = ['*'];
 
-        return response()->json($list);
+        if ($request->has('edit')) {
+            $columns = ['id', 'began_at', 'duration', 'room', 'std_maximum_num', 'allow_apply'];
+        }
+
+        $list = Lists::where('code', $code)->first($columns);
+
+        if (is_null($list)) {
+            return $this->responseNotFound();
+        }
+
+        if (! $request->has('edit')) {
+            $list->load([
+                'paper' => function (BelongsTo $relation) {
+                    $relation->getQuery()->getQuery()->select(['id', 'name']);
+                },
+                'apply',
+                'subject'
+            ]);
+        }
+
+        return $this->setData($list)->responseOk();
     }
 
     /**
      * 更新指定測驗
      *
-     * @param Request $request
+     * @param ExamListRequest $request
      * @param string $code
-     * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $code)
+    public function update(ExamListRequest $request, $code)
     {
-        return $this->storeOrUpdate(Lists::where('code', '=', $code)->firstOrFail(), $request);
+        $list = Lists::where('code', $code)->first();
+
+        if (is_null($list)) {
+            return $this->responseNotFound();
+        }
+
+        return $this->storeOrUpdate($list, $request, ['code', 'began_at', 'duration', 'room', 'std_maximum_num', 'allow_apply']);
     }
 
     /**
@@ -85,37 +109,42 @@ class ExamListController extends Controller
      * @param Model $list
      * @param Request $request
      * @param array $attributes
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function storeOrUpdate(Model $list, Request $request, array $attributes = [])
     {
-        $request->merge([
-            'code' => Carbon::parse($request->input('began_at'))->format('YmdH') . $request->input('room')
+        $list = parent::storeOrUpdate($list, $request, $attributes ?: [
+            'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id', 'std_maximum_num', 'allow_apply'
         ]);
 
-        try {
-            parent::storeOrUpdate($list, $request, [
-                'code', 'began_at', 'duration', 'room', 'paper_id', 'apply_type_id', 'subject_id', 'std_maximum_num'
-            ]);
-
-            return $this->ok();
-        } catch (QueryException $e) {
-            return response()->json(['errors' => ['create' => 'timeAlreadyUsed']], 422);
+        if (! $list->exists) {
+            return $this->responseUnknownError();
         }
+
+        $this->setData($list);
+
+        return $request->isMethod('POST') ? $this->responseCreated() : $this->responseOk();
     }
+
 
     /**
      * 刪除指定測驗與已報名資料
      * 如該測驗已開始，則無法刪除
      *
      * @param string $code
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function destroy($code)
     {
-        Lists::where('code', '=', $code)->whereNull('started_at')->firstOrFail(['id'])->delete();
+        $list = Lists::where('code', $code)->whereNull('started_at')->first();;
 
-        return $this->ok();
+        if (is_null($list)) {
+            return $this->responseNotFound();
+        }
+
+        $list->delete();
+
+        return $this->responseOk();
     }
 }

@@ -15,9 +15,9 @@ class CreateExamSetsTable extends Migration
         Schema::create('exam_sets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 32);
-            $table->integer('category_id')->unsigned();
+            $table->unsignedInteger('category_id');
             $table->boolean('enable')->default(false);
-            $table->timestamps();
+            $table->nullableTimestamps();
             $table->softDeletes();
 
             $table->index('name');

@@ -30,33 +30,23 @@ class Department extends Sync
     protected $departments;
 
     /**
-     * Create a new command instance.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return array
      */
     public function handle()
     {
-        $departments = $this->getRemoteData();
+        $departments = $this->getSourceData();
 
         $this->departments = Category::getCategories('user.department');
 
         $this->analysis['total'] = $departments->count();
 
-        $this->syncData($departments);
+        $this->syncDestinationData($departments);
 
         Cache::forget('categoriesTable');
 
-        $this->printResult();
-
-        return $this->analysis;
+        return parent::handle();
     }
 
     /**
@@ -64,7 +54,7 @@ class Department extends Sync
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function getRemoteData()
+    protected function getSourceData()
     {
         return collect($this->trimData(DB::connection('elearn')->table('unit')->get()));
     }
@@ -76,7 +66,7 @@ class Department extends Sync
      * @param \Illuminate\Support\Collection $departments
      * @return void
      */
-    protected function syncData($departments)
+    protected function syncDestinationData($departments)
     {
         foreach ($departments as $department) {
             $exists = $this->departments->search(function (Category $item) use ($department) {
@@ -84,7 +74,13 @@ class Department extends Sync
             });
 
             if (false !== $exists) {
-                ++$this->analysis['notAffect'];
+                if ($this->departments[$exists]->getAttribute('remark') !== $department->name) {
+                    $this->departments[$exists]->update(['remark' => $department->name]);
+
+                    ++$this->analysis['updated'];
+                } else {
+                    ++$this->analysis['notAffect'];
+                }
             } else {
                 $category = Category::create([
                     'category' => 'user.department',
