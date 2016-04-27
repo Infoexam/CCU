@@ -60,6 +60,10 @@
     $(document).arrive('.modal-trigger', function () {
       $(this).leanModal();
     });
+
+    $(document).arrive('select', function () {
+      $(this).material_select();
+    });
   });
 })(jQuery);
 

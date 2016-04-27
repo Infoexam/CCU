@@ -3,89 +3,75 @@
         <div class="row" >
 
             <div class="input-field col s12">
-                    <input
-                        v-model="question.content"
-                        id="questions_content"
-                        type="text"
-                        class="validate"
-                        length="255"
-                        maxlength="255"
-                        autofocus
-                        required
-                    >
-                    <label for="id">題目</label>
-                </div>
-
-            <div >
-                    <a class="btn-floating btn-large waves-effect waves-light green" @click="c++"><i class="material-icons">add</i></a>
-                    <a class="btn-floating btn-large waves-effect waves-light blue" v-if= "c>1" @click="c --"><i class="material-icons">add</i></a>
+                <textarea
+                    v-model="form.question.content"
+                    id="questions-content"
+                    class="materialize-textarea validate"
+                    required
+                ></textarea>
+                <label for="questions-content">題目</label>
             </div>
 
-            <div class="input-field col s12" v-for = "n in c">
-                    <input
-                        v-model="option[0].content[n]"
-                        id="option{{n}}"
-                        type="text"
-                        class="browser-default"
-                        length="255"
-                        maxlength="255"
-                        autofocus
-                        required
-                    >
-                    <label for="option{{n}}">題目選項{{n + 1}}</label>
-                </div>
+            <div class="input-field col s12" v-for="n in c">
+                <template v-if="! form.option.hasOwnProperty($index) && form.option.$set($index, {content: '', image: []})"></template>
+                <textarea
+                    v-model="form.option[$index].content"
+                    id="option-{{ $index }}"
+                    class="materialize-textarea validate"
+                    required
+                ></textarea>
+                <label for="option-{{ $index }}">選項 {{ $index + 1 }}</label>
+            </div>
 
-                <div class="col s12">
-                    <label for="category">多選</label>
-                         <p>
-                            <input
-                             type="radio" 
-                             v-model="multiple"
-                            id = "single"
-                            value = "single"
-                            >
-                            <label for = "single">single</label>
+            <div class="right">
+                <a class="btn-floating btn-large waves-effect waves-light green" @click="c++"><i class="material-icons">add</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light blue" v-show="c > 1" @click="c--; option.pop()"><i class="material-icons">remove</i></a>
+            </div>
 
-                            <input
-                             type="radio" 
-                             v-model="multiple"
-                            id = "multiple"
-                            value = "multiple"
-                            >
+            <div class="input-field col s12">
+                <textarea
+                    v-model="form.explanation"
+                    id="explanation"
+                    class="materialize-textarea validate"
+                ></textarea>
+                <label for="explanation">解析</label>
+            </div>
 
-                            <label for = "multiple">multiple</label>
-                         </p>
-                </div>
-
-                <div class="col s12">
-                    <label for="category">題目答案</label>
-                         <p v-for="test in c">
-                            <input
-                             type="checkbox" 
-                             v-model="answer[test]"
-                            id = "{{test}}"
-                            value = "{{test}}"
-                            >
-
-                            <label for = "{{test}}">{{test+1}}</label>
-                         </p>
-                </div>
-
-
-
-                <div class="col s12">
+            <div class="col s12">
+                <label>難度</label>
                 <select
-                    v-model="difficulty_id"
+                    v-model="form.difficulty_id"
                     class="browser-default"
                     required
                 >
-                    <option value="easy">easy</option>
-                    <option value="midium">midium</option>
-                    <option value="hard">hard</option>
+                    <template v-for="difficulty in difficulties">
+                        <option value="{{ difficulty.id }}">{{ difficulty.name }}</option>
+                    </template>
                 </select>
             </div>
 
+            <div class="input-field col s12">
+                <input
+                    v-model="form.multiple"
+                    id="multiple"
+                    type="checkbox"
+                    class="filled-in"
+                >
+                <label for="multiple">多選</label>
+            </div>
 
+            <div class="input-field col s12">
+                <label>答案</label>
+                <template v-for="n in c">
+                    <input
+                        v-model="form.answer"
+                        id="answer={{ $index }}"
+                        type="checkbox"
+                        value="{{ $index }}"
+                    >
+                    <label for="answer={{ $index }}"> 選項 {{$index + 1}}</label>
+                </template>
+            </div>
         </div>
 
 
