@@ -23,15 +23,13 @@ elixir(function (mix) {
         },
 
         { test: /\.vue$/, loader: 'vue' },
-        { test: /\.scss$/, loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'] },
+        { test: /\.scss$/, loaders: ['style', 'css', 'sass?sourceMap'] },
         { test: /\.(png|jpg|gif)$/, loader: 'file' }
-      ],
-
-      plugins: [
-        new webpack.ProvidePlugin({
-          $: 'jquery'
-        })
       ]
     }
+  })
+
+  mix.browserSync({
+    proxy: 'localhost:8000'
   })
 })

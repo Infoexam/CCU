@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import CoreView from '../views/core/core.vue'
+import StudentHomeView from '../views/home/student.vue'
 import SignInView from '../views/signIn/signIn.vue'
 
 Vue.use(VueRouter)
@@ -14,12 +15,8 @@ const router = new VueRouter({
 })
 
 router.map({
-  '/': {
-    component: Vue.extend({
-      template: '<p>Home page.</p>'
-    })
-  },
-  '/sign-in': { component: SignInView }
+  '/': { component: StudentHomeView },
+  '/sign-in': { name: 'signIn', component: SignInView }
 })
 
-export { infoexam, router }
+export { router, infoexam }

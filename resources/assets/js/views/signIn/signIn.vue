@@ -4,25 +4,48 @@
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_circle</i>
-                    <input id="icon_prefix" type="text" class="validate">
-                    <label for="icon_prefix">First Name</label>
+                    <input
+                        v-model="form.username"
+                        id="Username"
+                        type="text"
+                        class="validate"
+                        required
+                    >
+                    <label for="Username">Username</label>
                 </div>
+
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">phone</i>
-                    <input id="icon_telephone" type="tel" class="validate">
-                    <label for="icon_telephone">Telephone</label>
+                    <i class="material-icons prefix">lock</i>
+                    <input
+                        v-model="form.password"
+                        id="password"
+                        type="password"
+                        class="validate"
+                        required
+                    >
+                    <label for="password">Password</label>
                 </div>
             </div>
         </form>
     </div>
 </template>
 
-<script>
+<script type="text/babel">
     export default {
         data() {
             return {
-                username: '',
-                password: ''
+                form: {
+                    username: '',
+                    password: ''
+                }
+            }
+        },
+
+        methods: {
+            signIn() {
+                this.$http.post('auth/sign-in').then((response) => {
+
+                })
             }
         }
     }

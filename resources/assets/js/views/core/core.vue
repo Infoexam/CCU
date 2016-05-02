@@ -1,15 +1,27 @@
 <template>
-    <h1>Hello World!</h1>
-
-    <router-view></router-view>
+    <div class="container">
+        <router-view></router-view>
+    </div>
 </template>
 
-<script>
+<script type="text/babel">
+    import Events from '../../events/events'
+
     export default {
         data() {
             return {
-                signIn: false
+                user: null
             }
+        },
+
+        events: Events,
+
+        ready() {
+            this.$http.get(`account/profile`).then((response) => {
+                this.user = response.data
+            }, (response) => {
+                this.user = null;
+            })
         }
     }
 </script>
