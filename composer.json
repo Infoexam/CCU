@@ -29,7 +29,6 @@
       "database"
     ],
     "files": [
-      "app/Infoexam/Library/helpers.php"
     ],
     "psr-4": {
       "App\\": "app/"
