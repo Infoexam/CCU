@@ -22,7 +22,12 @@ class Exam extends Entity
      * @var array
      */
     protected $dates = ['deleted_at'];
-    
+
+    /**
+     * 取得題庫的題目.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function questions()
     {
         return $this->hasMany(Question::class);

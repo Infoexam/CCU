@@ -20,11 +20,21 @@ class User extends Entity
      */
     protected $dates = ['passed_at'];
 
+    /**
+     * 取得使用者測驗通過狀態.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function certificates()
     {
         return $this->hasMany(Certificate::class);
     }
 
+    /**
+     * 取得使用者繳費紀錄.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function receipts()
     {
         return $this->hasMany(Receipt::class);
