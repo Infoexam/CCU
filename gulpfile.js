@@ -23,9 +23,7 @@ elixir(function (mix) {
         },
 
         { test: /\.vue$/, loader: 'vue' },
-        { test: /\.woff2?$|\.ttf$|\.eot$|\.svg$/, loader: 'file' },
         { test: /\.scss$/, loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'] },
-        { test: /\.css$/, loaders: ['style', 'css'] },
         { test: /\.(png|jpg|gif)$/, loader: 'file' }
       ],
 
