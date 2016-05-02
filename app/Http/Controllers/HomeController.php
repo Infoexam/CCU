@@ -3,46 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin', ['only' => 'admin']);
-
-        $this->middleware('auth', ['only' => 'exam']);
-    }
-
     /**
-     * 網站首頁
+     * Get home page view.
      *
      * @return \Illuminate\View\View
      */
-    public function student()
+    public function home()
     {
-        return view('student');
-    }
-
-    /**
-     * 管理頁面
-     *
-     * @return \Illuminate\View\View
-     */
-    public function admin()
-    {
-        return view('admin');
-    }
-
-    /**
-     * 考試頁面
-     *
-     * @return \Illuminate\View\View
-     */
-    public function exam()
-    {
-        //
+        return view('home');
     }
 
     /**
