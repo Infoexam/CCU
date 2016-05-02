@@ -1,43 +1,13 @@
-require('dotenv').load();
+let elixir = require('laravel-elixir');
 
-if ('true' === process.env.DISABLE_GULP_NOTIFY) {
-    process.env.DISABLE_NOTIFIER = true;
-}
-
-var elixir = require('laravel-elixir');
+require('laravel-elixir-vueify');
 
 if (elixir.config.production) {
-    elixir.config.publicPath = 'public/assets';
+  elixir.config.publicPath = 'public/assets';
 }
 
+elixir.config.notifications = false;
+
 elixir(function (mix) {
-    mix.babel([
-        'general.js',
-        'vue-mixin.js',
-        'admin/components',
-        'admin/router.js'
-    ], 'resources/assets/js/compiled/admin.js')
-        .babel([
-            'general.js',
-            'vue-mixin.js',
-            'student/components',
-            'student/router.js'
-        ], 'resources/assets/js/compiled/student.js')
-        .sass([
-            'app.scss',
-            'admin.scss',
-            'student.scss'
-        ])
-        .browserify('compiled/admin.js')
-        .browserify('compiled/student.js');
-
-    if ('true' === process.env.BROWSER_SYNC) {
-        mix.browserSync({
-            proxy: 'localhost:8000'
-        });
-    }
-
-    if ('true' === process.env.PHP_UNIT) {
-        mix.phpUnit();
-    }
+  mix.browserify('main.js');
 });
