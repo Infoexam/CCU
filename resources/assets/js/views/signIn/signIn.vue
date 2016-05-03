@@ -1,17 +1,18 @@
 <template>
     <div class="row">
-        <form class="col s12">
+        <form @submit.prevent="signIn" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_circle</i>
                     <input
                         v-model="form.username"
-                        id="Username"
+                        id="username"
                         type="text"
                         class="validate"
+                        autofocus
                         required
                     >
-                    <label for="Username">Username</label>
+                    <label for="username">{{ $t("auth.username") }}</label>
                 </div>
 
                 <div class="input-field col s12">
@@ -23,7 +24,14 @@
                         class="validate"
                         required
                     >
-                    <label for="password">Password</label>
+                    <label for="password">{{ $t("auth.password") }}</label>
+                </div>
+
+                <div class="input-field col s12 center">
+                    <button class="btn waves-effect waves-light" type="submit">
+                        <span>{{ $t("auth.signIn") }}</span>
+                        <i class="material-icons right">send</i>
+                    </button>
                 </div>
             </div>
         </form>
@@ -31,6 +39,8 @@
 </template>
 
 <script type="text/babel">
+    import Auth from '../../services/auth/index'
+
     export default {
         data() {
             return {
@@ -43,9 +53,7 @@
 
         methods: {
             signIn() {
-                this.$http.post('auth/sign-in').then((response) => {
-
-                })
+                this.$auth.signIn(this.form)
             }
         }
     }

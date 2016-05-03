@@ -3,15 +3,31 @@
 namespace App\Accounts;
 
 use App\Core\Entity;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
-class User extends Entity
+class User extends Entity implements AuthenticatableContract, AuthorizableContract
 {
+    use Authenticatable, Authorizable;
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token', 'department_id', 'grade_id',
+        'created_at', 'updated_at',
+    ];
 
     /**
      * The attributes that should be mutated to dates.

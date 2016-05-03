@@ -1,6 +1,6 @@
 <?php
 
-use App\Infoexam\General\Category;
+use App\Categories\Category;
 use Illuminate\Database\Seeder;
 
 class CategoriesTableSeeder extends Seeder

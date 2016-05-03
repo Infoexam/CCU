@@ -1,4 +1,4 @@
-var elixir = require('laravel-elixir')
+var elixir  = require('laravel-elixir')
 var webpack = require('webpack')
 
 require('laravel-elixir-webpack')
@@ -6,8 +6,6 @@ require('laravel-elixir-webpack')
 if (elixir.config.production) {
   elixir.config.publicPath = 'public/assets'
 }
-
-elixir.config.notifications = false
 
 elixir(function (mix) {
   mix.webpack('main.js', {
@@ -30,6 +28,7 @@ elixir(function (mix) {
   })
 
   mix.browserSync({
-    proxy: 'localhost:8000'
-  })
+    proxy: 'localhost:8000',
+    browser: ['google chrome']
+  });
 })
