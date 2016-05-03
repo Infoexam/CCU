@@ -1,5 +1,5 @@
 import _Vue from '../../vueWithResource'
-import Toast from '../toast/index'
+import Toast from '../../components/toast'
 
 let router
 

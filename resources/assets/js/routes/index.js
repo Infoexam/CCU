@@ -6,6 +6,7 @@ import StudentHomeView from '../views/home/student.vue'
 import AdminHomeView from '../views/home/admin.vue'
 import SignInView from '../views/signIn/signIn.vue'
 import ExamList from '../views/exam/list.vue'
+import ExamCreate from '../views/exam/create.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,8 @@ router.map({
   '/admin': {
     component: AdminHomeView,
     subRoutes: {
-      '/exams': { name: 'admin.exams', component: ExamList }
+      '/exams': { name: 'admin.exams', component: ExamList },
+      '/exams/create': { name: 'admin.exams.create', component: ExamCreate }
     }
   }
 })
