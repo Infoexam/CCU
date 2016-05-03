@@ -15,6 +15,13 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->post('sign-in', 'AuthController@signIn');
         $api->get('sign-out', 'AuthController@signOut');
     });
+
+    $api->group(['middleware' => 'auth:admin'], function (ApiRouter $api) {
+        $api->resource('exams', 'ExamController', ['except' => ['create', 'edit']]);
+
+        $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
+        $api->resource('categories', 'CategoryController', ['except' => ['create', 'show', 'edit']]);
+    });
 });
 
 $router->get('{redirect}', ['middleware' => ['web'], 'as' => 'home', 'uses' => 'HomeController@home'])->where('redirect', '.*');

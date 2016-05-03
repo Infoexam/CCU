@@ -55,4 +55,19 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
     {
         return $this->hasMany(Receipt::class);
     }
+
+    /**
+     * 檢查使用者是否具有該身份.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function is($role)
+    {
+        if (! $this->exists) {
+            return false;
+        }
+
+        return $role === $this->getAttribute('role');
+    }
 }

@@ -18,26 +18,20 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        $roles = array_reverse(func_get_args());
+        /** @var \App\Accounts\User|null $user */
+    
+        $user = Auth::guard()->user();
 
-        // 移除 $request 及 $next 兩個參數
-        array_pop($roles);
-        array_pop($roles);
+        $role = func_get_arg(2);
 
-        /** @var \App\Infoexam\User\User|null $user */
-
-        if (null === ($user = Auth::guard()->user())) {
+        if (is_null($user)) {
             $e = new UnauthorizedHttpException('Unauthorized');
-        } else if (! empty($roles) && ! $user->hasRole($roles)) {
+        } else if (is_string($role) && ! $user->is($role)) {
             $e = new AccessDeniedHttpException;
         }
 
-        if (isset($e)) {
-            if ($request->ajax()) {
-                throw $e;
-            }
-
-            return redirect()->guest(route('home', ['signIn' => true]));
+        if (isset($e) && $request->is('api/*')) {
+            throw $e;
         }
 
         return $next($request);
