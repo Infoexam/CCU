@@ -1,4 +1,5 @@
 import _Vue from '../../vueWithResource'
+import Toast from '../toast/index'
 
 let router
 
@@ -11,21 +12,39 @@ let auth = new _Vue({
 
   methods: {
     signIn(credentials, callable) {
+      this.$progress.start()
+
       this.$http.post(`auth/sign-in`, credentials).then((response) => {
+        this.$progress.finish()
+
         this.user = response.data.user
 
         router.go({ name: this.homeRoute() })
       }, (response) => {
-        console.log('sign in failed');
+        this.$progress.failed()
+
+        let message = 422 === response.status
+          ? this.$t('auth.failed')
+          : response.data.message
+
+        Toast.failed(message)
       })
+
+      this.$progress.increase(35)
     },
 
     signOut() {
+      this.$progress.start()
+
       this.$http.get(`auth/sign-out`).then((response) => {
+        this.$progress.finish()
+
         this.user = null
 
         router.go({ name: 'home' })
       }, (response) => {
+        this.$progress.failed()
+
         console.log('sign out failed');
       })
     },
@@ -37,13 +56,13 @@ let auth = new _Vue({
     is(role) {
       return null !== this.user && role === this.user.role
     },
-    
+
     homeRoute() {
       if (this.guest()) {
         return 'home'
       }
-      
-      return this.is('admin') ? 'admin' : 'home'
+
+      return this.is('admin') ? 'admin.exams' : 'home'
     }
   },
 

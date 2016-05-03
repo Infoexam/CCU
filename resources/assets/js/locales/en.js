@@ -2,6 +2,7 @@ export default {
   auth: {
     username: 'Username',
     password: 'Password',
-    signIn:   'Sign In'
+    signIn:   'Sign In',
+    failed:   'These credentials do not match our records.'
   }
 }
