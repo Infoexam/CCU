@@ -1,10 +1,23 @@
+process.env.DISABLE_NOTIFIER = true
+
 var elixir  = require('laravel-elixir')
-var webpack = require('webpack')
 
 require('laravel-elixir-webpack')
 
 if (elixir.config.production) {
   elixir.config.publicPath = 'public/assets'
+}
+
+var browsers = ['google chrome'];
+
+switch (process.platform) {
+  case 'linux':
+    browsers = ['chromium-browser'];
+    break
+
+  case 'darwin':
+    browsers = ['google chrome'];
+    break
 }
 
 elixir(function (mix) {
@@ -29,6 +42,6 @@ elixir(function (mix) {
 
   mix.browserSync({
     proxy: 'localhost:8000',
-    browser: ['google chrome']
+    browser: browsers
   });
 })

@@ -1,59 +1,65 @@
-import _Vue from 'vue'
+import _Vue from '../../vueWithResource'
 
-let _data = new _Vue({
+let router
+
+let auth = new _Vue({
   data() {
     return {
       user: null
     }
-  }
-})
+  },
 
-export default function (Vue, router) {
-  Vue.auth = {
-    me() {
-      Vue.http.get(`account/profile`).then((response) => {
-        _data.user = response.data.user
-      }, (response) => {
-        // not sign in
-      })
-    },
+  methods: {
+    signIn(credentials, callable) {
+      this.$http.post(`auth/sign-in`, credentials).then((response) => {
+        this.user = response.data.user
 
-    signIn(credentials, redirect) {
-      Vue.http.post(`auth/sign-in`, credentials).then((response) => {
-        _data.user = response.data.user
-
-        this._signInRedirect(redirect)
+        router.go({ name: this.homeRoute() })
       }, (response) => {
         console.log('sign in failed');
       })
     },
 
-    _signInRedirect(redirect = 'home') {
-      router.go({name: redirect})
-    },
-
     signOut() {
-      Vue.http.get(`auth/sign-out`).then((response) => {
-        _data.user = null
+      this.$http.get(`auth/sign-out`).then((response) => {
+        this.user = null
+
+        router.go({ name: 'home' })
       }, (response) => {
         console.log('sign out failed');
       })
     },
 
-    check() {
-      return null !== _data.user
-    },
-
     guest() {
-      return ! this.check()
+      return null === this.user
     },
 
     is(role) {
-      return null !== _data.user && role === _data.user.role
+      return null !== this.user && role === this.user.role
+    },
+    
+    homeRoute() {
+      if (this.guest()) {
+        return 'home'
+      }
+      
+      return this.is('admin') ? 'admin' : 'home'
     }
-  }
+  },
 
-  Vue.prototype.$auth = Vue.auth
+  init() {
+    this.$http.get(`account/profile`).then((response) => {
+      this.user = response.data.user
+    }, (response) => {
+      // not sign in, do nothing
+    })
+  }
+})
+
+export default function (Vue, externalRouter) {
+  router = externalRouter
+
+  Vue.prototype.$auth = Vue.auth = auth
 
   return Vue
 }

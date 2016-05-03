@@ -39,9 +39,21 @@
 </template>
 
 <script type="text/babel">
-    import Auth from '../../services/auth/index'
-
     export default {
+        route: {
+            canActivate(transition) {
+                let auth = transition.to.router.app.$auth
+
+                if (! auth.guest()) {
+                    transition.redirect({
+                        name: auth.homeRoute()
+                    })
+                }
+
+                transition.next()
+            }
+        },
+
         data() {
             return {
                 form: {

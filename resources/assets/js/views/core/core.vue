@@ -5,9 +5,9 @@
 </template>
 
 <script type="text/babel">
-    import Events from '../../events/events'
+    import events from '../../events/events'
 
     export default {
-        events: Events
+        events
     }
 </script>

@@ -3,14 +3,14 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-
     export default {
         route: {
             canActivate(transition) {
-                if (Vue.auth.guest()) {
+                let auth = transition.to.router.app.$auth
+                
+                if (auth.guest()) {
                     transition.redirect({name: 'auth.signIn'})
-                } else if (! Vue.auth.is('admin')) {
+                } else if (! auth.is('admin')) {
                     transition.abort('Permission denied.')
                 }
 
