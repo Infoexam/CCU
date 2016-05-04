@@ -35,6 +35,11 @@
                 twoWay: true,
                 type: Object,
                 required: true
+            },
+
+            failed: {
+                type: Function,
+                default: null
             }
         },
 
@@ -127,7 +132,9 @@
                 this.$http.get(url).then((response) => {
                     this.pagination = response.data
                 }, (response) => {
-                    // error
+                    if (null !== this.failed) {
+                        this.failed(response)
+                    }
                 })
             }
         }

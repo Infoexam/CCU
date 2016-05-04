@@ -14,7 +14,7 @@
                     <a v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}">{{ exam.name }}</a>
                 </td>
                 <td>{{ exam.category.name }}</td>
-                <td>{{ exam.enable }}</td>
+                <td><available-icon :available.once="exam.enable"></available-icon></td>
             </tr>
         </tbody>
     </table>
@@ -23,6 +23,8 @@
 </template>
 
 <script type="text/babel">
+    import availableIcon from '../../components/icon/available.vue'
+    import cache from '../../components/cache'
     import pagination from '../../components/pagination.vue'
 
     export default {
@@ -32,14 +34,27 @@
             }
         },
 
+        watch: {
+            exams() {
+                cache.setItem('exams', JSON.stringify(this.exams), 'session')
+            }
+        },
+
         components: {
+            availableIcon,
             pagination
         },
 
         created() {
-            this.$http.get(`exams`).then((response) => {
-                this.exams = response.data
-            });
+            let exams = cache.getItem('exams', () => {
+                return this.$http.get(`exams`).then((response) => {
+                    this.exams = response.data
+                })
+            })
+
+            if (exams && 'function' !== typeof exams.then) {
+                this.exams = JSON.parse(exams)
+            }
         }
     }
 </script>
