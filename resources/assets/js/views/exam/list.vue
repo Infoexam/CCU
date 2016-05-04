@@ -10,7 +10,9 @@
 
         <tbody>
             <tr v-for="exam in exams.data">
-                <td>{{ exam.name }}</td>
+                <td>
+                    <a v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}">{{ exam.name }}</a>
+                </td>
                 <td>{{ exam.category.name }}</td>
                 <td>{{ exam.enable }}</td>
             </tr>

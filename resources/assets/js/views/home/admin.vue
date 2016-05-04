@@ -1,5 +1,6 @@
 <template>
     <h1>Here is Left Nav</h1>
+    <a v-link="{ name: 'admin.exams' }">exam list</a>
     <a v-link="{ name: 'admin.exams.create' }">exam create</a>
 
     <router-view></router-view>
