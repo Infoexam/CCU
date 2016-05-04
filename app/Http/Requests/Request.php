@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Dingo\Api\Exception\ValidationHttpException;
+use Dingo\Api\Http\FormRequest;
 
-abstract class Request extends ValidationHttpException
+abstract class Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

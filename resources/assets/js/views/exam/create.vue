@@ -16,7 +16,7 @@
 
                 <div class="input-field col s12">
                     <materialize-select
-                        :model.sync="form.category"
+                        :model.sync="form.category_id"
                         :label="'題庫類型'"
                         :key="'name'"
                         :value="'id'"
@@ -49,6 +49,7 @@
 
 <script type="text/babel">
     import materializeSelect from '../../components/form/select.vue'
+    import toast from '../../components/toast'
 
     export default {
         data() {
@@ -57,7 +58,7 @@
 
                 form: {
                     name: '',
-                    category: '',
+                    category_id: '',
                     enable: false
                 }
             }
@@ -65,7 +66,11 @@
 
         methods: {
             store() {
-                //
+                this.$http.post(`exams`, this.form).then((response) => {
+                    this.$router.go({ name: 'admin.exams' })
+                }, (response) => {
+                    toast.formRequestFailed(response)
+                })
             }
         },
 
