@@ -1,11 +1,8 @@
-vendor/
-node_modules/
+/vendor
+/node_modules
 
-public/build/
-public/images
-public/images/
-public/js/
-public/css/
+/public/build
+/public/js
 
 Homestead.yaml
 Homestead.json
