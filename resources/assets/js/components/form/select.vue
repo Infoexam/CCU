@@ -1,13 +1,15 @@
 <template>
-    <select id="{{ id }}">
-        <option value="" disabled selected>Choose your option</option>
+    <select :id="id">
+        <option value="" disabled selected>{{ prompt }}</option>
 
         <template v-for="option in options">
-            <option value="{{ isArray ? option : option[value] }}">{{ isArray ? option : option[key] }}</option>
+            <option
+                value="{{ null === value ? option : option[value] }}"
+            >{{ null === key ? option : option[key] }}</option>
         </template>
     </select>
 
-    <label v-if="label" for="{{ id }}">{{ label }}</label>
+    <label v-if="label" :for="id">{{ label }}</label>
 </template>
 
 <script type="text/babel">
@@ -31,17 +33,22 @@
 
             key: {
                 type: String,
-                required: true
+                default: null
             },
 
             value: {
                 type: String,
-                required: true
+                default: null
             },
 
             options: {
                 type: [Array, Object],
                 required: true
+            },
+
+            prompt: {
+                type: String,
+                default: 'Choose your option'
             }
         },
 
@@ -51,28 +58,28 @@
             }
         },
 
-        computed: {
-            isArray() {
-                return Array.isArray(this.options)
-            }
-        },
-
         watch: {
             options() {
-                let id = `#${this.id}`
+                let select = $(`#${this.id}`)
 
-                $(id).material_select();
+                select.material_select();
 
                 if (! this._binded) {
                     let _this = this
 
-                    let target = $(id).closest('div.select-wrapper').find('input[data-activates^="select-options"]')
+                    let target = select.closest('div.select-wrapper').find('input[data-activates^="select-options"]')
 
-                    $(document).on('change', target, function () {
+                    $(select).on('change', target, function () {
+                        if (null === _this.value) {
+                            _this.model =  target.val()
+
+                            return
+                        }
+
                         let option = _this.search(target.val())
 
                         if (null !== option) {
-                            _this.model = option.id
+                            _this.model = option[_this.value]
                         }
                     })
 

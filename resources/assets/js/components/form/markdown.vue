@@ -1,22 +1,25 @@
 <template>
-    <div class="input-field col s12 m6">
-        <textarea
-            v-model="model"
-            :id="textareaId"
-            class="materialize-textarea"
-            :maxlength="length"
-            :length="length"
-        ></textarea>
-        <label
-            :class="{ 'active': model.length > 0 }"
-            :for="textareaId"
-        >{{ label }}</label>
-    </div>
+    <div class="row">
+        <div class="input-field col s12 m5">
+            <textarea
+                v-model="model"
+                :id="textareaId"
+                class="materialize-textarea validate"
+                :maxlength="length"
+                :length="length"
+            ></textarea>
 
-    <div class="col m6 hide-on-small-only">
-        <span>預覽</span>
+            <label
+                :class="{ 'active': model.length > 0 }"
+                :for="textareaId"
+            >{{ label }}</label>
+        </div>
 
-        <div v-html="model | marked"></div>
+        <div class="col m6 offset-m1 hide-on-small-only">
+            <span>預覽</span>
+
+            <div v-html="model | marked"></div>
+        </div>
     </div>
 </template>
 
@@ -24,8 +27,11 @@
     import highlight from 'highlight.js'
     import marked from 'marked'
     import uuid from 'node-uuid'
+    require('highlight.js/styles/github.css')
 
     marked.setOptions({
+        breaks: true,
+
         highlight: (code, lang) => {
             return highlight.highlightAuto(code, [lang]).value
         }

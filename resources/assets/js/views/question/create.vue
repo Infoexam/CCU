@@ -4,9 +4,10 @@
             <div class="row">
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s4"><a href="#from-question">題目</a></li>
-                        <li class="tab col s4"><a href="#form-option">選項</a></li>
-                        <li class="tab col s4"><a href="#form-explanation">解析</a></li>
+                        <li class="tab col s3"><a href="#from-question">題目</a></li>
+                        <li class="tab col s3"><a href="#form-option">選項</a></li>
+                        <li class="tab col s3"><a href="#form-explanation">解析</a></li>
+                        <li class="tab col s3"><a href="#form-image">圖片</a></li>
                     </ul>
                 </div>
 
@@ -16,17 +17,29 @@
                             <materialize-select
                                 :model.sync="form.question.question_id"
                                 :label="'題組'"
-                                :key="'$index'"
-                                :value="'$index'"
                                 :options="groups"
                             ></materialize-select>
                         </div>
 
-                        <markdown
-                            :model.sync="form.question.content"
-                            :length="1000"
-                            :label="'題目'"
-                        ></markdown>
+                        <div class="input-field col s12">
+                            <input
+                                v-model="form.question.uuid"
+                                id="uuid"
+                                type="text"
+                                class="validate"
+                                maxlength="36"
+                                length="36"
+                            >
+                            <label for="uuid" class="active">代碼</label>
+                        </div>
+
+                        <div class="col s12">
+                            <markdown
+                                :model.sync="form.question.content"
+                                :length="5000"
+                                :label="'題目'"
+                            ></markdown>
+                        </div>
                     </div>
                 </div>
 
@@ -52,17 +65,40 @@
                                 <span class="lever"></span>
                             </label>
                         </div>
+
+                        <template v-for="i in form.optionNum">
+                            <div class="col s12"><br></div>
+
+                            <div class="col s12" style="max-height: 350px; overflow-y: scroll">
+                                <markdown
+                                    :model.sync="form.option[i].content"
+                                    :length="1000"
+                                    :label="'選項 ' + (i+1)"
+                                ></markdown>
+                            </div>
+                        </template>
+
+                        <div class="col s12"><br></div>
+
+                        <a
+                            @click="addOption()"
+                            class="btn-floating btn-large waves-effect waves-light red"
+                        ><i class="material-icons">add</i></a>
                     </div>
                 </div>
 
                 <div id="form-explanation" class="col s12">
-                    <div class="row">
+                    <div class="col s12">
                         <markdown
                             :model.sync="form.question.explanation"
-                            :length="1000"
+                            :length="5000"
                             :label="'解析'"
                         ></markdown>
                     </div>
+                </div>
+
+                <div id="form-image" class="col s12">
+                    image
                 </div>
 
                 <div class="input-field col s12 center">
@@ -89,8 +125,13 @@
 
 [this is a link](https://www.google.com.tw)
 
-## User ##
-- [x] List exam's questions
+![logo](https://vuejs.org/images/logo.png)
+
+\`\`\`php
+<?php
+
+  echo 1;
+\`\`\`
 
 ## General ##
 - [ ] Optimize and refactor
@@ -100,18 +141,24 @@
         data() {
             return {
                 difficulties: [],
+
                 groups: [],
 
                 formId: uuid.v4(),
 
                 form: {
                     question: {
+                        uuid: uuid.v4(),
                         content: temp,
                         multiple: false,
                         difficulty_id: '',
                         explanation: temp,
                         question_id: ''
-                    }
+                    },
+
+                    option: [],
+
+                    optionNum: 0
                 }
             }
         },
@@ -119,6 +166,12 @@
         methods: {
             store() {
                 console.log('ok')
+            },
+
+            addOption() {
+                this.form.option.push({ content: '' })
+
+                ++this.form.optionNum
             }
         },
 
@@ -135,10 +188,14 @@
             this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then((response) => {
                 this.groups = response.data
             })
+
+            this.addOption()
         },
 
         ready() {
             $(`#${this.formId}`).find('.tabs').tabs()
+
+            $('#uuid').characterCounter();
         }
     }
 </script>

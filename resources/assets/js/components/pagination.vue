@@ -45,11 +45,11 @@
 
         computed: {
             pages() {
-                let arr = [1, 2]
+                let arr = [1]
                 let currentPage = this.pagination.current_page
                 let lastPage = this.pagination.last_page
 
-                arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage - 1, lastPage)
+                arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage)
 
                 arr = arr.sort().filter(function(item, pos, self) {
                     return (item >= 1) && (item <= lastPage) && (self.indexOf(item) === pos)

@@ -34,6 +34,7 @@ elixir(function (mix) {
         },
 
         { test: /\.vue$/, loader: 'vue' },
+        { test: /\.css$/, loader: "style-loader!css-loader" },
         { test: /\.scss$/, loaders: ['style', 'css', 'sass?sourceMap'] },
         { test: /\.(png|jpg|gif)$/, loader: 'file' }
       ]
