@@ -175,11 +175,8 @@
 |---|----|-----|------|
 | 1 | f  | ff  | fff  |
 | 2 | ss | sss | sass |
-| 3 | d  | ddd | dd   |
 
 [this is a link](https://www.google.com.tw)
-
-![logo](https://vuejs.org/images/logo.png)
 
 \`\`\`php
 <?php
@@ -188,8 +185,10 @@
 \`\`\`
 
 ## General ##
-- [ ] Optimize and refactor
-- [x] Permission check`
+1. Optimize and refactor
+2. Permission check
+
+![logo](https://vuejs.org/images/logo.png)`
 
     export default {
         data() {
@@ -208,7 +207,7 @@
                         content: temp,
                         multiple: false,
                         difficulty_id: '',
-                        explanation: temp,
+                        explanation: '',
                         question_id: ''
                     },
 

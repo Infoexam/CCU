@@ -21,7 +21,14 @@ class ExamQuestionController extends Controller
      */
     public function index($examId)
     {
-        return Exam::with(['category', 'questions'])->findOrFail($examId);
+        return Exam::with([
+            'category',
+            'questions' => function ($query) {
+                $query->whereNUll('question_id');
+            },
+            'questions.difficulty',
+            'questions.options'
+        ])->findOrFail($examId);
     }
 
     /**
@@ -51,6 +58,24 @@ class ExamQuestionController extends Controller
         }
 
         return $this->response->created(null, $question->fresh(['options']));
+    }
+
+    /**
+     * Get exam question.
+     *
+     * @param int $examId
+     * @param string $uuid
+     *
+     * @return \Illuminate\Database\Eloquent\Model|static
+     */
+    public function show($examId, $uuid)
+    {
+        $question = Question::with(['difficulty', 'options', 'answers'])
+            ->where('exam_id', $examId)
+            ->where('uuid', $uuid)
+            ->firstOrFail();
+
+        return $question;
     }
 
     /**

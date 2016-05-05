@@ -1,21 +1,26 @@
 <template>
-    <h2>{{ exam.name }}</h2>
+    <h2 style="display: inline">{{ exam.name }}</h2>
 
-    <a v-link="{ name: 'admin.exams.questions.create', params: { id: exam.id }}">+</a>
+    <a
+        v-link="{ name: 'admin.exams.questions.create', params: { id: exam.id }}"
+        class="btn-floating btn-large waves-effect waves-light red right"
+    ><i class="material-icons">add</i></a>
 
     <table class="bordered highlight">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Enable</th>
+                <th>UUID</th>
+                <th>Difficulty</th>
+                <th></th>
             </tr>
         </thead>
 
         <tbody>
             <tr v-for="question in exam.questions">
-                <td></td>
-                <td></td>
+                <td>
+                    <a v-link="{ name: 'admin.exams.questions.show', params: { id: exam.id, uuid: question.uuid }}">{{ question.uuid }}</a>
+                </td>
+                <td>{{ question.difficulty.name }}</td>
                 <td></td>
             </tr>
         </tbody>

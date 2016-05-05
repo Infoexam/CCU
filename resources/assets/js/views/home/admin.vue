@@ -1,7 +1,10 @@
 <template>
-    <h1>Here is Left Nav</h1>
-    <a v-link="{ name: 'admin.exams' }">exam list</a>
-    <a v-link="{ name: 'admin.exams.create' }">exam create</a>
+    <div>
+        <br><br>
+        <a v-link="{ name: 'admin.exams' }">題庫列表</a>
+        <a v-link="{ name: 'admin.exams.create' }">新增題庫</a>
+        <br><br>
+    </div>
 
     <router-view></router-view>
 </template>

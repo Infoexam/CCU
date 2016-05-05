@@ -2,6 +2,7 @@
 
 namespace App\Exams;
 
+use App\Categories\Category;
 use App\Core\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,6 +18,13 @@ class Question extends Entity
     protected $table = 'questions';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['exam_id', 'difficulty_id', 'created_at', 'updated_at', 'deleted_at'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,6 +37,16 @@ class Question extends Entity
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Get the question difficulty.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function difficulty()
+    {
+        return $this->belongsTo(Category::class, 'difficulty_id');
+    }
 
     /**
      * 取得題目的選項.
