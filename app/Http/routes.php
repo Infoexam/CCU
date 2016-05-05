@@ -17,6 +17,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
     });
 
     $api->group(['middleware' => 'auth:admin'], function (ApiRouter $api) {
+        $api->get('exams/{exams}/images', 'ExamController@image');
+        $api->post('exams/{exams}/images', 'ExamController@storeImage');
         $api->resource('exams', 'ExamController', ['except' => ['create', 'edit']]);
         $api->get('exams/{exams}/questions/groups', 'ExamQuestionController@groups');
         $api->resource('exams.questions', 'ExamQuestionController');

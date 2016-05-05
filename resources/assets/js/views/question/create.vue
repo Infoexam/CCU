@@ -17,6 +17,8 @@
                             <materialize-select
                                 :model.sync="form.question.question_id"
                                 :label="'題組'"
+                                :key="'uuid'"
+                                :value="'id'"
                                 :options="groups"
                             ></materialize-select>
                         </div>
@@ -66,6 +68,19 @@
                             </label>
                         </div>
 
+                        <div class="input-field col s12">
+                            <label>答案</label>
+
+                            <template v-for="i in form.optionNum">
+                                <input
+                                    v-model="form.option[i].answer"
+                                    :id="`option-${i+1}-answer`"
+                                    type="checkbox"
+                                >
+                                <label :for="`option-${i+1}-answer`">選項 {{ i + 1 }}</label>
+                            </template>
+                        </div>
+
                         <template v-for="i in form.optionNum">
                             <div class="col s12"><br></div>
 
@@ -73,7 +88,7 @@
                                 <markdown
                                     :model.sync="form.option[i].content"
                                     :length="1000"
-                                    :label="'選項 ' + (i+1)"
+                                    :label="'選項 ' + (i + 1)"
                                 ></markdown>
                             </div>
                         </template>
@@ -98,7 +113,44 @@
                 </div>
 
                 <div id="form-image" class="col s12">
-                    image
+                    <div class="row">
+                        <template v-for="image in images">
+                            <div class="col s12 m6">
+                                <input :id="'image-' + $index" value="{{ image.url }}">
+
+                                <button
+                                    type="button"
+                                    class="btn clipboard-btn"
+                                    data-clipboard-target="#image-{{ $index }}"
+                                >
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
+                                </button>
+
+                                <img
+                                    :src="image.url"
+                                    class="materialboxed"
+                                    width="100%"
+                                >
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Image</span>
+                            <input
+                                v-el:image
+                                @change="upload()"
+                                type="file"
+                                accept="image/*"
+                                multiple
+                            >
+                        </div>
+
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="input-field col s12 center">
@@ -113,8 +165,10 @@
 </template>
 
 <script type="text/babel">
+    import clipboard from 'clipboard'
     import markdown from '../../components/form/markdown.vue'
     import materializeSelect from '../../components/form/select.vue'
+    import toast from '../../components/toast'
     import uuid from 'node-uuid'
 
     let temp = `|   | Hi | sss | ccc  |
@@ -142,7 +196,9 @@
             return {
                 difficulties: [],
 
-                groups: [],
+                groups: {},
+
+                images: [],
 
                 formId: uuid.v4(),
 
@@ -163,15 +219,47 @@
             }
         },
 
+        watch: {
+            images() {
+                $('.materialboxed').materialbox();
+            }
+        },
+
         methods: {
             store() {
-                console.log('ok')
+                this.$http.post(`exams/${this.$route.params.id}/questions`, this.form).then((response) => {
+                    toast.success('Success')
+                }, (response) => {
+                    toast.formRequestFailed(response)
+                })
             },
 
             addOption() {
-                this.form.option.push({ content: '' })
+                this.form.option.push({ content: '', answer: false })
 
                 ++this.form.optionNum
+            },
+
+            upload() {
+                let files = this.$els.image.files
+
+                if (0 === files.length) {
+                    return
+                }
+
+                let data = new FormData()
+
+                for (let i = 0; i < files.length; ++i) {
+                    data.append('image[]', files[i])
+                }
+
+                this.$progress.start()
+
+                this.$http.post(`exams/${this.$route.params.id}/images`, data).then((response) => {
+                    this.images = response.data
+
+                    this.$progress.finish()
+                })
             }
         },
 
@@ -186,7 +274,11 @@
             })
 
             this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then((response) => {
-                this.groups = response.data
+                this.groups = response.data.questions
+            })
+
+            this.$http.get(`exams/${this.$route.params.id}/images`).then((response) => {
+                this.images = response.data
             })
 
             this.addOption()
@@ -196,6 +288,8 @@
             $(`#${this.formId}`).find('.tabs').tabs()
 
             $('#uuid').characterCounter();
+
+            new clipboard('.clipboard-btn');
         }
     }
 </script>

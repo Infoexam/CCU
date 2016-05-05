@@ -17,6 +17,13 @@ class Option extends Entity
     protected $table = 'options';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['content'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

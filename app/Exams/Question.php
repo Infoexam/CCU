@@ -17,6 +17,13 @@ class Question extends Entity
     protected $table = 'questions';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['uuid', 'content', 'multiple', 'difficulty_id', 'explanation', 'question_id'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

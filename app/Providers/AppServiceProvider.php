@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Exams\Exam;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,8 +15,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerProviders()
-            ->setMorphMap();
+        $this->registerProviders();
+
+        Relation::morphMap([
+            Exam::class
+        ]);
     }
 
     /**
@@ -29,24 +33,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
-
-        return $this;
-    }
-
-    /**
-     * 設定 morphMap 關聯關係
-     *
-     * @return $this
-     *
-     * @link http://yish.im/2016/01/20/Laravel-morphMap-future/
-     */
-    protected function setMorphMap()
-    {
-        Relation::morphMap([
-            'announcement' => \App\Infoexam\Website\Announcement::class,
-            'exam-question' => \App\Infoexam\Exam\Question::class,
-            'exam-option' => \App\Infoexam\Exam\Option::class,
-        ]);
 
         return $this;
     }

@@ -90,8 +90,8 @@
 
         methods: {
             search(key) {
-                for (let i = 0; i < this.options.length; ++i) {
-                    if (this.options[i].name === key) {
+                for (let i in this.options) {
+                    if (this.options.hasOwnProperty(i) && this.options[i][this.key] === key) {
                         return this.options[i];
                     }
                 }

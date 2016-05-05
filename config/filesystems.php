@@ -48,6 +48,11 @@ return [
             'root'   => env('FILESYSTEM_LOCAL_ROOT', storage_path('app')),
         ],
 
+        'media' => [
+            'driver' => 'local',
+            'root'   => env('MEDIA_ROOT', public_path('assets/images')),
+        ],
+
         'ftp' => [
             'driver'   => 'ftp',
             'host'     => env('FTP_HOST'),

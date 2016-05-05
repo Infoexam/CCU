@@ -5,10 +5,12 @@ namespace App\Exams;
 use App\Categories\Category;
 use App\Core\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Exam extends Entity
+class Exam extends Entity implements HasMediaConversions
 {
-    use SoftDeletes;
+    use HasMediaTrait, SoftDeletes;
 
     /**
      * The table associated with the model.
@@ -65,5 +67,18 @@ class Exam extends Entity
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * Register the conversions that should be performed.
+     *
+     * @return array
+     */
+    public function registerMediaConversions()
+    {
+        $this->addMediaConversion('thumb')
+            ->setManipulations(['w' => 368])
+            ->performOnCollections('*')
+            ->nonQueued();
     }
 }

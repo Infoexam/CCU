@@ -162,6 +162,7 @@ return [
          */
         Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 
     ],
 
