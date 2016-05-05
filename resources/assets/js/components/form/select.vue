@@ -3,7 +3,7 @@
         <option value="" disabled selected>Choose your option</option>
 
         <template v-for="option in options">
-            <option value="{{ option[value] }}">{{ option[key] }}</option>
+            <option value="{{ isArray ? option : option[value] }}">{{ isArray ? option : option[key] }}</option>
         </template>
     </select>
 
@@ -23,11 +23,6 @@
             id: {
                 type: String,
                 default: null
-            },
-
-            required: {
-                type: Boolean,
-                default: false
             },
 
             label: {
@@ -53,6 +48,12 @@
         data() {
             return {
                 _binded: false
+            }
+        },
+
+        computed: {
+            isArray() {
+                return Array.isArray(this.options)
             }
         },
 

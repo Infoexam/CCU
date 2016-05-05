@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form @submit.prevent="store" class="col s12">
+        <form @submit.prevent="store()" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <input
@@ -21,7 +21,6 @@
                         :key="'name'"
                         :value="'id'"
                         :options="categories"
-                        :required="true"
                     ></materialize-select>
                 </div>
 

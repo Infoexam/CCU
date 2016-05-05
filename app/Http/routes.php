@@ -18,6 +18,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
 
     $api->group(['middleware' => 'auth:admin'], function (ApiRouter $api) {
         $api->resource('exams', 'ExamController', ['except' => ['create', 'edit']]);
+        $api->get('exams/{exams}/questions/groups', 'ExamQuestionController@groups');
+        $api->resource('exams.questions', 'ExamQuestionController');
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
         $api->resource('categories', 'CategoryController', ['except' => ['create', 'show', 'edit']]);
