@@ -7,6 +7,8 @@ import AdminHomeView from '../views/home/admin.vue'
 import SignInView from '../views/signIn/signIn.vue'
 import ExamList from '../views/exam/list.vue'
 import ExamCreate from '../views/exam/create.vue'
+import PracticeList from '../views/practice/list.vue'
+import PracticeProcessing from '../views/practice/processing.vue'
 import QuestionList from '../views/question/list.vue'
 import QuestionCreate from '../views/question/create.vue'
 import QuestionShow from '../views/question/show.vue'
@@ -22,7 +24,9 @@ const router = new VueRouter({
 
 router.map({
   '/': { name: 'home', component: StudentHomeView },
-  '/sign-in': { name: 'auth.signIn', component: SignInView },
+  '/sign-in': { name: 'signIn', component: SignInView },
+  '/practice': { name: 'practice', component: PracticeList },
+  '/practice/:id': { name: 'practice.processing', component: PracticeProcessing },
   '/admin': {
     component: AdminHomeView,
     subRoutes: {

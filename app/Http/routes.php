@@ -16,6 +16,13 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->get('sign-out', 'AuthController@signOut');
     });
 
+    $api->group(['middleware' => 'auth'], function (ApiRouter $api) {
+        $api->group(['prefix' => 'practice'], function (ApiRouter $api) {
+            $api->get('exams', 'PracticeController@exam');
+            $api->get('{exams}/processing', 'PracticeController@processing');
+        });
+    });
+
     $api->group(['middleware' => 'auth:admin'], function (ApiRouter $api) {
         $api->get('exams/{exams}/images', 'ExamController@image');
         $api->post('exams/{exams}/images', 'ExamController@storeImage');

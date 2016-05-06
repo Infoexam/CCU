@@ -67,4 +67,9 @@ class Question extends Entity
     {
         return $this->belongsToMany(Option::class, 'answers', null, 'option_id');
     }
+    
+    public function questions()
+    {
+        return $this->hasMany(self::class);
+    }
 }

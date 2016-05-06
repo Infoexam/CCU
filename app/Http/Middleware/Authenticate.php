@@ -22,7 +22,7 @@ class Authenticate
     
         $user = Auth::guard()->user();
 
-        $role = func_get_arg(2);
+        $role = 3 === func_num_args() ? func_get_arg(2) : null;
 
         if (is_null($user)) {
             $e = new UnauthorizedHttpException('Unauthorized');

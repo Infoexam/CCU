@@ -7,11 +7,18 @@ html {
 }
 
 body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
   background: #F3F6F8 none repeat scroll 0% 0%;
 }
 
 header {
   margin-bottom: 30px;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .tabs {
