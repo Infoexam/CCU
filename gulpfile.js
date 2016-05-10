@@ -8,7 +8,8 @@ if (elixir.config.production) {
   elixir.config.publicPath = 'public/assets'
 }
 
-var browsers = ['google chrome'];
+var browsers = ['google chrome']
+var proxyUrl = 'localhost:8000'
 
 switch (process.platform) {
   case 'linux':
@@ -16,7 +17,7 @@ switch (process.platform) {
     break
 
   case 'darwin':
-    browsers = ['google chrome'];
+    proxyUrl = 'infoexam.dev';
     break
 }
 
@@ -42,7 +43,7 @@ elixir(function (mix) {
   })
 
   mix.browserSync({
-    proxy: 'localhost:8000',
+    proxy: proxyUrl,
     browser: browsers
   });
 })
