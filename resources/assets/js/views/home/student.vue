@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="card-action">
-                    <a href="#">預約</a>
+                    <a href="#">預約（建構中）</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="card-action">
-                    <a href="#">考試</a>
+                    <a href="#">考試（建構中）</a>
                 </div>
             </div>
         </div>
