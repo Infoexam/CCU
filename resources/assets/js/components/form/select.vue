@@ -13,7 +13,7 @@
 </template>
 
 <script type="text/babel">
-    import uuid from 'node-uuid'
+    import Uuid from 'node-uuid'
 
     export default {
         props: {
@@ -24,7 +24,7 @@
 
             id: {
                 type: String,
-                default: null
+                default: Uuid.v4()
             },
 
             label: {
@@ -90,19 +90,13 @@
 
         methods: {
             search(key) {
-                for (let i in this.options) {
-                    if (this.options.hasOwnProperty(i) && this.options[i][this.key] === key) {
-                        return this.options[i];
+                for (let option of this.options) {
+                    if (key === option[this.key]) {
+                        return option
                     }
                 }
 
                 return null
-            }
-        },
-
-        created() {
-            if (null === this.id) {
-                this.id = uuid.v4()
             }
         }
     }

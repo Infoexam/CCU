@@ -1,11 +1,8 @@
 <template>
-    <template v-if="available">
-        <i class="material-icons green-text">check</i>
-    </template>
-
-    <template v-else>
-        <i class="material-icons red-text">close</i>
-    </template>
+    <i
+        :class="[available ? 'green-text' : 'red-text']"
+        class="material-icons"
+    >{{ available ? 'check' : 'close' }}</i>
 </template>
 
 <script type="text/babel">

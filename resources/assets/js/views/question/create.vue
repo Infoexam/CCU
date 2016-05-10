@@ -116,7 +116,7 @@
                     <div class="row">
                         <template v-for="image in images">
                             <div class="col s12 m6">
-                                <input :id="'image-' + $index" value="{{ image.url }}">
+                                <input :id="'image-' + $index" :value="image.url">
 
                                 <button
                                     type="button"
@@ -165,30 +165,11 @@
 </template>
 
 <script type="text/babel">
-    import clipboard from 'clipboard'
+    import Clipboard from 'clipboard'
     import markdown from '../../components/form/markdown.vue'
     import materializeSelect from '../../components/form/select.vue'
     import toast from '../../components/toast'
     import uuid from 'node-uuid'
-
-    let temp = `|   | Hi | sss | ccc  |
-|---|----|-----|------|
-| 1 | f  | ff  | fff  |
-| 2 | ss | sss | sass |
-
-[this is a link](https://www.google.com.tw)
-
-\`\`\`php
-<?php
-
-  echo 1;
-\`\`\`
-
-## General ##
-1. Optimize and refactor
-2. Permission check
-
-![logo](https://vuejs.org/images/logo.png)`
 
     export default {
         data() {
@@ -204,7 +185,7 @@
                 form: {
                     question: {
                         uuid: uuid.v4(),
-                        content: temp,
+                        content: '',
                         multiple: false,
                         difficulty_id: '',
                         explanation: '',
@@ -252,12 +233,8 @@
                     data.append('image[]', files[i])
                 }
 
-                this.$progress.start()
-
                 this.$http.post(`exams/${this.$route.params.id}/images`, data).then((response) => {
                     this.images = response.data
-
-                    this.$progress.finish()
                 })
             }
         },
@@ -273,7 +250,7 @@
             })
 
             this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then((response) => {
-                this.groups = response.data.questions
+                this.groups = response.data.questions || []
             })
 
             this.$http.get(`exams/${this.$route.params.id}/images`).then((response) => {
@@ -286,9 +263,9 @@
         ready() {
             $(`#${this.formId}`).find('.tabs').tabs()
 
-            $('#uuid').characterCounter();
+            $('#uuid').characterCounter()
 
-            new clipboard('.clipboard-btn');
+            new Clipboard('.clipboard-btn')
         }
     }
 </script>

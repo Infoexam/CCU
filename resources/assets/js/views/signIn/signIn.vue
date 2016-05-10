@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <form @submit.prevent="signIn" class="col s12">
+        <form @submit.prevent="signIn()" class="col s12">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_circle</i>
@@ -27,18 +27,15 @@
                     <label for="password">{{ $t("auth.password") }}</label>
                 </div>
 
-                <div class="input-field col s12 center">
-                    <button class="btn waves-effect waves-light" type="submit">
-                        <span>{{ $t("auth.signIn") }}</span>
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
+                <submit :text="$t('auth.signIn')"></submit>
             </div>
         </form>
     </div>
 </template>
 
 <script type="text/babel">
+    import Submit from '../../components/form/submit.vue'
+
     export default {
         route: {
             canActivate(transition) {
@@ -67,6 +64,10 @@
             signIn() {
                 this.$auth.signIn(this.form)
             }
+        },
+
+        components: {
+            submit: Submit
         }
     }
 </script>

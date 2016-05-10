@@ -24,8 +24,8 @@
 </template>
 
 <script type="text/babel">
-    import markdown from '../markdown.vue'
-    import uuid from 'node-uuid'
+    import Markdown from '../markdown.vue'
+    import Uuid from 'node-uuid'
 
     export default {
         props: {
@@ -42,17 +42,16 @@
             label: {
                 type: String,
                 required: true
-            }
-        },
+            },
 
-        data() {
-            return {
-                textareaId: uuid.v4()
+            textareaId: {
+                type: String,
+                default: Uuid.v4()
             }
         },
 
         components: {
-            markdown
+            markdown: Markdown
         },
 
         ready() {
