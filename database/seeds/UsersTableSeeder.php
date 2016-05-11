@@ -1,8 +1,7 @@
 <?php
 
-use App\Infoexam\User\Certificate;
-use App\Infoexam\User\Role;
-use App\Infoexam\User\User;
+use App\Accounts\User;
+use App\Accounts\Certificate;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
