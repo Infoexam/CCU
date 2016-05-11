@@ -6,7 +6,7 @@ function randomCategory($category) {
     return \App\Categories\Category::getCategories($category)->random()->getAttribute('id');
 }
 
-git 
+
 /**
  * users and certificates table
  */
