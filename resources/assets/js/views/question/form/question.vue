@@ -13,13 +13,13 @@
         <div class="input-field col s12">
             <input
                 v-model="uuid"
-                id="uuid"
+                :id="uuidFieldId"
                 type="text"
                 class="validate"
                 maxlength="36"
                 length="36"
             >
-            <label for="uuid" class="active">代碼</label>
+            <label :for="uuidFieldId" class="active">代碼</label>
         </div>
 
         <div class="col s12">
@@ -35,6 +35,7 @@
 <script type="text/babel">
     import Markdown from '../../../components/form/markdown.vue'
     import MaterializeSelect from '../../../components/form/select.vue'
+    import Uuid from 'node-uuid'
 
     export default {
         props: {
@@ -59,7 +60,9 @@
 
         data() {
             return {
-                groups: []
+                groups: [],
+
+                uuidFieldId: Uuid.v4()
             }
         },
 
@@ -72,6 +75,8 @@
             this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then((response) => {
                 this.groups = response.data.questions || []
             })
+
+            $(`#${this.uuidFieldId}`).characterCounter()
         }
     }
 </script>

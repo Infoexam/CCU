@@ -2,7 +2,7 @@
     <div class="row">
         <div class="input-field col s12">
             <materialize-select
-                :model.sync="form.question.difficulty_id"
+                :model.sync="difficultyId"
                 :label="'難度'"
                 :key="'name'"
                 :value="'id'"
@@ -26,24 +26,24 @@
         <div class="input-field col s12">
             <label>答案</label>
 
-            <template v-for="i in form.optionNum">
+            <template v-for="i in counter">
                 <input
-                    v-model="form.option[i].answer"
-                    :id="`option-${i+1}-answer`"
+                    v-model="option[i].answer"
+                    :id="`option-${i + 1}-answer`"
                     type="checkbox"
                 >
-                <label :for="`option-${i+1}-answer`">選項 {{ i + 1 }}</label>
+                <label :for="`option-${i + 1}-answer`">選項 {{ i + 1 }}</label>
             </template>
         </div>
 
-        <template v-for="i in form.optionNum">
+        <template v-for="i in counter">
             <div class="col s12"><br></div>
 
             <div class="col s12" style="max-height: 350px; overflow-y: scroll">
                 <markdown
-                    :model.sync="form.option[i].content"
+                    :model.sync="option[i].content"
                     :length="1000"
-                    :label="'選項 ' + (i + 1)"
+                    :label="`選項 ${i + 1}`"
                 ></markdown>
             </div>
         </template>
@@ -63,16 +63,52 @@
 
     export default {
         props: {
+            difficultyId: {
+                twoWay: true,
+                type: Number,
+                required: true
+            },
+
             multiple: {
                 twoWay: true,
                 type: Boolean,
                 required: true
+            },
+
+            option: {
+                twoWay: true,
+                type: Array,
+                required: true
+            }
+        },
+
+        data() {
+            return {
+                difficulties: [],
+
+                counter: 0
+            }
+        },
+
+        methods: {
+            addOption() {
+                this.option.push({ content: '', answer: false })
+
+                ++this.counter
             }
         },
 
         components: {
             markdown: Markdown,
             materializeSelect: MaterializeSelect
+        },
+
+        created() {
+            this.$http.get(`categories/f/exam.difficulty`).then((response) => {
+                this.difficulties = response.data.categories
+            })
+
+            this.addOption()
         }
     }
 </script>
