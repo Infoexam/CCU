@@ -1,8 +1,8 @@
 import Vue from 'vue'
-
 import VueResource from 'vue-resource'
 import VueProgress from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
+import VueAuth from './services/auth'
 
 import VueLocales from './locales'
 import HttpInterceptor from './init/httpInterceptor'
@@ -36,8 +36,11 @@ Vue.prototype.$progress.setHolder({options: {}})
 Vue.config.lang = 'zh_TW'
 
 // Set locales
-Object.keys(VueLocales).forEach(function (lang) {
-  Vue.locale(lang, VueLocales[lang])
-})
+for (let key of Object.keys(VueLocales)) {
+  Vue.locale(key, VueLocales[key])
+}
+
+// VueAuth must install after http setting
+Vue.use(VueAuth)
 
 export default Vue

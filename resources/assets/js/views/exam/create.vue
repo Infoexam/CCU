@@ -35,20 +35,16 @@
                     </label>
                 </div>
 
-                <div class="input-field col s12 center">
-                    <button class="btn waves-effect waves-light" type="submit">
-                        <span>新增</span>
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
+                <submit :text="$t('form.submit.create')"></submit>
             </div>
         </form>
     </div>
 </template>
 
 <script type="text/babel">
-    import materializeSelect from '../../components/form/select.vue'
-    import toast from '../../components/toast'
+    import MaterializeSelect from '../../components/form/select.vue'
+    import Submit from '../../components/form/submit.vue'
+    import Toast from '../../components/toast'
 
     export default {
         data() {
@@ -68,13 +64,14 @@
                 this.$http.post(`exams`, this.form).then((response) => {
                     this.$router.go({ name: 'admin.exams' })
                 }, (response) => {
-                    toast.formRequestFailed(response)
+                    Toast.formRequestFailed(response)
                 })
             }
         },
 
         components: {
-            materializeSelect
+            materializeSelect: MaterializeSelect,
+            submit: Submit
         },
 
         created() {

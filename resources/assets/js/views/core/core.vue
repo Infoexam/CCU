@@ -23,11 +23,17 @@
 
                     <ul>
                         <li v-if="$auth.guest()">
-                            <a v-link="{ name: 'signIn' }" class="grey-text text-lighten-3">登入</a>
+                            <a
+                                v-link="{ name: 'signIn' }"
+                                class="grey-text text-lighten-3"
+                            >{{ $t('auth.signIn') }}</a>
                         </li>
 
                         <li v-else>
-                            <a @click="$auth.signOut()" class="cursor-pointer grey-text text-lighten-3">登出</a>
+                            <a
+                                @click="$auth.signOut(() => { $router.go({ name: 'home' }) })"
+                                class="cursor-pointer grey-text text-lighten-3"
+                            >{{ $t('auth.signOut') }}</a>
                         </li>
 
                         <template v-if="$auth.is('admin')">
@@ -43,14 +49,18 @@
             <div class="container">
                 <span>© 2016 <a v-link="{ name: 'home' }" class="grey-text text-lighten-4">Infoexam</a></span>
 
-                <a class="grey-text text-lighten-4 right" href="http://www.ccu.edu.tw" target="_blank">國立中正大學</a>
+                <a
+                    class="grey-text text-lighten-4 right"
+                    href="http://www.ccu.edu.tw"
+                    target="_blank"
+                >{{ $t('ccu') }}</a>
             </div>
         </div>
     </footer>
 </template>
 
 <script type="text/babel">
-    import Events from '../../events/events'
+    import Events from '../../events'
     import Progress from 'vue-progressbar/vue-progressbar.vue'
 
     export default {

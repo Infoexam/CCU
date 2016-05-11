@@ -39,12 +39,4 @@ router.map({
   }
 })
 
-router.beforeEach(function (transition) {
-  transition.next()
-})
-
-router.afterEach(function (transition) {
-  //
-})
-
 export { router, infoexam }

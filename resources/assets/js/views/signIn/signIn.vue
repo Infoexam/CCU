@@ -62,7 +62,9 @@
 
         methods: {
             signIn() {
-                this.$auth.signIn(this.form)
+                this.$auth.signIn(this.form, (home) => {
+                    this.$router.go({ name: home })
+                })
             }
         },
 

@@ -20,7 +20,7 @@
 
             text: {
                 type: String,
-                default: Vue.t("form.submit")
+                default: Vue.t("form.submit.send")
             }
         }
     }

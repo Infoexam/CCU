@@ -11,7 +11,6 @@
             <tr>
                 <th>UUID</th>
                 <th>Difficulty</th>
-                <th></th>
             </tr>
         </thead>
 
@@ -21,14 +20,13 @@
                     <a v-link="{ name: 'admin.exams.questions.show', params: { id: exam.id, uuid: question.uuid }}">{{ question.uuid }}</a>
                 </td>
                 <td>{{ question.difficulty.name }}</td>
-                <td></td>
             </tr>
         </tbody>
     </table>
 </template>
 
 <script type="text/babel">
-    import cache from '../../components/cache'
+    import Cache from '../../components/cache'
 
     export default {
         data() {
@@ -37,14 +35,11 @@
             }
         },
 
-        methods: {
-        },
-
         ready() {
-            let _id = this.$route.params.id
+            let id = this.$route.params.id
 
-            let exam = cache.getItem(`questions-${_id}`, () => {
-                return this.$http.get(`exams/${_id}/questions`).then((response) => {
+            let exam = Cache.getItem(`questions-${id}`, () => {
+                return this.$http.get(`exams/${id}/questions`).then((response) => {
                     this.exam = response.data.exam
                 })
             })

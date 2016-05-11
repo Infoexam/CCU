@@ -1,83 +1,74 @@
-import Vue from '../../vue'
 import Toast from '../../components/toast'
 
-let Router
-
-let auth = new Vue({
-  data() {
-    return {
-      user: null
-    }
-  },
-
-  methods: {
-    signIn(credentials) {
-      this.$http.post(`auth/sign-in`, credentials).then((response) => {
-        this.user = response.data.user
-
-        Router.go({ name: this.homeRoute() })
-      }, (response) => {
-        let message = 422 === response.status
-          ? this.$t('auth.failed')
-          : response.data.message
-
-        Toast.failed(message)
-      })
-    },
-
-    signOut() {
-      this.$http.get(`auth/sign-out`).then((response) => {
-        this.user = null
-
-        Router.go({ name: 'home' })
-      }, (response) => {
-        console.log('sign out failed');
-      })
-    },
-
-    guest() {
-      return null === this.user
-    },
-
-    is(...roles) {
-      if (null === this.user) {
-        return false
+function install(Vue) {
+  Vue.prototype.$auth = Vue.auth = new Vue({
+    data() {
+      return {
+        user: null
       }
+    },
 
-      for (let role of roles) {
-        if (role === this.user.role) {
-          return true
+    methods: {
+      signIn(credentials, callable) {
+        this.$http.post(`auth/sign-in`, credentials).then((response) => {
+          this.user = response.data.user
+
+          if ('function' === typeof callable) {
+            callable(this.homeRoute())
+          }
+        }, (response) => {
+          let message = 422 === response.status
+            ? this.$t('auth.failed')
+            : response.data.message
+
+          Toast.failed(message)
+        })
+      },
+
+      signOut(callable) {
+        this.$http.get(`auth/sign-out`).then((response) => {
+          this.user = null
+
+          if ('function' === typeof callable) {
+            callable()
+          }
+        }, (response) => {
+          console.log('sign out failed');
+        })
+      },
+
+      guest() {
+        return null === this.user
+      },
+
+      is(...roles) {
+        if (null === this.user) {
+          return false
         }
-      }
 
-      return false
+        return roles.includes(this.user.role)
+      },
+
+      homeRoute() {
+        if (this.guest()) {
+          return 'home'
+        }
+
+        return this.is('admin') ? 'admin.exams' : 'home'
+      }
     },
 
-    homeRoute() {
-      if (this.guest()) {
-        return 'home'
-      }
-
-      return this.is('admin') ? 'admin.exams' : 'home'
+    created() {
+      this.$http.get(`account/profile`).then((response) => {
+        this.user = response.data.user
+      }, (response) => {
+        // not sign in, do nothing
+      })
     }
-  },
-
-  created() {
-    this.$http.get(`account/profile`).then((response) => {
-      this.user = response.data.user
-    }, (response) => {
-      // not sign in, do nothing
-    })
-  }
-})
-
-function install(externalVue, externalRouter) {
-  Router = externalRouter
-
-  externalVue.prototype.$auth = externalVue.auth = auth
+  })
 }
 
-if (typeof window !== 'undefined' && window.Vue) {
+if ('undefined' !== typeof window && window.Vue) {
   window.Vue.use(install)
 }
 

@@ -23,9 +23,9 @@
 </template>
 
 <script type="text/babel">
-    import availableIcon from '../../components/icon/available.vue'
-    import cache from '../../components/cache'
-    import pagination from '../../components/pagination.vue'
+    import AvailableIcon from '../../components/icon/available.vue'
+    import Cache from '../../components/cache'
+    import Pagination from '../../components/pagination.vue'
 
     export default {
         data() {
@@ -36,17 +36,19 @@
 
         watch: {
             exams() {
-                cache.setItem('exams', JSON.stringify(this.exams), 'session')
+                Cache.setItem('exams', JSON.stringify(this.exams), 'session')
             }
         },
 
         components: {
-            availableIcon,
-            pagination
+            availableIcon: AvailableIcon,
+            pagination: Pagination
         },
 
         created() {
-            let exams = cache.getItem('exams', () => {
+            /** @todo refactor */
+
+            let exams = Cache.getItem('exams', () => {
                 return this.$http.get(`exams`).then((response) => {
                     this.exams = response.data
                 })
