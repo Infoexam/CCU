@@ -46,17 +46,11 @@
         },
 
         created() {
-            /** @todo refactor */
-
-            let exams = Cache.getItem('exams', () => {
+            this.exams = Cache.getItem('exams', () => {
                 return this.$http.get(`exams`).then((response) => {
                     this.exams = response.data
                 })
-            })
-
-            if (exams && 'function' !== typeof exams.then) {
-                this.exams = JSON.parse(exams)
-            }
+            }, true)
         }
     }
 </script>

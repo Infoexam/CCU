@@ -38,15 +38,11 @@
         ready() {
             let id = this.$route.params.id
 
-            let exam = Cache.getItem(`questions-${id}`, () => {
+            this.exam = Cache.getItem(`questions-${id}`, () => {
                 return this.$http.get(`exams/${id}/questions`).then((response) => {
                     this.exam = response.data.exam
                 })
-            })
-
-            if (exam && 'function' !== typeof exam.then) {
-                this.exam = JSON.parse(exam)
-            }
+            }, true)
         }
     }
 </script>

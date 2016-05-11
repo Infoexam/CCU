@@ -68,7 +68,7 @@
 </template>
 
 <script type="text/babel">
-    import markdown from '../../components/markdown.vue'
+    import Markdown from '../../components/markdown.vue'
 
     export default {
         data() {
@@ -86,7 +86,7 @@
         },
 
         components: {
-            markdown
+            markdown: Markdown
         },
 
         created() {

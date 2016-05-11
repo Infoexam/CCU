@@ -8,7 +8,7 @@ let request = function(request) {
   }
 
   ++httpQueue
-  
+
   return request
 }
 
@@ -16,7 +16,7 @@ let response = function(response) {
   if (response.ok) {
     if (1 === httpQueue) {
       this.$progress.finish()
-    } else {
+    } else if (httpQueue > 1) {
       this.$progress.increase(10)
     }
   } else {
@@ -26,7 +26,7 @@ let response = function(response) {
   }
 
   --httpQueue
-  
+
   return response
 }
 

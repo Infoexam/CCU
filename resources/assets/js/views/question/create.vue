@@ -265,7 +265,9 @@
 
             $('#uuid').characterCounter()
 
-            new Clipboard('.clipboard-btn')
+            if (this.images.length > 0) {
+                new Clipboard('.clipboard-btn')
+            }
         }
     }
 </script>

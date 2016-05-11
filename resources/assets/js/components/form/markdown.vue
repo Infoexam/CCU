@@ -46,12 +46,19 @@
 
             textareaId: {
                 type: String,
-                default: Uuid.v4()
+                default: null
             }
         },
 
         components: {
             markdown: Markdown
+        },
+
+        created() {
+            // The textareaId default value must assign here
+            if (null === this.textareaId) {
+                this.textareaId = Uuid.v4()
+            }
         },
 
         ready() {

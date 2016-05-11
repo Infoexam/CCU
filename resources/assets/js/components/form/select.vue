@@ -24,7 +24,7 @@
 
             id: {
                 type: String,
-                default: Uuid.v4()
+                default: null
             },
 
             label: {
@@ -97,6 +97,13 @@
                 }
 
                 return null
+            }
+        },
+
+        created() {
+            // The id default value must assign here
+            if (null === this.id) {
+                this.id = Uuid.v4()
             }
         }
     }

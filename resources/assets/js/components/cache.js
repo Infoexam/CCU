@@ -13,15 +13,21 @@ export default {
     }
   },
 
-  getItem(key, _default = null) {
+  getItem(key, _default = null, jsonParse = false) {
     key = `cache.${key}`
 
-    if (null !== localStorage.getItem(key)) {
-      return localStorage.getItem(key)
-    } else if (null !== sessionStorage.getItem(key)) {
-      return sessionStorage.getItem(key)
+    let result = localStorage.getItem(key) || sessionStorage.getItem(key)
+
+    if (null !== result) {
+      return jsonParse ? JSON.parse(result) : result
     }
 
-    return 'function' === typeof _default ? _default() : _default
+    if ('function' !== typeof _default) {
+      return _default
+    } else {
+      result = _default()
+
+      return 'function' === typeof result.then ? {} : result
+    }
   }
 }
