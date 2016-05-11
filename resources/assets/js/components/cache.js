@@ -1,4 +1,4 @@
-let cache = {
+export default {
   setItem(key, value, storage = 'local') {
     let s = 'local' === storage ? localStorage : sessionStorage
 
@@ -9,7 +9,7 @@ let cache = {
     if ('local' === storage) {
       localStorage.removeItem(key)
     } else if ('session' === storage) {
-      sessionStorage.removeItem(key);
+      sessionStorage.removeItem(key)
     }
   },
 
@@ -25,5 +25,3 @@ let cache = {
     return 'function' === typeof _default ? _default() : _default
   }
 }
-
-export default cache

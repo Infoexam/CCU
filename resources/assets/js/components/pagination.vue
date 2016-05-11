@@ -26,8 +26,8 @@
 </template>
 
 <script type="text/babel">
-    import url from 'url'
-    import queryString from 'query-string'
+    import Url from 'url'
+    import QueryString from 'query-string'
 
     export default {
         props: {
@@ -58,16 +58,14 @@
                 let pages = []
                 let prev = 1;
 
-                for (let index in arr) {
-                    if (arr.hasOwnProperty(index)) {
-                        if (arr[index] - prev > 1) {
-                            pages.push(-1)
-                        }
-
-                        pages.push(arr[index])
-
-                        prev = arr[index]
+                for (let element of arr) {
+                    if (element - prev > 1) {
+                        pages.push(-1)
                     }
+
+                    pages.push(element)
+
+                    prev = element
                 }
 
                 return pages
@@ -94,11 +92,11 @@
                     return null
                 }
 
-                let _url = url.parse(this.pagination.prev_page_url || this.pagination.next_page_url)
+                let url = Url.parse(this.pagination.prev_page_url || this.pagination.next_page_url)
 
                 return {
-                    search: _url.search,
-                    pathname: _url.pathname
+                    search: url.search,
+                    pathname: url.pathname
                 }
             }
         },
@@ -121,11 +119,11 @@
                     return
                 }
 
-                let parsed = queryString.parse(this.baseUrl.search)
+                let parsed = QueryString.parse(this.baseUrl.search)
 
                 parsed.page = page
 
-                this._sendRequest(`${this.baseUrl.pathname}?${queryString.stringify(parsed)}`)
+                this._sendRequest(`${this.baseUrl.pathname}?${QueryString.stringify(parsed)}`)
             },
 
             _sendRequest(url) {

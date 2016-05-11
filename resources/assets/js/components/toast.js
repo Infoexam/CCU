@@ -1,4 +1,4 @@
-let toast = {
+export default {
   formRequestFailed(response) {
     switch (response.status) {
       case 422:
@@ -12,26 +12,22 @@ let toast = {
   },
 
   unprocessableEntity(errors) {
-    let _this = this;
-
-    Object.keys(errors).forEach(function (field) {
-      errors[field].forEach(function (error) {
-        _this.failed(error)
-      })
-    })
+    for (let error of errors) {
+      for (let msg of error) {
+        this.failed(msg)
+      }
+    }
   },
 
   success(message, duration) {
-    this._toast(message, duration)
+    this.toast(message, duration)
   },
 
   failed(message, duration) {
-    this._toast(message, duration, 'red darken-2')
+    this.toast(message, duration, 'red darken-2')
   },
 
-  _toast(message = '', duration = 4000, style = 'green') {
+  toast(message = '', duration = 4000, style = 'green') {
     Materialize.toast(message, duration, style)
   }
 }
-
-export default toast

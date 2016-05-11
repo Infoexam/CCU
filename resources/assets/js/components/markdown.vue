@@ -3,11 +3,11 @@
 </template>
 
 <script type="text/babel">
-    import highlight from 'highlight.js'
-    import marked from 'marked'
+    import Highlight from 'highlight.js'
+    import Marked from 'marked'
     require('highlight.js/styles/github.css')
 
-    let renderer = new marked.Renderer()
+    let renderer = new Marked.Renderer()
 
     renderer.image = function (href, title, text) {
         let out = `<img width="100%" src="${href}" alt="${text}"`
@@ -24,14 +24,14 @@
     renderer.link = function(href, title, text) {
         if (this.options.sanitize) {
             try {
-                let prot = decodeURIComponent(unescape(href))
+                let prot = decodeURIComponent(decodeURI(href))
                     .replace(/[^\w:]/g, '')
                     .toLowerCase()
-            } catch (e) {
-                return ''
-            }
 
-            if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0) {
+                if (prot.includes('javascript:') || prot.includes('vbscript:')) {
+                    return ''
+                }
+            } catch (e) {
                 return ''
             }
         }
@@ -47,13 +47,13 @@
         return out
     }
 
-    marked.setOptions({
+    Marked.setOptions({
         renderer: renderer,
 
         breaks: true,
 
         highlight: (code, lang) => {
-            return highlight.highlightAuto(code, [lang]).value
+            return Highlight.highlightAuto(code, [lang]).value
         }
     })
 
@@ -65,7 +65,7 @@
         },
 
         filters: {
-            marked
+            marked: Marked
         }
     }
 </script>

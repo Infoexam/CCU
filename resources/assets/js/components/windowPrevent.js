@@ -1,5 +1,5 @@
-module.exports = function (){
-    window.onblur = function(){
-        alert("Waring");
-    }
+export default function () {
+  window.onblur = function() {
+    alert("Waring");
+  }
 }
