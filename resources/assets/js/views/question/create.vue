@@ -12,37 +12,11 @@
                 </div>
 
                 <div id="from-question" class="col s12">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <materialize-select
-                                :model.sync="form.question.question_id"
-                                :label="'題組'"
-                                :key="'uuid'"
-                                :value="'id'"
-                                :options="groups"
-                            ></materialize-select>
-                        </div>
-
-                        <div class="input-field col s12">
-                            <input
-                                v-model="form.question.uuid"
-                                id="uuid"
-                                type="text"
-                                class="validate"
-                                maxlength="36"
-                                length="36"
-                            >
-                            <label for="uuid" class="active">代碼</label>
-                        </div>
-
-                        <div class="col s12">
-                            <markdown
-                                :model.sync="form.question.content"
-                                :length="5000"
-                                :label="'題目'"
-                            ></markdown>
-                        </div>
-                    </div>
+                    <form-question
+                        :id.sync="form.question.question_id"
+                        :uuid.sync="form.question.uuid"
+                        :content.sync="form.question.content"
+                    ></form-question>
                 </div>
 
                 <div id="form-option" class="col s12">
@@ -103,105 +77,53 @@
                 </div>
 
                 <div id="form-explanation" class="col s12">
-                    <div class="col s12">
-                        <markdown
-                            :model.sync="form.question.explanation"
-                            :length="5000"
-                            :label="'解析'"
-                        ></markdown>
-                    </div>
+                    <form-explanation
+                        :explanation.sync="form.question.explanation"
+                    ></form-explanation>
                 </div>
 
                 <div id="form-image" class="col s12">
-                    <div class="row">
-                        <template v-for="image in images">
-                            <div class="col s12 m6">
-                                <input :id="'image-' + $index" :value="image.url">
-
-                                <button
-                                    type="button"
-                                    class="btn clipboard-btn"
-                                    data-clipboard-target="#image-{{ $index }}"
-                                >
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
-                                </button>
-
-                                <img
-                                    :src="image.url"
-                                    class="materialboxed"
-                                    width="100%"
-                                >
-                            </div>
-                        </template>
-                    </div>
-
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>Image</span>
-                            <input
-                                v-el:image
-                                @change="upload()"
-                                type="file"
-                                accept="image/*"
-                                multiple
-                            >
-                        </div>
-
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
+                    <form-image></form-image>
                 </div>
 
-                <div class="input-field col s12 center">
-                    <button class="btn waves-effect waves-light" type="submit">
-                        <span>新增</span>
-                        <i class="material-icons right">send</i>
-                    </button>
-                </div>
+                <submit :text="$t('form.submit.create')"></submit>
             </div>
         </form>
     </div>
 </template>
 
 <script type="text/babel">
-    import Clipboard from 'clipboard'
     import markdown from '../../components/form/markdown.vue'
     import materializeSelect from '../../components/form/select.vue'
     import toast from '../../components/toast'
-    import uuid from 'node-uuid'
+    import Uuid from 'node-uuid'
+
+    import FormQuestion from './form/question.vue'
+    import FormExplanation from './form/explanation.vue'
+    import FormImage from './form/image.vue'
+    import Submit from '../../components/form/submit.vue'
 
     export default {
         data() {
             return {
                 difficulties: [],
 
-                groups: {},
-
-                images: [],
-
-                formId: uuid.v4(),
+                formId: Uuid.v4(),
 
                 form: {
                     question: {
-                        uuid: uuid.v4(),
+                        uuid: Uuid.v4(),
                         content: '',
                         multiple: false,
                         difficulty_id: '',
                         explanation: '',
-                        question_id: ''
+                        question_id: 0
                     },
 
                     option: [],
 
                     optionNum: 0
                 }
-            }
-        },
-
-        watch: {
-            images() {
-                $('.materialboxed').materialbox();
             }
         },
 
@@ -218,43 +140,21 @@
                 this.form.option.push({ content: '', answer: false })
 
                 ++this.form.optionNum
-            },
-
-            upload() {
-                let files = this.$els.image.files
-
-                if (0 === files.length) {
-                    return
-                }
-
-                let data = new FormData()
-
-                for (let i = 0; i < files.length; ++i) {
-                    data.append('image[]', files[i])
-                }
-
-                this.$http.post(`exams/${this.$route.params.id}/images`, data).then((response) => {
-                    this.images = response.data
-                })
             }
         },
 
         components: {
             markdown,
-            materializeSelect
+            materializeSelect,
+            formQuestion: FormQuestion,
+            formExplanation: FormExplanation,
+            formImage: FormImage,
+            submit: Submit
         },
 
         created() {
             this.$http.get(`categories/f/exam.difficulty`).then((response) => {
                 this.difficulties = response.data.categories
-            })
-
-            this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then((response) => {
-                this.groups = response.data.questions || []
-            })
-
-            this.$http.get(`exams/${this.$route.params.id}/images`).then((response) => {
-                this.images = response.data
             })
 
             this.addOption()
@@ -264,10 +164,6 @@
             $(`#${this.formId}`).find('.tabs').tabs()
 
             $('#uuid').characterCounter()
-
-            if (this.images.length > 0) {
-                new Clipboard('.clipboard-btn')
-            }
         }
     }
 </script>
