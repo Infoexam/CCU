@@ -39,7 +39,7 @@
       markdown
     },
 
-    ready () {
+    created () {
       this.$http.get(`exams/${this.$route.params.id}/questions/${this.$route.params.uuid}`).then(response => {
         this.question = response.data.question
       })

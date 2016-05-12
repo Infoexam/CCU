@@ -1,12 +1,6 @@
-<style lang="sass">
-  #exam-practice p {
-    margin-top: 0;
-  }
-</style>
-
 <template>
   <div class="row">
-    <form @submit.prevent="submit()" id="exam-practice" class="col s12">
+    <form @submit.prevent="submit()" class="col s12">
       <template v-for="question in exam.questions">
         <div class="row">
           <div class="col s12">
@@ -15,19 +9,23 @@
             <markdown :model="question.content"></markdown>
           </div>
 
-          <template v-for="option in question.options">
-            <div class="col s12">
-              <input
-                :name="`question-${question.id}`"
-                :type="question.multiple ? 'checkbox' : 'radio'"
-                :id="`option-${option.id}`"
-                class="with-gap"
-              >
-              <label :for="`option-${option.id}`">
-                <markdown :model="option.content"></markdown>
-              </label>
-            </div>
-          </template>
+          <form-option
+            :question="question"
+            :option="question.options"
+          ></form-option>
+          <!--<template v-for="option in question.options">-->
+            <!--<div class="col s12">-->
+              <!--<input-->
+                <!--:name="`question-${question.id}`"-->
+                <!--:type="question.multiple ? 'checkbox' : 'radio'"-->
+                <!--:id="`option-${option.id}`"-->
+                <!--class="with-gap"-->
+              <!--&gt;-->
+              <!--<label :for="`option-${option.id}`">-->
+                <!--<markdown :model="option.content"></markdown>-->
+              <!--</label>-->
+            <!--</div>-->
+          <!--</template>-->
 
           <div v-if="question.questions.length > 0" class="col s12">
             <div class="row">
@@ -68,6 +66,7 @@
 </template>
 
 <script type="text/babel">
+  import FormOption from './form/option.vue'
   import Markdown from '../../components/markdown.vue'
 
   export default {
@@ -86,6 +85,7 @@
     },
 
     components: {
+      formOption: FormOption,
       markdown: Markdown
     },
 

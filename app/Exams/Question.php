@@ -22,7 +22,7 @@ class Question extends Entity
      *
      * @var array
      */
-    protected $hidden = ['exam_id', 'difficulty_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['exam_id', 'difficulty_id', 'question_id', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -67,7 +67,7 @@ class Question extends Entity
     {
         return $this->belongsToMany(Option::class, 'answers', null, 'option_id');
     }
-    
+
     public function questions()
     {
         return $this->hasMany(self::class);

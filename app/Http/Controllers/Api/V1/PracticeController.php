@@ -14,7 +14,7 @@ class PracticeController extends Controller
     {
         return Exam::where('enable', true)->latest()->get(['id', 'name']);
     }
-    
+
     public function processing($id)
     {
         return Exam::with([
@@ -22,8 +22,10 @@ class PracticeController extends Controller
                 $query->whereNull('question_id')->orderBy(DB::raw('RAND()'))->limit(50);
             },
             'questions.options' => function ($query) {$query->orderBy(DB::raw('RAND()'));},
+            'questions.answers' => function ($query) {$query->select(['id']);},
             'questions.questions',
             'questions.questions.options' => function ($query) {$query->orderBy(DB::raw('RAND()'));},
+            'questions.questions.answers' => function ($query) {$query->select(['id']);},
         ])->where('enable', true)->findOrFail($id);
     }
 }

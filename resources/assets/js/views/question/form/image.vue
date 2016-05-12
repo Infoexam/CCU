@@ -42,6 +42,8 @@
   import Clipboard from 'clipboard'
   import Md5 from 'crypto-js/md5'
 
+  let clipboard = null
+
   export default {
     data () {
       return {
@@ -54,7 +56,7 @@
         $('.materialboxed').materialbox()
 
         if (0 < this.images.length) {
-          new Clipboard('.clipboard-btn')
+          clipboard = new Clipboard('.clipboard-btn')
         }
       }
     },
@@ -91,6 +93,12 @@
       this.$http.get(`exams/${this.$route.params.id}/images`).then(response => {
         this.images = this.preprocess(response.data)
       })
+    },
+
+    beforeDestroy () {
+      if (null !== clipboard) {
+        clipboard.destroy()
+      }
     }
   }
 </script>

@@ -35,7 +35,7 @@
       }
     },
 
-    ready () {
+    created () {
       const id = this.$route.params.id
 
       this.exam = Cache.getItem(`questions-${id}`, () => {

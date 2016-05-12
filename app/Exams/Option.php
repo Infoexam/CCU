@@ -17,6 +17,13 @@ class Option extends Entity
     protected $table = 'options';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['question_id', 'created_at', 'updated_at', 'deleted_at'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

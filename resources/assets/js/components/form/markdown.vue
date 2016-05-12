@@ -1,13 +1,13 @@
 <template>
   <div class="row">
     <div class="input-field col s12 m5">
-            <textarea
-              v-model="model"
-              :id="textareaId"
-              class="materialize-textarea validate"
-              :maxlength="length"
-              :length="length"
-            ></textarea>
+      <textarea
+        v-model="model"
+        :id="textareaId"
+        class="materialize-textarea validate"
+        :maxlength="length"
+        :length="length"
+      ></textarea>
 
       <label
         :class="{ 'active': model.length > 0 }"

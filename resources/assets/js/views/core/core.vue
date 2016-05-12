@@ -31,7 +31,7 @@
 
             <li v-else>
               <a
-                @click="$auth.signOut(() => { $router.go({ name: 'home' }) })"
+                @click="$auth.signOut(signOutCallback)"
                 class="cursor-pointer grey-text text-lighten-3"
               >{{ $t('auth.signOut') }}</a>
             </li>
@@ -81,6 +81,12 @@
     },
 
     events: Events,
+
+    methods: {
+      signOutCallback () {
+        this.$router.go({ name: 'home' })
+      }
+    },
 
     components: {
       progress: Progress
