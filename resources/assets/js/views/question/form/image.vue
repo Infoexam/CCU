@@ -40,7 +40,7 @@
 
 <script type="text/babel">
   import Clipboard from 'clipboard'
-  import Md5 from 'crypto-js/md5'
+  import Md5 from 'md5'
 
   let clipboard = null
 
@@ -64,7 +64,7 @@
     methods: {
       preprocess (images) {
         for (const image of images) {
-          image.uuid = `image-${Md5(image.url).toString()}`
+          image.uuid = `image-${Md5(image.url)}`
         }
 
         return images

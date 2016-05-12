@@ -1,97 +1,199 @@
+<style lang="sass">
+  .exam-practice-should-disable-select {
+    user-select: none;
+  }
+</style>
+
 <template>
-  <div class="row">
+  <div class="row exam-practice-should-disable-select">
+    <div v-if="submitted" class="col s12 center">
+      <span>本次測驗共 {{ statistics.total }} 題</span>
+      <span>正確 {{ statistics.correct }} 題</span>
+      <span>錯誤 {{ statistics.total - statistics.blank - statistics.correct }} 題</span>
+      <span>未作答 {{ statistics.blank }} 題</span>
+    </div>
+
     <form @submit.prevent="submit()" class="col s12">
-      <template v-for="question in exam.questions">
+      <template v-for="question in questions">
         <div class="row">
           <div class="col s12">
-            <h5>第 {{* counter++ }} 題</h5>
+            <h4>
+              <available-icon
+                v-if="submitted"
+                :available.once="question.correct"
+              ></available-icon>
 
-            <markdown :model="question.content"></markdown>
+              <span>第 {{* counter++ }} 題</span>
+            </h4>
           </div>
 
+          <!-- 題目 -->
+          <markdown
+            :model="question.content"
+            class="col s12 m6"
+          ></markdown>
+
+          <!-- 解析 -->
+          <markdown
+            v-if="submitted"
+            :model="question.explanation || ''"
+            class="col m6 hide-on-small-only"
+          ></markdown>
+
+          <!-- 選項 -->
           <form-option
-            :question="question"
             :option="question.options"
+            :multiple="question.multiple"
+            :submitted="submitted"
+            class="col s12"
           ></form-option>
-          <!--<template v-for="option in question.options">-->
-            <!--<div class="col s12">-->
-              <!--<input-->
-                <!--:name="`question-${question.id}`"-->
-                <!--:type="question.multiple ? 'checkbox' : 'radio'"-->
-                <!--:id="`option-${option.id}`"-->
-                <!--class="with-gap"-->
-              <!--&gt;-->
-              <!--<label :for="`option-${option.id}`">-->
-                <!--<markdown :model="option.content"></markdown>-->
-              <!--</label>-->
-            <!--</div>-->
-          <!--</template>-->
+        </div>
 
-          <div v-if="question.questions.length > 0" class="col s12">
-            <div class="row">
-              <template v-for="q in question.questions">
-                <div class="col s12">
-                  <h5>第 {{* counter++ }} 題</h5>
+        <div v-if="question.questions.length > 0" class="row">
+          <template v-for="q in question.questions">
+            <div class="col s12">
+              <h4>
+                <available-icon
+                  v-if="submitted"
+                  :available.once="q.correct"
+                ></available-icon>
 
-                  <markdown :model="q.content"></markdown>
-                </div>
-
-                <template v-for="o in q.options">
-                  <div class="col s12">
-                    <input
-                      :name="`question-${q.id}`"
-                      :type="q.multiple ? 'checkbox' : 'radio'"
-                      :id="`option-${o.id}`"
-                      class="with-gap"
-                    >
-                    <label :for="`option-${o.id}`"><markdown :model="o.content"></markdown></label>
-                  </div>
-                </template>
-              </template>
+                <span>第 {{* counter++ }} 題</span>
+              </h4>
             </div>
-          </div>
+
+            <!-- 題組子題目 -->
+            <markdown
+              :model="q.content"
+              class="col s12 m6"
+            ></markdown>
+
+            <!-- 解析 -->
+            <markdown
+              v-if="submitted"
+              :model="q.explanation || ''"
+              class="col m6 hide-on-small-only"
+            ></markdown>
+
+            <!-- 選項 -->
+            <form-option
+              :option="q.options"
+              :multiple="q.multiple"
+              :submitted="submitted"
+              class="col s12"
+            ></form-option>
+          </template>
         </div>
       </template>
 
-      <div class="row">
-        <div class="input-field col s12 center">
-          <button class="btn waves-effect waves-light" type="submit">
-            <span>送出</span>
-            <i class="material-icons right">send</i>
-          </button>
-        </div>
+      <div v-if="! submitted" class="row">
+        <submit :text="'送出'"></submit>
       </div>
     </form>
   </div>
 </template>
 
 <script type="text/babel">
+  import AvailableIcon from '../../components/icon/available.vue'
   import FormOption from './form/option.vue'
   import Markdown from '../../components/markdown.vue'
+  import Md5 from 'md5'
+  import Submit from '../../components/form/submit.vue'
 
   export default {
     data () {
       return {
         counter: 1,
 
-        exam: {}
+        questions: {},
+
+        submitted: false,
+
+        statistics: {
+          total: 0,
+          correct: 0,
+          blank: 0
+        }
       }
     },
 
     methods: {
+      preprocess (questions) {
+        for (const question of questions) {
+          const answers = question.answers.map(answer => {
+            return answer.id
+          })
+
+          for (const option of question.options) {
+            option.hash = Md5(option.id)
+
+            option.answer = answers.includes(option.id)
+
+            option.check = false
+          }
+
+          if (question.hasOwnProperty('questions') && 0 < question.questions.length) {
+            question.questions = this.preprocess(question.questions)
+          }
+
+          question.correct = false
+
+          delete question.answers
+        }
+
+        return questions
+      },
+
       submit () {
-        alert('submit~')
+        if (this.submitted) {
+          return
+        }
+
+        this.statistics.total = this.counter - 1
+
+        this.judge(this.questions)
+
+        this.submitted = true
+      },
+
+      judge (questions) {
+        for (const question of questions) {
+          let blank = true
+          let correct = true
+
+          for (const option of question.options) {
+            if (blank && false !== option.check) {
+              blank = false
+            }
+
+            correct = correct && option.answer === option.check
+          }
+
+          if (blank) {
+            ++this.statistics.blank
+          } else if (correct) {
+            ++this.statistics.correct
+
+            question.correct = true
+          }
+
+          if (question.hasOwnProperty('questions') && 0 < question.questions.length) {
+            this.judge(question.questions)
+          }
+        }
       }
     },
 
     components: {
+      availableIcon: AvailableIcon,
       formOption: FormOption,
-      markdown: Markdown
+      markdown: Markdown,
+      submit: Submit
     },
 
     created () {
       this.$http.get(`practice/${this.$route.params.id}/processing`).then(response => {
-        this.exam = response.data.exam
+        this.questions = this.preprocess(response.data.exam.questions)
       })
     }
   }

@@ -2,14 +2,17 @@
   <div class="row">
     <div v-for="o in option" class="col s12">
       <input
-        :name="`question-${question.id}`"
-        :type="question.multiple ? 'checkbox' : 'radio'"
-        :id="id"
+        v-model="o.check"
+        :name="uuid"
+        :type="multiple ? 'checkbox' : 'radio'"
+        :id="o.hash"
+        :value="true"
+        :disabled="submitted"
         class="with-gap"
-      >
-      <label :for="id">
-        <markdown :model="o.content"></markdown>
-      </label>
+        @change="update(o)"
+      ><label :for="o.hash">選項 {{ $index + 1 }}</label>
+
+      <markdown :model="o.content"></markdown>
     </div>
   </div>
 </template>
@@ -20,19 +23,35 @@
 
   export default {
     props: {
-      question: {
+      option: {
+        type: Array,
         required: true
       },
 
-      option: {
-        type: Array,
+      multiple: {
+        type: Boolean,
+        required: true
+      },
+
+      submitted: {
+        type: Boolean,
         required: true
       }
     },
 
     data () {
       return {
-        id: Uuid.v4()
+        uuid: Uuid.v4()
+      }
+    },
+
+    methods: {
+      update (o) {
+        if (! this.multiple) {
+          for (const option of this.option) {
+            option.check = o === option
+          }
+        }
       }
     },
 

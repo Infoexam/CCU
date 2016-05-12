@@ -41,7 +41,7 @@
     props: {
       id: {
         twoWay: true,
-        type: Number,
+        type: [Number, String],
         required: true
       },
 

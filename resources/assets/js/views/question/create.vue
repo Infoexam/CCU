@@ -62,9 +62,9 @@
             uuid: Uuid.v4(),
             content: '',
             multiple: false,
-            difficulty_id: 0,
+            difficulty_id: '',
             explanation: '',
-            question_id: 0
+            question_id: ''
           },
 
           option: []
