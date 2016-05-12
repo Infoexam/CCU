@@ -1,11 +1,11 @@
 export default {
-  setItem(key, value, storage = 'local') {
-    let s = 'local' === storage ? localStorage : sessionStorage
+  setItem (key, value, storage = 'local') {
+    const s = 'local' === storage ? localStorage : sessionStorage
 
     s.setItem(`cache.${key}`, value)
   },
 
-  removeItem(key, storage = 'local') {
+  removeItem (key, storage = 'local') {
     if ('local' === storage) {
       localStorage.removeItem(key)
     } else if ('session' === storage) {
@@ -13,7 +13,7 @@ export default {
     }
   },
 
-  getItem(key, _default = null, jsonParse = false) {
+  getItem (key, _default = null, jsonParse = false) {
     key = `cache.${key}`
 
     let result = localStorage.getItem(key) || sessionStorage.getItem(key)

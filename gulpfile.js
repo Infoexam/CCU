@@ -3,25 +3,40 @@ process.env.DISABLE_NOTIFIER = true
 var elixir  = require('laravel-elixir')
 
 require('laravel-elixir-webpack')
+require('laravel-elixir-eslint')
 
-if (elixir.config.production) {
+var production = elixir.config.production
+
+if (production) {
   elixir.config.publicPath = 'public/assets'
 }
 
-var browsers = ['google chrome']
-var proxyUrl = 'localhost:8000'
-
-switch (process.platform) {
-  case 'linux':
-    browsers = ['chromium-browser'];
-    break
-
-  case 'darwin':
-    proxyUrl = 'infoexam.dev';
-    break
-}
-
 elixir(function (mix) {
+  if (! production) {
+    var browsers = ['google chrome']
+    var proxyUrl = 'localhost:8000'
+
+    switch (process.platform) {
+      case 'linux':
+        browsers = ['chromium-browser']
+        break
+
+      case 'darwin':
+        proxyUrl = 'infoexam.dev'
+        break
+    }
+
+    mix.browserSync({
+      proxy: proxyUrl,
+      browser: browsers
+    })
+
+    mix.eslint([
+      'resources/assets/js/**/*.js',
+      'resources/assets/js/**/*.vue'
+    ])
+  }
+
   mix.webpack('main.js', {
     module: {
       loaders: [
@@ -41,9 +56,4 @@ elixir(function (mix) {
       ]
     }
   })
-
-  mix.browserSync({
-    proxy: proxyUrl,
-    browser: browsers
-  });
 })

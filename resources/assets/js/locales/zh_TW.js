@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export default {
   auth: {
     username: '帳號',

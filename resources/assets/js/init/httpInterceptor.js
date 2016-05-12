@@ -1,6 +1,6 @@
 let httpQueue = 0
 
-let request = function(request) {
+const request = function (request) {
   if (0 === httpQueue) {
     this.$progress.start()
   } else {
@@ -12,11 +12,11 @@ let request = function(request) {
   return request
 }
 
-let response = function(response) {
+const response = function (response) {
   if (response.ok) {
     if (1 === httpQueue) {
       this.$progress.finish()
-    } else if (httpQueue > 1) {
+    } else if (1 < httpQueue) {
       this.$progress.increase(10)
     }
   } else {

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export default {
   auth: {
     username: 'Username',
@@ -9,7 +11,7 @@ export default {
 
   form: {
     submit: {
-      send: 'Submit',
+      send:   'Submit',
       create: 'Create'
     }
   },

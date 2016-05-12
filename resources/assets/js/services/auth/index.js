@@ -1,23 +1,23 @@
 import Toast from '../../components/toast'
 
-function install(Vue) {
+function install (Vue) {
   Vue.prototype.$auth = Vue.auth = new Vue({
-    data() {
+    data () {
       return {
         user: null
       }
     },
 
     methods: {
-      signIn(credentials, callable) {
-        this.$http.post(`auth/sign-in`, credentials).then((response) => {
+      signIn (credentials, callable) {
+        this.$http.post('auth/sign-in', credentials).then(response => {
           this.user = response.data.user
 
           if ('function' === typeof callable) {
             callable(this.homeRoute())
           }
-        }, (response) => {
-          let message = 422 === response.status
+        }, response => {
+          const message = 422 === response.status
             ? this.$t('auth.failed')
             : response.data.message
 
@@ -25,23 +25,23 @@ function install(Vue) {
         })
       },
 
-      signOut(callable) {
-        this.$http.get(`auth/sign-out`).then((response) => {
+      signOut (callable) {
+        this.$http.get('auth/sign-out').then(response => {
           this.user = null
 
           if ('function' === typeof callable) {
             callable()
           }
-        }, (response) => {
-          console.log('sign out failed');
+        }, response => {
+          console.log('sign out failed')
         })
       },
 
-      guest() {
+      guest () {
         return null === this.user
       },
 
-      is(...roles) {
+      is (...roles) {
         if (null === this.user) {
           return false
         }
@@ -49,7 +49,7 @@ function install(Vue) {
         return roles.includes(this.user.role)
       },
 
-      homeRoute() {
+      homeRoute () {
         if (this.guest()) {
           return 'home'
         }
@@ -58,10 +58,10 @@ function install(Vue) {
       }
     },
 
-    created() {
-      this.$http.get(`account/profile`).then((response) => {
+    created () {
+      this.$http.get('account/profile').then(response => {
         this.user = response.data.user
-      }, (response) => {
+      }, response => {
         // not sign in, do nothing
       })
     }

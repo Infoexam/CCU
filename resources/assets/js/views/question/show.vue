@@ -1,48 +1,48 @@
 <template>
-    <template v-if="available">
-        <h3>題目</h3>
+  <template v-if="available">
+    <h3>題目</h3>
 
-        <blockquote>
-            <markdown :model="question.content"></markdown>
-        </blockquote>
+    <blockquote>
+      <markdown :model="question.content"></markdown>
+    </blockquote>
 
-        <template v-for="option in question.options">
-            <h3>選項 {{ $index + 1 }}</h3>
+    <template v-for="option in question.options">
+      <h3>選項 {{ $index + 1 }}</h3>
 
-            <blockquote>
-                <markdown :model="option.content"></markdown>
-            </blockquote>
-        </template>
+      <blockquote>
+        <markdown :model="option.content"></markdown>
+      </blockquote>
     </template>
+  </template>
 </template>
 
 <script type="text/babel">
-    import markdown from '../../components/markdown.vue'
+  import markdown from '../../components/markdown.vue'
 
-    export default {
-        data() {
-            return {
-                question: {}
-            }
-        },
+  export default {
+    data () {
+      return {
+        question: {}
+      }
+    },
 
-        computed: {
-            available() {
-                return Object.keys(this.question).length > 0
-            }
-        },
+    computed: {
+      available () {
+        return 0 < Object.keys(this.question).length
+      }
+    },
 
-        methods: {
-        },
+    methods: {
+    },
 
-        components: {
-            markdown
-        },
+    components: {
+      markdown
+    },
 
-        ready() {
-            this.$http.get(`exams/${this.$route.params.id}/questions/${this.$route.params.uuid}`).then((response) => {
-                this.question = response.data.question
-            })
-        }
+    ready () {
+      this.$http.get(`exams/${this.$route.params.id}/questions/${this.$route.params.uuid}`).then(response => {
+        this.question = response.data.question
+      })
     }
+  }
 </script>

@@ -1,5 +1,5 @@
 export default {
-  formRequestFailed(response) {
+  formRequestFailed (response) {
     switch (response.status) {
       case 422:
         this.unprocessableEntity(response.data.errors)
@@ -11,23 +11,23 @@ export default {
     }
   },
 
-  unprocessableEntity(errors) {
-    for (let error of errors) {
-      for (let msg of error) {
+  unprocessableEntity (errors) {
+    for (const error of errors) {
+      for (const msg of error) {
         this.failed(msg)
       }
     }
   },
 
-  success(message, duration) {
+  success (message, duration) {
     this.toast(message, duration)
   },
 
-  failed(message, duration) {
+  failed (message, duration) {
     this.toast(message, duration, 'red darken-2')
   },
 
-  toast(message = '', duration = 4000, style = 'green') {
+  toast (message = '', duration = 4000, style = 'green') {
     Materialize.toast(message, duration, style)
   }
 }

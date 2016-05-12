@@ -1,140 +1,140 @@
 <style lang="sass">
-    .vue-materializecss-pagination-noselect {
-        user-select: none;
-    }
+  .vue-materializecss-pagination-noselect {
+    user-select: none;
+  }
 </style>
 
 <template>
-    <ul class="pagination vue-materializecss-pagination-noselect">
-        <li :class="prevPageClass">
-            <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
-        </li>
+  <ul class="pagination vue-materializecss-pagination-noselect">
+    <li :class="prevPageClass">
+      <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
+    </li>
 
-        <template v-for="page in pages" track-by="$index">
-            <li v-if="-1 === page">...</li>
+    <template v-for="page in pages" track-by="$index">
+      <li v-if="-1 === page">...</li>
 
-            <li
-                v-else
-                :class="[page === pagination.current_page ? 'active' : 'waves-effect']"
-            ><a @click.prevent="changePage(page)">{{ page }}</a></li>
-        </template>
+      <li
+        v-else
+        :class="[page === pagination.current_page ? 'active' : 'waves-effect']"
+      ><a @click.prevent="changePage(page)">{{ page }}</a></li>
+    </template>
 
-        <li :class="nextPageClass">
-            <a @click.prevent="nextPage()"><i class="material-icons">chevron_right</i></a>
-        </li>
-    </ul>
+    <li :class="nextPageClass">
+      <a @click.prevent="nextPage()"><i class="material-icons">chevron_right</i></a>
+    </li>
+  </ul>
 </template>
 
 <script type="text/babel">
-    import Url from 'url'
-    import QueryString from 'query-string'
+  import Url from 'url'
+  import QueryString from 'query-string'
 
-    export default {
-        props: {
-            pagination: {
-                twoWay: true,
-                type: Object,
-                required: true
-            },
+  export default {
+    props: {
+      pagination: {
+        twoWay: true,
+        type: Object,
+        required: true
+      },
 
-            failed: {
-                type: Function,
-                default: null
-            }
-        },
+      failed: {
+        type: Function,
+        default: null
+      }
+    },
 
-        computed: {
-            pages() {
-                let arr = [1]
-                let currentPage = this.pagination.current_page
-                let lastPage = this.pagination.last_page
+    computed: {
+      pages () {
+        let arr = [1]
+        const currentPage = this.pagination.current_page
+        const lastPage = this.pagination.last_page
 
-                arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage)
+        arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage)
 
-                arr = arr.sort().filter(function(item, pos, self) {
-                    return (item >= 1) && (item <= lastPage) && (self.indexOf(item) === pos)
-                })
+        arr = arr.sort().filter(function (item, pos, self) {
+          return (1 <= item) && (item <= lastPage) && (self.indexOf(item) === pos)
+        })
 
-                let pages = []
-                let prev = 1;
+        const pages = []
+        let prev = 1
 
-                for (let element of arr) {
-                    if (element - prev > 1) {
-                        pages.push(-1)
-                    }
+        for (const element of arr) {
+          if (1 < element - prev) {
+            pages.push(-1)
+          }
 
-                    pages.push(element)
+          pages.push(element)
 
-                    prev = element
-                }
-
-                return pages
-            },
-
-            prevPageClass() {
-                return [
-                    (null !== this.pagination.prev_page_url)
-                        ? 'waves-effect'
-                        : 'disabled'
-                ]
-            },
-
-            nextPageClass() {
-                return [
-                    (null !== this.pagination.next_page_url)
-                        ? 'waves-effect'
-                        : 'disabled'
-                ]
-            },
-
-            baseUrl() {
-                if (this.pagination.per_page >= this.pagination.total) {
-                    return null
-                }
-
-                let url = Url.parse(this.pagination.prev_page_url || this.pagination.next_page_url)
-
-                return {
-                    search: url.search,
-                    pathname: url.pathname
-                }
-            }
-        },
-
-        methods: {
-            prevPage() {
-                if (null !== this.pagination.prev_page_url) {
-                    this._sendRequest(this.pagination.prev_page_url)
-                }
-            },
-
-            nextPage() {
-                if (null !== this.pagination.next_page_url) {
-                    this._sendRequest(this.pagination.next_page_url)
-                }
-            },
-
-            changePage(page) {
-                if (null === this.baseUrl || page === this.pagination.current_page) {
-                    return
-                }
-
-                let parsed = QueryString.parse(this.baseUrl.search)
-
-                parsed.page = page
-
-                this._sendRequest(`${this.baseUrl.pathname}?${QueryString.stringify(parsed)}`)
-            },
-
-            _sendRequest(url) {
-                this.$http.get(url).then((response) => {
-                    this.pagination = response.data
-                }, (response) => {
-                    if (null !== this.failed) {
-                        this.failed(response)
-                    }
-                })
-            }
+          prev = element
         }
+
+        return pages
+      },
+
+      prevPageClass () {
+        return [
+          (null !== this.pagination.prev_page_url)
+            ? 'waves-effect'
+            : 'disabled'
+        ]
+      },
+
+      nextPageClass () {
+        return [
+          (null !== this.pagination.next_page_url)
+            ? 'waves-effect'
+            : 'disabled'
+        ]
+      },
+
+      baseUrl () {
+        if (this.pagination.per_page >= this.pagination.total) {
+          return null
+        }
+
+        const url = Url.parse(this.pagination.prev_page_url || this.pagination.next_page_url)
+
+        return {
+          search: url.search,
+          pathname: url.pathname
+        }
+      }
+    },
+
+    methods: {
+      prevPage () {
+        if (null !== this.pagination.prev_page_url) {
+          this._sendRequest(this.pagination.prev_page_url)
+        }
+      },
+
+      nextPage () {
+        if (null !== this.pagination.next_page_url) {
+          this._sendRequest(this.pagination.next_page_url)
+        }
+      },
+
+      changePage (page) {
+        if (null === this.baseUrl || page === this.pagination.current_page) {
+          return
+        }
+
+        const parsed = QueryString.parse(this.baseUrl.search)
+
+        parsed.page = page
+
+        this._sendRequest(`${this.baseUrl.pathname}?${QueryString.stringify(parsed)}`)
+      },
+
+      _sendRequest (url) {
+        this.$http.get(url).then(response => {
+          this.pagination = response.data
+        }, response => {
+          if (null !== this.failed) {
+            this.failed(response)
+          }
+        })
+      }
     }
+  }
 </script>

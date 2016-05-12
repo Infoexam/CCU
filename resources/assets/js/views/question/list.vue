@@ -1,48 +1,48 @@
 <template>
-    <h2 style="display: inline">{{ exam.name }}</h2>
+  <h2 style="display: inline">{{ exam.name }}</h2>
 
-    <a
-        v-link="{ name: 'admin.exams.questions.create', params: { id: exam.id }}"
-        class="btn-floating btn-large waves-effect waves-light red right"
-    ><i class="material-icons">add</i></a>
+  <a
+    v-link="{ name: 'admin.exams.questions.create', params: { id: exam.id }}"
+    class="btn-floating btn-large waves-effect waves-light red right"
+  ><i class="material-icons">add</i></a>
 
-    <table class="bordered highlight">
-        <thead>
-            <tr>
-                <th>UUID</th>
-                <th>Difficulty</th>
-            </tr>
-        </thead>
+  <table class="bordered highlight">
+    <thead>
+      <tr>
+        <th>UUID</th>
+        <th>Difficulty</th>
+      </tr>
+    </thead>
 
-        <tbody>
-            <tr v-for="question in exam.questions">
-                <td>
-                    <a v-link="{ name: 'admin.exams.questions.show', params: { id: exam.id, uuid: question.uuid }}">{{ question.uuid }}</a>
-                </td>
-                <td>{{ question.difficulty.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <tbody>
+      <tr v-for="question in exam.questions">
+        <td>
+          <a v-link="{ name: 'admin.exams.questions.show', params: { id: exam.id, uuid: question.uuid }}">{{ question.uuid }}</a>
+        </td>
+        <td>{{ question.difficulty.name }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script type="text/babel">
-    import Cache from '../../components/cache'
+  import Cache from '../../components/cache'
 
-    export default {
-        data() {
-            return {
-                exam: {}
-            }
-        },
+  export default {
+    data () {
+      return {
+        exam: {}
+      }
+    },
 
-        ready() {
-            let id = this.$route.params.id
+    ready () {
+      const id = this.$route.params.id
 
-            this.exam = Cache.getItem(`questions-${id}`, () => {
-                return this.$http.get(`exams/${id}/questions`).then((response) => {
-                    this.exam = response.data.exam
-                })
-            }, true)
-        }
+      this.exam = Cache.getItem(`questions-${id}`, () => {
+        return this.$http.get(`exams/${id}/questions`).then(response => {
+          this.exam = response.data.exam
+        })
+      }, true)
     }
+  }
 </script>
