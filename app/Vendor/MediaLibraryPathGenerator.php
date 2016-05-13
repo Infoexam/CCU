@@ -35,6 +35,8 @@ class MediaLibraryPathGenerator implements PathGenerator
      * Get the path prefix.
      *
      * @param Media $media
+     *
+     * @return int
      */
     protected function getPrefix(Media $media)
     {

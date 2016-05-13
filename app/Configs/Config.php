@@ -14,6 +14,13 @@ class Config extends Entity
     protected $table = 'configs';
 
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'key';
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool

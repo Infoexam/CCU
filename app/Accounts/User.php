@@ -59,13 +59,17 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
     /**
      * 檢查使用者是否具有該身份.
      *
-     * @param string $role
+     * @param string|array $role
      * @return bool
      */
     public function is($role)
     {
         if (! $this->exists) {
             return false;
+        }
+
+        if (is_array($role)) {
+            return in_array($this->getAttribute('role'), $role, true);
         }
 
         return $role === $this->getAttribute('role');

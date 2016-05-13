@@ -160,7 +160,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 

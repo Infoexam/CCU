@@ -67,6 +67,11 @@ class Question extends Entity
         return $this->hasMany(Option::class);
     }
 
+    /**
+     * 題組關聯.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function questions()
     {
         return $this->hasMany(self::class);

@@ -9,6 +9,7 @@ use Cookie;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use ParagonIE\CSPBuilder\CSPBuilder;
 
 class PreprocessConnection
 {
@@ -43,6 +44,10 @@ class PreprocessConnection
         $response = $next($request);
 
         $response->withCookie(Cookie::forever('locale', $locale, null, null, false, false));
+
+        $csp = CSPBuilder::fromFile(config_path('csp.json'));
+
+        $response->withHeaders($csp->getHeaderArray());
 
         return $response;
     }

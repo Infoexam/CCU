@@ -23,6 +23,8 @@ abstract class Entity extends Eloquent
         parent::boot();
 
         static::saving(function (self $model) {
+            // Transform empty string to null
+            
             foreach ($model->getAttributes() as $key => $value) {
                 if (is_string($value) && empty($value)) {
                     $model->setAttribute($key, null);
