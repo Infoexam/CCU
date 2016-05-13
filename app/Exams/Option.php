@@ -28,7 +28,7 @@ class Option extends Entity
      *
      * @var array
      */
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'answer'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -36,4 +36,13 @@ class Option extends Entity
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'answer' => 'boolean',
+    ];
 }

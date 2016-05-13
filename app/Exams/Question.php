@@ -67,16 +67,6 @@ class Question extends Entity
         return $this->hasMany(Option::class);
     }
 
-    /**
-     * 取得題目的答案.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function answers()
-    {
-        return $this->belongsToMany(Option::class, 'answers', null, 'option_id');
-    }
-
     public function questions()
     {
         return $this->hasMany(self::class);

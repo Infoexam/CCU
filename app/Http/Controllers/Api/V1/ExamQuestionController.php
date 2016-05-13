@@ -46,15 +46,10 @@ class ExamQuestionController extends Controller
         $question = $exam->questions()->save(new Question($request->only(['question'])['question']));
 
         foreach ($request->input('option') as $option) {
-            $_option = $question->options()->save(new Option(['content' => $option['content']]));
-
-            if ($option['answer']) {
-                $answers[] = $_option->getAttribute('id');
-            }
-        }
-
-        if (isset($answers)) {
-            $question->answers()->sync($answers);
+            $question->options()->save(new Option([
+                'content' => $option['content'],
+                'answer'  => $option['answer'],
+            ]));
         }
 
         return $this->response->created(null, $question->fresh(['options']));

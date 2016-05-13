@@ -120,14 +120,8 @@
     methods: {
       preprocess (questions) {
         for (const question of questions) {
-          const answers = question.answers.map(answer => {
-            return answer.id
-          })
-
           for (const option of question.options) {
             option.hash = Md5(option.id)
-
-            option.answer = answers.includes(option.id)
 
             option.check = false
           }
