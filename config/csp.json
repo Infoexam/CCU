@@ -8,6 +8,9 @@
     "self": false
   },
   "connect-src": {
+    "allow": [
+      "ws://localhost:3000"
+    ],
     "self": true
   },
   "font-src": {
@@ -35,7 +38,8 @@
   "script-src": {
     "allow": [
       "https://ajax.googleapis.com",
-      "https://cdnjs.cloudflare.com"
+      "https://cdnjs.cloudflare.com",
+      "'sha256-I5NMg1IOPL6KXsADdXeWTPofNDPPOXmmljohr1rfihU='"
     ],
     "self": true,
     "unsafe-inline": false,
