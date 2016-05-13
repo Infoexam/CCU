@@ -7,6 +7,11 @@ use Eloquent;
 abstract class Entity extends Eloquent
 {
     /**
+     * Application version.
+     */
+    const VERSION = '0.0.1';
+
+    /**
      * The number of models to return for pagination.
      *
      * @var int
@@ -24,7 +29,7 @@ abstract class Entity extends Eloquent
 
         static::saving(function (self $model) {
             // Transform empty string to null
-            
+
             foreach ($model->getAttributes() as $key => $value) {
                 if (is_string($value) && empty($value)) {
                     $model->setAttribute($key, null);

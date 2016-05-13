@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Infoexam\Core\Entity;
+use App;
+use App\Core\Entity;
 use Artisan;
 use Cache;
 use Carbon\Carbon;
 use File;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Log;
 use RuntimeException;
@@ -30,6 +30,23 @@ class Deploy extends Command
     protected $description = 'Deploy application';
 
     /**
+     * The environment is production or not.
+     *
+     * @var bool
+     */
+    protected $production = false;
+
+    /**
+     * Deploy constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->production = App::environment('production');
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -50,11 +67,13 @@ class Deploy extends Command
 
         $this->migrate();
 
-        $this->copyAssets();
+        if ($this->production) {
+            $this->copyAssets();
+        }
 
         $this->up();
 
-        Log::info('Github Webhook', ['status' => 'update successfully']);
+        Log::info('Github-Webhook', ['status' => 'uok']);
     }
 
     /**
@@ -108,8 +127,8 @@ class Deploy extends Command
     protected function queueNeedRestart()
     {
         switch (true) {
-            case 'production' === config('app.env'):
-            case $this->isModified(app_path(file_build_path('Console', 'Commands', 'Deploy.php'))):
+            case $this->production:
+            case $this->isModified(__FILE__):
             case $this->isModified(base_path('composer.lock')):
                 $this->call('queue:restart');
 
@@ -144,16 +163,16 @@ class Deploy extends Command
      */
     protected function copyAssets()
     {
-        $targetDir = config('infoexam.assets_dir');
+        $targetDir = config('infoexam.static_dir');
 
         if (empty($targetDir)) {
             return;
         }
 
-        $version = config('app.env') === 'production' ? Entity::VERSION : 'dev';
-
-        File::copyDirectory(public_path(file_build_path('assets', 'css')), file_build_path($targetDir, 'css', $version));
-        File::copyDirectory(public_path(file_build_path('assets', 'js')), file_build_path($targetDir, 'js', $version));
+        File::copyDirectory(
+            public_path(file_build_path('assets', 'js')),
+            file_build_path($targetDir, 'js', Entity::VERSION)
+        );
     }
 
     /**
@@ -163,8 +182,6 @@ class Deploy extends Command
      */
     protected function down()
     {
-        (new Client())->get(route('opcache-reset'));
-
         $this->clearCache();
 
         $this->call('down');
@@ -180,8 +197,6 @@ class Deploy extends Command
         $this->call('up');
 
         $this->setupCache();
-
-        (new Client())->get(route('opcache-reset'));
     }
 
     /**
@@ -212,6 +227,7 @@ class Deploy extends Command
         $this->call('config:cache');
 
         $this->call('clear-compiled');
+
         $this->call('optimize');
     }
 
