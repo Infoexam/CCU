@@ -127,6 +127,8 @@ return [
         'cluster' => false,
 
         'default' => [
+            'scheme'   => env('REDIS_SCHEME', 'tcp'),
+            'path'     => env('REDIS_PATH', '/var/run/redis/redis.sock'),
             'host'     => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port'     => env('REDIS_PORT', 6379),
