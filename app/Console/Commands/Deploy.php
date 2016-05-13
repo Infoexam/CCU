@@ -222,7 +222,7 @@ class Deploy extends Command
      */
     protected function setupCache()
     {
-        $this->call('route:cache');
+        $this->call('api:cache');
 
         $this->call('config:cache');
 
