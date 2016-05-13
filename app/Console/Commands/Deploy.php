@@ -73,7 +73,7 @@ class Deploy extends Command
 
         $this->up();
 
-        Log::info('Github-Webhook', ['status' => 'uok']);
+        Log::info('Github-Webhook', ['status' => 'ok']);
     }
 
     /**
