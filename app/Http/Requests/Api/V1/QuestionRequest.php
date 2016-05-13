@@ -23,6 +23,7 @@ class QuestionRequest extends Request
             'question.question_id'   => 'integer|exists:questions,id',
             'option'                 => 'required|array',
             'option.*.content'       => 'required|string|max:1000',
+            'option.*.answer'        => 'required|boolean',
         ];
     }
 }

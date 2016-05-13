@@ -47,6 +47,8 @@ class PreprocessConnection
 
         $csp = CSPBuilder::fromFile(config_path('csp.json'));
 
+        $csp->addDirective('upgrade-insecure-requests', $request->secure());
+
         $response->withHeaders($csp->getHeaderArray());
 
         return $response;
