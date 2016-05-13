@@ -26,6 +26,10 @@ if (! function_exists('_asset')) {
     function _asset($path, $secure = null)
     {
         if (! app()->environment('production')) {
+            if (app()->environment('development')) {
+                $path = 'assets/'.$path;
+            }
+
             return asset($path, $secure);
         }
 
