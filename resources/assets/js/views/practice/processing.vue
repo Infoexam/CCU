@@ -48,42 +48,6 @@
             class="col s12"
           ></form-option>
         </div>
-
-        <div v-if="question.questions.length > 0" class="row">
-          <template v-for="q in question.questions">
-            <div class="col s12">
-              <h4>
-                <available-icon
-                  v-if="submitted"
-                  :available.once="q.correct"
-                ></available-icon>
-
-                <span>第 {{* counter++ }} 題</span>
-              </h4>
-            </div>
-
-            <!-- 題組子題目 -->
-            <markdown
-              :model="q.content"
-              class="col s12 m6"
-            ></markdown>
-
-            <!-- 解析 -->
-            <markdown
-              v-if="submitted"
-              :model="q.explanation || ''"
-              class="col m6 hide-on-small-only"
-            ></markdown>
-
-            <!-- 選項 -->
-            <form-option
-              :option="q.options"
-              :multiple="q.multiple"
-              :submitted="submitted"
-              class="col s12"
-            ></form-option>
-          </template>
-        </div>
       </template>
 
       <div v-if="! submitted" class="row">
@@ -105,7 +69,7 @@
       return {
         counter: 1,
 
-        questions: {},
+        questions: [],
 
         submitted: false,
 
@@ -126,16 +90,18 @@
             option.check = false
           }
 
-          if (question.hasOwnProperty('questions') && 0 < question.questions.length) {
-            question.questions = this.preprocess(question.questions)
-          }
-
           question.correct = false
 
-          delete question.answers
-        }
+          const temp = JSON.parse(JSON.stringify(question))
 
-        return questions
+          delete temp.questions
+
+          this.questions.push(temp)
+
+          if (question.hasOwnProperty('questions') && 0 < question.questions.length) {
+            this.preprocess(question.questions)
+          }
+        }
       },
 
       submit () {
@@ -187,7 +153,7 @@
 
     created () {
       this.$http.get(`practice/${this.$route.params.id}/processing`).then(response => {
-        this.questions = this.preprocess(response.data.exam.questions)
+        this.preprocess(response.data.exam.questions)
       })
     }
   }
