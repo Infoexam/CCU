@@ -24,7 +24,7 @@
     </div>
 
     <div class="input-field col s12">
-      <label>答案</label>
+      <label style="position: relative; left: 0;">答案</label>
 
       <template v-for="i in counter">
         <input
