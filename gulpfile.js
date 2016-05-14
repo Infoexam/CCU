@@ -1,11 +1,24 @@
 process.env.DISABLE_NOTIFIER = true
 
-var elixir = require('laravel-elixir')
+const gulp = require('gulp')
+const eslint = require('gulp-eslint')
+const elixir = require('laravel-elixir')
+const production = elixir.config.production
 
 require('laravel-elixir-webpack')
-require('laravel-elixir-eslint')
 
-var production = elixir.config.production
+elixir.extend('eslint', function (src, options) {
+  const paths = new elixir.GulpPaths().src(src)
+
+  new elixir.Task('eslint', function () {
+    this.log(paths.src)
+
+    return gulp.src(paths.src.path)
+      .pipe(eslint(options || {}))
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError())
+  }).watch(paths.src.path)
+})
 
 if (production) {
   elixir.config.publicPath = 'public/assets'
