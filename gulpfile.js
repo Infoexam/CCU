@@ -1,6 +1,6 @@
 process.env.DISABLE_NOTIFIER = true
 
-var elixir  = require('laravel-elixir')
+var elixir = require('laravel-elixir')
 
 require('laravel-elixir-webpack')
 require('laravel-elixir-eslint')
@@ -22,7 +22,7 @@ elixir(function (mix) {
         break
 
       case 'darwin':
-        proxyUrl = 'infoexam.dev'
+        proxyUrl = 'https://infoexam.dev'
         break
     }
 
@@ -50,7 +50,7 @@ elixir(function (mix) {
         },
 
         { test: /\.vue$/, loader: 'vue' },
-        { test: /\.css$/, loader: "style-loader!css-loader" },
+        { test: /\.css$/, loader: 'style-loader!css-loader' },
         { test: /\.scss$/, loaders: ['style', 'css', 'sass?sourceMap'] },
         { test: /\.(png|jpg|gif)$/, loader: 'file' }
       ]
