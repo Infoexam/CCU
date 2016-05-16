@@ -16,7 +16,15 @@ class PracticeController extends Controller
      */
     public function exam()
     {
-        return Exam::where('enable', true)->latest()->get(['id', 'name']);
+        $exams = Exam::where('enable', true)->latest()->get(['id', 'name']);
+
+        $exams->each(function ($exam) {
+            $media = $exam->getFirstMedia('cover');
+
+            $exam->setAttribute('cover', is_null($media) ? null : $media->getUrl('thumb'));
+        });
+
+        return $exams;
     }
 
     /**

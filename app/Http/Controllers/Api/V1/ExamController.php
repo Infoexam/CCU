@@ -17,7 +17,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::with(['category'])->latest()->paginate(10);
+        $exams = Exam::with(['category'])->latest()->paginate(5);
 
         foreach ($exams->items() as $exam) {
             $media = $exam->getFirstMedia('cover');

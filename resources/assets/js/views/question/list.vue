@@ -26,8 +26,6 @@
 </template>
 
 <script type="text/babel">
-  import Cache from '../../components/cache'
-
   export default {
     data () {
       return {

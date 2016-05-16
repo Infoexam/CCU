@@ -1,5 +1,5 @@
 <template>
-  <table class="bordered highlight">
+  <table class="bordered highlight centered">
     <thead>
       <tr>
         <th>Name</th>

@@ -2,11 +2,19 @@
   <div class="row">
     <template v-for="exam in exams">
       <div class="col s12 m4">
-        <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
-          <div class="card-panel center-align hoverable teal">
-            <span class="white-text">{{ exam.name }}</span>
+        <div class="card hoverable">
+          <div class="card-image">
+            <a
+              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
+            ><img :src="exam.cover"></a>
           </div>
-        </a>
+
+          <div class="card-action">
+            <a
+              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
+            >{{ exam.name }}</a>
+          </div>
+        </div>
       </div>
     </template>
   </div>
