@@ -36,7 +36,7 @@
 
     watch: {
       exams () {
-        Cache.setItem('exams', JSON.stringify(this.exams), 'session')
+        Cache.setItem('exams', this.exams, 'session')
       }
     },
 
@@ -50,7 +50,7 @@
         return this.$http.get('exams').then(response => {
           this.exams = response.data
         })
-      }, true)
+      })
     }
   }
 </script>

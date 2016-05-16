@@ -42,7 +42,7 @@
         return this.$http.get(`exams/${id}/questions`).then(response => {
           this.exam = response.data.exam
         })
-      }, true)
+      })
     }
   }
 </script>

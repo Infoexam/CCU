@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use Artisan;
 use Illuminate\Http\Request;
+use Log;
 
 class HomeController extends Controller
 {
@@ -18,23 +20,27 @@ class HomeController extends Controller
     }
 
     /**
-     * 自動化更新
+     * Auto update when github pushed.
      *
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function deploy(Request $request)
     {
-        list($algo, $hash) = explode('=', $request->header('X-Hub-Signature'), 2);
+        list($algo, $hash) = explode('=', $request->header('X-Hub-Signature', 'sha1=failed'), 2);
 
-        if (! hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.github_webhook_secret')))) {
-            \Log::notice('Github-Webhook', ['auth' => 'failed', 'ip' => $request->ip()]);
-        } else {
-            \Log::info('Github-Webhook', ['auth' => 'success', 'ip' => $request->ip()]);
+        if (hash_equals($hash, hash_hmac($algo, $request->getContent(), config('infoexam.github_webhook_secret')))) {
+            Artisan::queue('deploy');
 
-            \Artisan::queue('deploy');
+            $success = 'success';
         }
 
-        return response()->json('', 200);
+        Log::info('Github-Webhook', [
+            'auth' => $success ?? 'failed',
+            'ip' => $request->ip(),
+        ]);
+
+        return $this->response->noContent();
     }
 }

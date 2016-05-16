@@ -1,3 +1,4 @@
+import Cache from '../../components/cache'
 import Toast from '../../components/toast'
 
 function install (Vue) {
@@ -8,26 +9,36 @@ function install (Vue) {
       }
     },
 
+    events: {
+      signIn (user) {
+        this.user = user
+
+        Cache.setItem('signIn', true)
+      },
+
+      signOut () {
+        this.user = null
+
+        Cache.setItem('signIn', false)
+      }
+    },
+
     methods: {
       signIn (credentials, callable) {
         this.$http.post('auth/sign-in', credentials).then(response => {
-          this.user = response.data.user
+          this.$emit('signIn', response.data.user)
 
           if ('function' === typeof callable) {
             callable(this.homeRoute())
           }
         }, response => {
-          const message = 422 === response.status
-            ? this.$t('auth.failed')
-            : response.data.message
-
-          Toast.failed(message)
+          Toast.failed(this.$t(response.data.message))
         })
       },
 
       signOut (callable) {
         this.$http.get('auth/sign-out').then(response => {
-          this.user = null
+          this.$emit('signOut')
 
           if ('function' === typeof callable) {
             callable()
@@ -59,11 +70,13 @@ function install (Vue) {
     },
 
     created () {
-      this.$http.get('account/profile').then(response => {
-        this.user = response.data.user
-      }, response => {
-        // not sign in, do nothing
-      })
+      if (false !== Cache.getItem('signIn')) {
+        this.$http.get('account/profile').then(response => {
+          this.$emit('signIn', response.data.user)
+        }, response => {
+          this.$emit('signOut')
+        })
+      }
     }
   })
 }

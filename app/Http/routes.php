@@ -35,6 +35,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
     });
 });
 
+$router->get('api/auth/sso', 'Api\V1\AuthController@sso');
+
 $router->post('deploy', 'HomeController@deploy');
 
-$router->get('{redirect}', ['middleware' => ['web'], 'as' => 'home', 'uses' => 'HomeController@home'])->where('redirect', '.*');
+$router->get('{redirect?}', ['middleware' => ['web'], 'as' => 'home', 'uses' => 'HomeController@home'])->where('redirect', '.*');
