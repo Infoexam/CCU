@@ -15,8 +15,9 @@ class ExamRequest extends Request
     {
         return [
             'category_id' => 'required|integer|exists:categories,id,category,exam.category',
-            'name'        => 'required|string|max:16',
+            'name'        => 'required|string|max:16|unique:exams,name',
             'enable'      => 'required|boolean',
+            'cover'       => 'required|image',
         ];
     }
 }

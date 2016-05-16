@@ -7,18 +7,25 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamImageRequest;
 use App\Http\Requests\Api\V1\ExamRequest;
-use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
     /**
      * Get the exam list.
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Dingo\Api\Http\Response
      */
     public function index()
     {
-        return Exam::with(['category'])->latest()->paginate(6);
+        $exams = Exam::with(['category'])->latest()->paginate(10);
+
+        foreach ($exams->items() as $exam) {
+            $media = $exam->getFirstMedia('cover');
+
+            $exam->setAttribute('cover', is_null($media) ? null : $media->getUrl('thumb'));
+        }
+
+        return $exams;
     }
 
     /**
@@ -32,6 +39,12 @@ class ExamController extends Controller
     {
         $exam = Exam::create($request->only(['category_id', 'name', 'enable']));
 
+        if (! $exam->exists) {
+            $this->response->errorInternal();
+        }
+
+        $exam->uploadImages($request->file('cover'), 'cover');
+
         return $this->response->created(null, $exam);
     }
 
@@ -40,7 +53,7 @@ class ExamController extends Controller
      *
      * @param int $id
      *
-     * @return array
+     * @return \Dingo\Api\Http\Response
      */
     public function image($id)
     {
@@ -61,13 +74,9 @@ class ExamController extends Controller
     {
         $exam = Exam::findOrFail($id);
 
-        foreach ($request->file('image') as $file) {
-            $exam->addMedia($file)
-                ->setFileName(random_int(1000000000, 2147483647).'.'.$file->guessExtension())
-                ->toMediaLibrary();
-        }
+        $exam->uploadImages($request->file('image'), $request->input('collection', 'default'));
 
-        return $this->response->created(null, $this->transformImage($exam));
+        return $this->response->created();
     }
 
     /**

@@ -11,7 +11,16 @@
     <tbody>
       <tr v-for="exam in exams.data">
         <td>
-          <a v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}">{{ exam.name }}</a>
+          <a
+            v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}"
+            style="display: block;"
+          >{{ exam.name }}</a>
+
+          <img
+            v-if="null !== exam.cover"
+            :src="exam.cover"
+            width="33%"
+          >
         </td>
         <td>{{ exam.category.name }}</td>
         <td><available-icon :available.once="exam.enable"></available-icon></td>
@@ -46,10 +55,8 @@
     },
 
     created () {
-      this.exams = Cache.getItem('exams', () => {
-        return this.$http.get('exams').then(response => {
-          this.exams = response.data
-        })
+      this.$http.get('exams').then(response => {
+        this.exams = response.data
       })
     }
   }

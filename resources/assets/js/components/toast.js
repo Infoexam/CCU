@@ -12,8 +12,8 @@ export default {
   },
 
   unprocessableEntity (errors) {
-    for (const error of errors) {
-      for (const msg of error) {
+    for (const key of Object.keys(errors)) {
+      for (const msg of errors[key]) {
         this.failed(msg)
       }
     }

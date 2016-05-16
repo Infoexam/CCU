@@ -14,8 +14,9 @@ class ExamImageRequest extends Request
     public function rules()
     {
         return [
-            'image'   => 'required|array',
-            'image.*' => 'required|image',
+            'collection' => 'sometimes|required|string|in:default,cover',
+            'image'      => 'required|array',
+            'image.*'    => 'required|image',
         ];
     }
 }

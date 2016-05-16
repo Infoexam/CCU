@@ -36,12 +36,8 @@
     },
 
     created () {
-      const id = this.$route.params.id
-
-      this.exam = Cache.getItem(`questions-${id}`, () => {
-        return this.$http.get(`exams/${id}/questions`).then(response => {
-          this.exam = response.data.exam
-        })
+      this.$http.get(`exams/${this.$route.params.id}/questions`).then(response => {
+        this.exam = response.data.exam
       })
     }
   }

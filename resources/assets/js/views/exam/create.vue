@@ -35,6 +35,22 @@
           </label>
         </div>
 
+        <div class="file-field input-field col s12">
+          <div class="btn">
+            <span>封面相片</span>
+
+            <input
+              v-el:cover
+              type="file"
+              accept="image/*"
+            >
+          </div>
+
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+
         <submit :text="$t('form.submit.create')"></submit>
       </div>
     </form>
@@ -61,7 +77,14 @@
 
     methods: {
       store () {
-        this.$http.post('exams', this.form).then(response => {
+        const data = new FormData()
+
+        data.set('name', this.form.name)
+        data.set('category_id', this.form.category_id)
+        data.set('enable', this.form.enable ? 1 : 0)
+        data.set('cover', this.$els.cover.files[0])
+
+        this.$http.post('exams', data).then(response => {
           this.$router.go({ name: 'admin.exams' })
         }, response => {
           Toast.formRequestFailed(response)

@@ -31,7 +31,6 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->resource('exams.questions', 'ExamQuestionController');
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
-        $api->resource('categories', 'CategoryController', ['except' => ['create', 'show', 'edit']]);
     });
 });
 
