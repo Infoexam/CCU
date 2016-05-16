@@ -2,7 +2,7 @@
   <div class="row">
     <template v-for="exam in exams">
       <div class="col s12 m4">
-        <a v-link="{ name: 'practice.processing', params: { id: exam.id }}">
+        <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
           <div class="card-panel center-align hoverable teal">
             <span class="white-text">{{ exam.name }}</span>
           </div>

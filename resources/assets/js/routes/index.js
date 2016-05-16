@@ -26,7 +26,7 @@ router.map({
   '/': { name: 'home', component: StudentHomeView },
   '/sign-in': { name: 'signIn', component: SignInView },
   '/practice': { name: 'practice', component: PracticeList },
-  '/practice/:id': { name: 'practice.processing', component: PracticeProcessing },
+  '/practice/:name': { name: 'practice.processing', component: PracticeProcessing },
   '/admin': {
     component: AdminHomeView,
     subRoutes: {

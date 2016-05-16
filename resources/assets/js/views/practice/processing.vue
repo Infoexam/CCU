@@ -152,7 +152,7 @@
     },
 
     created () {
-      this.$http.get(`practice/${this.$route.params.id}/processing`).then(response => {
+      this.$http.get(`practice/${this.$route.params.name}/processing`).then(response => {
         this.preprocess(response.data.exam.questions)
       })
     }

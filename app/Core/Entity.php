@@ -19,6 +19,18 @@ abstract class Entity extends Eloquent
     protected $perPage = 10;
 
     /**
+     * Scope a query to order by RAND().
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrderByRand($query)
+    {
+        return $query->getQuery()->orderByRaw('RAND()');
+    }
+
+    /**
      * The "booting" method of the model.
      *
      * @return void
