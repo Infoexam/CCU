@@ -59,7 +59,6 @@ class Department extends Sync
         return collect($this->trimData(DB::connection('elearn')->table('unit')->get()));
     }
 
-
     /**
      * 同步資料
      *
