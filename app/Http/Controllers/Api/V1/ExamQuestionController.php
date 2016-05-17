@@ -8,6 +8,7 @@ use App\Exams\Question;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\QuestionRequest;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ExamQuestionController extends Controller
@@ -17,14 +18,14 @@ class ExamQuestionController extends Controller
      *
      * @param int $examId
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return \Dingo\Api\Http\Response
      */
     public function index($examId)
     {
         return Exam::with([
             'category',
-            'questions' => function ($query) {
-                $query->whereNUll('question_id');
+            'questions' => function (HasMany $query) {
+                $query->getQuery()->whereNUll('question_id');
             },
             'questions.difficulty',
             'questions.options'
@@ -43,16 +44,13 @@ class ExamQuestionController extends Controller
     {
         $exam = Exam::findOrFail($examId, ['id']);
 
-        $question = $exam->questions()->save(new Question($request->only(['question'])['question']));
+        $question = $exam->questions()->save(new Question($request->input(['question'])));
 
         foreach ($request->input('option') as $option) {
-            $question->options()->save(new Option([
-                'content' => $option['content'],
-                'answer'  => $option['answer'],
-            ]));
+            $question->options()->save(new Option($option));
         }
 
-        return $this->response->created(null, $question->fresh(['options']));
+        return $this->response->created();
     }
 
     /**
@@ -61,7 +59,7 @@ class ExamQuestionController extends Controller
      * @param int $examId
      * @param string $uuid
      *
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Dingo\Api\Http\Response
      */
     public function show($examId, $uuid)
     {
@@ -78,7 +76,7 @@ class ExamQuestionController extends Controller
      *
      * @param int $examId
      *
-     * @return \Illuminate\Support\Collection
+     * @return \Dingo\Api\Http\Response
      */
     public function groups($examId)
     {
