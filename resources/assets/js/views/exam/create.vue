@@ -79,10 +79,10 @@
       store () {
         const data = new FormData()
 
-        data.set('name', this.form.name)
-        data.set('category_id', this.form.category_id)
-        data.set('enable', this.form.enable ? 1 : 0)
-        data.set('cover', this.$els.cover.files[0])
+        data.append('name', this.form.name)
+        data.append('category_id', this.form.category_id)
+        data.append('enable', this.form.enable ? 1 : 0)
+        data.append('cover', this.$els.cover.files[0])
 
         this.$http.post('exams', data).then(response => {
           this.$router.go({ name: 'admin.exams' })

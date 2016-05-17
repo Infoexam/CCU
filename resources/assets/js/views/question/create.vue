@@ -76,6 +76,8 @@
       store () {
         this.$http.post(`exams/${this.$route.params.id}/questions`, this.form).then(response => {
           Toast.success('Success')
+
+          this.$router.go({ name: 'admin.exams.questions', params: { id: this.$route.params.id }})
         }, response => {
           Toast.formRequestFailed(response)
         })

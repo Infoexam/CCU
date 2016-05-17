@@ -6,7 +6,7 @@
     }
 
     img {
-      width: 33%;
+      max-width: 196px;
     }
   }
 </style>
