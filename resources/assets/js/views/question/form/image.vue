@@ -21,7 +21,7 @@
 
   <div class="file-field input-field">
     <div class="btn">
-      <span>Image</span>
+      <span>上傳圖片</span>
 
       <input
         v-el:image

@@ -1,3 +1,16 @@
+<style lang="sass">
+  .question-form-answer-label {
+    position: relative !important;
+    left: 0 !important;
+  }
+
+  .question-form-option-content {
+    margin-top: 20px;
+    max-height: 350px;
+    overflow-y: scroll;
+  }
+</style>
+
 <template>
   <div class="row">
     <div class="input-field col s12">
@@ -24,7 +37,7 @@
     </div>
 
     <div class="input-field col s12">
-      <label style="position: relative; left: 0;">答案</label>
+      <label class="question-form-answer-label">答案</label>
 
       <template v-for="i in counter">
         <input
@@ -37,9 +50,7 @@
     </div>
 
     <template v-for="i in counter">
-      <div class="col s12"><br></div>
-
-      <div class="col s12" style="max-height: 350px; overflow-y: scroll">
+      <div class="col s12 question-form-option-content">
         <markdown
           :model.sync="option[i].content"
           :length="1000"

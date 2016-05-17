@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamImageRequest;
 use App\Http\Requests\Api\V1\ExamRequest;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -51,15 +52,16 @@ class ExamController extends Controller
     /**
      * Get exam images.
      *
+     * @param Request $request
      * @param int $id
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function image($id)
+    public function image(Request $request, $id)
     {
         $exam = Exam::findOrFail($id);
 
-        return $this->transformImage($exam);
+        return $this->transformImage($exam, $request->input('collection', 'default'));
     }
 
     /**
@@ -83,14 +85,15 @@ class ExamController extends Controller
      * Transform media to url.
      *
      * @param Exam $exam
+     * @param string $collection
      *
      * @return array
      */
-    protected function transformImage(Exam $exam)
+    protected function transformImage(Exam $exam, $collection)
     {
         $result = [];
 
-        foreach ($exam->getMedia() as $media) {
+        foreach ($exam->getMedia($collection) as $media) {
             $result[] = [
                 'url'   => $media->getUrl(),
                 'thumb' => $media->getUrl('thumb'),

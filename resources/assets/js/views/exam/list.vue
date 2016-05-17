@@ -1,3 +1,16 @@
+<style lang="sass">
+  .exam-list-exam-cover {
+    a {
+      display: block;
+      margin: 10px 0;
+    }
+
+    img {
+      width: 33%;
+    }
+  }
+</style>
+
 <template>
   <table class="bordered highlight centered">
     <thead>
@@ -10,16 +23,14 @@
 
     <tbody>
       <tr v-for="exam in exams.data">
-        <td>
+        <td class="exam-list-exam-cover">
           <a
             v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}"
-            style="display: block;"
           >{{ exam.name }}</a>
 
           <img
             v-if="null !== exam.cover"
             :src="exam.cover"
-            width="33%"
           >
         </td>
         <td>{{ exam.category.name }}</td>
