@@ -4,13 +4,14 @@
 
 html {
   overflow-y: scroll !important;
+  font-size: 18px;
 }
 
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background: #F3F6F8 none repeat scroll 0% 0%;
+  background: #F3F6F8 none repeat scroll 0 0;
 }
 
 header {
