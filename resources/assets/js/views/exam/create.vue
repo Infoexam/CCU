@@ -27,6 +27,7 @@
         <div class="switch col s12">
           <label>
             <span>啟用題庫</span>
+
             <input
               v-model="form.enable"
               type="checkbox"
@@ -43,6 +44,7 @@
               v-el:cover
               type="file"
               accept="image/*"
+              required
             >
           </div>
 
