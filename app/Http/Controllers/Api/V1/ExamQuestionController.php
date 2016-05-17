@@ -9,7 +9,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\QuestionRequest;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 
 class ExamQuestionController extends Controller
 {
