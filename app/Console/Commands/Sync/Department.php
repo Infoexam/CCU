@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Infoexam\General\Category;
+use App\Categories\Category;
 use Cache;
 use DB;
 
