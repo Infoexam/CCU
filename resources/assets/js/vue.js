@@ -5,6 +5,7 @@ import VueI18n from 'vue-i18n'
 import VueAuth from './services/auth'
 
 import VueLocales from './locales'
+import BrowserLocale from './init/browserLocale'
 import HttpInterceptor from './init/httpInterceptor'
 
 Vue.use(VueResource)
@@ -32,7 +33,7 @@ Vue.prototype.$progress.setHolder({ options: {}})
 /* Vue i18n settings */
 
 // Set default language
-Vue.config.lang = 'zh_TW'
+Vue.config.lang = VueLocales.hasOwnProperty(BrowserLocale) ? BrowserLocale : 'zh_TW'
 
 // Set locales
 for (const key of Object.keys(VueLocales)) {

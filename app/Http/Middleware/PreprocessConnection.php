@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Agent;
 use Carbon\Carbon;
 use Closure;
-use Cookie;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -43,8 +42,6 @@ class PreprocessConnection
 
         $response = $next($request);
 
-        $response->withCookie(Cookie::forever('locale', $locale, null, null, false, false));
-
         $csp = CSPBuilder::fromFile(config_path('csp.json'));
 
         $csp->addDirective('upgrade-insecure-requests', $request->secure());
@@ -55,7 +52,7 @@ class PreprocessConnection
     }
 
     /**
-     * 取得環境語言
+     * 取得環境語言.
      *
      * @param Request $request
      * @param string $defaultLocale
@@ -75,7 +72,7 @@ class PreprocessConnection
     }
 
     /**
-     * 取得使用者偏好語言
+     * 取得使用者偏好語言.
      *
      * @param Request $request
      * @return array
@@ -92,7 +89,7 @@ class PreprocessConnection
     }
 
     /**
-     * 取得使用者的瀏覽器以及版本
+     * 取得使用者的瀏覽器以及版本.
      *
      * @param string $agent
      * @return \Illuminate\Support\Collection
@@ -108,7 +105,7 @@ class PreprocessConnection
     }
 
     /**
-     * 判斷是否為不支援的瀏覽器或版本
+     * 判斷是否為不支援的瀏覽器或版本.
      *
      * @param Collection $agent
      * @return bool

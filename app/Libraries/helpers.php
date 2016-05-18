@@ -45,6 +45,3 @@ if (! function_exists('_asset')) {
         ]);
     }
 }
-
-
-
