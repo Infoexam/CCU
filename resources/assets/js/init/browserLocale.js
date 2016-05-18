@@ -1,6 +1,6 @@
 import Cache from '../components/cache'
 
-let lang = Cache.getItem('locale', () => {
+const lang = Cache.getItem('locale', () => {
   let _lang
 
   if (navigator.languages) {
