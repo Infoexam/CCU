@@ -53,18 +53,10 @@ return [
             'root'   => env('MEDIA_ROOT', public_path('assets/images')),
         ],
 
-        'ftp' => [
-            'driver'   => 'ftp',
-            'host'     => env('FTP_HOST'),
-            'username' => env('FTP_USERNAME'),
-            'password' => env('FTP_PASSWORD'),
-
-            // Optional FTP Settings...
-            'port'     => env('FTP_PORT', 21),
-            'root'     => env('FTP_ROOT', '/'),
-            'passive'  => env('FTP_PASSIVE', true),
-            'ssl'      => env('FTP_SSL', true),
-            'timeout'  => 60,
+        'public' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public'),
+            'visibility' => 'public',
         ],
 
         's3' => [
@@ -73,16 +65,6 @@ return [
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
-        ],
-
-        'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
-            'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
-            'url_type'  => 'publicURL',
         ],
 
     ],

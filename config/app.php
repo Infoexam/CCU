@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APPLICATION_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Taipei',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Taipei'),
 
     /*
     |--------------------------------------------------------------------------
