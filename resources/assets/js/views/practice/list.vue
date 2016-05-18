@@ -1,5 +1,13 @@
 <template>
   <div class="row">
+    <div class="col s12">
+      <blockquote>
+        <h4>{{ $t('practice.precautions.heading') }}</h4>
+
+        <pre>{{ $t('practice.precautions.content') }}</pre>
+      </blockquote>
+    </div>
+
     <template v-for="exam in exams">
       <div class="col s12 m4">
         <div class="card hoverable">
