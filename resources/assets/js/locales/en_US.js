@@ -35,5 +35,6 @@ export default {
     }
   },
 
+  infoexam: 'Infoexam',
   ccu: 'National Chung Cheng University'
 }

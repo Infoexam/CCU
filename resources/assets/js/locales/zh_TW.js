@@ -35,5 +35,6 @@ export default {
     }
   },
 
+  infoexam: '資訊能力測驗系統',
   ccu: '國立中正大學'
 }

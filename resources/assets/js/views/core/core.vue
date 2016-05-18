@@ -14,7 +14,7 @@
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">資訊能力測驗系統</h5>
+          <h5 class="white-text">{{ $t('infoexam') }}</h5>
 
           <p class="grey-text text-lighten-4">More text.</p>
         </div>
