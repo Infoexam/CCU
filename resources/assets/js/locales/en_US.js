@@ -25,6 +25,7 @@ export default {
   },
 
   practice: {
+    title: 'Practice',
     precautions: {
       heading: '注意事項',
       content: `線上練習題庫共分為學科，術科兩科目

@@ -8,7 +8,7 @@
           </div>
 
           <div class="card-action">
-            <a class="cursor-pointer">練習</a>
+            <a class="cursor-pointer">{{ $t('practice.title') }}</a>
           </div>
         </div>
       </a>

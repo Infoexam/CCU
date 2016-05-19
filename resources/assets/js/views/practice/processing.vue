@@ -9,19 +9,22 @@
 </style>
 
 <template>
-  <div class="row exam-practice-should-disable-select">
-    <div v-if="submitted" class="col s12 center">
+    <header class="center">
+      <h3>{{ $route.params.name }} 題庫練習</h3>
+    </header>
+
+    <article v-if="submitted" class="center">
       <a v-link="{ name: 'practice' }">回練習頁面</a>
       <span>本次測驗共 {{ statistics.total }} 題</span>
       <span>正確 {{ statistics.correct }} 題</span>
       <span>錯誤 {{ statistics.total - statistics.blank - statistics.correct }} 題</span>
       <span>未作答 {{ statistics.blank }} 題</span>
-    </div>
+    </article>
 
-    <form @submit.prevent="submit()" class="col s12">
+    <form @submit.prevent="submit()" class="exam-practice-should-disable-select">
       <template v-for="question in questions">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
+        <article class="card blue-grey darken-1">
+          <section class="card-content white-text">
             <div class="card-title">
               <span class="exam-practice-icon-vertical-middle">
                 <available-icon
@@ -52,23 +55,22 @@
                 class="col m6 hide-on-small-only"
               ></markdown>
             </div>
-          </div>
+          </section>
 
-          <div class="card-action">
+          <section class="card-action">
             <form-option
               :option="question.options"
               :multiple="question.multiple"
               :submitted="submitted"
             ></form-option>
-          </div>
-        </div>
+          </section>
+        </article>
       </template>
 
       <div v-if="! submitted" class="row">
         <submit :text="'送出'"></submit>
       </div>
     </form>
-  </div>
 </template>
 
 <script type="text/babel">

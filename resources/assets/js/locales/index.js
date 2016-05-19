@@ -5,5 +5,7 @@ import zh_TW from './zh_TW'
 
 export default {
   en_US,
-  zh_TW
+  en: en_US,
+  zh_TW,
+  zh: zh_TW
 }
