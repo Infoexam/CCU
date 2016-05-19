@@ -15,10 +15,10 @@
 
     <article v-if="submitted" class="center">
       <a v-link="{ name: 'practice' }">回練習頁面</a>
-      <span>本次測驗共 {{ statistics.total }} 題</span>
-      <span>正確 {{ statistics.correct }} 題</span>
-      <span>錯誤 {{ statistics.total - statistics.blank - statistics.correct }} 題</span>
-      <span>未作答 {{ statistics.blank }} 題</span>
+      <span>{{ $t('practice.statistics.total', { num: statistics.total }) }}</span>
+      <span>{{ $t('practice.statistics.correct', { num: statistics.correct }) }}</span>
+      <span>{{ $t('practice.statistics.incorrect', { num: statistics.total - statistics.blank - statistics.correct }) }}</span>
+      <span>{{ $t('practice.statistics.blank', { num: statistics.blank }) }}</span>
     </article>
 
     <form @submit.prevent="submit()" class="exam-practice-should-disable-select">

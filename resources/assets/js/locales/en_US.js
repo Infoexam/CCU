@@ -41,6 +41,12 @@ export default {
 電腦軟體能力
 學科：Linux的系統管理，Linux的網路管理
 術科：程式設計`
+    },
+    statistics: {
+      total: '總題數 {num} 題',
+      correct: '正確 {num} 題',
+      incorrect: '錯誤 {num} 題',
+      blank: '未作答 {num} 題'
     }
   },
 

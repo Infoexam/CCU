@@ -56,7 +56,7 @@
     },
 
     components: {
-      markdown: Markdown
+      Markdown
     }
   }
 </script>
