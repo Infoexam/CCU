@@ -41,8 +41,10 @@ class PracticeController extends Controller
                 $query->whereNull('question_id')->orderByRand()->limit(50);
             },
             'questions.options' => function (HasMany $query) {$query->orderByRand();},
+            'questions.difficulty',
             'questions.questions',
             'questions.questions.options' => function (HasMany $query) {$query->orderByRand();},
+            'questions.questions.difficulty',
         ])->where('enable', true)->where('name', $name)->firstOrFail();
     }
 }

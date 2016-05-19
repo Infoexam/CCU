@@ -16,6 +16,14 @@ export default {
     }
   },
 
+  question: {
+    difficulty: {
+      easy: '簡單',
+      middle: '普通',
+      hard: '困難'
+    }
+  },
+
   practice: {
     precautions: {
       heading: '注意事項',
