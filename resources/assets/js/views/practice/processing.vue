@@ -82,6 +82,18 @@
   import Submit from '../../components/form/submit.vue'
 
   export default {
+    route: {
+      canActivate (transition) {
+        const auth = transition.to.router.app.$auth
+
+        if (auth.guest()) {
+          transition.redirect({ name: 'signIn' })
+        }
+
+        transition.next()
+      }
+    },
+
     data () {
       return {
         questions: [],
