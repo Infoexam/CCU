@@ -1,19 +1,24 @@
-<template>
-  <div class="row">
-    <div v-for="o in option" class="col s12">
-      <input
-        v-model="o.check"
-        :name="uuid"
-        :type="multiple ? 'checkbox' : 'radio'"
-        :id="o.hash"
-        :value="true"
-        :disabled="submitted"
-        class="with-gap"
-        @change="update(o)"
-      ><label :for="o.hash">選項 {{ $index + 1 }}</label>
+<style lang="sass">
+  .exam-practice-question-option-content {
+    margin: 18px 0 27px;
+    padding-left: 35px;
+  }
+</style>
 
-      <markdown :model="o.content"></markdown>
-    </div>
+<template>
+  <div v-for="o in option">
+    <input
+      v-model="o.check"
+      :name="uuid"
+      :type="multiple ? 'checkbox' : 'radio'"
+      :id="o.hash"
+      :value="true"
+      :disabled="submitted"
+      class="with-gap"
+      @change="update(o)"
+    ><label :for="o.hash">選項 {{ $index + 1 }}</label>
+
+    <markdown :model="o.content" class="exam-practice-question-option-content"></markdown>
   </div>
 </template>
 
