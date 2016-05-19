@@ -1,12 +1,8 @@
 {
   "report-only": false,
-  "report-uri": "/csp_violation_reporting_endpoint",
   "base-uri": [],
   "default-src": [],
-  "child-src": {
-    "allow": [],
-    "self": false
-  },
+  "child-src": [],
   "connect-src": {
     "allow": [
       "ws://localhost:3000"
@@ -26,7 +22,8 @@
   },
   "frame-ancestors": [],
   "img-src": {
-    "allow": [
+    "allow": [],
+    "types": [
       "https:"
     ],
     "self": true,
@@ -38,9 +35,11 @@
   "script-src": {
     "allow": [
       "https://ajax.googleapis.com",
-      "https://cdnjs.cloudflare.com",
-      "'sha256-I5NMg1IOPL6KXsADdXeWTPofNDPPOXmmljohr1rfihU='",
-      "'sha256-X3L99Fr8H4ZuITyUqIoiId5vHqXaiAp/3oicgoII6sc='"
+      "https://cdnjs.cloudflare.com"
+    ],
+    "hashes": [
+      { "sha256": "I5NMg1IOPL6KXsADdXeWTPofNDPPOXmmljohr1rfihU=" },
+      { "sha256": "X3L99Fr8H4ZuITyUqIoiId5vHqXaiAp/3oicgoII6sc=" }
     ],
     "self": true,
     "unsafe-inline": false,
