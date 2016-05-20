@@ -23,8 +23,8 @@
 
     <form @submit.prevent="submit()" class="exam-practice-should-disable-select">
       <template v-for="question in questions">
-        <article class="card blue-grey darken-1">
-          <section class="card-content white-text">
+        <article class="card">
+          <section class="card-content">
             <div class="card-title">
               <span class="exam-practice-icon-vertical-middle">
                 <available-icon

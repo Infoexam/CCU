@@ -86,7 +86,7 @@
     },
 
     ready () {
-      $('a[data-activates="translate-dropdown"]').dropdown();
+      $('a[data-activates="translate-dropdown"]').dropdown()
     }
   }
 </script>

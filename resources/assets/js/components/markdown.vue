@@ -1,3 +1,9 @@
+<style lang="sass">
+  .img-limit-max-witdth {
+    max-width: 100%;
+  }
+</style>
+
 <template>
   <div v-html="model | marked"></div>
 </template>
@@ -10,7 +16,7 @@
   const renderer = new Marked.Renderer()
 
   renderer.image = function (href, title, text) {
-    let out = `<img width="100%" src="${href}" alt="${text}"`
+    let out = `<img src="${href}" alt="${text}" class="img-limit-max-witdth"`
 
     if (title) {
       out += ` title="${title}"`
