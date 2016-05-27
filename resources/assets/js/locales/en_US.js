@@ -28,19 +28,19 @@ export default {
     title: 'Practice',
     precautions: {
       heading: '注意事項',
-      content: `線上練習題庫共分為學科，術科兩科目
-若是練習中，對於題目有疑問的地方，歡迎同學們來信指正。
+      content: `The online question pool consists of 'academic test' and 'skills test', total 2 kinds of tests.
+If you have any problem or question during practicing, you're welcome to email us. (infotest@ccu.edu.tw)
 
-學科練習為題庫中，每次隨機挑選50題線上作答練習。
-術科練習請安裝閱卷程式，或下載範例檔案自行練習。
+The online question pool of 'academic test' will pick 50 questions randomly every time during your practice.
+Please download the marking/grading software or/and the example files in order to practice with the online question pool of 'skills test'.
 
-電腦應用能力
-學科：文書編輯，電子試算表，簡報軟體，計算機概論，雲端技術與網路服務
-術科：文書編輯，電子試算表，簡報軟體
+Computer application ability
+Academic test : Documents editing, electronic spreadsheet, presentation software, introduction of computer science, cloud computing technique and online services.
+Skills test : Documents editing, electronic spreadsheet, presentation software. (by using Microsoft Office 2010)
 
-電腦軟體能力
-學科：Linux的系統管理，Linux的網路管理
-術科：程式設計`
+Computer programming ability
+Academic test : Linux system administration, Linux network management.
+Skills test : Programming`
     },
     statistics: {
       total: '總題數 {num} 題',
