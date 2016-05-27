@@ -27,7 +27,7 @@ export default {
   practice: {
     title: '練習',
     precautions: {
-      heading: '注意事項',
+      heading: '練習規則',
       content: `線上練習題庫共分為學科，術科兩科目
 若是練習中，對於題目有疑問的地方，歡迎同學們來信指正。
 

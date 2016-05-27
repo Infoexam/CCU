@@ -27,7 +27,7 @@ export default {
   practice: {
     title: 'Practice',
     precautions: {
-      heading: '注意事項',
+      heading: 'Practice Policy',
       content: `The online question pool consists of 'academic test' and 'skills test', total 2 kinds of tests.
 If you have any problem or question during practicing, you're welcome to email us. (infotest@ccu.edu.tw)
 
