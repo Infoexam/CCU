@@ -2,10 +2,14 @@
   .img-limit-max-witdth {
     max-width: 100%;
   }
+
+  .markdown-content {
+    word-break: break-all;
+  }
 </style>
 
 <template>
-  <div v-html="model | marked"></div>
+  <div v-html="model | marked" class="markdown-content"></div>
 </template>
 
 <script type="text/babel">

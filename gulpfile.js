@@ -5,6 +5,8 @@ const eslint = require('gulp-eslint')
 const elixir = require('laravel-elixir')
 const production = elixir.config.production
 
+const DotenvPlugin = require('webpack-dotenv-plugin')
+
 require('laravel-elixir-webpack')
 
 elixir.extend('eslint', function (src, options) {
@@ -67,6 +69,10 @@ elixir(function (mix) {
         { test: /\.scss$/, loaders: ['style', 'css', 'sass?sourceMap'] },
         { test: /\.(png|jpg|gif)$/, loader: 'file' }
       ]
-    }
+    },
+
+    plugins: [
+      new DotenvPlugin({ sample: './.env.example' })
+    ]
   })
 })

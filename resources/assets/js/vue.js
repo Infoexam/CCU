@@ -6,36 +6,28 @@ import VueAuth from './services/auth'
 
 import VueLocales from './locales'
 import BrowserLocale from './init/browserLocale'
+import HttpHeaders from './init/httpHeaders'
 import HttpInterceptor from './init/httpInterceptor'
 
 Vue.use(VueResource)
 Vue.use(VueProgress)
 Vue.use(VueI18n)
 
-/* Vue resource settings */
-
 // All api should prefix with 'api'
-Vue.http.options.root = '/api'
+Vue.http.options.root = `/${process.env.API_PREFIX}`
 
-// Add X-XSRF-TOKEN header to prevent CSRF
-// Reference: https://laravel.com/docs/5.2/routing#csrf-protection
-Vue.http.headers.common['x-xsrf-token'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift())
-
-// Reference: https://github.com/dingo/api/wiki/Making-Requests-To-Your-API
-Vue.http.headers.common.accept = `Accept: application/${'localhost' === window.location.hostname ? 'x' : 'vnd'}.infoexam.v1+json`
+// Append extra headers
+Object.assign(Vue.http.headers.common, HttpHeaders)
 
 Vue.http.interceptors.push(HttpInterceptor)
 
-/* Vue progress bar settings */
-
+// Vue progress bar settings
 Vue.prototype.$progress.setHolder({ options: {}})
 
-/* Vue i18n settings */
-
-// Set default language
+// Vue i18n default language
 Vue.config.lang = VueLocales.hasOwnProperty(BrowserLocale) ? BrowserLocale : 'zh_TW'
 
-// Set locales
+// Vue i18n set locales
 for (const key of Object.keys(VueLocales)) {
   Vue.locale(key, VueLocales[key])
 }

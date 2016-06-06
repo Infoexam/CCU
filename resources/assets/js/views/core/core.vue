@@ -12,7 +12,6 @@
 </template>
 
 <script type="text/babel">
-  import Events from '../../events'
   import LayoutFooter from './footer.vue'
   import Progress from 'vue-progressbar/vue-progressbar.vue'
 
@@ -32,8 +31,6 @@
         }
       }
     },
-
-    events: Events,
 
     components: {
       LayoutFooter,

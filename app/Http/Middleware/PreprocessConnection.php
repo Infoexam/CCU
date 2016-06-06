@@ -3,64 +3,77 @@
 namespace App\Http\Middleware;
 
 use Agent;
+use App;
 use Carbon\Carbon;
 use Closure;
+use Config;
 use Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use ParagonIE\CSPBuilder\CSPBuilder;
 
 class PreprocessConnection
 {
     /**
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
+    /**
+     * @var \Illuminate\Http\Response
+     */
+    protected $response;
+
+    /**
      * Handle an incoming request.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        // set the cost for BCRYPT to 12
+        $this->request = $request;
+
+        // Set the password work factor
         Hash::setRounds(12);
 
-        // 設定環境語言
-        $locale = $this->getLocale($request);
+        // Set session to secure if the request is secure
+        Config::set('session.secure', $this->request->secure());
 
-        app()->setLocale($locale);
-        Carbon::setLocale($locale);
+        // Set the application locale
+        $this->setLocale();
 
-        // 處理不支援的瀏覽器
-        $agent = $this->getBrowserAndVersion();
+        $this->response = $next($this->request);
 
-        // todo 可以增加設定來決定是否要啟用瀏覽器檢查
-        if ($this->isUnsupportedBrowser($agent)) {
-            // redirect to error page
-        }
+        // Append the csp header to http response
+        $this->appendCsp();
 
-        /** @var $response \Illuminate\Http\Response */
-
-        $response = $next($request);
-
-        $csp = CSPBuilder::fromFile(config_path('csp.json'));
-
-        $csp->addDirective('upgrade-insecure-requests', $request->secure());
-
-        $response->withHeaders($csp->getHeaderArray());
-
-        return $response;
+        return $this->response;
     }
 
     /**
-     * 取得環境語言.
+     * Set the application locale.
      *
-     * @param Request $request
+     * @return void
+     */
+    protected function setLocale()
+    {
+        $locale = $this->getLocale();
+
+        App::setLocale($locale);
+
+        Carbon::setLocale($locale);
+    }
+
+    /**
+     * Get the user accept language.
+     *
      * @param string $defaultLocale
+     *
      * @return string
      */
-    protected function getLocale(Request $request, $defaultLocale = 'en')
+    protected function getLocale($defaultLocale = 'en')
     {
-        $userAcceptLanguages = $this->getUserAcceptLanguages($request);
+        $userAcceptLanguages = $this->getUserAcceptLanguages();
 
         foreach (['zh-TW', 'zh-tw', 'zh'] as $zh) {
             if (in_array($zh, $userAcceptLanguages)) {
@@ -72,51 +85,34 @@ class PreprocessConnection
     }
 
     /**
-     * 取得使用者偏好語言.
+     * Get the user prefer languages.
      *
-     * @param Request $request
      * @return array
      */
-    protected function getUserAcceptLanguages(Request $request)
+    protected function getUserAcceptLanguages()
     {
-        if ($request->has('lang')) {
-            return [strstr($request->input('lang'), '/', true)];
-        } else if ($request->hasCookie('locale')) {
-            return [$request->cookie('locale')];
+        if ($this->request->has('lang')) {
+            return [strstr($this->request->input('lang'), '/', true)];
+        } else if ($this->request->hasCookie('locale')) {
+            return [$this->request->cookie('locale')];
         }
 
         return Agent::languages();
     }
 
     /**
-     * 取得使用者的瀏覽器以及版本.
+     * Append the csp header to http response.
      *
-     * @param string $agent
-     * @return \Illuminate\Support\Collection
-     */
-    protected function getBrowserAndVersion($agent = '')
-    {
-        $agent = empty($agent) ? Agent::getUserAgent() : $agent;
-
-        return collect([
-            'browser' => Agent::browser($agent),
-            'version' => Agent::version(Agent::browser($agent)),
-        ]);
-    }
-
-    /**
-     * 判斷是否為不支援的瀏覽器或版本.
+     * @return void
      *
-     * @param Collection $agent
-     * @return bool
+     * @throws \Exception
      */
-    protected function isUnsupportedBrowser(Collection $agent)
+    protected function appendCsp()
     {
-        switch (true) {
-            case ('IE' === $agent->get('browser')) && ($agent->get('version') < 11):
-                return true;
-        }
+        $csp = CSPBuilder::fromFile(config_path('csp.json'));
 
-        return false;
+        $csp->addDirective('upgrade-insecure-requests', $this->request->secure());
+
+        $this->response->withHeaders($csp->getHeaderArray());
     }
 }

@@ -2,21 +2,16 @@ export default {
   setItem (key, value, storage = 'local') {
     const s = 'local' === storage ? localStorage : sessionStorage
 
-    s.setItem(`cache.${key}`, JSON.stringify(value))
+    s.setItem(this.getKey(key), JSON.stringify(value))
   },
 
-  removeItem (key, storage = 'local') {
-    if ('local' === storage) {
-      localStorage.removeItem(key)
-    } else if ('session' === storage) {
-      sessionStorage.removeItem(key)
-    }
+  removeItem (key) {
+    localStorage.removeItem(this.getKey(key))
+    sessionStorage.removeItem(this.getKey(key))
   },
 
   getItem (key, _default = null) {
-    key = `cache.${key}`
-
-    let result = localStorage.getItem(key) || sessionStorage.getItem(key)
+    let result = localStorage.getItem(this.getKey(key)) || sessionStorage.getItem(this.getKey(key))
 
     if (null !== result) {
       return JSON.parse(result)
@@ -29,5 +24,9 @@ export default {
 
       return 'function' === typeof result.then ? {} : result
     }
+  },
+
+  getKey (key) {
+    return `cache-service.${key}`
   }
 }

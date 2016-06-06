@@ -14,12 +14,14 @@ function install (Vue) {
         this.user = user
 
         Cache.setItem('signIn', true)
+        Cache.setItem('user', user)
       },
 
       signOut () {
         this.user = null
 
         Cache.setItem('signIn', false)
+        Cache.removeItem('user')
       }
     },
 
@@ -44,7 +46,7 @@ function install (Vue) {
             callable()
           }
         }, response => {
-          console.log('sign out failed')
+          console.log('Sign out failed.')
         })
       },
 
@@ -61,20 +63,24 @@ function install (Vue) {
       },
 
       homeRoute () {
-        if (this.guest()) {
+        if (this.guest() || ! this.is('admin')) {
           return 'home'
         }
 
-        return this.is('admin') ? 'admin.exams' : 'home'
+        return 'admin.exams'
       }
     },
 
     created () {
-      if (false !== Cache.getItem('signIn')) {
+      if (Cache.getItem('signIn') && null !== Cache.getItem('user')) {
+        this.user = Cache.getItem('user')
+
         this.$http.get('account/profile').then(response => {
           this.$emit('signIn', response.data.user)
         }, response => {
           this.$emit('signOut')
+
+          window.location.href = '/sign-in'
         })
       }
     }
