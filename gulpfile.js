@@ -3,6 +3,7 @@ process.env.DISABLE_NOTIFIER = true
 const gulp = require('gulp')
 const eslint = require('gulp-eslint')
 const elixir = require('laravel-elixir')
+const webpack = require('webpack')
 const production = elixir.config.production
 
 const DotenvPlugin = require('webpack-dotenv-plugin')
@@ -72,7 +73,8 @@ elixir(function (mix) {
     },
 
     plugins: [
-      new DotenvPlugin({ sample: './.env.example' })
+      new DotenvPlugin({ sample: './.env.example' }),
+      new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': production ? '"production"' : '"local"' }})
     ]
   })
 })
