@@ -23,7 +23,7 @@
 
     <form @submit.prevent="submit()" class="exam-practice-should-disable-select">
       <template v-for="question in questions">
-        <article class="card">
+        <article class="card" v-show="currentPage === Math.ceil(($index + 1) / perPage)">
           <section class="card-content">
             <div class="card-title">
               <span class="exam-practice-icon-vertical-middle">
@@ -67,6 +67,16 @@
         </article>
       </template>
 
+      <section class="center">
+        <ul class="pagination">
+          <template v-for="i in Math.ceil(this.statistics.total / this.perPage)">
+            <li class="waves-effect">
+              <a @click="currentPage = i + 1" class="cursor-pointer">{{ i + 1 }}</a>
+            </li>
+          </template>
+        </ul>
+      </section>
+
       <div v-if="! submitted" class="row">
         <submit :text="'送出'"></submit>
       </div>
@@ -104,7 +114,10 @@
           total: 0,
           correct: 0,
           blank: 0
-        }
+        },
+
+        perPage: 10,
+        currentPage: 1
       }
     },
 
