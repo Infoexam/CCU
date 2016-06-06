@@ -6,6 +6,14 @@
   .exam-practice-icon-vertical-middle {
     vertical-align: middle;
   }
+
+  .exam-practice-border-color-green {
+    border-left: 5px solid #4caf50;
+  }
+
+  .exam-practice-border-color-red {
+    border-left: 5px solid #f44336;
+  }
 </style>
 
 <template>
@@ -23,7 +31,14 @@
 
     <form @submit.prevent="submit()" class="exam-practice-should-disable-select">
       <template v-for="question in questions">
-        <article class="card" v-show="currentPage === Math.ceil(($index + 1) / perPage)">
+        <article
+          v-show="currentPage === Math.ceil(($index + 1) / perPage)"
+          :class="{
+            'exam-practice-border-color-green': submitted && question.correct,
+            'exam-practice-border-color-red': submitted && ! question.correct
+          }"
+          class="card"
+        >
           <section class="card-content">
             <div class="card-title">
               <span class="exam-practice-icon-vertical-middle">
@@ -33,14 +48,15 @@
                 ></available-icon>
               </span>
 
+              <span>第 {{ $index + 1 }} 題</span>
+
               <span class="exam-practice-icon-vertical-middle">
                 <star-icon
                   :total="3"
                   :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
+                  :class="'tiny'"
                 ></star-icon>
               </span>
-
-              <span>第 {{ $index + 1 }} 題</span>
             </div>
 
             <div class="row">
@@ -70,7 +86,7 @@
       <section class="center">
         <ul class="pagination">
           <template v-for="i in Math.ceil(this.statistics.total / this.perPage)">
-            <li class="waves-effect">
+            <li :class="[currentPage === i + 1 ? 'active' : 'waves-effect']">
               <a @click="currentPage = i + 1" class="cursor-pointer">{{ i + 1 }}</a>
             </li>
           </template>
