@@ -1,6 +1,6 @@
 <style lang="sass">
   .exam-practice-should-disable-select {
-    user-select: none;
+    user-select: none !important;
   }
 
   .exam-practice-icon-vertical-middle {
@@ -59,7 +59,7 @@
               </span>
             </div>
 
-            <div class="row">
+            <div class="row" style="margin-top: 15px; margin-bottom: 10px;">
               <markdown
                 :model="question.content"
                 class="col s12 m6"
