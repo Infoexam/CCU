@@ -1,5 +1,5 @@
 <style lang="sass">
-  .exam-practice-should-disable-select {
+  .exam-practice-should-disable-select * {
     user-select: none !important;
   }
 
