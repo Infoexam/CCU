@@ -25,27 +25,27 @@ class Account extends Sync
     protected $description = '將中心帳號資料同步到本地資料庫';
 
     /**
-     * 資料來源
+     * 資料來源.
      *
      * @var array
      */
     protected $rs;
 
     /**
-     * 目的地資料
+     * 目的地資料.
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
     protected $rd;
 
     /**
-     * 資料對應表
+     * 資料對應表.
      *
      * @var array
      */
     protected $mapTable = [
         'gender' => ['F' => 'female', 'M' => 'male'],
-        'grade' => ['1' => 'freshman', '2' => 'sophomore', '3' => 'junior', '4' => 'senior']
+        'grade' => ['1' => 'freshman', '2' => 'sophomore', '3' => 'junior', '4' => 'senior'],
     ];
 
     /**
@@ -67,7 +67,7 @@ class Account extends Sync
     }
 
     /**
-     * 初始話 mapTable
+     * 初始話 mapTable.
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class Account extends Sync
     }
 
     /**
-     * 取得中心帳號資料
+     * 取得中心帳號資料.
      *
      * @return array
      */
@@ -101,7 +101,7 @@ class Account extends Sync
     }
 
     /**
-     * 將資料分群
+     * 將資料分群.
      *
      * @return array
      */
@@ -115,9 +115,9 @@ class Account extends Sync
 
             if (false === $index) {
                 $groups['create'][] = $key;
-            } else if ($this->isDirty($this->rd[$index], $user)) {
+            } elseif ($this->isDirty($this->rd[$index], $user)) {
                 $groups['update'][] = ['rd' => $index, 'rs' => $key];
-            } else if ($this->rd[$index]->getRelation('certificates')->count() !== $this->mapTable['certificates']['count']) {
+            } elseif ($this->rd[$index]->getRelation('certificates')->count() !== $this->mapTable['certificates']['count']) {
                 $groups['syncCertificates'][] = $index;
             } else {
                 ++$this->analysis['notAffect'];
@@ -132,7 +132,7 @@ class Account extends Sync
     }
 
     /**
-     * 判斷帳號資料是否需要更新
+     * 判斷帳號資料是否需要更新.
      *
      * @param User $rd
      * @param $rs
@@ -156,7 +156,7 @@ class Account extends Sync
     }
 
     /**
-     * 同步資料
+     * 同步資料.
      *
      * @param array $data
      */
@@ -224,7 +224,7 @@ class Account extends Sync
     }
 
     /**
-     * 更新測驗資料
+     * 更新測驗資料.
      *
      * @param array $indexes
      */
@@ -254,7 +254,7 @@ class Account extends Sync
     }
 
     /**
-     * 取得新增與更新共同之欄位
+     * 取得新增與更新共同之欄位.
      *
      * @param int $index
      * @return array

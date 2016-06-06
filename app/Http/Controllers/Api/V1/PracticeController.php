@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Exams\Exam;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -40,10 +39,14 @@ class PracticeController extends Controller
             'questions' => function (HasMany $query) {
                 $query->whereNull('question_id')->orderByRand()->limit(50);
             },
-            'questions.options' => function (HasMany $query) {$query->orderByRand();},
+            'questions.options' => function (HasMany $query) {
+                $query->orderByRand();
+            },
             'questions.difficulty',
             'questions.questions',
-            'questions.questions.options' => function (HasMany $query) {$query->orderByRand();},
+            'questions.questions.options' => function (HasMany $query) {
+                $query->orderByRand();
+            },
             'questions.questions.difficulty',
         ])->where('enable', true)->where('name', $name)->firstOrFail();
     }

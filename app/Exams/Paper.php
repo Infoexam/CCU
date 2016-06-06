@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Paper extends Entity
 {
     use SoftDeletes;
-    
+
     /**
      * The table associated with the model.
      *

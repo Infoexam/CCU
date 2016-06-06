@@ -41,14 +41,14 @@ class Receipt extends Sync
     }
 
     /**
-     * 取得收據資料
+     * 取得收據資料.
      *
      * @return \Illuminate\Support\Collection
      */
     protected function getSourceData()
     {
         $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
-            ->where('receipt_date', (Carbon::yesterday()->year - 1911) . (Carbon::yesterday()->format('md')))
+            ->where('receipt_date', (Carbon::yesterday()->year - 1911).(Carbon::yesterday()->format('md')))
             ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
             ->where('acc5_cd', '422Y-300')
             ->get();
@@ -57,7 +57,7 @@ class Receipt extends Sync
     }
 
     /**
-     * 同步資料
+     * 同步資料.
      *
      * @param \Illuminate\Support\Collection $receipts
      * @return void
@@ -72,7 +72,7 @@ class Receipt extends Sync
 
             if (null === $user) {
                 $this->userNotFound($user);
-            } else if (! ReceiptEntity::where('receipt_no', $receipt->receipt_no)->exists()) {
+            } elseif (! ReceiptEntity::where('receipt_no', $receipt->receipt_no)->exists()) {
                 $user->receipts()->save(new ReceiptEntity([
                     'receipt_no' => $receipt->receipt_no,
                     'receipt_date' => $receipt->receipt_date,
@@ -103,7 +103,7 @@ class Receipt extends Sync
     }
 
     /**
-     * 取得對應類別id
+     * 取得對應類別id.
      *
      * @param $receipt
      * @return int
@@ -115,7 +115,7 @@ class Receipt extends Sync
                 return Category::getCategories('exam.category', 'theory', true);
             case str_contains($receipt->note, '術科'):
                 return Category::getCategories('exam.category', 'technology', true);
-            default :
+            default:
                 return Category::getCategories('error', 'general', true);
         }
     }

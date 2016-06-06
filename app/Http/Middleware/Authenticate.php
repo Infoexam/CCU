@@ -19,14 +19,13 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         /** @var \App\Accounts\User|null $user */
-    
         $user = Auth::guard()->user();
 
         $role = 3 === func_num_args() ? func_get_arg(2) : null;
 
         if (is_null($user)) {
             $e = new UnauthorizedHttpException('Unauthorized');
-        } else if (is_string($role) && ! $user->is($role)) {
+        } elseif (is_string($role) && ! $user->is($role)) {
             $e = new AccessDeniedHttpException;
         }
 

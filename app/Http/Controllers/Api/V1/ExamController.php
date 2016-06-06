@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Exams\Exam;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamImageRequest;
 use App\Http\Requests\Api\V1\ExamRequest;

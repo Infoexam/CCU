@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Exams\Exam;
 use App\Exams\Option;
 use App\Exams\Question;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\QuestionRequest;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,7 +26,7 @@ class ExamQuestionController extends Controller
                 $query->getQuery()->whereNUll('question_id');
             },
             'questions.difficulty',
-            'questions.options'
+            'questions.options',
         ])->findOrFail($examId);
     }
 

@@ -4,8 +4,6 @@ use App\Infoexam\Exam\Set;
 use App\Infoexam\General\Category;
 use App\Infoexam\User\Role;
 use App\Infoexam\User\User;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExamSetTest extends TestCase
@@ -13,7 +11,7 @@ class ExamSetTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@index
+     * test for \App\Http\Controller\Api\V1\ExamSetController@index.
      *
      * @return void
      */
@@ -25,7 +23,7 @@ class ExamSetTest extends TestCase
     }
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@store
+     * test for \App\Http\Controller\Api\V1\ExamSetController@store.
      *
      * @return void
      */
@@ -57,7 +55,7 @@ class ExamSetTest extends TestCase
         // admin 帳號新增題庫
         Auth::loginUsingId($userAdmin->getAttribute('id'));
         $this->call('POST', $route, [
-            'name' => 'test_' . str_random(4),
+            'name' => 'test_'.str_random(4),
             'category_id' => Category::where('category', '=', 'exam.category')->first(['id'])->getAttribute('id'),
             'enable' => '1',
         ]);
@@ -65,7 +63,7 @@ class ExamSetTest extends TestCase
     }
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@show
+     * test for \App\Http\Controller\Api\V1\ExamSetController@show.
      *
      * @return void
      */
@@ -86,7 +84,7 @@ class ExamSetTest extends TestCase
     }
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@update
+     * test for \App\Http\Controller\Api\V1\ExamSetController@update.
      *
      * @return void
      */
@@ -118,7 +116,7 @@ class ExamSetTest extends TestCase
 
         // 更新測試題庫
         $this->call('PATCH', $route, [
-            'name' => 'test_' . str_random(4),
+            'name' => 'test_'.str_random(4),
             'category_id' => $set->getAttribute('category_id'),
             'enable' => $set->getAttribute('enable'),
         ]);
@@ -133,7 +131,7 @@ class ExamSetTest extends TestCase
     }
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@destroy
+     * test for \App\Http\Controller\Api\V1\ExamSetController@destroy.
      *
      * @return void
      */
@@ -155,7 +153,7 @@ class ExamSetTest extends TestCase
     }
 
     /**
-     * test for \App\Http\Controller\Api\V1\ExamSetController@allQuestions
+     * test for \App\Http\Controller\Api\V1\ExamSetController@allQuestions.
      *
      * @return void
      */

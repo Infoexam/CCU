@@ -18,12 +18,12 @@ class AppServiceProvider extends ServiceProvider
         $this->registerProviders();
 
         Relation::morphMap([
-            Exam::class
+            Exam::class,
         ]);
     }
 
     /**
-     * 註冊非 production 和 development 環境的 providers
+     * 註冊非 production 和 development 環境的 providers.
      *
      * @return $this
      */

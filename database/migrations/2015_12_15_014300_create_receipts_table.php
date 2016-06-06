@@ -39,7 +39,7 @@ class CreateReceiptsTable extends Migration
      */
     public function down()
     {
-        Schema::table('receipts', function(Blueprint $table) {
+        Schema::table('receipts', function (Blueprint $table) {
             $table->dropForeign('receipts_user_id_foreign');
             $table->dropForeign('receipts_category_id_foreign');
         });
