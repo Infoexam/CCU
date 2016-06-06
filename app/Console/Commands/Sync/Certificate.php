@@ -22,7 +22,7 @@ class Certificate extends Sync
     protected $description = '將本地測驗資料同步到中心資料庫';
 
     /**
-     * 本地資料庫帳號資料
+     * 本地資料庫帳號資料.
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
@@ -47,7 +47,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 取得中心檢定資料
+     * 取得中心檢定資料.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -57,7 +57,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 同步資料
+     * 同步資料.
      *
      * @param \Illuminate\Support\Collection $certificates
      * @return void
@@ -75,7 +75,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 將各個成績轉為統一格式
+     * 將各個成績轉為統一格式.
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 將使用者分成 不存在 和 需更新 兩個群組
+     * 將使用者分成 不存在 和 需更新 兩個群組.
      *
      * @param \Illuminate\Support\Collection $certificates
      * @return array
@@ -111,7 +111,7 @@ class Certificate extends Sync
 
             if (false === $exists) {
                 $groups['notExists'][] = $user;
-            } else if ($this->shouldUpdate($user, $certificates[$exists])) {
+            } elseif ($this->shouldUpdate($user, $certificates[$exists])) {
                 $groups['needUpdate'][] = $user;
             } else {
                 ++$this->analysis['notAffect'];
@@ -122,7 +122,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 判斷該使用者的資訊是否需要更新
+     * 判斷該使用者的資訊是否需要更新.
      *
      * @param User $user
      * @param $certificate
@@ -142,7 +142,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 新建檢定資料
+     * 新建檢定資料.
      *
      * @param array $users
      * @return void
@@ -160,7 +160,7 @@ class Certificate extends Sync
     }
 
     /**
-     * 更新檢定資料
+     * 更新檢定資料.
      *
      * @param array $users
      * @return void

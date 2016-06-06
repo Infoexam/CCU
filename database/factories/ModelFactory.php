@@ -1,13 +1,13 @@
 <?php
 
 /** @var $factory \Illuminate\Database\Eloquent\Factory */
-
-function randomCategory($category) {
+function randomCategory($category)
+{
     return \App\Categories\Category::getCategories($category)->random()->getAttribute('id');
 }
 
 
-/**
+/*
  * users and certificates table
  */
 $factory->define(App\Accounts\User::class, function () {
@@ -32,7 +32,7 @@ $factory->defineAs(App\Accounts\User::class, 'passed', function () use ($factory
 
     return array_merge($factory->raw(App\Accounts\User::class), [
         'passed_score' => $faker->numberBetween(0, 100),
-        'passed_at' => $faker->dateTime
+        'passed_at' => $faker->dateTime,
     ]);
 });
 
@@ -46,7 +46,7 @@ $factory->define(App\Accounts\Certificate::class, function () {
 });
 
 
-/**
+/*
  * exam_sets, exam_questions, exam_options, exam_explanations,
  * exam_lists, exam_applies and exam_results tables
  */
@@ -72,6 +72,7 @@ $factory->define(\App\Exams\Question::class, function () {
 
 $factory->define(\App\Exams\Option::class, function () {
     $faker = Faker\Factory::create('zh_TW');
+
     return [
         'content' => $faker->realText(120),
     ];
@@ -81,7 +82,7 @@ $factory->define(\App\Exams\Listing::class, function () {
     $faker = Faker\Factory::create('zh_TW');
 
     return [
-        'code' => $faker->dateTime->format('YmdH') . $faker->numberBetween(100, 999),
+        'code' => $faker->dateTime->format('YmdH').$faker->numberBetween(100, 999),
         'began_at' => $faker->dateTime,
         'duration' => $faker->numberBetween(30, 90),
         'room' => $faker->numberBetween(100, 999),
@@ -112,7 +113,7 @@ $factory->define(\App\Exams\Result::class, function () {
 });
 
 
-/**
+/*
  * papers table
  */
 $factory->define(\App\Exams\Paper::class, function () {
@@ -126,14 +127,14 @@ $factory->define(\App\Exams\Paper::class, function () {
 });
 
 
-/**
+/*
  * announcements and faqs table
  */
 $factory->define(\App\Websites\Announcement::class, function () {
     $faker = Faker\Factory::create('zh_TW');
 
     return [
-        'heading' => $faker->realText(16) . str_random(4),
+        'heading' => $faker->realText(16).str_random(4),
         'link' => $faker->boolean() ? $faker->url : null,
         'content' => $faker->realText(120),
     ];

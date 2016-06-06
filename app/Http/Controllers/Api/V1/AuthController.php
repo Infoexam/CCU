@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Accounts\User;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 use DOMDocument;

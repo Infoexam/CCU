@@ -1,8 +1,6 @@
 <?php
 
 use App\Infoexam\User\User;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthTest extends TestCase
@@ -10,7 +8,7 @@ class AuthTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * 測試登入 api
+     * 測試登入 api.
      *
      * @return void
      */
@@ -47,7 +45,7 @@ class AuthTest extends TestCase
     }
 
     /**
-     * 測試登出 api
+     * 測試登出 api.
      *
      * @return void
      */

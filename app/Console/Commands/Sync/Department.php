@@ -50,7 +50,7 @@ class Department extends Sync
     }
 
     /**
-     * 取得系所代碼資料
+     * 取得系所代碼資料.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -60,7 +60,7 @@ class Department extends Sync
     }
 
     /**
-     * 同步資料
+     * 同步資料.
      *
      * @param \Illuminate\Support\Collection $departments
      * @return void

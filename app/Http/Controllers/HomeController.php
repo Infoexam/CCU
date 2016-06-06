@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use Artisan;
 use Illuminate\Http\Request;
 use Log;

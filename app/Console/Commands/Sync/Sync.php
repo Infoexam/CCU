@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 abstract class Sync extends Command
 {
     /**
-     * 同步數據結果
+     * 同步數據結果.
      *
      * @var array
      */
@@ -31,7 +31,7 @@ abstract class Sync extends Command
     }
 
     /**
-     * 跳脫空白字元
+     * 跳脫空白字元.
      *
      * @param array $data
      * @return array
@@ -48,7 +48,7 @@ abstract class Sync extends Command
     }
 
     /**
-     * 輸出結果
+     * 輸出結果.
      *
      * @return void
      */
@@ -56,8 +56,8 @@ abstract class Sync extends Command
     {
         $this->getOutput()->writeln("<info>Total: {$this->analysis['total']}</info>");
         $this->getOutput()->writeln(
-            "<info>Success: {$this->analysis['success']}</info> | " .
-            "<comment>Not Affect: {$this->analysis['notAffect']}</comment> | " .
+            "<info>Success: {$this->analysis['success']}</info> | ".
+            "<comment>Not Affect: {$this->analysis['notAffect']}</comment> | ".
             "<error>Fail: {$this->analysis['fail']}</error>"
         );
         $this->getOutput()->writeln("<comment>Create: {$this->analysis['created']}/{$this->analysis['create']}</comment>");

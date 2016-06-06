@@ -93,7 +93,7 @@ class PreprocessConnection
     {
         if ($this->request->has('lang')) {
             return [strstr($this->request->input('lang'), '/', true)];
-        } else if ($this->request->hasCookie('locale')) {
+        } elseif ($this->request->hasCookie('locale')) {
             return [$this->request->cookie('locale')];
         }
 

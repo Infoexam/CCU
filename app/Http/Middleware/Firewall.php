@@ -36,7 +36,7 @@ class Firewall
     }
 
     /**
-     * 確認是否是維護模式
+     * 確認是否是維護模式.
      */
     protected function checkForMaintenance()
     {
@@ -52,7 +52,7 @@ class Firewall
     }
 
     /**
-     * 防火牆過濾
+     * 防火牆過濾.
      *
      * @param \Illuminate\Http\Request $request
      */
@@ -82,7 +82,7 @@ class Firewall
     }
 
     /**
-     * 取得 firewall 的過濾條件
+     * 取得 firewall 的過濾條件.
      *
      * @return bool|null
      */
@@ -90,7 +90,7 @@ class Firewall
     {
         if (in_array($this->domain, ['api', 'others'])) {
             return null;
-        } else if (in_array($this->domain, ['admin', 'exam'])) {
+        } elseif (in_array($this->domain, ['admin', 'exam'])) {
             return true;
         }
 
@@ -109,7 +109,7 @@ class Firewall
 
         if (in_array($domain, ['api', 'admin', 'exam'])) {
             return $domain;
-        } else if (in_array($domain, ['deploy', 'opcache-reset'])) {
+        } elseif (in_array($domain, ['deploy', 'opcache-reset'])) {
             return 'others';
         }
 
