@@ -126,6 +126,8 @@
         for (const question of questions) {
           // Ensure the number of questions is not more than 50
           if (50 < ++this.statistics.total) {
+            --this.statistics.total
+
             return
           }
 
