@@ -22,9 +22,8 @@ footer.page-footer {
   background-color: #4285f4 !important;
 }
 
-pre {
-  white-space: pre-line;
-  word-wrap: break-word;
+img {
+  max-width: 100%;
 }
 
 input.untouched {
@@ -32,11 +31,18 @@ input.untouched {
   box-shadow: none !important;
 }
 
-.cursor {
-  &-pointer {
-    cursor: pointer;
-    user-select: none;
-  }
+pre {
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+ul.pagination {
+  user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  user-select: none;
 }
 
 .tabs {
@@ -45,4 +51,8 @@ input.untouched {
 
 .dropdown-button {
   display: inline-block;
+}
+
+.markdown-content {
+  word-break: break-all;
 }

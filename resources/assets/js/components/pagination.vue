@@ -1,11 +1,5 @@
-<style lang="sass">
-  .vue-materializecss-pagination-noselect {
-    user-select: none;
-  }
-</style>
-
 <template>
-  <ul class="pagination vue-materializecss-pagination-noselect">
+  <ul class="pagination">
     <li :class="prevPageClass">
       <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
     </li>

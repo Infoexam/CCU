@@ -14,7 +14,9 @@ export default {
       send:   'Submit',
       create: 'Create'
     },
-    
+
+    preview: 'Preview',
+
     validation: {
       required: 'The {attribute} field is required.'
     }
@@ -30,7 +32,7 @@ export default {
 
   practice: {
     title: 'Practice',
-    
+
     precautions: {
       heading: 'Practice Policy',
       content: `The online question pool consists of 'academic test' and 'skills test', total 2 kinds of tests.
@@ -47,7 +49,7 @@ Computer programming ability
 Academic test : Linux system administration, Linux network management.
 Skills test : Programming`
     },
-    
+
     statistics: {
       total: '總題數 {num} 題',
       correct: '正確 {num} 題',

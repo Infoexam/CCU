@@ -23,8 +23,7 @@
       },
 
       id: {
-        type: String,
-        default: null
+        type: String
       },
 
       label: {
@@ -65,21 +64,19 @@
         select.material_select()
 
         if (! this._binded) {
-          const _this = this
-
           const target = select.closest('div.select-wrapper').find('input[data-activates^="select-options"]')
 
-          $(select).on('change', target, function () {
-            if (null === _this.value) {
-              _this.model = target.val()
+          $(select).on('change', target, () => {
+            if (null === this.value) {
+              this.model = target.val()
 
               return
             }
 
-            const option = _this.search(target.val())
+            const option = this.search(target.val())
 
             if (null !== option) {
-              _this.model = option[_this.value]
+              this.model = option[this.value]
             }
           })
 
@@ -102,9 +99,7 @@
 
     created () {
       // The id default value must assign here
-      if (null === this.id) {
-        this.id = Uuid.v4()
-      }
+      this.id = this.id || Uuid.v4()
     }
   }
 </script>

@@ -65,10 +65,7 @@ elixir(function (mix) {
           exclude: /node_modules/
         },
 
-        { test: /\.vue$/, loader: 'vue' },
-        { test: /\.css$/, loader: 'style-loader!css-loader' },
-        { test: /\.scss$/, loaders: ['style', 'css', 'sass?sourceMap'] },
-        { test: /\.(png|jpg|gif)$/, loader: 'file' }
+        { test: /\.vue$/, loader: 'vue' }
       ]
     },
 

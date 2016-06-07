@@ -10,19 +10,17 @@
 
     <template v-for="exam in exams">
       <div class="col s12 m4">
-        <div class="card hoverable">
-          <div class="card-image">
-            <a
-              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
-            ><img :src="exam.cover"></a>
-          </div>
+        <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
+          <div class="card hoverable">
+            <div class="card-image">
+              <img :src="exam.cover">
+            </div>
 
-          <div class="card-action">
-            <a
-              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
-            >{{ exam.name }}</a>
+            <div class="card-action">
+              <a class="cursor-pointer">{{ exam.name }}</a>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </template>
   </div>
@@ -39,6 +37,14 @@
         }
 
         transition.next()
+      },
+
+      data (transition) {
+        return this.$http.get('practice/exams').then(response => {
+          return {
+            exams: response.data.exams
+          }
+        })
       }
     },
 
@@ -46,12 +52,6 @@
       return {
         exams: {}
       }
-    },
-
-    created () {
-      this.$http.get('practice/exams').then(response => {
-        this.exams = response.data.exams
-      })
     }
   }
 </script>

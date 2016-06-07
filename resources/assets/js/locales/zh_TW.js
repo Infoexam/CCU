@@ -14,6 +14,8 @@ export default {
       send: '送出',
       create: '新增'
     },
+    
+    preview: '預覽',
 
     validation: {
       required: '{attribute} 不能留空。'

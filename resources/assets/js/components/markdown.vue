@@ -1,12 +1,4 @@
-<style lang="sass">
-  .img-limit-max-witdth {
-    max-width: 100%;
-  }
-
-  .markdown-content {
-    word-break: break-all;
-  }
-</style>
+<style src="highlight.js/styles/github.css"></style>
 
 <template>
   <div v-html="model | marked" class="markdown-content"></div>
@@ -15,12 +7,11 @@
 <script type="text/babel">
   import Highlight from 'highlight.js'
   import Marked from 'marked'
-  require('highlight.js/styles/github.css')
 
   const renderer = new Marked.Renderer()
 
   renderer.image = function (href, title, text) {
-    let out = `<img src="${href}" alt="${text}" class="img-limit-max-witdth"`
+    let out = `<img src="${href}" alt="${text}"`
 
     if (title) {
       out += ` title="${title}"`
@@ -38,7 +29,7 @@
           .replace(/[^\w:]/g, '')
           .toLowerCase()
 
-        if (prot.includes('javascript:') || prot.includes('vbscript:')) {
+        if (prot.toLowerCase().includes('javascript:') || prot.toLowerCase().includes('vbscript:')) {
           return ''
         }
       } catch (e) {
@@ -70,6 +61,7 @@
   export default {
     props: {
       model: {
+        type: String,
         required: true
       }
     },

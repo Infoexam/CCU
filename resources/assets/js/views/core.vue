@@ -1,3 +1,5 @@
+<style src="../../sass/app.scss"></style>
+
 <template>
   <main class="container">
     <router-view></router-view>

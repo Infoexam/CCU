@@ -1,7 +1,7 @@
 <template>
   <i
     v-for="i in total"
-    :class="[null === class ? '' : class]"
+    :class="[class]"
     class="material-icons"
   >{{ active > i ? 'star' : 'star_border' }}</i>
 </template>
@@ -24,7 +24,7 @@
 
       class: {
         type: String,
-        default: null
+        default: ''
       }
     }
   }

@@ -16,7 +16,7 @@
     </div>
 
     <div class="col m6 offset-m1 hide-on-small-only">
-      <span>預覽</span>
+      <span>{{ $t('form.preview') }}</span>
 
       <markdown :model="model"></markdown>
     </div>
@@ -45,20 +45,17 @@
       },
 
       textareaId: {
-        type: String,
-        default: null
+        type: String
       }
     },
 
     components: {
-      markdown: Markdown
+      Markdown
     },
 
     created () {
       // The textareaId default value must assign here
-      if (null === this.textareaId) {
-        this.textareaId = Uuid.v4()
-      }
+      this.textareaId = this.textareaId || Uuid.v4()
     },
 
     ready () {

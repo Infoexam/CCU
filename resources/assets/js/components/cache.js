@@ -19,11 +19,11 @@ export default {
 
     if ('function' !== typeof _default) {
       return _default
-    } else {
-      result = _default()
-
-      return 'function' === typeof result.then ? {} : result
     }
+
+    result = _default()
+
+    return 'function' === typeof result.then ? {} : result
   },
 
   getKey (key) {
