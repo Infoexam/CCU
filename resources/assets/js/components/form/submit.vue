@@ -1,7 +1,12 @@
 <template>
   <div :class="[align]" class="input-field col s12">
-    <button class="btn waves-effect waves-light" type="submit">
-      <span>{{ text }}</span>
+    <button
+      :class="{ disabled: disabled }"
+      class="btn waves-effect waves-light"
+      type="submit"
+      :disabled="disabled"
+    >
+      <span>{{ text || $t('form.submit.send') }}</span>
 
       <i class="material-icons right">send</i>
     </button>
@@ -9,8 +14,6 @@
 </template>
 
 <script type="text/babel">
-  import Vue from '../../vue'
-
   export default {
     props: {
       align: {
@@ -19,8 +22,17 @@
       },
 
       text: {
-        type: String,
-        default: Vue.t('form.submit.send')
+        type: String
+      },
+
+      validation: {
+        type: Object
+      }
+    },
+
+    computed: {
+      disabled () {
+        return this.validation && this.validation.invalid
       }
     }
   }

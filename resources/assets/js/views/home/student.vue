@@ -22,7 +22,7 @@
           </div>
 
           <div class="card-action">
-            <a class="cursor-pointer">預約（尚未啟用）</a>
+            <a class="cursor-pointer">{{ $t('apply.title') }}（尚未啟用）</a>
           </div>
         </div>
       </a>
@@ -36,7 +36,7 @@
           </div>
 
           <div class="card-action">
-            <a class="cursor-pointer">考試（尚未啟用）</a>
+            <a class="cursor-pointer">{{ $t('exam.title') }}（尚未啟用）</a>
           </div>
         </div>
       </a>

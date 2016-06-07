@@ -12,7 +12,7 @@
 </template>
 
 <script type="text/babel">
-  import LayoutFooter from './footer.vue'
+  import LayoutFooter from './layout/footer.vue'
   import Progress from 'vue-progressbar/vue-progressbar.vue'
 
   export default {

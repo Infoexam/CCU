@@ -13,6 +13,10 @@ export default {
     submit: {
       send: '送出',
       create: '新增'
+    },
+
+    validation: {
+      required: '{attribute} 不能留空。'
     }
   },
 
@@ -26,6 +30,7 @@ export default {
 
   practice: {
     title: '練習',
+
     precautions: {
       heading: '練習規則',
       content: `線上練習題庫共分為學科，術科兩科目
@@ -42,12 +47,26 @@ export default {
 學科：Linux的系統管理，Linux的網路管理
 術科：程式設計`
     },
+
     statistics: {
       total: '總題數 {num} 題',
       correct: '正確 {num} 題',
       incorrect: '錯誤 {num} 題',
       blank: '未作答 {num} 題'
     }
+  },
+
+  apply: {
+    title: '預約'
+  },
+
+  exam: {
+    title: '考試'
+  },
+
+  footer: {
+    dashboard: '後台',
+    home: '前台'
   },
 
   infoexam: '資訊能力測驗系統',

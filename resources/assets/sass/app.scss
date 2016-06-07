@@ -1,5 +1,5 @@
 * {
-  font-family: Microsoft JhengHei, Monospace;
+  font-family: Microsoft JhengHei, Monospace, sans-serif;
 }
 
 html {
@@ -12,10 +12,6 @@ body {
   min-height: 100vh;
   flex-direction: column;
   background: #F3F6F8 none repeat scroll 0 0;
-}
-
-header {
-  margin-bottom: 30px;
 }
 
 main {
@@ -31,8 +27,9 @@ pre {
   word-wrap: break-word;
 }
 
-.tabs {
-  margin-bottom: 15px;
+input.untouched {
+  border-bottom: 1px solid #9e9e9e !important;
+  box-shadow: none !important;
 }
 
 .cursor {
@@ -42,97 +39,10 @@ pre {
   }
 }
 
-.collapsible-accordion {
-  background-color: #FFF;
+.tabs {
+  margin-bottom: 15px;
 }
 
 .dropdown-button {
   display: inline-block;
-}
-
-.wrap-text {
-  word-wrap: break-word !important;
-  white-space: pre-wrap !important;
-}
-
-.nowrap-text {
-  word-wrap: unset !important;
-  white-space: nowrap !important;
-}
-
-.breadnav {
-  box-shadow: none;
-  margin-bottom: 30px;
-}
-
-.breadcrumb {
-  display: inline-block;
-  vertical-align: middle;
-  color: #0d47a1 !important;
-  font-size: 1.5em;
-  &:before {
-    color: #000 !important;
-  }
-  &:nth-child(2) {
-    &:before {
-      content:"" !important;
-    }
-  }
-}
-
-.breadcrumb-navi {
-  font-size: 2.5em;
-  height: 64px;
-  line-height: 64px;
-  vertical-align: middle;
-  transform: rotate(90deg);
-  user-select: none;
-}
-
-.reponsive-table-heading {
-  th {
-    word-wrap: unset !important;
-    white-space: nowrap !important;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .reponsive-table-heading {
-    th {
-      height: 4em;
-    }
-  }
-  .reponsive-table-body {
-    width: 100%;
-    td {
-      height: 4em;
-    }
-  }
-}
-
-@media screen and (min-width: 601px) and (max-width: 992px) {
-  .reponsive-table-heading {
-    th {
-      height: 5em;
-    }
-  }
-  .reponsive-table-body {
-    width: 50%;
-    td {
-      height: 5em;
-    }
-  }
-}
-
-@media screen and (min-width: 993px) {
-  .reponsive-table-body {
-    td:first-child {
-      max-width: 20em;
-    }
-  }
-}
-
-.show-img {
-  width: 100%;
-  padding: 0.4rem 0.75rem;
 }

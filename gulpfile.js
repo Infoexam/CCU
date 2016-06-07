@@ -73,7 +73,7 @@ elixir(function (mix) {
     },
 
     plugins: [
-      new DotenvPlugin({ sample: './.env.example' }),
+      new DotenvPlugin({ sample: './.env.example', path: './.env' }),
       new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': production ? '"production"' : '"local"' }})
     ]
   })

@@ -1,7 +1,7 @@
 import Vue from '../vue'
 import VueRouter from 'vue-router'
 
-import CoreView from '../views/core/core.vue'
+import CoreView from '../views/core.vue'
 import StudentHomeView from '../views/home/student.vue'
 import AdminHomeView from '../views/home/admin.vue'
 import SignInView from '../views/signIn/signIn.vue'

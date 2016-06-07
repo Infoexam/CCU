@@ -13,6 +13,10 @@ export default {
     submit: {
       send:   'Submit',
       create: 'Create'
+    },
+    
+    validation: {
+      required: 'The {attribute} field is required.'
     }
   },
 
@@ -26,6 +30,7 @@ export default {
 
   practice: {
     title: 'Practice',
+    
     precautions: {
       heading: 'Practice Policy',
       content: `The online question pool consists of 'academic test' and 'skills test', total 2 kinds of tests.
@@ -42,12 +47,26 @@ Computer programming ability
 Academic test : Linux system administration, Linux network management.
 Skills test : Programming`
     },
+    
     statistics: {
       total: '總題數 {num} 題',
       correct: '正確 {num} 題',
       incorrect: '錯誤 {num} 題',
       blank: '未作答 {num} 題'
     }
+  },
+
+  apply: {
+    title: 'Apply'
+  },
+
+  exam: {
+    title: 'Exam'
+  },
+
+  footer: {
+    dashboard: 'Dashboard',
+    home: 'Home'
   },
 
   infoexam: 'Infoexam',

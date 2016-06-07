@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
+import VueValidator from 'vue-validator'
 import VueProgress from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
 import VueAuth from './services/auth'
@@ -10,6 +11,7 @@ import HttpHeaders from './init/httpHeaders'
 import HttpInterceptor from './init/httpInterceptor'
 
 Vue.use(VueResource)
+Vue.use(VueValidator)
 Vue.use(VueProgress)
 Vue.use(VueI18n)
 
