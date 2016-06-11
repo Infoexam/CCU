@@ -17,7 +17,7 @@
             </div>
 
             <div class="card-action">
-              <a class="cursor-pointer">{{ exam.name }}</a>
+              <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">{{ exam.name }}</a>
             </div>
           </div>
         </a>

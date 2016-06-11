@@ -1,5 +1,5 @@
 <template>
-  <ul class="pagination">
+  <ul class="pagination user-select-none">
     <li :class="prevPageClass">
       <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
     </li>

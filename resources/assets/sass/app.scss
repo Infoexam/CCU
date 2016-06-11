@@ -36,8 +36,8 @@ pre {
   word-wrap: break-word;
 }
 
-ul.pagination {
-  user-select: none;
+ul.pagination a {
+  cursor: pointer;
 }
 
 .cursor-pointer {
@@ -53,6 +53,19 @@ ul.pagination {
   display: inline-block;
 }
 
+.material-icons {
+  vertical-align: middle;
+}
+
 .markdown-content {
   word-break: break-all;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+.practice-option-content {
+  margin: 18px 0 27px;
+  padding-left: 35px;
 }

@@ -1,10 +1,3 @@
-<style lang="sass">
-  .exam-practice-question-option-content {
-    margin: 18px 0 27px;
-    padding-left: 35px;
-  }
-</style>
-
 <template>
   <div v-for="o in option">
     <input
@@ -16,9 +9,9 @@
       :disabled="submitted"
       class="with-gap"
       @change="update(o)"
-    ><label :for="o.hash">選項 {{ $index + 1 }}</label>
+    ><label :for="o.hash">{{ $t('form.option') }} {{ $index + 1 }}</label>
 
-    <markdown :model="o.content" class="exam-practice-question-option-content"></markdown>
+    <markdown :model="o.content" class="practice-option-content"></markdown>
   </div>
 </template>
 

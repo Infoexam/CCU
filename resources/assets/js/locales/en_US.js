@@ -16,6 +16,8 @@ export default {
     },
 
     preview: 'Preview',
+    question: 'Question {num}',
+    option: 'Option',
 
     validation: {
       required: 'The {attribute} field is required.'
@@ -50,11 +52,14 @@ Academic test : Linux system administration, Linux network management.
 Skills test : Programming`
     },
 
+    heading: 'Practice',
+    back: 'Previous Page',
+
     statistics: {
-      total: '總題數 {num} 題',
-      correct: '正確 {num} 題',
-      incorrect: '錯誤 {num} 題',
-      blank: '未作答 {num} 題'
+      total: 'Total: {num}',
+      correct: 'Correct: {num}',
+      incorrect: 'Incorrect {num}',
+      blank: 'No answer: {num}'
     }
   },
 

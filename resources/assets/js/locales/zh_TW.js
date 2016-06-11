@@ -14,8 +14,10 @@ export default {
       send: '送出',
       create: '新增'
     },
-    
+
     preview: '預覽',
+    question: '第 {num} 題',
+    option: '選項',
 
     validation: {
       required: '{attribute} 不能留空。'
@@ -49,6 +51,9 @@ export default {
 學科：Linux的系統管理，Linux的網路管理
 術科：程式設計`
     },
+
+    heading: '題庫練習',
+    back: '回題庫練習',
 
     statistics: {
       total: '總題數 {num} 題',

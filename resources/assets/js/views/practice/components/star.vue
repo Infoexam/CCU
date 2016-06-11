@@ -1,8 +1,7 @@
 <template>
   <i
     v-for="i in total"
-    :class="[class]"
-    class="material-icons"
+    class="material-icons tiny"
   >{{ active > i ? 'star' : 'star_border' }}</i>
 </template>
 
@@ -20,11 +19,6 @@
         validator (value) {
           return 0 <= value
         }
-      },
-
-      class: {
-        type: String,
-        default: ''
       }
     }
   }

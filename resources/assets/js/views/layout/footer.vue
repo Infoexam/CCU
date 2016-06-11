@@ -8,7 +8,7 @@
               <a
                 class="dropdown-button grey-text text-lighten-4 cursor-pointer"
                 data-activates="translate-dropdown"
-              ><i class="material-icons">translate</i> <span style="vertical-align: super">Language</span></a>
+              ><i class="material-icons">translate</i> <span>Language</span></a>
 
               <ul id="translate-dropdown" class="dropdown-content">
                 <li v-for="translate in translates">

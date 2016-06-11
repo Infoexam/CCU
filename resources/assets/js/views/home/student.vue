@@ -8,7 +8,7 @@
           </div>
 
           <div class="card-action">
-            <a class="cursor-pointer">{{ $t('practice.title') }}</a>
+            <a v-link="{ name: 'practice' }">{{ $t('practice.title') }}</a>
           </div>
         </div>
       </a>

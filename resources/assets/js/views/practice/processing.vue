@@ -1,65 +1,44 @@
-<style lang="sass">
-  .exam-practice-should-disable-select * {
-    user-select: none !important;
-  }
-
-  .exam-practice-icon-vertical-middle {
-    vertical-align: middle;
-  }
-
-  .exam-practice-border-color-green {
-    border-left: 5px solid #4caf50;
-  }
-
-  .exam-practice-border-color-red {
-    border-left: 5px solid #f44336;
-  }
-</style>
-
 <template>
-    <header class="center">
-      <h3>{{ $route.params.name }} 題庫練習</h3>
-    </header>
+  <section class="center">
+    <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
+  </section>
 
-    <article v-if="submitted" class="center">
-      <a v-link="{ name: 'practice' }">回練習頁面</a>
-      <span>{{ $t('practice.statistics.total', { num: statistics.total }) }}</span>
-      <span>{{ $t('practice.statistics.correct', { num: statistics.correct }) }}</span>
-      <span>{{ $t('practice.statistics.incorrect', { num: statistics.total - statistics.blank - statistics.correct }) }}</span>
-      <span>{{ $t('practice.statistics.blank', { num: statistics.blank }) }}</span>
-    </article>
+  <section v-if="submitted" class="center">
+    <a v-link="{ name: 'practice' }">{{ $t('practice.back') }}</a>
+    <span>{{ $t('practice.statistics.total', { num: statistics.total }) }}</span>
+    <span>{{ $t('practice.statistics.correct', { num: statistics.correct }) }}</span>
+    <span>{{ $t('practice.statistics.incorrect', { num: statistics.total - statistics.blank - statistics.correct }) }}</span>
+    <span>{{ $t('practice.statistics.blank', { num: statistics.blank }) }}</span>
+  </section>
 
-    <form @submit.prevent="submit()" class="exam-practice-should-disable-select">
+  <section>
+    <form @submit.prevent="submit()" class="user-select-none">
       <template v-for="question in questions">
-        <article
+        <section
           v-show="currentPage === Math.ceil(($index + 1) / perPage)"
-          :class="{
-            'exam-practice-border-color-green': submitted && question.correct,
-            'exam-practice-border-color-red': submitted && ! question.correct
-          }"
           class="card"
+          :style="submitted ? (question.correct ? 'border-left: 5px solid #4caf50' : 'border-left: 5px solid #f44336') : ''"
         >
-          <section class="card-content">
+          <div class="card-content">
             <div class="card-title">
-              <span class="exam-practice-icon-vertical-middle">
+              <span>
                 <available-icon
                   v-if="submitted"
                   :available.once="question.correct"
                 ></available-icon>
               </span>
 
-              <span>第 {{ $index + 1 }} 題</span>
+              <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
 
-              <span class="exam-practice-icon-vertical-middle">
+              <span>
                 <star-icon
                   :total="3"
                   :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
-                  :class="'tiny'"
                 ></star-icon>
               </span>
             </div>
 
-            <div class="row" style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="row" style="margin-top: 10px; margin-bottom: 5px;">
               <markdown
                 :model="question.content"
                 class="col s12 m6"
@@ -71,32 +50,23 @@
                 class="col m6 hide-on-small-only"
               ></markdown>
             </div>
-          </section>
+          </div>
 
-          <section class="card-action">
+          <div class="card-action">
             <form-option
               :option="question.options"
               :multiple="question.multiple"
               :submitted="submitted"
             ></form-option>
-          </section>
-        </article>
+          </div>
+        </section>
       </template>
 
-      <section class="center">
-        <ul class="pagination">
-          <template v-for="i in Math.ceil(this.statistics.total / this.perPage)">
-            <li :class="[currentPage === i + 1 ? 'active' : 'waves-effect']">
-              <a @click="currentPage = i + 1" class="cursor-pointer">{{ i + 1 }}</a>
-            </li>
-          </template>
-        </ul>
-      </section>
+      <pagination :current.sync="currentPage" :total="totalPage"></pagination>
 
-      <div v-if="! submitted" class="row">
-        <submit :text="'送出'"></submit>
-      </div>
+      <submit v-if="! submitted"></submit>
     </form>
+  </section>
 </template>
 
 <script type="text/babel">
@@ -104,7 +74,8 @@
   import FormOption from './form/option.vue'
   import Markdown from '../../components/markdown.vue'
   import Md5 from 'md5'
-  import StarIcon from '../../components/icon/star.vue'
+  import Pagination from './components/pagination.vue'
+  import StarIcon from './components/star.vue'
   import Submit from '../../components/form/submit.vue'
 
   export default {
@@ -117,6 +88,12 @@
         }
 
         transition.next()
+      },
+
+      data (transition) {
+        return this.$http.get(`practice/${this.$route.params.name}/processing`).then(response => {
+          this.preprocess(response.data.exam.questions)
+        })
       }
     },
 
@@ -134,6 +111,12 @@
 
         perPage: 10,
         currentPage: 1
+      }
+    },
+
+    computed: {
+      totalPage () {
+        return Math.ceil(this.statistics.total / this.perPage)
       }
     },
 
@@ -172,15 +155,15 @@
           return
         }
 
-        this.judge(this.questions)
+        this.judge()
 
         this.submitted = true
 
         window.scrollTo(0, window.scrollX)
       },
 
-      judge (questions) {
-        for (const question of questions) {
+      judge () {
+        for (const question of this.questions) {
           let blank = true // 未作答
           let correct = true // 正確
 
@@ -199,10 +182,6 @@
 
             question.correct = true
           }
-
-          if (question.hasOwnProperty('questions') && 0 < question.questions.length) {
-            this.judge(question.questions)
-          }
         }
       }
     },
@@ -211,14 +190,9 @@
       AvailableIcon,
       FormOption,
       Markdown,
+      Pagination,
       StarIcon,
       Submit
-    },
-
-    created () {
-      this.$http.get(`practice/${this.$route.params.name}/processing`).then(response => {
-        this.preprocess(response.data.exam.questions)
-      })
     }
   }
 </script>
