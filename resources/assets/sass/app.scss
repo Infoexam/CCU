@@ -57,6 +57,10 @@ ul.pagination a {
   vertical-align: middle;
 }
 
+.materialboxed.initialized.active {
+  max-width: unset;
+}
+
 .markdown-content {
   word-break: break-all;
 }

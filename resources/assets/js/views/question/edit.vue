@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <form @submit.prevent="store()" :id="formId" class="col s12">
+    <form @submit.prevent="update()" :id="formId" class="col s12">
       <form-component
         :question_id.sync="form.question.question_id"
         :uuid.sync="form.question.uuid"
@@ -9,7 +9,6 @@
         :multiple.sync="form.question.multiple"
         :option.sync="form.option"
         :explanation.sync="form.question.explanation"
-        :create="true"
       ></form-component>
     </form>
   </div>
@@ -21,13 +20,31 @@
   import Uuid from 'node-uuid'
 
   export default {
+    route: {
+      data (transition) {
+        return this.$http.get(`exams/${this.$route.params.name}/questions/${this.$route.params.uuid}`).then(response => {
+          const question = JSON.parse(JSON.stringify(response.data.question))
+
+          this.form.option = question.options
+
+          question.explanation = question.explanation || ''
+          question.question_id = question.question_id || ''
+
+          delete question.difficulty
+          delete question.options
+
+          this.form.question = question
+        })
+      }
+    },
+
     data () {
       return {
         formId: Uuid.v4(),
 
         form: {
           question: {
-            uuid: Uuid.v4(),
+            uuid: '',
             content: '',
             multiple: false,
             difficulty_id: '',
@@ -41,9 +58,9 @@
     },
 
     methods: {
-      store () {
-        this.$http.post(`exams/${this.$route.params.name}/questions`, this.form).then(response => {
-          Toast.success('新增成功')
+      update () {
+        this.$http.patch(`exams/${this.$route.params.name}/questions/${this.$route.params.uuid}`, this.form).then(response => {
+          Toast.success('更新成功')
 
           this.$router.go({ name: 'admin.exams.questions', params: { name: this.$route.params.name }})
         }, response => {

@@ -22,7 +22,7 @@
       <label :for="uuidFieldId" class="active">代碼</label>
     </div>
 
-    <div class="col s12">
+    <div class="input-field col s12">
       <markdown
         :model.sync="content"
         :length="5000"
@@ -72,11 +72,11 @@
     },
 
     created () {
-      this.$http.get(`exams/${this.$route.params.id}/questions/groups`).then(response => {
+      this.$http.get(`exams/${this.$route.params.name}/questions/groups`).then(response => {
         this.groups = response.data.questions || []
-      })
 
-      $(`#${this.uuidFieldId}`).characterCounter()
+        this.groups.unshift({ id: '', uuid: '無' })
+      })
     }
   }
 </script>

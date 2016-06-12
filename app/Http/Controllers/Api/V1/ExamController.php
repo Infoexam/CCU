@@ -49,13 +49,13 @@ class ExamController extends Controller
     /**
      * Get the exam data.
      *
-     * @param int $id
+     * @param string $name
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        $exam = Exam::findOrFail($id, ['id', 'category_id', 'name', 'enable']);
+        $exam = Exam::where('name', $name)->firstOrFail(['id', 'category_id', 'name', 'enable']);
 
         $exam->makeVisible(['category_id']);
 
@@ -66,13 +66,13 @@ class ExamController extends Controller
      * Update the exam data.
      *
      * @param ExamRequest $request
-     * @param int $id
+     * @param string $name
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function update(ExamRequest $request, $id)
+    public function update(ExamRequest $request, $name)
     {
-        $exam = Exam::findOrFail($id);
+        $exam = Exam::where('name', $name)->firstOrFail();
 
         if (! $exam->update($request->only(['category_id', 'name', 'enable']))) {
             $this->response->errorInternal();
@@ -90,13 +90,13 @@ class ExamController extends Controller
     /**
      * Delete the exam and it's related data.
      *
-     * @param int $id
+     * @param string $name
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function destroy($id)
+    public function destroy($name)
     {
-        if (! Exam::findOrFail($id)->delete()) {
+        if (! Exam::where('name', $name)->firstOrFail(['id'])->delete()) {
             $this->response->errorInternal();
         }
 

@@ -13,13 +13,13 @@ class ExamImageController extends Controller
      * Get exam images.
      *
      * @param Request $request
-     * @param int $examId
+     * @param string $name
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function index(Request $request, $examId)
+    public function index(Request $request, $name)
     {
-        $exam = Exam::findOrFail($examId, ['id']);
+        $exam = Exam::where('name', $name)->firstOrFail(['id']);
 
         return $this->transformImage($exam, $request->input('collection', 'default'));
     }
@@ -28,30 +28,30 @@ class ExamImageController extends Controller
      * Upload images to exam.
      *
      * @param ExamImageRequest $request
-     * @param int $examId
+     * @param string $name
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function store(ExamImageRequest $request, $examId)
+    public function store(ExamImageRequest $request, $name)
     {
-        $exam = Exam::findOrFail($examId, ['id']);
+        $exam = Exam::where('name', $name)->firstOrFail(['id']);
 
         $exam->uploadImages($request->file('image'), $request->input('collection', 'default'));
 
-        return $this->response->created();
+        return $this->response->created(null, $this->transformImage($exam, 'default'));
     }
 
     /**
      * Delete the exam image.
      *
-     * @param int $examId
+     * @param string $name
      * @param int $id
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function destroy($examId, $id)
+    public function destroy($name, $id)
     {
-        $exam = Exam::findOrFail($examId, ['id']);
+        $exam = Exam::where('name', $name)->firstOrFail(['id']);
 
         $exam->deleteMedia($id);
 

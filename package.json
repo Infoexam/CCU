@@ -33,7 +33,7 @@
     "webpack-dotenv-plugin": "^1.3.0"
   },
   "dependencies": {
-    "clipboard": "^1.5.10",
+    "clipboard": "^1.5.12",
     "highlight.js": "^9.4.0",
     "marked": "^0.3.5",
     "md5": "^2.1.0",
@@ -43,8 +43,9 @@
     "vue": "^1.0.24",
     "vue-i18n": "^4.0.1",
     "vue-progressbar": "^0.2.5",
-    "vue-resource": "^0.7.2",
+    "vue-resource": "^0.7.3",
     "vue-router": "^0.7.13",
-    "vue-validator": "^2.1.3"
+    "vue-validator": "^2.1.3",
+    "webpack-dotenv-plugin": "^1.3.2"
   }
 }

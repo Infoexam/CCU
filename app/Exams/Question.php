@@ -4,6 +4,7 @@ namespace App\Exams;
 
 use App\Categories\Category;
 use App\Core\Entity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Entity
@@ -82,5 +83,31 @@ class Question extends Entity
     public function questions()
     {
         return $this->hasMany(self::class);
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (self $question) {
+            // Delete the question's sub questions.
+            foreach ($question->load(['questions'])->getRelation('questions') as $subQuestion) {
+                $question->forceDeleting ? $subQuestion->forceDelete() : $subQuestion->delete();
+            }
+
+            if (! $question->forceDeleting) {
+                $question->update(['uuid' => $question->getAttribute('uuid').'-'.Carbon::now()->timestamp]);
+            } else {
+                // Delete the question's options if it is force deleting.
+                $question->load(['options'])->getRelation('options')->each(function (Option $option) {
+                    $option->forceDelete();
+                });
+            }
+        });
     }
 }

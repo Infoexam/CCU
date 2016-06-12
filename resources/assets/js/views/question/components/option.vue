@@ -1,16 +1,3 @@
-<style lang="sass">
-  .question-form-answer-label {
-    position: relative !important;
-    left: 0 !important;
-  }
-
-  .question-form-option-content {
-    margin-top: 20px;
-    max-height: 350px;
-    overflow-y: scroll;
-  }
-</style>
-
 <template>
   <div class="row">
     <div class="input-field col s12">
@@ -37,7 +24,7 @@
     </div>
 
     <div class="input-field col s12">
-      <label class="question-form-answer-label">答案</label>
+      <label style="position: relative; left: 0;">答案</label>
 
       <template v-for="i in counter">
         <input
@@ -47,24 +34,27 @@
         >
         <label :for="`option-${i + 1}-answer`">選項 {{ i + 1 }}</label>
       </template>
+
+      <a
+        @click="addOption()"
+        class="waves-effect waves-light btn green right"
+      ><i class="material-icons">add</i></a>
     </div>
 
-    <template v-for="i in counter">
-      <div class="col s12 question-form-option-content">
-        <markdown
-          :model.sync="option[i].content"
-          :length="1000"
-          :label="`選項 ${i + 1}`"
-        ></markdown>
-      </div>
-    </template>
-
-    <div class="col s12"><br></div>
-
-    <a
-      @click="addOption()"
-      class="btn-floating btn-large waves-effect waves-light red"
-    ><i class="material-icons">add</i></a>
+    <div
+      class="input-field col s12"
+      style="margin-top: 1.4rem; max-height: 600px; overflow-y: scroll"
+    >
+      <template v-for="i in counter">
+        <div class="input-field">
+          <markdown
+            :model.sync="option[i].content"
+            :length="1000"
+            :label="`選項 ${i + 1}`"
+          ></markdown>
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -97,7 +87,19 @@
       return {
         difficulties: [],
 
-        counter: 0
+        counter: 0,
+
+        binded: false
+      }
+    },
+
+    watch: {
+      option () {
+        if (! this.binded) {
+          this.counter = this.option.length
+
+          this.binded = true
+        }
       }
     },
 
@@ -119,7 +121,9 @@
         this.difficulties = response.data.categories
       })
 
-      this.addOption()
+      if (this.$parent.create) {
+        this.addOption()
+      }
     }
   }
 </script>

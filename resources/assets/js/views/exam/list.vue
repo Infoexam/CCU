@@ -13,7 +13,7 @@
       <tbody>
         <tr v-for="exam in exams.data">
           <td>
-            <a v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}">
+            <a v-link="{ name: 'admin.exams.questions', params: { name: exam.name }}">
               <span style="display: block; margin: 10px 0;">{{ exam.name }}</span>
 
               <img v-if="exam.cover" :src="exam.cover" style="max-width: 196px;">
@@ -22,15 +22,10 @@
           <td>{{ exam.category.name }}</td>
           <td><available-icon :available.once="exam.enable"></available-icon></td>
           <td>
-            <a
-              v-link="{ name: 'admin.exams.edit', params: { id: exam.id }}"
-              class="waves-effect waves-light btn orange"
-            ><i class="material-icons">update</i></a>
-
-            <a
-              @click="destroy(exam)"
-              class="waves-effect waves-light btn red"
-            ><i class="material-icons">delete</i></a>
+            <action-button
+              :edit="{ name: 'admin.exams.edit', params: { name: exam.name }}"
+              :destroy="exam"
+            ></action-button>
           </td>
         </tr>
       </tbody>
@@ -41,6 +36,7 @@
 </template>
 
 <script type="text/babel">
+  import ActionButton from '../../components/actionButton.vue'
   import AvailableIcon from '../../components/icon/available.vue'
   import Pagination from '../../components/pagination.vue'
   import Toast from '../../components/toast'
@@ -64,7 +60,7 @@
 
     methods: {
       destroy (exam) {
-        this.$http.delete(`exams/${exam.id}`).then(response => {
+        this.$http.delete(`exams/${exam.name}`).then(response => {
           this.exams.data.$remove(exam)
 
           Toast.success('刪除成功')
@@ -75,6 +71,7 @@
     },
 
     components: {
+      ActionButton,
       AvailableIcon,
       Pagination
     }

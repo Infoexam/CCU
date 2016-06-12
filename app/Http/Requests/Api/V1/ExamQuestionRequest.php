@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1;
 
 use App\Http\Requests\Request;
 
-class QuestionRequest extends Request
+class ExamQuestionRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -13,7 +13,7 @@ class QuestionRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'question'               => 'required|array',
             'question.uuid'          => 'required|string|max:36|unique:questions,uuid',
             'question.content'       => 'required|string|max:5000',
@@ -25,5 +25,11 @@ class QuestionRequest extends Request
             'option.*.content'       => 'required|string|max:1000',
             'option.*.answer'        => 'required|boolean',
         ];
+
+        if ($this->isMethod('PATCH')) {
+            $rules['question.uuid'] .= ','.$this->route('uuid').',uuid';
+        }
+
+        return $rules;
     }
 }

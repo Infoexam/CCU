@@ -21,7 +21,7 @@ class ExamRequest extends Request
         ];
 
         if ($this->isMethod('PATCH')) {
-            $rules['name'] .= ','.$this->route('exams');
+            $rules['name'] .= ','.$this->route('name').',name';
 
             $rules['cover'] = 'image';
         }

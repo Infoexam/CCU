@@ -13,6 +13,7 @@ import PracticeProcessing from '../views/practice/processing.vue'
 import QuestionList from '../views/question/list.vue'
 import QuestionCreate from '../views/question/create.vue'
 import QuestionShow from '../views/question/show.vue'
+import QuestionEdit from '../views/question/edit.vue'
 
 Vue.use(VueRouter)
 
@@ -33,10 +34,11 @@ router.map({
     subRoutes: {
       '/exams': { name: 'admin.exams', component: ExamList },
       '/exams/create': { name: 'admin.exams.create', component: ExamCreate },
-      '/exams/:id/edit': { name: 'admin.exams.edit', component: ExamEdit },
-      '/exams/:id/questions': { name: 'admin.exams.questions', component: QuestionList },
-      '/exams/:id/questions/create': { name: 'admin.exams.questions.create', component: QuestionCreate },
-      '/exams/:id/questions/:uuid': { name: 'admin.exams.questions.show', component: QuestionShow }
+      '/exams/:name/edit': { name: 'admin.exams.edit', component: ExamEdit },
+      '/exams/:name/questions': { name: 'admin.exams.questions', component: QuestionList },
+      '/exams/:name/questions/create': { name: 'admin.exams.questions.create', component: QuestionCreate },
+      '/exams/:name/questions/:uuid': { name: 'admin.exams.questions.show', component: QuestionShow },
+      '/exams/:name/questions/:uuid/edit': { name: 'admin.exams.questions.edit', component: QuestionEdit }
     }
   }
 })

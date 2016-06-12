@@ -18,7 +18,7 @@
   export default {
     route: {
       data (transition) {
-        return this.$http.get(`exams/${this.$route.params.id}`).then(response => {
+        return this.$http.get(`exams/${this.$route.params.name}`).then(response => {
           this.form = response.data.exam
         })
       }
@@ -43,11 +43,11 @@
         data.append('category_id', this.form.category_id)
         data.append('enable', this.form.enable ? 1 : 0)
 
-        if (this.$refs.formComponent.$els.cover.files.length > 0) {
+        if (0 < this.$refs.formComponent.$els.cover.files.length) {
           data.append('cover', this.$refs.formComponent.$els.cover.files[0])
         }
 
-        this.$http.post(`exams/${this.$route.params.id}`, data).then(response => {
+        this.$http.post(`exams/${this.$route.params.name}`, data).then(response => {
           Toast.success('更新成功')
 
           this.$router.go({ name: 'admin.exams' })

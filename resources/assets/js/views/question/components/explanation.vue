@@ -1,5 +1,5 @@
 <template>
-  <div class="col s12">
+  <div class="input-field col s12">
     <markdown
       :model.sync="explanation"
       :length="5000"

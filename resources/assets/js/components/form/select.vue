@@ -1,10 +1,14 @@
 <template>
   <select :id="id">
-    <option value="" disabled selected>{{ prompt }}</option>
+    <option
+      v-if="! model"
+      value="" disabled selected
+    >{{ prompt }}</option>
 
     <template v-for="option in options">
       <option
         value="{{ null === value ? option : option[value] }}"
+        :selected.once="model === (null === value ? option : option[value])"
       >{{ null === key ? option : option[key] }}</option>
     </template>
   </select>
@@ -53,39 +57,60 @@
 
     data () {
       return {
-        _binded: false
+        binded: {
+          model: false,
+          options: false
+        }
       }
     },
 
     watch: {
+      model () {
+        if (! this.binded.model && '' !== this.model) {
+          this.init()
+
+          this.binded.model = true
+        }
+      },
+
       options () {
-        const select = $(`#${this.id}`)
+        if (! this.binded.options) {
+          this.init()
 
-        select.material_select()
-
-        if (! this._binded) {
-          const target = select.closest('div.select-wrapper').find('input[data-activates^="select-options"]')
-
-          $(select).on('change', target, () => {
-            if (null === this.value) {
-              this.model = target.val()
-
-              return
-            }
-
-            const option = this.search(target.val())
-
-            if (null !== option) {
-              this.model = option[this.value]
-            }
-          })
-
-          this._binded = true
+          this.binded.options = true
         }
       }
     },
 
     methods: {
+      init () {
+        const select = $(`#${this.id}`)
+
+        if (this.binded.model || this.binded.options) {
+          $(select).off('change', select.closest('div.select-wrapper').find('input[data-activates^="select-options"]'))
+
+          select.material_select('destroy')
+        }
+
+        select.material_select()
+
+        const target = select.closest('div.select-wrapper').find('input[data-activates^="select-options"]')
+
+        $(select).on('change', target, () => {
+          if (null === this.value) {
+            this.model = target.val()
+
+            return
+          }
+
+          const option = this.search(target.val())
+
+          if (null !== option) {
+            this.model = option[this.value]
+          }
+        })
+      },
+
       search (key) {
         for (const option of this.options) {
           if (key === option[this.key]) {

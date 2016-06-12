@@ -27,6 +27,10 @@ export default {
     this.toast(message, duration, 'red darken-2')
   },
 
+  help (message, duration) {
+    this.toast(message, duration, 'blue')
+  },
+
   toast (message = '', duration = 4000, style = 'green') {
     Materialize.toast(message, duration, style)
   }
