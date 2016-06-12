@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Exams\Exam;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ExamImageRequest;
 use App\Http\Requests\Api\V1\ExamRequest;
-use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -49,56 +47,59 @@ class ExamController extends Controller
     }
 
     /**
-     * Get exam images.
+     * Get the exam data.
      *
-     * @param Request $request
      * @param int $id
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function image(Request $request, $id)
+    public function show($id)
     {
-        $exam = Exam::findOrFail($id);
+        $exam = Exam::findOrFail($id, ['id', 'category_id', 'name', 'enable']);
 
-        return $this->transformImage($exam, $request->input('collection', 'default'));
+        $exam->makeVisible(['category_id']);
+
+        return $exam;
     }
 
     /**
-     * Upload images.
+     * Update the exam data.
      *
-     * @param ExamImageRequest $request
+     * @param ExamRequest $request
      * @param int $id
      *
      * @return \Dingo\Api\Http\Response
      */
-    public function storeImage(ExamImageRequest $request, $id)
+    public function update(ExamRequest $request, $id)
     {
         $exam = Exam::findOrFail($id);
 
-        $exam->uploadImages($request->file('image'), $request->input('collection', 'default'));
-
-        return $this->response->created();
-    }
-
-    /**
-     * Transform media to url.
-     *
-     * @param Exam $exam
-     * @param string $collection
-     *
-     * @return array
-     */
-    protected function transformImage(Exam $exam, $collection)
-    {
-        $result = [];
-
-        foreach ($exam->getMedia($collection) as $media) {
-            $result[] = [
-                'url'   => $media->getUrl(),
-                'thumb' => $media->getUrl('thumb'),
-            ];
+        if (! $exam->update($request->only(['category_id', 'name', 'enable']))) {
+            $this->response->errorInternal();
         }
 
-        return $result;
+        if ($request->hasFile('cover')) {
+            $exam->clearMediaCollection('cover');
+
+            $exam->uploadImages($request->file('cover'), 'cover');
+        }
+
+        return $exam;
+    }
+
+    /**
+     * Delete the exam and it's related data.
+     *
+     * @param int $id
+     *
+     * @return \Dingo\Api\Http\Response
+     */
+    public function destroy($id)
+    {
+        if (! Exam::findOrFail($id)->delete()) {
+            $this->response->errorInternal();
+        }
+
+        return $this->response->noContent();
     }
 }

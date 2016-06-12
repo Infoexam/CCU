@@ -13,11 +13,19 @@ class ExamRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'category_id' => 'required|integer|exists:categories,id,category,exam.category',
-            'name'        => 'required|string|max:64|unique:exams,name',
+            'name'        => 'required|string|max:48|unique:exams,name',
             'enable'      => 'required|boolean',
             'cover'       => 'required|image',
         ];
+
+        if ($this->isMethod('PATCH')) {
+            $rules['name'] .= ','.$this->route('exams');
+
+            $rules['cover'] = 'image';
+        }
+
+        return $rules;
     }
 }

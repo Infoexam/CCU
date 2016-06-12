@@ -19,6 +19,13 @@ abstract class Entity extends Eloquent
     protected $perPage = 10;
 
     /**
+     * The attributes that should be replace sensitive characters.
+     *
+     * @var array
+     */
+    protected $urlSensitive = [];
+
+    /**
      * Scope a query to order by RAND().
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -41,11 +48,17 @@ abstract class Entity extends Eloquent
 
         static::saving(function (self $model) {
             // Transform empty string to null
-
             foreach ($model->getAttributes() as $key => $value) {
                 if (is_string($value) && empty($value)) {
                     $model->setAttribute($key, null);
                 }
+            }
+
+            // Replace sensitive characters to '-'
+            static $search = [' ', '/', '#', '　'];
+
+            foreach ($model->urlSensitive as $key) {
+                $model->setAttribute($key, str_replace($search, '-', $model->getAttribute($key)));
             }
         });
     }

@@ -12,7 +12,8 @@ export default {
   form: {
     submit: {
       send:   'Submit',
-      create: 'Create'
+      create: 'Create',
+      update: 'Update'
     },
 
     preview: 'Preview',

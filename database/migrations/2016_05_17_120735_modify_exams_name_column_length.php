@@ -25,7 +25,7 @@ class ModifyExamsNameColumnLength extends Migration
     public function down()
     {
         Schema::table('exams', function (Blueprint $table) {
-            $table->string('name', 16)->change();
+            // We should not shorten the column length.
         });
     }
 }

@@ -1,74 +1,82 @@
-<style lang="sass">
-  .exam-list-exam-cover {
-    a {
-      display: block;
-      margin: 10px 0;
-    }
-
-    img {
-      max-width: 196px;
-    }
-  }
-</style>
-
 <template>
-  <table class="bordered highlight centered">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Enable</th>
-      </tr>
-    </thead>
+  <section>
+    <table class="bordered highlight centered">
+      <thead>
+        <tr>
+          <th>題庫</th>
+          <th>類別</th>
+          <th>啟用</th>
+          <th>編輯</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr v-for="exam in exams.data">
-        <td class="exam-list-exam-cover">
-          <a
-            v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}"
-          >{{ exam.name }}</a>
+      <tbody>
+        <tr v-for="exam in exams.data">
+          <td>
+            <a v-link="{ name: 'admin.exams.questions', params: { id: exam.id }}">
+              <span style="display: block; margin: 10px 0;">{{ exam.name }}</span>
 
-          <img
-            v-if="null !== exam.cover"
-            :src="exam.cover"
-          >
-        </td>
-        <td>{{ exam.category.name }}</td>
-        <td><available-icon :available.once="exam.enable"></available-icon></td>
-      </tr>
-    </tbody>
-  </table>
+              <img v-if="exam.cover" :src="exam.cover" style="max-width: 196px;">
+            </a>
+          </td>
+          <td>{{ exam.category.name }}</td>
+          <td><available-icon :available.once="exam.enable"></available-icon></td>
+          <td>
+            <a
+              v-link="{ name: 'admin.exams.edit', params: { id: exam.id }}"
+              class="waves-effect waves-light btn orange"
+            ><i class="material-icons">update</i></a>
 
-  <pagination class="center-align" :pagination.sync="exams"></pagination>
+            <a
+              @click="destroy(exam)"
+              class="waves-effect waves-light btn red"
+            ><i class="material-icons">delete</i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <pagination :pagination.sync="exams"></pagination>
 </template>
 
 <script type="text/babel">
   import AvailableIcon from '../../components/icon/available.vue'
-  import Cache from '../../components/cache'
   import Pagination from '../../components/pagination.vue'
+  import Toast from '../../components/toast'
 
   export default {
+    route: {
+      data (transition) {
+        return this.$http.get('exams').then(response => {
+          return {
+            exams: response.data
+          }
+        })
+      }
+    },
+
     data () {
       return {
         exams: {}
       }
     },
 
-    watch: {
-      exams () {
-        Cache.setItem('exams', this.exams, 'session')
+    methods: {
+      destroy (exam) {
+        this.$http.delete(`exams/${exam.id}`).then(response => {
+          this.exams.data.$remove(exam)
+
+          Toast.success('刪除成功')
+        }, response => {
+          Toast.failed('刪除失敗')
+        })
       }
     },
 
     components: {
-      availableIcon: AvailableIcon,
-      pagination: Pagination
-    },
-
-    created () {
-      this.$http.get('exams').then(response => {
-        this.exams = response.data
-      })
+      AvailableIcon,
+      Pagination
     }
   }
 </script>

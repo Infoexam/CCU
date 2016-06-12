@@ -1,22 +1,24 @@
 <template>
-  <ul class="pagination user-select-none">
-    <li :class="prevPageClass">
-      <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
-    </li>
+  <section class="center">
+    <ul class="pagination user-select-none">
+      <li :class="prevPageClass">
+        <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>
+      </li>
 
-    <template v-for="page in pages" track-by="$index">
-      <li v-if="-1 === page">...</li>
+      <template v-for="page in pages" track-by="$index">
+        <li v-if="-1 === page">...</li>
 
-      <li
-        v-else
-        :class="[page === pagination.current_page ? 'active' : 'waves-effect']"
-      ><a @click.prevent="changePage(page)">{{ page }}</a></li>
-    </template>
+        <li
+          v-else
+          :class="[page === pagination.current_page ? 'active' : 'waves-effect']"
+        ><a @click.prevent="changePage(page)">{{ page }}</a></li>
+      </template>
 
-    <li :class="nextPageClass">
-      <a @click.prevent="nextPage()"><i class="material-icons">chevron_right</i></a>
-    </li>
-  </ul>
+      <li :class="nextPageClass">
+        <a @click.prevent="nextPage()"><i class="material-icons">chevron_right</i></a>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script type="text/babel">
@@ -45,6 +47,7 @@
 
         arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage)
 
+        // Remove duplicate
         arr = arr.sort().filter(function (item, pos, self) {
           return (1 <= item) && (item <= lastPage) && (self.indexOf(item) === pos)
         })

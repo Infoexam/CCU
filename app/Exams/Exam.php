@@ -5,6 +5,7 @@ namespace App\Exams;
 use App\Categories\Category;
 use App\Core\Entity;
 use App\Media\UploadImagesTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
@@ -51,6 +52,13 @@ class Exam extends Entity implements HasMediaConversions
     ];
 
     /**
+     * The attributes that should be replace sensitive characters.
+     *
+     * @var array
+     */
+    protected $urlSensitive = ['name'];
+
+    /**
      * 取得題庫類型.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -84,22 +92,6 @@ class Exam extends Entity implements HasMediaConversions
     }
 
     /**
-     * Replace special char in name attribute.
-     *
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setNameAttribute($value)
-    {
-        $search = [' ', '/', '#', '　'];
-
-        $this->attributes['name'] = str_replace($search, '-', $value);
-
-        return $this;
-    }
-
-    /**
      * Convert boolean equivalent to bool.
      *
      * @param mixed $value
@@ -111,5 +103,27 @@ class Exam extends Entity implements HasMediaConversions
         $this->attributes['enable'] = in_array($value, ['1', 1, true, 'true'], true);
 
         return $this;
+    }
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function (self $exam) {
+            if (! $exam->forceDeleting) {
+                $exam->update(['name' => $exam->getAttribute('name').'-'.Carbon::now()->timestamp]);
+            } else {
+                foreach ($exam->load(['questions'])->getRelation('questions') as $question) {
+                    $question->forceDelete();
+                }
+
+                $exam->clearMediaCollection('');
+            }
+        });
     }
 }

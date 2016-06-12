@@ -7,6 +7,7 @@ import AdminHomeView from '../views/home/admin.vue'
 import SignInView from '../views/signIn/signIn.vue'
 import ExamList from '../views/exam/list.vue'
 import ExamCreate from '../views/exam/create.vue'
+import ExamEdit from '../views/exam/edit.vue'
 import PracticeList from '../views/practice/list.vue'
 import PracticeProcessing from '../views/practice/processing.vue'
 import QuestionList from '../views/question/list.vue'
@@ -32,6 +33,7 @@ router.map({
     subRoutes: {
       '/exams': { name: 'admin.exams', component: ExamList },
       '/exams/create': { name: 'admin.exams.create', component: ExamCreate },
+      '/exams/:id/edit': { name: 'admin.exams.edit', component: ExamEdit },
       '/exams/:id/questions': { name: 'admin.exams.questions', component: QuestionList },
       '/exams/:id/questions/create': { name: 'admin.exams.questions.create', component: QuestionCreate },
       '/exams/:id/questions/:uuid': { name: 'admin.exams.questions.show', component: QuestionShow }

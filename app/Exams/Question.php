@@ -48,6 +48,13 @@ class Question extends Entity
     ];
 
     /**
+     * The attributes that should be replace sensitive characters.
+     *
+     * @var array
+     */
+    protected $urlSensitive = ['uuid'];
+
+    /**
      * Get the question difficulty.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

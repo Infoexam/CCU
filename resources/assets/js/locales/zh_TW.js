@@ -12,7 +12,8 @@ export default {
   form: {
     submit: {
       send: '送出',
-      create: '新增'
+      create: '新增',
+      update: '更新'
     },
 
     preview: '預覽',
