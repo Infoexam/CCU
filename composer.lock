@@ -1838,16 +1838,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "4ed9623466a93dbdc74edc91d46860f9e58d4c04"
+                "reference": "802a31079090bcfb8dfc88a5704bef3a761a39ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/4ed9623466a93dbdc74edc91d46860f9e58d4c04",
-                "reference": "4ed9623466a93dbdc74edc91d46860f9e58d4c04",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/802a31079090bcfb8dfc88a5704bef3a761a39ec",
+                "reference": "802a31079090bcfb8dfc88a5704bef3a761a39ec",
                 "shasum": ""
             },
             "require": {
@@ -1895,7 +1895,7 @@
                 "hex2bin",
                 "rfc4648"
             ],
-            "time": "2016-05-10 20:45:16"
+            "time": "2016-06-13 01:06:53"
         },
         {
             "name": "paragonie/csp-builder",
