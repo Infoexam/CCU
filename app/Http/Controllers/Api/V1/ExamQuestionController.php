@@ -23,7 +23,7 @@ class ExamQuestionController extends Controller
         return Exam::with([
             'category', 'questions' => function (HasMany $query) {
                 $query->getBaseQuery()->select(['uuid', 'exam_id']);
-            }])
+            }, ])
             ->where('name', $name)
             ->firstOrFail(['id', 'name']);
     }
