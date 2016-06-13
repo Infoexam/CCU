@@ -17,7 +17,7 @@
         <section
           v-show="currentPage === Math.ceil(($index + 1) / perPage)"
           class="card"
-          :style="submitted ? (question.correct ? 'border-left: 5px solid #4caf50' : 'border-left: 5px solid #f44336') : ''"
+          :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
         >
           <div class="card-content">
             <div class="card-title">
