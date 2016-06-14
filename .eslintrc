@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "html"
+    "html",
+    "vue"
   ],
   "env": {
     "browser" : true
