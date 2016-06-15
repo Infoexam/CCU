@@ -1,4 +1,4 @@
-<style src="highlight.js/styles/github.css"></style>
+<style src="highlight.js/styles/github.css" scoped></style>
 
 <template>
   <div v-html="model | marked" class="markdown-content"></div>
