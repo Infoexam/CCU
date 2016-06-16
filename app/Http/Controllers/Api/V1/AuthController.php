@@ -53,7 +53,7 @@ class AuthController extends Controller
         if ($request->has(['token'])) {
             $token = base64_decode($request->input('token'), true);
 
-            if (false !== $token && Hash::check($token, Hash::make(config('infoexam.token')))) {
+            if (false !== $token && Hash::check(config('infoexam.token'), $token)) {
                 $user = User::where('username', 'guest')->first();
 
                 if (! is_null($user)) {
