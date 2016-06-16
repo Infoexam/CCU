@@ -33,8 +33,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
     });
 });
 
-$router->get('api/auth/old-website', 'Api\V1\AuthController@oldWebsite');
-$router->get('api/auth/sso', 'Api\V1\AuthController@sso');
+$router->get('auth/old-website', 'Api\V1\AuthController@oldWebsite');
+$router->get('auth/sso', 'Api\V1\AuthController@sso');
 
 $router->post('deploy', 'HomeController@deploy');
 
