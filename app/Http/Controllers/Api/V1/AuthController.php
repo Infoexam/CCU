@@ -56,7 +56,7 @@ class AuthController extends Controller
             if (false !== $token && Hash::check($token, Hash::make(config('infoexam.token')))) {
                 $user = User::where('username', 'guest')->first();
 
-                if (is_null($user)) {
+                if (! is_null($user)) {
                     Auth::login($user);
                 }
             }
