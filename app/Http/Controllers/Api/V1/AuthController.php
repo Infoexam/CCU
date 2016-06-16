@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use Auth;
 use DOMDocument;
 use GuzzleHttp\Client;
+use Hash;
 use Illuminate\Http\Request;
+use Redirect;
 
 class AuthController extends Controller
 {
@@ -37,6 +39,30 @@ class AuthController extends Controller
         Auth::logout();
 
         return $this->response->noContent();
+    }
+
+    /**
+     * Sign in from old website.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function oldWebsite(Request $request)
+    {
+        if ($request->has(['token'])) {
+            $token = base64_decode($request->input('token'), true);
+
+            if (false !== $token && Hash::check($token, Hash::make(config('infoexam.token')))) {
+                $user = User::where('username', 'guest')->first();
+
+                if (is_null($user)) {
+                    Auth::login($user);
+                }
+            }
+        }
+
+        return Redirect::home();
     }
 
     /**

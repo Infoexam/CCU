@@ -2,6 +2,8 @@
 
 return [
 
+    'token' => env('APP_TOKEN'),
+
     'sso_url' => env('SSO_URL'),
 
     'firewall_on' => env('FIREWALL_ON', false),
