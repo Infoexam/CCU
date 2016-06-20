@@ -1,12 +1,14 @@
 <style src="prismjs/themes/prism-okaidia.css"></style>
 
 <template>
-  <vue-markdown
-    :id="id"
-    :source="model"
-    :html="false"
-    class="markdown-content"
-  ></vue-markdown>
+  <div>
+    <vue-markdown
+      :id="id"
+      :source="model"
+      :html="false"
+      class="markdown-content"
+    ></vue-markdown>
+  </div>
 </template>
 
 <script type="text/babel">
