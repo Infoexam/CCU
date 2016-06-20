@@ -61,8 +61,9 @@ ul.pagination a {
   max-width: unset;
 }
 
-.markdown-content {
-  word-break: break-all;
+.markdown-content * {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
 }
 
 .user-select-none {
