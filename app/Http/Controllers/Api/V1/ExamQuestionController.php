@@ -87,17 +87,38 @@ class ExamQuestionController extends Controller
             $this->response->errorNotFound();
         }
 
-        $question = Question::where('uuid', $uuid)->firstOrFail();
+        $question = Question::with(['options'])->where('uuid', $uuid)->firstOrFail();
 
         $question->update($request->input('question'));
 
-        foreach ($request->input('option') as $option) {
-            Option::where('question_id', $question->getKey())
-                ->findOrFail($option['id'] ?? 0)
-                ->update($option);
-        }
+        $this->updateOption($question, $request->input('option'));
 
         return $this->response->noContent();
+    }
+
+    /**
+     * Insert, update or delete the exam question's options.
+     *
+     * @param Question $question
+     * @param $options
+     *
+     * @throws \Exception
+     */
+    protected function updateOption(Question $question, $options)
+    {
+        $existIds = $question->getRelation('options')->pluck('id')->all();
+
+        foreach ($options as $option) {
+            if (! isset($option['id'])) {
+                $question->options()->save(new Option($option));
+            } elseif (in_array($option['id'], $existIds, true)) {
+                Option::where('id', $option['id'])->update($option);
+
+                $updated[] = $option['id'];
+            }
+        }
+
+        Option::whereIn('id', array_diff($existIds, $updated ?? []))->delete();
     }
 
     /**

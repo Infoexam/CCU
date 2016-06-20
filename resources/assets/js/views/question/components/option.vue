@@ -26,17 +26,17 @@
     <div class="input-field col s12">
       <label style="position: relative; left: 0;">答案</label>
 
-      <template v-for="i in counter">
+      <template v-for="item in option">
         <input
-          v-model="option[i].answer"
-          :id="`option-${i + 1}-answer`"
+          v-model="item.answer"
+          :id="`option-${$index}-answer`"
           type="checkbox"
         >
-        <label :for="`option-${i + 1}-answer`">選項 {{ i + 1 }}</label>
+        <label :for="`option-${$index}-answer`">選項 {{ $index + 1 }}</label>
       </template>
 
       <a
-        @click="addOption()"
+        @click="option.push({ content: '', answer: false })"
         class="waves-effect waves-light btn green right"
       ><i class="material-icons">add</i></a>
     </div>
@@ -45,13 +45,23 @@
       class="input-field col s12"
       style="margin-top: 1.4rem; max-height: 600px; overflow-y: scroll"
     >
-      <template v-for="i in counter">
-        <div class="input-field">
-          <markdown
-            :model.sync="option[i].content"
-            :length="1000"
-            :label="`選項 ${i + 1}`"
-          ></markdown>
+      <template v-for="item in option">
+        <div class="row">
+          <div class="col s2 m1">
+            <a
+              @click="option.$remove(item)"
+              class="waves-effect waves-light btn red"
+              style="padding: 0 0.6rem !important;"
+            ><i class="material-icons">clear</i></a>
+          </div>
+
+          <div class="col s10 m11">
+            <markdown
+              :model.sync="item.content"
+              :length="1000"
+              :label="`選項 ${$index + 1}`"
+            ></markdown>
+          </div>
         </div>
       </template>
     </div>
@@ -85,29 +95,7 @@
 
     data () {
       return {
-        difficulties: [],
-
-        counter: 0,
-
-        binded: false
-      }
-    },
-
-    watch: {
-      option () {
-        if (! this.binded) {
-          this.counter = this.option.length
-
-          this.binded = true
-        }
-      }
-    },
-
-    methods: {
-      addOption () {
-        this.option.push({ content: '', answer: false })
-
-        ++this.counter
+        difficulties: []
       }
     },
 
@@ -120,10 +108,6 @@
       this.$http.get('categories/f/exam.difficulty').then(response => {
         this.difficulties = response.data.categories
       })
-
-      if (this.$parent.create) {
-        this.addOption()
-      }
     }
   }
 </script>

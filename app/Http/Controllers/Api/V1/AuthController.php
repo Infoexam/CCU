@@ -90,6 +90,7 @@ class AuthController extends Controller
      *
      * @param string $miXd
      * @param string $ticket
+     *
      * @return bool|string
      */
     protected function ssoAuth($miXd, $ticket)

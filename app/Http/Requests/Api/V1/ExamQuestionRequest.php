@@ -28,6 +28,7 @@ class ExamQuestionRequest extends Request
 
         if ($this->isMethod('PATCH')) {
             $rules['question.uuid'] .= ','.$this->route('uuid').',uuid';
+            $rules['option.*.id'] = 'sometimes|required|integer|exists:options,id';
         }
 
         return $rules;
