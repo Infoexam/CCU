@@ -1,18 +1,43 @@
 <template>
   <section class="center">
+    <a
+      v-link="{ name: 'practice' }"
+      class="btn-floating btn-large waves-effect waves-light left"
+    ><i class="material-icons">reply</i></a>
+
     <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
   </section>
 
-  <section v-if="submitted" class="center">
-    <a v-link="{ name: 'practice' }">{{ $t('practice.back') }}</a>
-    <span>{{ $t('practice.statistics.total', { num: statistics.total }) }}</span>
-    <span>{{ $t('practice.statistics.correct', { num: statistics.correct }) }}</span>
-    <span>{{ $t('practice.statistics.incorrect', { num: statistics.total - statistics.blank - statistics.correct }) }}</span>
-    <span>{{ $t('practice.statistics.blank', { num: statistics.blank }) }}</span>
-  </section>
+  <section class="user-select-none">
+    <div v-if="submitted" class="row practice-result">
+      <div class="col s12 m4">
+        <div class="card-panel green center">
+          <i class="material-icons">panorama_fish_eye</i>
+          <p>{{ $t('practice.statistics.correct') }}</p>
+          <h1>{{ statistics.correct }}</h1>
+        </div>
+      </div>
 
-  <section>
-    <form @submit.prevent="submit()" class="user-select-none">
+      <div class="col s12 m4">
+        <div class="card-panel red darken-3 center">
+          <i class="material-icons">clear</i>
+          <p>{{ $t('practice.statistics.incorrect') }}</p>
+          <h1>{{ statistics.total - statistics.blank - statistics.correct }}</h1>
+        </div>
+      </div>
+
+      <div class="col s12 m4">
+        <div class="card-panel light-blue center">
+          <p>{{ $t('practice.statistics.blank') }}</p>
+          <h3>{{ statistics.blank }}</h3>
+          <hr>
+          <p>{{ $t('practice.statistics.total') }}</p>
+          <h3>{{ statistics.total }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <form @submit.prevent="submit()">
       <template v-for="question in questions">
         <section
           v-show="currentPage === Math.ceil(($index + 1) / perPage)"
@@ -20,7 +45,7 @@
           :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
         >
           <div class="card-content">
-            <div class="card-title">
+            <div :class="{ 'activator': question.explanation && submitted }" class="card-title">
               <span>
                 <available-icon
                   v-if="submitted"
@@ -36,20 +61,24 @@
                   :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
                 ></star-icon>
               </span>
+
+              <span v-if="question.explanation && submitted" class="yellow-text text-darken-3 right">
+                <i class="material-icons" style="vertical-align: unset;">info</i>
+              </span>
             </div>
 
-            <div class="row" style="margin-top: 10px; margin-bottom: 5px;">
-              <markdown
-                :model="question.content"
-                class="col s12 m6"
-              ></markdown>
+            <markdown
+              :model="question.content"
+              style="margin-top: 10px; margin-bottom: 5px;"
+            ></markdown>
+          </div>
 
-              <markdown
-                v-if="submitted && question.explanation"
-                :model="question.explanation"
-                class="col m6 hide-on-small-only"
-              ></markdown>
-            </div>
+          <div v-if="question.explanation" class="card-reveal">
+            <span class="card-title">解析<i class="material-icons right">close</i></span>
+
+            <markdown
+              :model="question.explanation"
+            ></markdown>
           </div>
 
           <div class="card-action">

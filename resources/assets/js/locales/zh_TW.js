@@ -57,10 +57,10 @@ export default {
     back: '回題庫練習',
 
     statistics: {
-      total: '總題數 {num} 題',
-      correct: '正確 {num} 題',
-      incorrect: '錯誤 {num} 題',
-      blank: '未作答 {num} 題'
+      total: '總題數',
+      correct: '正確',
+      incorrect: '錯誤',
+      blank: '未作答'
     }
   },
 

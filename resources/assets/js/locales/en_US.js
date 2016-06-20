@@ -57,10 +57,10 @@ Skills test : Programming`
     back: 'Previous Page',
 
     statistics: {
-      total: 'Total: {num}',
-      correct: 'Correct: {num}',
-      incorrect: 'Incorrect {num}',
-      blank: 'No answer: {num}'
+      total: 'Total',
+      correct: 'Correct',
+      incorrect: 'Incorrect',
+      blank: 'No Answer'
     }
   },
 

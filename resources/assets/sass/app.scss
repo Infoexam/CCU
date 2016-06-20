@@ -69,6 +69,22 @@ ul.pagination a {
   user-select: none;
 }
 
+.practice-result {
+  color: #fff;
+
+  p, h3 {
+    margin: 0;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  .card-panel {
+    border-radius: 3px;
+  }
+}
+
 .practice-option-content {
   margin: 18px 0 27px;
   padding-left: 35px;

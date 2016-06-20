@@ -1,4 +1,4 @@
-<style src="../../sass/app.scss"></style>
+<style src="../../sass/app.scss" lang="sass"></style>
 
 <template>
   <main class="container">

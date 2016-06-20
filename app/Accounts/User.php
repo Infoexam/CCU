@@ -25,7 +25,7 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'department_id', 'grade_id',
+        'id', 'password', 'remember_token', 'department_id', 'grade_id',
         'created_at', 'updated_at',
     ];
 
