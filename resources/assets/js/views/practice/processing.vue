@@ -45,7 +45,7 @@
           :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
         >
           <div class="card-content">
-            <div :class="{ 'activator': question.explanation && submitted }" class="card-title">
+            <div class="card-title">
               <span>
                 <available-icon
                   v-if="submitted"
@@ -62,9 +62,16 @@
                 ></star-icon>
               </span>
 
-              <span v-if="question.explanation && submitted" class="yellow-text text-darken-3 right">
-                <i class="material-icons" style="vertical-align: unset;">info</i>
-              </span>
+              <span
+                v-if="question.multiple"
+                style="font-size: 0.8rem;"
+              >({{ $t('practice.multiple') }})</span>
+
+              <span
+                v-if="question.explanation && submitted"
+                :class="{ 'activator': question.explanation && submitted }"
+                class="yellow-text text-darken-3 right cursor-pointer"
+              ><i class="material-icons">info</i> {{ $t('practice.explanation') }}</span>
             </div>
 
             <markdown

@@ -61,7 +61,10 @@ export default {
       correct: '正確',
       incorrect: '錯誤',
       blank: '未作答'
-    }
+    },
+    
+    multiple: '複選題',
+    explanation: '解析'
   },
 
   apply: {

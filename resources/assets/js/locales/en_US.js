@@ -61,7 +61,10 @@ Skills test : Programming`
       correct: 'Correct',
       incorrect: 'Incorrect',
       blank: 'No Answer'
-    }
+    },
+
+    multiple: 'Multiple-Choice',
+    explanation: 'Explanation'
   },
 
   apply: {
