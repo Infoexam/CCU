@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Categories\Category;
 use App\Exams\Exam;
 use App\Exams\Option;
 use App\Exams\Question;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamQuestionRequest;
+use Excel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Collections\CellCollection;
+use Ramsey\Uuid\Uuid;
 
 class ExamQuestionController extends Controller
 {
@@ -159,5 +164,79 @@ class ExamQuestionController extends Controller
             ->whereNull('question_id')
             ->latest()
             ->get(['id', 'uuid']);
+    }
+
+    /**
+     * Import questions using file.
+     *
+     * @param Request $request
+     * @param string $name
+     *
+     * @return array
+     */
+    public function import(Request $request, $name)
+    {
+        $this->validate($request, ['file' => 'required|mimes:xls,xlsx,csv']);
+
+        $exam = Exam::where('name', $name)->firstOrFail(['id']);
+
+        $sheet = Excel::load($request->file('file')->getRealPath())->get();
+
+        $result = [];
+
+        $sheet->each(function (CellCollection $item, $key) use ($exam, &$result) {
+            $result[] = $this->saveQuestion($exam, $item);
+        });
+
+        return $result;
+    }
+
+    /**
+     * Save exam question.
+     *
+     * @param Exam $exam
+     * @param CellCollection $item
+     *
+     * @return Question
+     */
+    protected function saveQuestion(Exam $exam, CellCollection $item)
+    {
+        static $difficulties = null;
+
+        if (is_null($difficulties)) {
+            $difficulties = Category::getCategories('exam.difficulty')->pluck('id', 'name')->toArray();
+        }
+
+        $question = $exam->questions()->save(new Question([
+            'uuid' => $item->get('uuid') ?? Uuid::uuid4()->toString(),
+            'content' => $item->get('content'),
+            'multiple' => boolval($item->get('multiple')),
+            'difficulty_id' => $difficulties[$item->get('difficulty')],
+            'explanation' => $item->get('explanation'),
+        ]));
+
+        $this->saveOption($question, $item);
+
+        return $question;
+    }
+
+    /**
+     * Save exam question option.
+     *
+     * @param Question $question
+     * @param CellCollection $item
+     *
+     * @return void
+     */
+    protected function saveOption(Question $question, CellCollection $item)
+    {
+        $count = $item->get('options', 0);
+
+        for ($i = 1; $i <= $count; ++$i) {
+            $question->options()->save(new Option([
+                'content' => $item->get("option_{$i}_content"),
+                'answer' => boolval($item->get("option_{$i}_answer")),
+            ]));
+        }
     }
 }

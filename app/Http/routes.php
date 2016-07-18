@@ -27,6 +27,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->resource('exams', 'ExamController', ['except' => ['create', 'edit'], 'parameters' => ['exams' => 'name', 'questions' => 'uuid']]);
         $api->resource('exams.images', 'ExamImageController', ['only' => ['index', 'store', 'destroy']]);
         $api->get('exams/{name}/questions/groups', 'ExamQuestionController@groups');
+        $api->post('exams/{name}/questions/import', 'ExamQuestionController@import');
         $api->resource('exams.questions', 'ExamQuestionController');
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
