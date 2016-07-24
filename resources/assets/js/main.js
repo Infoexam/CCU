@@ -1,4 +1,4 @@
-import { router, infoexam } from './routes'
+import { router, view } from './routes'
 
 // Vue router
-router.start(infoexam, 'main')
+router.start(view, 'main')

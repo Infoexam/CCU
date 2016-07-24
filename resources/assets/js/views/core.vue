@@ -1,9 +1,7 @@
 <style src="../../sass/app.scss" lang="sass"></style>
 
 <template>
-  <main class="container">
-    <router-view></router-view>
-  </main>
+  <router-view></router-view>
 
   <layout-footer></layout-footer>
 
@@ -26,7 +24,7 @@
           options: {
             show: true,
             canSuccess: true,
-            color: '#29d',
+            color: 'rgb(255, 234, 0)',
             failedColor: 'red',
             height: '2px'
           }

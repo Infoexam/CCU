@@ -1,5 +1,5 @@
 <template>
-  <footer class="page-footer">
+  <footer class="page-footer teal darken-1">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -24,14 +24,7 @@
             <template v-if="$auth.is('admin')">
               <li>
                 <a
-                  v-link="{ name: 'home' }"
-                  class="grey-text text-lighten-3"
-                ><i class="fa fa-home fa-fw" aria-hidden="true"></i>{{ $t('footer.home') }}</a>
-              </li>
-
-              <li>
-                <a
-                  v-link="{ name: 'admin.exams' }"
+                  href="/admin/exams"
                   class="grey-text text-lighten-3"
                 ><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>{{ $t('footer.dashboard') }}</a>
               </li>

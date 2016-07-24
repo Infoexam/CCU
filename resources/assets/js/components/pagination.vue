@@ -22,8 +22,9 @@
 </template>
 
 <script type="text/babel">
-  import Url from 'url'
+  import Md5 from 'md5'
   import QueryString from 'query-string'
+  import Url from 'url'
 
   export default {
     props: {
@@ -36,6 +37,12 @@
       failed: {
         type: Function,
         default: null
+      }
+    },
+
+    data () {
+      return {
+        cache: {}
       }
     },
 
@@ -124,8 +131,16 @@
       },
 
       _sendRequest (url) {
+        const hash = Md5(url)
+
+        if (this.cache.hasOwnProperty(hash)) {
+          this.pagination = this.cache[hash]
+
+          return
+        }
+
         this.$http.get(url).then(response => {
-          this.pagination = response.data
+          this.pagination = this.cache[hash] = response.data
         }, response => {
           if (null !== this.failed) {
             this.failed(response)

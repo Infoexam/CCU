@@ -229,6 +229,10 @@
       Pagination,
       StarIcon,
       Submit
+    },
+
+    ready () {
+      document.title = `${document.title} - ${this.$route.params.name}`
     }
   }
 </script>

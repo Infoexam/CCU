@@ -76,8 +76,26 @@ Skills test : Programming`
   },
 
   footer: {
-    dashboard: 'Dashboard',
-    home: 'Home'
+    dashboard: 'Dashboard'
+  },
+
+  title: {
+    infoexam: 'Infoexam',
+    signIn: 'Sign In',
+    practice: 'Practice',
+
+    exams: {
+      index: '題庫列表',
+      create: '新增題庫',
+      edit: '編輯題庫',
+
+      questions: {
+        index: '題目列表',
+        create: '新增題目',
+        show: '查看題目',
+        edit: '編輯題目'
+      }
+    }
   },
 
   infoexam: 'Infoexam',

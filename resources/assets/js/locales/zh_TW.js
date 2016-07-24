@@ -62,7 +62,7 @@ export default {
       incorrect: '錯誤',
       blank: '未作答'
     },
-    
+
     multiple: '複選題',
     explanation: '解析'
   },
@@ -76,8 +76,26 @@ export default {
   },
 
   footer: {
-    dashboard: '後台',
-    home: '前台'
+    dashboard: '後台'
+  },
+
+  title: {
+    infoexam: '資訊能力測驗系統',
+    signIn: '登入',
+    practice: '題庫練習',
+
+    exams: {
+      index: '題庫列表',
+      create: '新增題庫',
+      edit: '編輯題庫',
+
+      questions: {
+        index: '題目列表',
+        create: '新增題目',
+        show: '查看題目',
+        edit: '編輯題目'
+      }
+    }
   },
 
   infoexam: '資訊能力測驗系統',

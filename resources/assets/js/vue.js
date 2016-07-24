@@ -4,6 +4,7 @@ import VueValidator from 'vue-validator'
 import VueProgress from 'vue-progressbar'
 import VueI18n from 'vue-i18n'
 import VueAuth from './services/auth'
+import VueShare from './services/share'
 
 import VueLocales from './locales'
 import BrowserLocale from './init/browserLocale'
@@ -34,7 +35,8 @@ for (const key of Object.keys(VueLocales)) {
   Vue.locale(key, VueLocales[key])
 }
 
-// VueAuth must install after http setting
+// Custom services must install in the last
 Vue.use(VueAuth)
+Vue.use(VueShare)
 
 export default Vue
