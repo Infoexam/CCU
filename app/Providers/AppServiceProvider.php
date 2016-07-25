@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             Exam::class,
         ]);
+
+        $this->checkMysqlSsl();
     }
 
     /**
@@ -35,6 +37,20 @@ class AppServiceProvider extends ServiceProvider
         }
 
         return $this;
+    }
+
+    /**
+     * Remove mysql options config if there is an invalid value.
+     *
+     * @return void
+     */
+    protected function checkMysqlSsl()
+    {
+        $options = config('database.connections.mysql.options');
+
+        if (in_array(null, $options, true) || in_array('', $options, true)) {
+            config(['database.connections.mysql.options' => []]);
+        }
     }
 
     /**
