@@ -241,6 +241,8 @@ class Deploy extends Command
     {
         $process = new Process($command);
 
+        $process->setTimeout(300);
+
         $process->setWorkingDirectory(base_path());
 
         $process->run();
