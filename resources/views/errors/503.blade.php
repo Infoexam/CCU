@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Be right back.</title>
+  <head>
+    <title>Be right back.</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+    <style>
+      html, body {
+        height: 100%;
+      }
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                color: #B0BEC5;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        color: #B0BEC5;
+        display: table;
+        font-weight: 100;
+        font-family: 'Lato';
+      }
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+      img {
+        width: 48%;
+      }
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
+      .container {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+      }
 
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Be right back.</div>
-            </div>
-        </div>
-    </body>
+      .content {
+        text-align: center;
+        display: inline-block;
+      }
+
+      .title {
+        font-size: 72px;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <img src="/assets/images/maintain.jpg">
+
+        <div class="title">Be right back.</div>
+      </div>
+    </div>
+  </body>
 </html>
