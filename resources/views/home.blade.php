@@ -15,6 +15,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js" defer></script>
+    <script src="{{ _asset('js/vendor.js') }}" defer></script>
     <script src="{{ _asset('js/main.js') }}" defer></script>
   </body>
 </html>

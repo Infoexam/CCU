@@ -7,7 +7,7 @@
 
     <template v-for="option in options">
       <option
-        value="{{ null === value ? option : option[value] }}"
+        :value="null === value ? option : option[value]"
         :selected.once="model === (null === value ? option : option[value])"
       >{{ null === key ? option : option[key] }}</option>
     </template>
