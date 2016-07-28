@@ -14,6 +14,10 @@
       background-color: #42a5f5;
     }
 
+    .bold > a {
+      font-weight: bold;
+    }
+
     i.fa {
       margin: 0 !important;
       font-size: inherit !important;
@@ -31,10 +35,9 @@
     </nav>
 
     <ul id="navbar-mobile" class="side-nav fixed">
-      <li class="logo">
-        <a id="logo-container" href="http://materializecss.com/" class="brand-logo">
-          Logo
-          <!--<object type="image/svg+xml" data="res/materialize.svg">Logo</object>-->
+      <li class="center">
+        <a v-link="{ name: 'admin.exams' }">
+          <object type="image/svg+xml" data="res/materialize.svg">Infoexam</object>
         </a>
       </li>
 
@@ -68,9 +71,11 @@
 <script type="text/babel">
   export default {
     ready () {
-      $('.button-collapse').sideNav({
+      $('header .button-collapse').sideNav({
         closeOnClick: 993 > window.innerWidth
       })
+
+      $('header .collapsible').collapsible()
     },
 
     beforeDestroy () {

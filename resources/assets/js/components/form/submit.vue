@@ -1,5 +1,5 @@
 <template>
-  <div :class="[align]" class="input-field col s12">
+  <div :class="[align]" class="input-field">
     <button
       :class="{ disabled: disabled }"
       class="btn waves-effect waves-light"

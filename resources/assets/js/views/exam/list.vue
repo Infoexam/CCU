@@ -30,9 +30,9 @@
         </tr>
       </tbody>
     </table>
-  </section>
 
-  <pagination :pagination.sync="exams"></pagination>
+    <pagination :pagination.sync="exams"></pagination>
+  </section>
 </template>
 
 <script type="text/babel">

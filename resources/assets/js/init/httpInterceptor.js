@@ -1,33 +1,25 @@
 let httpQueue = 0
 
-const request = function (request) {
-  if (0 === httpQueue) {
+export default function (request, next) {
+  if (0 === httpQueue++) {
     this.$progress.start()
   } else {
-    this.$progress.increase(10)
+    this.$progress.increase(15)
   }
 
-  ++httpQueue
+  next(response => {
+    if (! response.ok) {
+      httpQueue = 0
 
-  return request
-}
+      this.$progress.failed()
+    } else {
+      --httpQueue
 
-const response = function (response) {
-  if (response.ok) {
-    if (1 === httpQueue) {
-      this.$progress.finish()
-    } else if (1 < httpQueue) {
-      this.$progress.increase(10)
+      if (0 === httpQueue) {
+        this.$progress.finish()
+      } else if (0 < httpQueue) {
+        this.$progress.increase(15)
+      }
     }
-  } else {
-    this.$progress.failed()
-
-    httpQueue = 1
-  }
-
-  --httpQueue
-
-  return response
+  })
 }
-
-export default { request, response }

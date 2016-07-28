@@ -1,14 +1,14 @@
 <template>
-  <section class="center">
-    <a
-      v-link="{ name: 'practice' }"
-      class="btn-floating btn-large waves-effect waves-light left"
-    ><i class="material-icons">reply</i></a>
+  <section class="full-width user-select-none">
+    <section class="center">
+      <a
+        v-link="{ name: 'practice' }"
+        class="btn-floating btn-large waves-effect waves-light left"
+      ><i class="material-icons">reply</i></a>
 
-    <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
-  </section>
+      <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
+    </section>
 
-  <section class="user-select-none">
     <div v-if="submitted" class="row practice-result">
       <div class="col s12 m4">
         <div class="card-panel green center">
@@ -55,12 +55,10 @@
 
               <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
 
-              <span>
-                <star-icon
-                  :total="3"
-                  :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
-                ></star-icon>
-              </span>
+              <star-icon
+                :total="3"
+                :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
+              ></star-icon>
 
               <span
                 v-if="question.multiple"

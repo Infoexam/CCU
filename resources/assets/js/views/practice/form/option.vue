@@ -1,17 +1,19 @@
 <template>
-  <div v-for="o in option">
-    <input
-      v-model="o.check"
-      :name="uuid"
-      :type="multiple ? 'checkbox' : 'radio'"
-      :id="o.hash"
-      :value="true"
-      :disabled="submitted"
-      class="with-gap"
-      @change="update(o)"
-    ><label :for="o.hash">{{ $t('form.option') }} {{ $index + 1 }}</label>
+  <div>
+    <div v-for="o in option">
+      <input
+        v-model="o.check"
+        :name="uuid"
+        :type="multiple ? 'checkbox' : 'radio'"
+        :id="o.hash"
+        :value="true"
+        :disabled="submitted"
+        class="with-gap"
+        @change="update(o)"
+      ><label :for="o.hash">{{ $t('form.option') }} {{ $index + 1 }}</label>
 
-    <markdown :model="o.content" class="practice-option-content"></markdown>
+      <markdown :model="o.content" class="practice-option-content"></markdown>
+    </div>
   </div>
 </template>
 

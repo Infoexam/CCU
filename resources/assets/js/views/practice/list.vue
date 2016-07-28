@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col s12">
+    <div class="col-xs-12">
       <blockquote>
         <h4>{{ $t('practice.precautions.heading') }}</h4>
 
@@ -9,7 +9,7 @@
     </div>
 
     <template v-for="exam in exams">
-      <div class="col s12 m4">
+      <div class="col-xs-12 col-sm-4">
         <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
           <div class="card hoverable">
             <div class="card-image">

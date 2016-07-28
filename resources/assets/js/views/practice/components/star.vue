@@ -1,8 +1,10 @@
 <template>
-  <i
-    v-for="i in total"
-    class="material-icons tiny"
-  >{{ active > i ? 'star' : 'star_border' }}</i>
+  <span>
+    <i
+      v-for="i in total"
+      class="material-icons tiny"
+    >{{ active > i ? 'star' : 'star_border' }}</i>
+  </span>
 </template>
 
 <script type="text/babel">

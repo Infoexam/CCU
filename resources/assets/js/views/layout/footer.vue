@@ -21,14 +21,12 @@
 
         <div class="col l4 offset-l2 s12">
           <ul>
-            <template v-if="$auth.is('admin')">
-              <li>
-                <a
-                  href="/admin/exams"
-                  class="grey-text text-lighten-3"
-                ><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>{{ $t('footer.dashboard') }}</a>
-              </li>
-            </template>
+            <li v-if="$auth.is('admin')">
+              <a
+                v-link="{ name: 'admin.exams' }"
+                class="grey-text text-lighten-3"
+              ><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>{{ $t('footer.dashboard') }}</a>
+            </li>
 
             <li>
               <a
@@ -39,7 +37,7 @@
 
               <a
                 v-else
-                @click="$auth.signOut(signOutCallback)"
+                @click="$auth.signOut()"
                 class="cursor-pointer grey-text text-lighten-3"
               ><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>{{ $t('auth.signOut') }}</a>
             </li>
@@ -50,7 +48,7 @@
 
     <div class="footer-copyright">
       <div class="container">
-        <span>© {{* new Date().getFullYear() }} <a v-link="{ name: 'home' }" class="grey-text text-lighten-4">Infoexam</a></span>
+        <span>© {{ year }} <a v-link="{ name: 'home' }" class="grey-text text-lighten-4">Infoexam</a></span>
 
         <a
           class="grey-text text-lighten-4 right"
@@ -71,15 +69,13 @@
         translates: {
           zh_TW: '繁體中文',
           en_US: 'English'
-        }
+        },
+
+        year: new Date().getFullYear()
       }
     },
 
     methods: {
-      signOutCallback () {
-        this.$router.go({ name: 'home' })
-      },
-
       changeLocale (locale) {
         Cache.setItem('locale', locale)
 
@@ -88,7 +84,7 @@
     },
 
     ready () {
-      $('a[data-activates="translate-dropdown"]').dropdown()
+      $('footer a[data-activates="translate-dropdown"]').dropdown()
     }
   }
 </script>

@@ -22,6 +22,8 @@ function install (Vue) {
 
         Cache.setItem('signIn', false)
         Cache.removeItem('user')
+
+        window.location.href = '/sign-in'
       }
     },
 
@@ -38,15 +40,11 @@ function install (Vue) {
         })
       },
 
-      signOut (callable) {
+      signOut () {
         this.$http.get('auth/sign-out').then(response => {
           this.$emit('signOut')
-
-          if ('function' === typeof callable) {
-            callable()
-          }
         }, response => {
-          console.log('Sign out failed.')
+          Toast.failed('Something went wrong.')
         })
       },
 
@@ -79,8 +77,6 @@ function install (Vue) {
           this.$emit('signIn', response.data.user)
         }, response => {
           this.$emit('signOut')
-
-          window.location.href = '/sign-in'
         })
       }
     }

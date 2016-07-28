@@ -1,42 +1,37 @@
 <template>
-  <div class="row" style="margin-top: 8%;">
-    <validator name="validation">
-      <form @submit.prevent="signIn()" class="col s12" novalidate>
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">account_circle</i>
-            <input
-              v-model="form.username"
-              id="username"
-              type="text"
-              autofocus
-              v-validate:username="form.validation.username"
-            >
-            <label for="username">{{ $t("auth.username") }}</label>
-          </div>
+  <div class="row middle-xs full-width">
+    <form @submit.prevent="signIn()" class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="input-field">
+        <i class="material-icons prefix">account_circle</i>
+        <input
+          v-model="form.username"
+          id="username"
+          type="text"
+          class="validate"
+          autofocus
+          required
+        >
+        <label for="username">{{ $t("auth.username") }}</label>
+      </div>
 
-          <div class="input-field col s12">
-            <i class="material-icons prefix">lock</i>
-            <input
-              v-model="form.password"
-              id="password"
-              type="password"
-              v-validate:password="form.validation.password"
-            >
-            <label for="password">{{ $t("auth.password") }}</label>
-          </div>
+      <div class="input-field">
+        <i class="material-icons prefix">lock</i>
+        <input
+          v-model="form.password"
+          id="password"
+          type="password"
+          class="validate"
+          required
+        >
+        <label for="password">{{ $t("auth.password") }}</label>
+      </div>
 
-          <form-errors :validation="$validation" :attribute="'auth.'"></form-errors>
-
-          <submit :text="$t('auth.signIn')" :validation="$validation"></submit>
-        </div>
-      </form>
-    </validator>
+      <submit :text="$t('auth.signIn')"></submit>
+    </form>
   </div>
 </template>
 
-<script type="text/babel">
-  import FormErrors from '../../components/form/errors.vue'
+<script>
   import Submit from '../../components/form/submit.vue'
 
   export default {
@@ -58,17 +53,7 @@
       return {
         form: {
           username: '',
-          password: '',
-
-          validation: {
-            username: {
-              required: { rule: true, message: 'invalid' }
-            },
-
-            password: {
-              required: { rule: true, message: 'invalid' }
-            }
-          }
+          password: ''
         }
       }
     },
@@ -82,7 +67,6 @@
     },
 
     components: {
-      FormErrors,
       Submit
     }
   }

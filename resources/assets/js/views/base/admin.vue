@@ -6,21 +6,7 @@
   }
 </style>
 
-<style lang="sass">
-  @media only screen and (min-width: 993px) {
-    .admin-page-footer {
-      padding-left: 250px;
-    }
-
-    .admin-container {
-      width: 85%;
-    }
-  }
-</style>
-
 <template>
-  <navbar></navbar>
-
   <main>
     <div class="container" style="padding-top: 1rem;">
       <router-view></router-view>
@@ -28,9 +14,7 @@
   </main>
 </template>
 
-<script type="text/babel">
-  import Navbar from '../layout/navbar/admin.vue'
-
+<script>
   export default {
     route: {
       canActivate (transition) {
@@ -46,18 +30,14 @@
       }
     },
 
-    components: {
-      Navbar
-    },
-
     ready () {
-      $('footer').addClass('admin-page-footer')
-      $('.container').addClass('admin-container')
+      $('footer').addClass('page-footer-admin')
+      $('.container').addClass('container-admin')
     },
 
     beforeDestroy () {
-      $('footer').removeClass('admin-page-footer')
-      $('.admin-container').removeClass('admin-container')
+      $('footer').removeClass('page-footer-admin')
+      $('.container-admin').removeClass('container-admin')
     }
   }
 </script>

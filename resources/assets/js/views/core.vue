@@ -1,18 +1,24 @@
 <style src="../../sass/app.scss" lang="sass"></style>
 
 <template>
-  <router-view></router-view>
+  <div id="vuejs-app">
+    <component :is="navbar"></component>
 
-  <layout-footer></layout-footer>
+    <router-view></router-view>
 
-  <progress
-    :percent.sync="progressConfig.percent"
-    :options="progressConfig.options"
-  ></progress>
+    <layout-footer></layout-footer>
+
+    <progress
+      :percent.sync="progressConfig.percent"
+      :options="progressConfig.options"
+    ></progress>
+  </div>
 </template>
 
-<script type="text/babel">
+<script>
   import LayoutFooter from './layout/footer.vue'
+  import NavbarStudent from './layout/navbar/student.vue'
+  import NavbarAdmin from './layout/navbar/admin.vue'
   import Progress from 'vue-progressbar/vue-progressbar.vue'
 
   export default {
@@ -24,7 +30,7 @@
           options: {
             show: true,
             canSuccess: true,
-            color: 'rgb(255, 234, 0)',
+            color: '#29d',
             failedColor: 'red',
             height: '2px'
           }
@@ -32,8 +38,21 @@
       }
     },
 
+    computed: {
+      navbar () {
+        const mapping = {
+          '/': 'navbar-student',
+          '/admin': 'navbar-admin'
+        }
+
+        return mapping[this.$route.matched[0].handler.path] || mapping['/']
+      }
+    },
+
     components: {
       LayoutFooter,
+      NavbarStudent,
+      NavbarAdmin,
       Progress
     },
 

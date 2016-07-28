@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <header></header>
 </template>
 
 <script type="text/babel">

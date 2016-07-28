@@ -1,6 +1,6 @@
 <template>
-  <div class="row" style="margin-top: 5%;">
-    <div class="col s12 m4">
+  <div class="row middle-xs">
+    <div class="col-xs-12 col-sm-4">
       <a v-link="{ name: 'practice' }">
         <div class="card hoverable">
           <div class="card-image">
@@ -14,7 +14,7 @@
       </a>
     </div>
 
-    <div class="col s12 m4">
+    <div class="col-xs-12 col-sm-4">
       <a href="#">
         <div class="card hoverable">
           <div class="card-image">
@@ -28,7 +28,7 @@
       </a>
     </div>
 
-    <div class="col s12 m4">
+    <div class="col-xs-12 col-sm-4">
       <a href="#">
         <div class="card hoverable">
           <div class="card-image">
