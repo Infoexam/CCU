@@ -1,7 +1,7 @@
 require('dotenv').config()
 
-const path = require('path')
-const webpack = require('webpack')
+const Webpack = require('webpack')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const production = process.argv.includes('-p')
 
 process.env.NODE_ENV = production ? 'production' : 'local'
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   output: {
-    path: path.join(__dirname, 'public', production ? '/assets/js' : '/js'),
+    path: require('path').join(__dirname, 'public', production ? '/assets/js' : '/js'),
     filename: '[name].js',
     chunkFilename: '[name].min.js',
     sourceMapFilename: '[file].map'
@@ -33,8 +33,9 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
-    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, comments: false, exclude: /vendor\.js$/ })
+    new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
+    new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+    new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, comments: false, exclude: /vendor\.js$/ }),
+    new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' })
   ]
 }
