@@ -38,7 +38,7 @@ class ExamImageController extends Controller
 
         $exam->uploadImages($request->file('image'), $request->input('collection', 'default'));
 
-        return $this->response->created(null, $this->transformImage($exam, 'default'));
+        return $this->transformImage($exam, $request->input('collection', 'default'));
     }
 
     /**

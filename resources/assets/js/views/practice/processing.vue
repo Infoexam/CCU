@@ -38,63 +38,60 @@
     </div>
 
     <form @submit.prevent="submit()">
-      <template v-for="question in questions">
-        <section
-          v-show="currentPage === Math.ceil(($index + 1) / perPage)"
-          class="card"
-          :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
-        >
-          <div class="card-content">
-            <div class="card-title">
-              <span>
-                <available-icon
-                  v-if="submitted"
-                  :available.once="question.correct"
-                ></available-icon>
-              </span>
+      <section
+        v-for="question in questions"
+        v-show="currentPage === Math.ceil(($index + 1) / perPage)"
+        class="card"
+        :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
+      >
+        <div class="card-content">
+          <div class="card-title">
+            <available-icon
+              v-if="submitted"
+              :available.once="question.correct"
+            ></available-icon>
 
-              <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
+            <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
 
-              <star-icon
-                :total="3"
-                :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
-              ></star-icon>
+            <star-icon
+              :total="3"
+              :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
+            ></star-icon>
 
-              <span
-                v-if="question.multiple"
-                style="font-size: 0.8rem;"
-              >({{ $t('practice.multiple') }})</span>
+            <span
+              v-if="question.multiple"
+              style="font-size: 0.75rem; vertical-align: middle;"
+            >({{ $t('practice.multiple') }})</span>
 
-              <span
-                v-if="question.explanation && submitted"
-                :class="{ 'activator': question.explanation && submitted }"
-                class="yellow-text text-darken-3 right cursor-pointer"
-              ><i class="material-icons">info</i> {{ $t('practice.explanation') }}</span>
-            </div>
-
-            <markdown
-              :model="question.content"
-              style="margin-top: 10px; margin-bottom: 5px;"
-            ></markdown>
+            <span
+              v-if="question.explanation && submitted"
+              :class="{ 'activator': question.explanation }"
+              class="yellow-text text-darken-3 right cursor-pointer"
+            ><i class="material-icons tiny">info</i> {{ $t('practice.explanation') }}</span>
           </div>
 
-          <div v-if="question.explanation" class="card-reveal">
-            <span class="card-title">解析<i class="material-icons right">close</i></span>
+          <markdown
+            :model="question.content"
+            style="margin-top: .65rem; margin-bottom: .4rem;"
+          ></markdown>
+        </div>
 
-            <markdown
-              :model="question.explanation"
-            ></markdown>
-          </div>
+        <div v-if="question.explanation" class="card-reveal">
+          <span class="card-title">{{ $t('practice.explanation') }}<i class="material-icons right">close</i></span>
 
-          <div class="card-action">
-            <form-option
-              :option="question.options"
-              :multiple="question.multiple"
-              :submitted="submitted"
-            ></form-option>
-          </div>
-        </section>
-      </template>
+          <markdown
+            :model="question.explanation"
+          ></markdown>
+        </div>
+
+        <div class="card-action">
+          <form-option
+            :option="question.options"
+            :multiple="question.multiple"
+            :submitted="submitted"
+          ></form-option>
+        </div>
+      </section>
 
       <pagination :current.sync="currentPage" :total="totalPage"></pagination>
 
@@ -103,14 +100,14 @@
   </section>
 </template>
 
-<script type="text/babel">
-  import AvailableIcon from '../../components/icon/available.vue'
+<script>
+  import AvailableIcon from '~/components/icon/available.vue'
   import FormOption from './form/option.vue'
-  import Markdown from '../../components/markdown.vue'
+  import Markdown from '~/components/markdown.vue'
   import Md5 from 'md5'
   import Pagination from './components/pagination.vue'
   import StarIcon from './components/star.vue'
-  import Submit from '../../components/form/submit.vue'
+  import Submit from '~/components/form/submit.vue'
 
   export default {
     route: {
@@ -193,7 +190,7 @@
 
         this.submitted = true
 
-        window.scrollTo(0, window.scrollX)
+        window.scrollTo(window.scrollX, 0)
       },
 
       judge () {
@@ -230,7 +227,7 @@
     },
 
     ready () {
-      document.title = `${document.title} - ${this.$route.params.name}`
+      document.title += ` - ${this.$route.params.name}`
     }
   }
 </script>

@@ -1,3 +1,8 @@
+blockquote {
+  padding-left: .5rem;
+  border-left-color: #64b5f6;
+}
+
 input.untouched {
   border-bottom: 1px solid #9e9e9e !important;
   box-shadow: none !important;
@@ -13,9 +18,23 @@ input.untouched {
   display: inline-block;
 }
 
-.input-field .prefix ~ input, .input-field .prefix ~ textarea, .input-field .prefix ~ label, .input-field .prefix ~ .validate ~ label, .input-field .prefix ~ .autocomplete-content {
-  margin-left: 3rem;
-  width: 92%;
+.file-field {
+  .btn {
+    height: 2rem;
+    line-height: 2rem;
+
+    input[type=file] {
+      height: 2rem;
+    }
+  }
+
+  .file-path {
+    height: 2rem;
+  }
+}
+
+.input-field label {
+  left: 0;
 }
 
 .material-icons {

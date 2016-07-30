@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: .5rem; margin-bottom: -1rem;">
     <div v-for="o in option">
       <input
         v-model="o.check"
@@ -8,7 +8,6 @@
         :id="o.hash"
         :value="true"
         :disabled="submitted"
-        class="with-gap"
         @change="update(o)"
       ><label :for="o.hash">{{ $t('form.option') }} {{ $index + 1 }}</label>
 
@@ -17,8 +16,8 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import Markdown from '../../../components/markdown.vue'
+<script>
+  import Markdown from '~/components/markdown.vue'
   import Uuid from 'node-uuid'
 
   export default {

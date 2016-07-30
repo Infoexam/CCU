@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const Webpack = require('webpack')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const path = require('path')
 const production = process.argv.includes('-p')
 
 process.env.NODE_ENV = production ? 'production' : 'local'
@@ -12,8 +13,14 @@ module.exports = {
     vendor: Object.keys(require('./package.json').dependencies)
   },
 
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, 'resources', 'assets', 'js')
+    }
+  },
+
   output: {
-    path: require('path').join(__dirname, 'public', production ? '/assets/js' : '/js'),
+    path: path.resolve(__dirname, 'public', production ? 'assets' : '', 'js'),
     filename: '[name].js',
     chunkFilename: '[name].min.js',
     sourceMapFilename: '[file].map'

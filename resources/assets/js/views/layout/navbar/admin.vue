@@ -68,7 +68,7 @@
   </header>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     ready () {
       $('header .button-collapse').sideNav({

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="input-field col s12 m5">
+    <div class="input-field col-xs-12 col-sm-5">
       <textarea
         v-model="model"
         :id="textareaId"
@@ -10,12 +10,12 @@
       ></textarea>
 
       <label
-        :class="{ 'active': model.length > 0 }"
         :for="textareaId"
+        class="active"
       >{{ label }}</label>
     </div>
 
-    <div class="col m6 offset-m1 hide-on-small-only">
+    <div class="col-sm-6 col-sm-offset-1 hide-on-small-only">
       <span>{{ $t('form.preview') }}</span>
 
       <markdown :model="model"></markdown>
@@ -23,8 +23,8 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import Markdown from '../markdown.vue'
+<script>
+  import Markdown from '~/components/markdown.vue'
   import Uuid from 'node-uuid'
 
   export default {

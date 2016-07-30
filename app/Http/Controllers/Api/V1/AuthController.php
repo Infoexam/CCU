@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Hash;
 use Illuminate\Http\Request;
 use Redirect;
+use Session;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      *
-     * @return \Dingo\Api\Http\Response
+     * @return \App\Accounts\User
      */
     public function signIn(Request $request)
     {
@@ -36,6 +37,8 @@ class AuthController extends Controller
      */
     public function signOut()
     {
+        Session::clear();
+
         Auth::logout();
 
         return $this->response->noContent();

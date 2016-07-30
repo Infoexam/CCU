@@ -35,11 +35,11 @@
   </section>
 </template>
 
-<script type="text/babel">
-  import ActionButton from '../../components/actionButton.vue'
-  import AvailableIcon from '../../components/icon/available.vue'
-  import Pagination from '../../components/pagination.vue'
-  import Toast from '../../components/toast'
+<script>
+  import ActionButton from '~/components/actionButton.vue'
+  import AvailableIcon from '~/components/icon/available.vue'
+  import Pagination from '~/components/pagination.vue'
+  import Toast from '~/components/toast'
 
   export default {
     route: {
@@ -54,7 +54,9 @@
 
     data () {
       return {
-        exams: {}
+        exams: {
+          data: []
+        }
       }
     },
 

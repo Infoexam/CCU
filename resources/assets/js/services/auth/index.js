@@ -1,5 +1,5 @@
-import Cache from '../../components/cache'
-import Toast from '../../components/toast'
+import Cache from '~/components/cache'
+import Toast from '~/components/toast'
 
 function install (Vue) {
   Vue.prototype.$auth = Vue.auth = new Vue({
@@ -17,13 +17,13 @@ function install (Vue) {
         Cache.setItem('user', user)
       },
 
-      signOut () {
+      signOut (url) {
         this.user = null
 
         Cache.setItem('signIn', false)
         Cache.removeItem('user')
 
-        window.location.href = '/sign-in'
+        window.location.href = url || '/'
       }
     },
 
@@ -76,7 +76,7 @@ function install (Vue) {
         this.$http.get('account/profile').then(response => {
           this.$emit('signIn', response.data.user)
         }, response => {
-          this.$emit('signOut')
+          this.$emit('signOut', '/sign-in')
         })
       }
     }

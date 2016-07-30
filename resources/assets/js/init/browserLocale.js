@@ -1,4 +1,4 @@
-import Cache from '../components/cache'
+import Cache from '~/components/cache'
 
 const lang = Cache.getItem('locale', () => {
   let _lang

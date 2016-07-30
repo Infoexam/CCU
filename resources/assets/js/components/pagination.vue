@@ -21,7 +21,7 @@
   </section>
 </template>
 
-<script type="text/babel">
+<script>
   import Md5 from 'md5'
   import QueryString from 'query-string'
   import Url from 'url'

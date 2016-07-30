@@ -1,22 +1,20 @@
 <template>
-  <div class="row">
-    <form @submit.prevent="update()" :id="formId" class="col s12">
-      <form-component
-        :question_id.sync="form.question.question_id"
-        :uuid.sync="form.question.uuid"
-        :content.sync="form.question.content"
-        :difficulty_id.sync="form.question.difficulty_id"
-        :multiple.sync="form.question.multiple"
-        :option.sync="form.option"
-        :explanation.sync="form.question.explanation"
-      ></form-component>
-    </form>
-  </div>
+  <form @submit.prevent="update()" :id="formId">
+    <form-component
+      :question_id.sync="form.question.question_id"
+      :uuid.sync="form.question.uuid"
+      :content.sync="form.question.content"
+      :difficulty_id.sync="form.question.difficulty_id"
+      :multiple.sync="form.question.multiple"
+      :option.sync="form.option"
+      :explanation.sync="form.question.explanation"
+    ></form-component>
+  </form>
 </template>
 
-<script type="text/babel">
+<script>
   import FormComponent from './components/form.vue'
-  import Toast from '../../components/toast'
+  import Toast from '~/components/toast'
   import Uuid from 'node-uuid'
 
   export default {

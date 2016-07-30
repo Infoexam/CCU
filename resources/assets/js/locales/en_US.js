@@ -68,11 +68,11 @@ Skills test : Programming`
   },
 
   apply: {
-    title: 'Apply'
+    title: 'Apply（尚未啟用）'
   },
 
   exam: {
-    title: 'Exam'
+    title: 'Exam（尚未啟用）'
   },
 
   footer: {

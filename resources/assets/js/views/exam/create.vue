@@ -1,20 +1,18 @@
 <template>
-  <div class="row">
-    <form @submit.prevent="store()" class="col s12">
-      <form-component
-        v-ref:form-component
-        :name.sync="form.name"
-        :category_id.sync="form.category_id"
-        :enable.sync="form.enable"
-        :create="true"
-      ></form-component>
-    </form>
-  </div>
+  <form @submit.prevent="store()">
+    <form-component
+      v-ref:form-component
+      :name.sync="form.name"
+      :category_id.sync="form.category_id"
+      :enable.sync="form.enable"
+      :create="true"
+    ></form-component>
+  </form>
 </template>
 
-<script type="text/babel">
+<script>
   import FormComponent from './components/form.vue'
-  import Toast from '../../components/toast'
+  import Toast from '~/components/toast'
 
   export default {
     data () {

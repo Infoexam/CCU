@@ -1,15 +1,15 @@
 <template>
   <div class="row">
-    <div class="col s12">
+    <div class="col-xs-12">
       <ul class="tabs">
-        <li class="tab col s3"><a href="#from-question">題目</a></li>
-        <li class="tab col s3"><a href="#form-option">選項</a></li>
-        <li class="tab col s3"><a href="#form-explanation">解析</a></li>
-        <li class="tab col s3"><a href="#form-image">圖片</a></li>
+        <li class="tab col-xs-3"><a href="#from-question">題目</a></li>
+        <li class="tab col-xs-3"><a href="#form-option">選項</a></li>
+        <li class="tab col-xs-3"><a href="#form-explanation">解析</a></li>
+        <li class="tab col-xs-3"><a href="#form-image">圖片</a></li>
       </ul>
     </div>
 
-    <div id="from-question" class="col s12">
+    <div id="from-question" class="col-xs-12">
       <form-question
         :id.sync="question_id"
         :uuid.sync="uuid"
@@ -17,7 +17,7 @@
       ></form-question>
     </div>
 
-    <div id="form-option" class="col s12">
+    <div id="form-option" class="col-xs-12">
       <form-option
         :difficulty-id.sync="difficulty_id"
         :multiple.sync="multiple"
@@ -25,26 +25,26 @@
       ></form-option>
     </div>
 
-    <div id="form-explanation" class="col s12">
+    <div id="form-explanation" class="col-xs-12">
       <form-explanation
         :explanation.sync="explanation"
       ></form-explanation>
     </div>
 
-    <div id="form-image" class="col s12">
+    <div id="form-image" class="col-xs-12">
       <form-image></form-image>
     </div>
 
-    <submit :text="$t(`form.submit.${create ? 'create' : 'update'}`)"></submit>
+    <submit :text="$t(`form.submit.${create ? 'create' : 'update'}`)" class="col-xs-12"></submit>
   </div>
 </template>
 
-<script type="text/babel">
+<script>
   import FormQuestion from './question.vue'
   import FormOption from './option.vue'
   import FormExplanation from './explanation.vue'
   import FormImage from './image.vue'
-  import Submit from '../../../components/form/submit.vue'
+  import Submit from '~/components/form/submit.vue'
 
   export default {
     props: {

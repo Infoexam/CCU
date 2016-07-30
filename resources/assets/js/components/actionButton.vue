@@ -1,16 +1,18 @@
 <template>
-  <a
-    v-link="edit"
-    class="waves-effect waves-light btn orange"
-  ><i class="material-icons">edit</i></a>
+  <div>
+    <a
+      v-link="edit"
+      class="waves-effect waves-light btn orange"
+    ><i class="material-icons">edit</i></a>
 
-  <a
-    @click="$parent.destroy(destroy)"
-    class="waves-effect waves-light btn red"
-  ><i class="material-icons">delete</i></a>
+    <a
+      @click="$parent.destroy(destroy)"
+      class="waves-effect waves-light btn red"
+    ><i class="material-icons">delete</i></a>
+  </div>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     props: {
       edit: {

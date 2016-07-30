@@ -1,19 +1,18 @@
 <template>
-  <div class="row">
-    <div class="input-field col s12">
+  <div>
+    <div class="input-field">
       <input
         v-model="name"
         id="name"
         type="text"
         class="validate"
         maxlength="48"
-        autofocus
         required
       >
       <label for="name" :class="{ active: ! create }">題庫名稱</label>
     </div>
 
-    <div class="input-field col s12">
+    <div class="input-field">
       <materialize-select
         :model.sync="category_id"
         :label="'題庫類型'"
@@ -23,20 +22,15 @@
       ></materialize-select>
     </div>
 
-    <div class="switch col s12">
+    <div class="switch">
       <label>
         <span>啟用題庫</span>
-
-        <input
-          v-model="enable"
-          type="checkbox"
-        >
-
+        <input v-model="enable" type="checkbox">
         <span class="lever"></span>
       </label>
     </div>
 
-    <div class="file-field input-field col s12">
+    <div class="file-field input-field">
       <div class="btn">
         <span>封面相片</span>
 
@@ -57,9 +51,9 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import MaterializeSelect from '../../../components/form/select.vue'
-  import Submit from '../../../components/form/submit.vue'
+<script>
+  import MaterializeSelect from '~/components/form/select.vue'
+  import Submit from '~/components/form/submit.vue'
 
   export default {
     props: {

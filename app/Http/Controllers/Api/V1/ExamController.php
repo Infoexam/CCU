@@ -43,7 +43,7 @@ class ExamController extends Controller
 
         $exam->uploadImages($request->file('cover'), 'cover');
 
-        return $this->response->created(null, $exam);
+        return $exam;
     }
 
     /**

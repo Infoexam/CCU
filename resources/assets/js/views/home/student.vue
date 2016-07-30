@@ -1,42 +1,14 @@
 <template>
   <div class="row middle-xs">
-    <div class="col-xs-12 col-sm-4">
-      <a v-link="{ name: 'practice' }">
+    <div v-for="item in navigation" class="col-xs-12 col-sm-4">
+      <a v-link="item.link">
         <div class="card hoverable">
           <div class="card-image">
-            <img src="/assets/images/practice.png">
+            <img :src="`/assets/images/${item.title}.png`":alt="item.title">
           </div>
 
           <div class="card-action">
-            <a v-link="{ name: 'practice' }">{{ $t('practice.title') }}</a>
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="col-xs-12 col-sm-4">
-      <a href="#">
-        <div class="card hoverable">
-          <div class="card-image">
-            <img src="/assets/images/apply.png">
-          </div>
-
-          <div class="card-action">
-            <a class="cursor-pointer">{{ $t('apply.title') }}（尚未啟用）</a>
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="col-xs-12 col-sm-4">
-      <a href="#">
-        <div class="card hoverable">
-          <div class="card-image">
-            <img src="/assets/images/exam.png">
-          </div>
-
-          <div class="card-action">
-            <a class="cursor-pointer">{{ $t('exam.title') }}（尚未啟用）</a>
+            <a v-link="item.link">{{ $t(item.title + '.title') }}</a>
           </div>
         </div>
       </a>
@@ -44,7 +16,16 @@
   </div>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
+    data () {
+      return {
+        navigation: [
+          { link: { name: 'practice' }, title: 'practice' },
+          { link: '#', title: 'apply' },
+          { link: '#', title: 'exam' }
+        ]
+      }
+    }
   }
 </script>

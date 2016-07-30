@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import Submit from '../../components/form/submit.vue'
+  import Submit from '~/components/form/submit.vue'
 
   export default {
     route: {

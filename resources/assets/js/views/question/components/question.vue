@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="input-field col s12">
+  <div>
+    <div class="input-field">
       <materialize-select
         :model.sync="id"
         :label="'題組'"
@@ -10,7 +10,7 @@
       ></materialize-select>
     </div>
 
-    <div class="input-field col s12">
+    <div class="input-field">
       <input
         v-model="uuid"
         :id="uuidFieldId"
@@ -22,7 +22,7 @@
       <label :for="uuidFieldId" class="active">代碼</label>
     </div>
 
-    <div class="input-field col s12">
+    <div class="input-field">
       <markdown
         :model.sync="content"
         :length="5000"
@@ -32,9 +32,9 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import Markdown from '../../../components/form/markdown.vue'
-  import MaterializeSelect from '../../../components/form/select.vue'
+<script>
+  import Markdown from '~/components/form/markdown.vue'
+  import MaterializeSelect from '~/components/form/select.vue'
   import Uuid from 'node-uuid'
 
   export default {

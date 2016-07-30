@@ -16,7 +16,7 @@
   <label v-if="label" :for="id">{{ label }}</label>
 </template>
 
-<script type="text/babel">
+<script>
   import Uuid from 'node-uuid'
 
   export default {

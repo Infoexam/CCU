@@ -1,20 +1,7 @@
-import Vue from '../vue'
+import Vue from '~/vue'
 import VueRouter from 'vue-router'
 
-import CoreView from '../views/core.vue'
-import AdminBaseView from '../views/base/admin.vue'
-import StudentBaseView from '../views/base/student.vue'
-import StudentHomeView from '../views/home/student.vue'
-import SignInView from '../views/signIn/signIn.vue'
-import ExamList from '../views/exam/list.vue'
-import ExamCreate from '../views/exam/create.vue'
-import ExamEdit from '../views/exam/edit.vue'
-import PracticeList from '../views/practice/list.vue'
-import PracticeProcessing from '../views/practice/processing.vue'
-import QuestionList from '../views/question/list.vue'
-import QuestionCreate from '../views/question/create.vue'
-import QuestionShow from '../views/question/show.vue'
-import QuestionEdit from '../views/question/edit.vue'
+import CoreView from '~/views/core.vue'
 
 Vue.use(VueRouter)
 
@@ -26,24 +13,23 @@ const router = new VueRouter({
 
 router.map({
   '/': {
-    component: StudentBaseView,
+    component: resolve => resolve(require('~/views/base/student.vue')),
     subRoutes: {
-      '/': { name: 'home', component: StudentHomeView, title: 'infoexam' },
-      '/sign-in': { name: 'signIn', component: SignInView, title: 'signIn' },
-      '/practice': { name: 'practice', component: PracticeList, title: 'practice' },
-      '/practice/:name': { name: 'practice.processing', component: PracticeProcessing, title: 'practice' }
+      '/': { name: 'home', component: resolve => resolve(require('~/views/home/student.vue')), title: 'infoexam' },
+      '/sign-in': { name: 'signIn', component: resolve => resolve(require('~/views/auth/signIn.vue')), title: 'signIn' },
+      '/practice': { name: 'practice', component: resolve => resolve(require('~/views/practice/list.vue')), title: 'practice' },
+      '/practice/:name': { name: 'practice.processing', component: resolve => resolve(require('~/views/practice/processing.vue')), title: 'practice' }
     }
   },
   '/admin': {
-    component: AdminBaseView,
+    component: resolve => resolve(require('~/views/base/admin.vue')),
     subRoutes: {
-      '/exams': { name: 'admin.exams', component: ExamList, title: 'exams.index' },
-      '/exams/create': { name: 'admin.exams.create', component: ExamCreate, title: 'exams.create' },
-      '/exams/:name/edit': { name: 'admin.exams.edit', component: ExamEdit, title: 'exams.edit' },
-      '/exams/:name/questions': { name: 'admin.exams.questions', component: QuestionList, title: 'exams.questions.index' },
-      '/exams/:name/questions/create': { name: 'admin.exams.questions.create', component: QuestionCreate, title: 'exams.questions.create' },
-      '/exams/:name/questions/:uuid': { name: 'admin.exams.questions.show', component: QuestionShow, title: 'exams.questions.show' },
-      '/exams/:name/questions/:uuid/edit': { name: 'admin.exams.questions.edit', component: QuestionEdit, title: 'exams.questions.edit' }
+      '/exams': { name: 'admin.exams', component: resolve => resolve(require('~/views/exam/list.vue')), title: 'exams.index' },
+      '/exams/create': { name: 'admin.exams.create', component: resolve => resolve(require('~/views/exam/create.vue')), title: 'exams.create' },
+      '/exams/:name/edit': { name: 'admin.exams.edit', component: resolve => resolve(require('~/views/exam/edit.vue')), title: 'exams.edit' },
+      '/exams/:name/questions': { name: 'admin.exams.questions', component: resolve => resolve(require('~/views/question/list.vue')), title: 'exams.questions.index' },
+      '/exams/:name/questions/create': { name: 'admin.exams.questions.create', component: resolve => resolve(require('~/views/question/create.vue')), title: 'exams.questions.create' },
+      '/exams/:name/questions/:uuid/edit': { name: 'admin.exams.questions.edit', component: resolve => resolve(require('~/views/question/edit.vue')), title: 'exams.questions.edit' }
     }
   }
 })

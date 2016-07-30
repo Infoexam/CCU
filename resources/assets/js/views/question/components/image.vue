@@ -21,8 +21,8 @@
 
   <div class="row">
     <template v-for="image in images" track-by="uuid">
-      <div class="col s12 m6">
-        <input :id="image.uuid" :value="image.url" style="width: calc(100% - 6rem)">
+      <div class="col-xs-12 col-sm-6">
+        <input :id="image.uuid" :value="image.url" style="width: calc(100% - 5.61rem)">
 
         <button
           type="button"
@@ -30,19 +30,16 @@
           data-clipboard-target="#{{ image.uuid }}"
         ><i class="fa fa-clipboard" aria-hidden="true"></i></button>
 
-        <img
-          :src="image.url"
-          class="materialboxed"
-        >
+        <img :src="image.url" class="materialboxed">
       </div>
     </template>
   </div>
 </template>
 
-<script type="text/babel">
+<script>
   import Clipboard from 'clipboard'
   import Md5 from 'md5'
-  import Toast from '../../../components/toast'
+  import Toast from '~/components/toast'
 
   let clipboard = null
 

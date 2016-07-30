@@ -1,5 +1,5 @@
 <template>
-  <div class="input-field col s12">
+  <div class="input-field">
     <markdown
       :model.sync="explanation"
       :length="5000"
@@ -8,8 +8,8 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import Markdown from '../../../components/form/markdown.vue'
+<script>
+  import Markdown from '~/components/form/markdown.vue'
 
   export default {
     props: {

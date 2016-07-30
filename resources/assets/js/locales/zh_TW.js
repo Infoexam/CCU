@@ -68,11 +68,11 @@ export default {
   },
 
   apply: {
-    title: '預約'
+    title: '預約（尚未啟用）'
   },
 
   exam: {
-    title: '考試'
+    title: '考試（尚未啟用）'
   },
 
   footer: {

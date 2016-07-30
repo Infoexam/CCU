@@ -1,17 +1,15 @@
 <style src="prismjs/themes/prism-okaidia.css"></style>
 
 <template>
-  <div>
-    <vue-markdown
-      :id="id"
-      :source="model"
-      :html="false"
-      class="markdown-content"
-    ></vue-markdown>
-  </div>
+  <vue-markdown
+    :id="id"
+    :source="model"
+    :html="false"
+    class="markdown-content"
+  ></vue-markdown>
 </template>
 
-<script type="text/babel">
+<script>
   import Prism from 'prismjs'
   import Uuid from 'node-uuid'
   import VueMarkdown from 'vue-markdown'

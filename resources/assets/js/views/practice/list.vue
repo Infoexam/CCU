@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row full-width">
     <div class="col-xs-12">
       <blockquote>
         <h4>{{ $t('practice.precautions.heading') }}</h4>
@@ -8,31 +8,29 @@
       </blockquote>
     </div>
 
-    <template v-for="exam in exams">
-      <div class="col-xs-12 col-sm-4">
-        <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
-          <div class="card hoverable">
-            <div class="card-image">
-              <img :src="exam.cover">
-            </div>
-
-            <div class="card-action">
-              <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">{{ exam.name }}</a>
-            </div>
+    <div v-for="exam in exams" class="col-xs-12 col-sm-4">
+      <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
+        <div class="card hoverable">
+          <div class="card-image">
+            <img :src="exam.cover" :alt="exam.name">
           </div>
-        </a>
-      </div>
-    </template>
+
+          <div class="card-action">
+            <a
+              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
+            >{{ exam.name }}</a>
+          </div>
+        </div>
+      </a>
+    </div>
   </div>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     route: {
       canActivate (transition) {
-        const auth = transition.to.router.app.$auth
-
-        if (auth.guest()) {
+        if (transition.to.router.app.$auth.guest()) {
           transition.redirect({ name: 'signIn' })
         }
 
@@ -50,7 +48,7 @@
 
     data () {
       return {
-        exams: {}
+        exams: []
       }
     }
   }

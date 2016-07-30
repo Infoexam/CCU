@@ -68,12 +68,16 @@ ul.pagination a {
 }
 
 .practice-option-content {
-  margin: 18px 0 27px;
-  padding-left: 35px;
+  margin: 1rem 0 1.5rem;
+  padding-left: 1.98rem;
 }
 
 .user-select-none {
-  user-select: none;
+  user-select: none !important;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 @import "admin";

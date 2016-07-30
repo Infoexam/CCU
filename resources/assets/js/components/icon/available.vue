@@ -1,11 +1,13 @@
 <template>
-  <i
-    :class="[available ? 'green-text' : 'red-text']"
-    class="material-icons"
-  >{{ available ? 'check' : 'close' }}</i>
+  <span>
+    <i
+      :class="[available ? 'green-text' : 'red-text']"
+      class="material-icons"
+    >{{ available ? 'check' : 'close' }}</i>
+  </span>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     props: {
       available: {

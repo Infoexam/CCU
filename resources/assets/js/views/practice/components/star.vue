@@ -7,7 +7,7 @@
   </span>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     props: {
       total: {

@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div class="input-field col s12">
+  <div>
+    <div class="input-field">
       <materialize-select
         :model.sync="difficultyId"
         :label="'難度'"
@@ -10,21 +10,16 @@
       ></materialize-select>
     </div>
 
-    <div class="switch col s12">
+    <div class="switch">
       <label>
         <span>多選</span>
-
-        <input
-          v-model="multiple"
-          type="checkbox"
-        >
-
+        <input v-model="multiple" type="checkbox">
         <span class="lever"></span>
       </label>
     </div>
 
-    <div class="input-field col s12">
-      <label style="position: relative; left: 0;">答案</label>
+    <div class="input-field">
+      <label style="position: relative;">答案</label>
 
       <template v-for="item in option">
         <input
@@ -32,22 +27,26 @@
           :id="`option-${$index}-answer`"
           type="checkbox"
         >
-        <label :for="`option-${$index}-answer`">選項 {{ $index + 1 }}</label>
+        <label
+          :for="`option-${$index}-answer`"
+          style="margin-left: .5rem; padding-left: 30px;"
+        >選項 {{ $index + 1 }}</label>
       </template>
 
       <a
         @click="option.push({ content: '', answer: false })"
         class="waves-effect waves-light btn green right"
+        style="padding: 0 0.6rem !important;"
       ><i class="material-icons">add</i></a>
     </div>
 
     <div
-      class="input-field col s12"
-      style="margin-top: 1.4rem; max-height: 600px; overflow-y: scroll"
+      class="input-field"
+      style="margin-top: 2.4rem; max-height: 600px; overflow-x: hidden; overflow-y: scroll;"
     >
       <template v-for="item in option">
         <div class="row">
-          <div class="col s2 m1">
+          <div class="col-xs-2 col-sm-1">
             <a
               @click="option.$remove(item)"
               class="waves-effect waves-light btn red"
@@ -55,7 +54,7 @@
             ><i class="material-icons">clear</i></a>
           </div>
 
-          <div class="col s10 m11">
+          <div class="col-xs-10 col-sm-11">
             <markdown
               :model.sync="item.content"
               :length="1000"
@@ -68,9 +67,9 @@
   </div>
 </template>
 
-<script type="text/babel">
-  import Markdown from '../../../components/form/markdown.vue'
-  import MaterializeSelect from '../../../components/form/select.vue'
+<script>
+  import Markdown from '~/components/form/markdown.vue'
+  import MaterializeSelect from '~/components/form/select.vue'
 
   export default {
     props: {

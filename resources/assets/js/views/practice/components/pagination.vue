@@ -1,5 +1,5 @@
 <template>
-  <section class="center">
+  <section class="center" style="margin: 1.5rem 0;">
     <ul class="pagination">
       <li class="waves-effect"><a @click="changePage(Math.max(current - 1, 1))"><i class="material-icons">chevron_left</i></a></li>
 
@@ -14,7 +14,7 @@
   </section>
 </template>
 
-<script type="text/babel">
+<script>
   export default {
     props: {
       current: {
