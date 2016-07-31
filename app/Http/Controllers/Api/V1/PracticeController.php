@@ -11,7 +11,7 @@ class PracticeController extends Controller
     /**
      * Get all available exams.
      *
-     * @return \Dingo\Api\Http\Response
+     * @return array|\Illuminate\Database\Eloquent\Collection
      */
     public function exam()
     {
@@ -31,7 +31,7 @@ class PracticeController extends Controller
      *
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return Exam
      */
     public function processing($name)
     {

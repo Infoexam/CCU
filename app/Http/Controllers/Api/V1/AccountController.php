@@ -12,7 +12,7 @@ class AccountController extends Controller
      *
      * @param Request $request
      *
-     * @return \Dingo\Api\Http\Response
+     * @return mixed
      */
     public function profile(Request $request)
     {

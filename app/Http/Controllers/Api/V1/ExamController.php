@@ -11,7 +11,7 @@ class ExamController extends Controller
     /**
      * Get the exam list.
      *
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
@@ -31,7 +31,7 @@ class ExamController extends Controller
      *
      * @param ExamRequest $request
      *
-     * @return \Dingo\Api\Http\Response
+     * @return Exam
      */
     public function store(ExamRequest $request)
     {
@@ -51,7 +51,7 @@ class ExamController extends Controller
      *
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return Exam
      */
     public function show($name)
     {
@@ -68,7 +68,7 @@ class ExamController extends Controller
      * @param ExamRequest $request
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return Exam
      */
     public function update(ExamRequest $request, $name)
     {

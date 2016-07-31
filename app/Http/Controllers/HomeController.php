@@ -23,7 +23,7 @@ class HomeController extends Controller
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Dingo\Api\Http\Response
      */
     public function deploy(Request $request)
     {

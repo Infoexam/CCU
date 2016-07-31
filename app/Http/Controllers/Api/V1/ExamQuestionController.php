@@ -21,7 +21,7 @@ class ExamQuestionController extends Controller
      *
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function index($name)
     {
@@ -60,7 +60,7 @@ class ExamQuestionController extends Controller
      * @param string $name
      * @param string $uuid
      *
-     * @return \Dingo\Api\Http\Response
+     * @return Question
      */
     public function show($name, $uuid)
     {
@@ -106,6 +106,8 @@ class ExamQuestionController extends Controller
      *
      * @param Question $question
      * @param $options
+     *
+     * @return void
      *
      * @throws \Exception
      */
@@ -154,7 +156,7 @@ class ExamQuestionController extends Controller
      *
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return array|\Illuminate\Database\Eloquent\Collection
      */
     public function groups($name)
     {

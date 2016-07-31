@@ -15,7 +15,7 @@ class ExamImageController extends Controller
      * @param Request $request
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return array
      */
     public function index(Request $request, $name)
     {
@@ -30,7 +30,7 @@ class ExamImageController extends Controller
      * @param ExamImageRequest $request
      * @param string $name
      *
-     * @return \Dingo\Api\Http\Response
+     * @return array
      */
     public function store(ExamImageRequest $request, $name)
     {

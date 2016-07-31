@@ -12,7 +12,8 @@ class CategoryController extends Controller
      *
      * @param string $category
      * @param string|null $name
-     * @return \Dingo\Api\Http\Response
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|Category
      */
     public function filter($category, $name = null)
     {
