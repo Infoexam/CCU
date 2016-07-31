@@ -28,9 +28,7 @@ class Firewall
 
         $this->checkForMaintenance();
 
-        if (config('infoexam.firewall_on')) {
-            $this->checkFirewall($request);
-        }
+//        $this->checkFirewall($request);
 
         return $next($request);
     }

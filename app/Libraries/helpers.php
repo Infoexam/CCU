@@ -1,19 +1,5 @@
 <?php
 
-if (! function_exists('file_build_path')) {
-    /**
-     * Builds a file path with the appropriate directory separator.
-     *
-     * @param array|string ...$segments
-     *
-     * @return string
-     */
-    function file_build_path(...$segments)
-    {
-        return implode(DIRECTORY_SEPARATOR, $segments);
-    }
-}
-
 if (! function_exists('_asset')) {
     /**
      * Generate an asset path for the application.

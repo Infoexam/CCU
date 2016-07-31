@@ -108,7 +108,7 @@ class Deploy extends Command
         $dir = config('infoexam.composer_home');
 
         if (empty($dir)) {
-            $dir = file_build_path(sys_get_temp_dir(), 'composer-temp-dir');
+            $dir = sys_get_temp_dir().'/composer-temp-dir';
 
             if (! File::exists($dir)) {
                 File::makeDirectory($dir);
@@ -169,9 +169,11 @@ class Deploy extends Command
             return;
         }
 
+        $version = Entity::VERSION;
+
         File::copyDirectory(
-            public_path(file_build_path('assets', 'js')),
-            file_build_path($targetDir, 'js', Entity::VERSION)
+            public_path('assets/js'),
+            "{$targetDir}/js/{$version}"
         );
     }
 
