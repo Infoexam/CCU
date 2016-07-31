@@ -113,6 +113,10 @@ class PreprocessConnection
 
         $csp->addDirective('upgrade-insecure-requests', $this->request->secure());
 
+        if (! empty($staticUrl = config('infoexam.static_url'))) {
+            $csp->addSource('script', $staticUrl);
+        }
+
         $this->response->withHeaders($csp->getHeaderArray());
     }
 }
