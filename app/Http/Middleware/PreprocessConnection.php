@@ -117,6 +117,6 @@ class PreprocessConnection
             $csp->addSource('script', $staticUrl);
         }
 
-        $this->response->withHeaders($csp->getHeaderArray());
+        $this->response->withHeaders($csp->getHeaderArray(false));
     }
 }
