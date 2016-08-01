@@ -29,7 +29,7 @@ class Authenticate
             $this->iptables($request->ip(), $role);
         } elseif (is_null($user)) {
             throw new UnauthorizedHttpException('Unauthorized');
-        } elseif (! $user->is($role)) {
+        } elseif (! is_null($role) && ! $user->is($role)) {
             throw new AccessDeniedHttpException;
         }
 
@@ -50,8 +50,8 @@ class Authenticate
             ->filter(function ($rule) use ($role) {
                 return $rule['role'] === $role;
             })
-            ->keys()
-            ->all();
+            ->pluck('ip')
+            ->toArray();
 
         // 防火牆檢查
         $allow = (new Firewall())->setDefaultState(false)

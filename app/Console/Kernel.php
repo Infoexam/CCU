@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Deploy::class,
+        Commands\Firewall::class,
         Commands\Sync\Account::class,
         Commands\Sync\Certificate::class,
         Commands\Sync\Department::class,
