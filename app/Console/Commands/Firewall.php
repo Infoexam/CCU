@@ -89,7 +89,7 @@ class Firewall extends Command
         $this->rules->push([
             'index' => $index,
             'ip' => $this->promptForIp(),
-            'role' => '管理頁面' === $target ? 'admin' : 'testing'
+            'role' => '管理頁面' === $target ? 'admin' : 'testing',
         ]);
 
         $this->touched = true;
