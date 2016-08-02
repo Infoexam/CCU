@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Configs\Config;
 use Cache;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -15,17 +16,19 @@ class Firewall extends Command
      * @var string
      */
     protected $signature = 'firewall 
-                            {--l|list : 列出所有防火牆規則}
+                            {--l|list : 列出防火牆規則}
                             {--a|add : 新增規則}
                             {--d|delete : 刪除規則}
-                            {--c|clear : 清空規則}';
+                            {--c|clear : 清空規則}
+                            {--r|restore : 從資料庫回復規則}
+                            {--save : 將更動備份到資料庫}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '管理網佔防火牆規則';
+    protected $description = '管理網站防火牆規則';
 
     /**
      * The firewall rules.
@@ -56,13 +59,11 @@ class Firewall extends Command
             $this->delete();
         } elseif ($this->option('clear')) {
             $this->clear();
+        } elseif ($this->option('restore')) {
+            $this->restore();
         }
 
-        if ($this->touched) {
-            $this->rules = $this->rules->sortBy('index', SORT_NUMERIC)->values();
-
-            Cache::tags('config')->forever('iptables', $this->rules);
-        }
+        $this->updateIfTouched();
 
         $this->table(['#', 'IP 位址', '目標'], $this->rules);
     }
@@ -191,14 +192,57 @@ class Firewall extends Command
     }
 
     /**
-     * Write a string as information output.
+     * Restore rules from database.
+     *
+     * @return void
+     */
+    protected function restore()
+    {
+        $rules = Config::find('iptables');
+
+        if (is_null($rules)) {
+            $this->warn('資料庫中無防火牆規則可回復，資料未更動');
+
+            return;
+        }
+
+        $this->rules = new Collection(json_decode($rules->getAttribute('value'), true));
+
+        $this->touched = true;
+
+        $this->info('回復成功');
+    }
+
+    /**
+     * Update cache and database record if the rules had been touched.
+     *
+     * @return void
+     */
+    protected function updateIfTouched()
+    {
+        if (! $this->touched) {
+            return;
+        }
+
+        $this->rules = $this->rules->sortBy('index', SORT_NUMERIC)->values();
+
+        Cache::tags('config')->forever('iptables', $this->rules);
+
+        if ($this->option('save')) {
+            Config::updateOrCreate(['key' => 'iptables'], ['value' => $this->rules]);
+        }
+    }
+
+    /**
+     * Write a string as standard output.
      *
      * @param  string  $string
+     * @param  string  $style
      * @param  null|int|string  $verbosity
      * @return void
      */
-    public function info($string, $verbosity = null)
+    public function line($string, $style = null, $verbosity = null)
     {
-        parent::info($string.PHP_EOL, $verbosity);
+        parent::line($string.PHP_EOL, $style, $verbosity);
     }
 }
