@@ -83,12 +83,12 @@ class Firewall extends Command
 
         if (PHP_INT_MAX !== $index) {
             $this->reindex($index);
-        } else {
-            $index = ($this->rules->max('index') ?? 0) + 1;
         }
 
+        $max = $this->rules->max('index') ?? 0;
+
         $this->rules->push([
-            'index' => $index,
+            'index' => $index > $max ? $max + 1 : $index,
             'ip' => $this->promptForIp(),
             'role' => '管理頁面' === $target ? 'admin' : 'testing',
         ]);
