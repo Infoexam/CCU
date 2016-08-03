@@ -14,16 +14,39 @@ class MediaLibraryUrlGenerator extends BaseUrlGenerator implements UrlGenerator
      */
     public function getUrl() : string
     {
-        $prefix = config('laravel-medialibrary.media_url');
+        static $prefix = null;
 
-        if (empty($prefix)) {
-            $filesystem = config('laravel-medialibrary.defaultFilesystem');
-
-            $root = config("filesystems.disks.{$filesystem}.root");
-
-            $prefix = str_replace(public_path(), '', $root);
+        if (is_null($prefix)) {
+            $prefix = $this->prefix();
         }
 
         return $prefix.'/'.$this->getPathRelativeToRoot();
+    }
+
+    /**
+     * Get the url prefix.
+     *
+     * @return string
+     */
+    protected function prefix()
+    {
+        $prefix = config('laravel-medialibrary.media_url');
+
+        return empty($prefix) ? $this->localStorage() : $prefix;
+    }
+
+
+    /**
+     * Get image url from local filesystem.
+     *
+     * @return string
+     */
+    protected function localStorage()
+    {
+        $filesystem = config('laravel-medialibrary.defaultFilesystem');
+
+        $root = config("filesystems.disks.{$filesystem}.root");
+
+        return str_replace(public_path(), '', $root);
     }
 }

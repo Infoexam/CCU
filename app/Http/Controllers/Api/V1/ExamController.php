@@ -96,7 +96,7 @@ class ExamController extends Controller
      */
     public function destroy($name)
     {
-        if (! Exam::where('name', $name)->firstOrFail(['id'])->delete()) {
+        if (! Exam::where('name', $name)->firstOrFail(['id', 'name'])->delete()) {
             $this->response->errorInternal();
         }
 

@@ -116,6 +116,8 @@ class Exam extends Entity implements HasMediaConversions
 
         static::deleting(function (self $exam) {
             if (! $exam->forceDeleting) {
+                $exam->deletePreservingMedia = true;
+
                 $exam->update(['name' => $exam->getAttribute('name').'-'.Carbon::now()->timestamp]);
             } else {
                 foreach ($exam->load(['questions'])->getRelation('questions') as $question) {

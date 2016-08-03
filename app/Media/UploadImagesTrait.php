@@ -20,7 +20,7 @@ trait UploadImagesTrait
 
         foreach ($files as $file) {
             $media[] = $this->addMedia($file)
-                ->setFileName(random_int(1000000000, 2147483647).'.'.$file->guessExtension())
+                ->setFileName('origin.'.$file->guessExtension())
                 ->toMediaLibrary($collection);
         }
 
