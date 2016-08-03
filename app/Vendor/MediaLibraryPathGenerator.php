@@ -55,7 +55,7 @@ class MediaLibraryPathGenerator implements PathGenerator
     {
         return implode('-', [
             substr($media->getAttribute('created_at')->timestamp, 4),
-            app(Hashids::class)->encode($media->getAttribute('id'), $media->getAttribute('model_id'))
+            app(Hashids::class)->encode($media->getAttribute('id'), $media->getAttribute('model_id')),
         ]);
     }
 }
