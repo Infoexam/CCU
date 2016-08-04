@@ -35,7 +35,6 @@ class MediaLibraryUrlGenerator extends BaseUrlGenerator implements UrlGenerator
         return empty($prefix) ? $this->localStorage() : $prefix;
     }
 
-
     /**
      * Get image url from local filesystem.
      *

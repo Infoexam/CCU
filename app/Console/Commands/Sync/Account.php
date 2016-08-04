@@ -240,7 +240,7 @@ class Account extends Sync
         Cache::put(implode('|', [
             $this->uuid,
             $update ? 'update' : 'create',
-            $index
+            $index,
         ]), $data, 180);
     }
 

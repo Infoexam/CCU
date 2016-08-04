@@ -124,7 +124,7 @@ class Certificate extends Sync
                 $this->categories[$certificate->getAttribute('category_id')] => [
                     'score' => $certificate->getAttribute('score'),
                     'free' => $certificate->getAttribute('free'),
-                ]
+                ],
             ];
         })
             ->flatten(1)
