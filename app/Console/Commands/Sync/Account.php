@@ -2,11 +2,16 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Infoexam\General\Category;
-use App\Infoexam\User\Role;
-use App\Infoexam\User\User;
+use App\Accounts\Certificate;
+use App\Accounts\User;
+use App\Categories\Category;
+use Cache;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+use Ko\ProcessManager;
+use Ramsey\Uuid\Uuid;
 
 class Account extends Sync
 {
@@ -15,264 +20,310 @@ class Account extends Sync
      *
      * @var string
      */
-    protected $signature = 'sync:account {student_id? : 學號}';
+    protected $signature = 'sync:account';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '將中心帳號資料同步到本地資料庫';
+    protected $description = '將學籍帳號資料同步到本地資料庫';
 
     /**
-     * 資料來源.
+     * Unique identity for current process string.
+     *
+     * @var string
+     */
+    protected $uuid = 'sync:account';
+
+    /**
+     * Mapping departments code to id.
      *
      * @var array
      */
-    protected $rs;
+    protected $departments = [];
 
     /**
-     * 目的地資料.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
-    protected $rd;
-
-    /**
-     * 資料對應表.
+     * Mapping grades code to id.
      *
      * @var array
      */
-    protected $mapTable = [
-        'gender' => ['F' => 'female', 'M' => 'male'],
-        'grade' => ['1' => 'freshman', '2' => 'sophomore', '3' => 'junior', '4' => 'senior'],
-    ];
+    protected $grades = [];
 
     /**
      * Execute the console command.
      *
-     * @return array
+     * @return mixed
      */
     public function handle()
     {
-        $this->initMapTable();
+        $this->uuid = Uuid::uuid4();
 
-        $this->rs = $this->getSourceData();
+        $this->mapping();
 
-        $this->rd = User::with(['certificates', 'department', 'gender', 'grade'])->get();
+        $this->fetch()
+            ->each(function ($group, $method) {
+                $this->{$method}($group);
+            });
 
-        $this->syncDestinationData($this->groupData());
-
-        return parent::handle();
+        $this->certificates();
     }
 
     /**
-     * 初始話 mapTable.
+     * Create departments and grades mapping data.
      *
      * @return void
      */
-    protected function initMapTable()
+    protected function mapping()
     {
-        $certificates = Category::getCategories('exam.category');
+        $this->departments = Category::getCategories('user.department')
+            ->pluck('id', 'name')
+            ->toArray();
 
-        $this->mapTable['certificates'] = [
-            'count' => $certificates->count(),
-            'ids' => $certificates->pluck('id')->all(),
-        ];
+        $this->grades = Category::getCategories('user.grade')
+            ->pluck('name', 'id')
+            ->transform(function ($name) {
+                static $mapping = [
+                    'freshman' => '1',
+                    'sophomore' => '2',
+                    'junior' => '3',
+                    'senior' => '4',
+                ];
 
-        $this->mapTable['now'] = Carbon::now();
+                return $mapping[$name] ?? '5';
+            })
+            ->unique()
+            ->flip()
+            ->toArray();
     }
 
     /**
-     * 取得中心帳號資料.
+     * Get data and group by create or update.
      *
-     * @return array
+     * @return Collection
      */
-    protected function getSourceData()
+    protected function fetch()
     {
-        $db = DB::connection('elearn')->table('std_info');
+        $this->info('Fetching data...');
 
-        // 指定帳號
-        if (! is_null($this->argument('student_id'))) {
-            $db->where('std_no', $this->argument('student_id'));
-        }
+        $local = $this->local();
 
-        return $this->trimData($db->get());
-    }
+        return $this->remote()
+            ->map(function (array $user) use ($local) {
+                $model = $offset = $local->where('username', $user['std_no'])->keys()->first();
 
-    /**
-     * 將資料分群.
-     *
-     * @return array
-     */
-    protected function groupData()
-    {
-        $groups = ['create' => [], 'update' => [], 'syncCertificates' => []];
-        $indexes = $this->rd->pluck('username')->all();
+                if (! is_null($offset)) {
+                    $model = $local->get($offset);
 
-        foreach ($this->rs as $key => $user) {
-            $index = array_search($user->std_no, $indexes, true);
-
-            if (false === $index) {
-                $groups['create'][] = $key;
-            } elseif ($this->isDirty($this->rd[$index], $user)) {
-                $groups['update'][] = ['rd' => $index, 'rs' => $key];
-            } elseif ($this->rd[$index]->getRelation('certificates')->count() !== $this->mapTable['certificates']['count']) {
-                $groups['syncCertificates'][] = $index;
-            } else {
-                ++$this->analysis['notAffect'];
-            }
-        }
-
-        $this->analysis['total'] = count($this->rs);
-        $this->analysis['create'] = count($groups['create']);
-        $this->analysis['update'] = count($groups['update']) + count($groups['syncCertificates']);
-
-        return $groups;
-    }
-
-    /**
-     * 判斷帳號資料是否需要更新.
-     *
-     * @param User $rd
-     * @param $rs
-     * @return bool
-     */
-    protected function isDirty(User $rd, $rs)
-    {
-        switch (false) {
-            case $rd->getAttribute('name') === $rs->name:
-            case $rd->getAttribute('email') === $rs->email:
-            case $rd->getAttribute('ssn') === $rs->id_num:
-            case $rd->getRelation('gender')->getAttribute('name') === $this->mapTable['gender'][$rs->sex]:
-            case $rd->getRelation('department')->getAttribute('name') === $rs->deptcd:
-            case isset($this->mapTable['grade'][$rs->now_grade]):
-            case $rd->getRelation('grade')->getAttribute('name') === $this->mapTable['grade'][$rs->now_grade]:
-            case $rd->getAttribute('class') === $rs->now_class:
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * 同步資料.
-     *
-     * @param array $data
-     */
-    protected function syncDestinationData($data)
-    {
-        $this->create($data['create']);
-
-        $this->update($data['update']);
-
-        $this->syncCertificates($data['syncCertificates']);
-
-        $this->analysis['success'] = $this->analysis['updated'] + $this->analysis['created'];
-    }
-
-    /**
-     * 新增帳號
-     *
-     * @param array $indexes
-     */
-    protected function create(array $indexes)
-    {
-        $delayInserts = ['certificates' => [], 'roles' => []];
-        $roleId = Role::where('name', 'undergraduate')->first()->getAttribute('id');
-
-        foreach ($indexes as $index) {
-            $user = User::create(array_merge([
-                'username' => $this->rs[$index]->std_no,
-                'password' => bcrypt($this->rs[$index]->user_pass),
-            ], $this->commonFields($index)));
-
-            if (! $user->exists) {
-                ++$this->analysis['fail'];
-            } else {
-                foreach ($this->mapTable['certificates']['ids'] as $id) {
-                    $delayInserts['certificates'][] = [
-                        'user_id' => $user->getAttribute('id'),
-                        'category_id' => $id,
-                        'created_at' => $this->mapTable['now'],
-                        'updated_at' => $this->mapTable['now'],
-                    ];
+                    $local->forget($offset);
                 }
 
-                $delayInserts['roles'][] = ['user_id' => $user->getAttribute('id'), 'role_id' => $roleId];
+                $user['_type'] = is_null($model) ? 'create' : 'update';
+                $user['_model'] = $model;
+
+                return $user;
+            })
+            ->groupBy('_type');
+    }
+
+    /**
+     * Get synchronous data.
+     *
+     * @return Collection
+     */
+    protected function remote()
+    {
+        $data = DB::connection('elearn')->table('std_info')->get();
+
+        $data = $data instanceof Collection ? $data : new Collection($data);
+
+        return $this->trim($data);
+    }
+
+    /**
+     * Get synchronized data.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function local()
+    {
+        return User::all();
+    }
+
+    /**
+     * Create new users.
+     *
+     * @param Collection $users
+     *
+     * @return void
+     */
+    protected function create(Collection $users)
+    {
+        $this->info('Sync new accounts...');
+
+        $manager = new ProcessManager();
+
+        $count = $users->chunk(intval(ceil($users->count() / 8)))
+            ->each(function ($users, $index) use ($manager) {
+                $manager->fork(function () use ($users, $index) {
+                    $this->parallel($users, $index);
+                });
+            })
+            ->count();
+
+        $manager->wait();
+
+        for ($i = 0; $i < $count; ++$i) {
+            $chucks = Cache::pull("{$this->uuid}|create|{$i}", []);
+
+            foreach (array_chunk($chucks, 1000) as $chuck) {
+                User::insert($chuck);
             }
         }
-
-        DB::table('certificates')->insert($delayInserts['certificates']);
-        DB::table('role_user')->insert($delayInserts['roles']);
-
-        $this->analysis['created'] = count($delayInserts['roles']);
     }
 
     /**
-     * 更新帳號
+     * Update exist users.
      *
-     * @param array $indexes
-     */
-    protected function update(array $indexes)
-    {
-        foreach ($indexes as $index) {
-            $this->rd[$index['rd']]->update($this->commonFields($index['rs']))
-                ? ++$this->analysis['updated']
-                : ++$this->analysis['fail'];
-        }
-    }
-
-    /**
-     * 更新測驗資料.
+     * @param Collection $users
      *
-     * @param array $indexes
+     * @return void
      */
-    protected function syncCertificates(array $indexes)
+    protected function update(Collection $users)
     {
-        $inserts = [];
+        $this->info('Sync exist accounts...');
 
-        foreach ($indexes as $index) {
-            $ids = array_diff(
-                $this->mapTable['certificates']['ids'],
-                $this->rd[$index]->getRelation('certificates')->pluck('category_id')->all()
-            );
-
-            foreach ($ids as $id) {
-                $inserts[] = [
-                    'user_id' => $this->rd[$index]->getAttribute('id'),
-                    'category_id' => $id,
-                    'created_at' => $this->mapTable['now'],
-                    'updated_at' => $this->mapTable['now'],
-                ];
+        $users->each(function (array $user) {
+            if ($this->isModified($user)) {
+                $user['_model']->update($this->user($user, true));
             }
-        }
-
-        DB::table('certificates')->insert($inserts);
-
-        $this->analysis['updated'] += count($indexes);
+        });
     }
 
     /**
-     * 取得新增與更新共同之欄位.
+     * Check remote data is same as local or not.
      *
+     * @param array $user
+     *
+     * @return bool
+     */
+    protected function isModified(array $user)
+    {
+        $model = $user['_model'];
+
+        return ! (
+            $user['name'] === $model->getAttribute('name') &&
+            $user['email'] === $model->getAttribute('email') &&
+            $user['sex'] === $model->getAttribute('gender') &&
+            ($this->departments[$user['deptcd']] ?? $this->departments['0000']) == $model->getAttribute('department_id') &&
+            ($this->grades[$user['now_grade']] ?? $this->grades[5]) == $model->getAttribute('grade_id') &&
+            $user['now_class'] === $model->getAttribute('class')
+        );
+    }
+
+    /**
+     * Parallel compute the user data, bcrypt is time-consuming.
+     *
+     * @param Collection $users
      * @param int $index
+     * @param bool $update
+     *
+     * @return void
+     */
+    protected function parallel(Collection $users, $index, $update = false)
+    {
+        $data = $users->map(function (array $user) use ($update) {
+            return $this->user($user, $update);
+        })
+            ->toArray();
+
+        Cache::put(implode('|', [
+            $this->uuid,
+            $update ? 'update' : 'create',
+            $index
+        ]), $data, 180);
+    }
+
+    /**
+     * Get user data according to create or update.
+     *
+     * @param array $user
+     * @param bool $update
+     *
      * @return array
      */
-    protected function commonFields($index)
+    protected function user(array $user, $update = false)
     {
-        $gradeName = isset($this->mapTable['grade'][$this->rs[$index]->now_grade])
-            ? $this->mapTable['grade'][$this->rs[$index]->now_grade]
-            : 'deferral';
-
-        return [
-            'name' => $this->rs[$index]->name,
-            'email' => $this->rs[$index]->email,
-            'ssn' => $this->rs[$index]->id_num,
-            'gender_id' => Category::getCategories('user.gender', $this->mapTable['gender'][$this->rs[$index]->sex], true),
-            'department_id' => Category::getCategories('user.department', $this->rs[$index]->deptcd, true),
-            'grade_id' => Category::getCategories('user.grade', $gradeName, true),
-            'class' => $this->rs[$index]->now_class,
+        $info = [
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'gender' => $user['sex'],
+            'department_id' => $this->departments[$user['deptcd']] ?? $this->departments['0000'],
+            'grade_id' => $this->grades[$user['now_grade']] ?? $this->grades[5],
+            'class' => $user['now_class'],
         ];
+
+        if (! $update) {
+            $now = Carbon::now()->toDateTimeString();
+
+            $info['username'] = $user['std_no'];
+            $info['role'] = starts_with($user['std_no'], '4') ? 'under' : 'graduate';
+            $info['password'] = bcrypt($user['user_pass']);
+            $info['created_at'] = $now;
+            $info['updated_at'] = $now;
+        }
+
+        return $info;
+    }
+
+    /**
+     * Sync user certificates.
+     *
+     * @return void
+     */
+    protected function certificates()
+    {
+        $this->info('Sync certificates...');
+
+        Category::getCategories('exam.category')
+            ->each(function (Category $category) {
+                $new = array_map(function ($userId) use ($category) {
+                    $now = Carbon::now()->toDateTimeString();
+
+                    return [
+                        'user_id' => $userId,
+                        'category_id' => $category->getAttribute('id'),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }, $this->userIdsForCreate($category->getAttribute('id')));
+
+                foreach (array_chunk($new, 1000) as $chuck) {
+                    Certificate::insert($chuck);
+                }
+            });
+    }
+
+    /**
+     * Get user ids that do not have specific certificate record.
+     *
+     * @param int $categoryId
+     *
+     * @return array
+     */
+    protected function userIdsForCreate($categoryId)
+    {
+        static $users = null;
+
+        if (is_null($users)) {
+            $users = User::where('role', 'under')->get(['id'])->pluck('id')->all();
+        }
+
+        return array_diff(
+            $users,
+            User::whereHas('certificates', function (Builder $query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            })->get(['id'])->pluck('id')->all()
+        );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Accounts;
 
 use App\Core\Entity;
+use Carbon\Carbon;
 
 class Receipt extends Entity
 {
@@ -21,9 +22,30 @@ class Receipt extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['receipt_no', 'receipt_date', 'category_id'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
     protected $dates = ['created_at'];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (self $receipt) {
+            $receipt->setAttribute('created_at', Carbon::now());
+        });
+    }
 }

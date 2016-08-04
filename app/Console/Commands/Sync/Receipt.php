@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Infoexam\General\Category;
-use App\Infoexam\User\Receipt as ReceiptEntity;
-use App\Infoexam\User\User;
+use App\Accounts\User;
+use App\Categories\Category;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Collection;
+use Log;
 
 class Receipt extends Sync
 {
@@ -22,98 +23,126 @@ class Receipt extends Sync
      *
      * @var string
      */
-    protected $description = '更新本地資料庫的收據資料';
+    protected $description = '更新本地資料庫繳費資料';
 
     /**
      * Execute the console command.
      *
-     * @return array
+     * @return mixed
      */
     public function handle()
     {
-        $receipts = $this->getSourceData();
+        $this->fetch()
+            ->pipe(function ($self) {
+                $this->info('Sync data...');
 
-        $this->analysis['total'] = $receipts->count();
+                return $self;
+            })
+            ->each(function (array $receipt) {
+                $user = User::with(['receipts'])
+                    ->where('username', $this->studentId($receipt['payer_name']))
+                    ->first();
 
-        $this->syncDestinationData($receipts);
+                if (! is_null($user)) {
+                    $model = $user->receipts()->save($this->receipt($receipt));
 
-        return parent::handle();
+                    DB::table('certificates')
+                        ->where('user_id', $model->getAttribute('user_id'))
+                        ->where('category_id', $model->getAttribute('category_id'))
+                        ->increment('free');
+                } else {
+                    Log::error('sync:receipt', [
+                        'type' => 'user-not-found',
+                        'receipt_no' => $receipt['receipt_no'],
+                        'student_id' => $this->studentId($receipt['payer_name']),
+                    ]);
+                }
+            });
     }
 
     /**
-     * 取得收據資料.
+     * Get data to be handle.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    protected function getSourceData()
+    protected function fetch()
     {
-        $receipts = DB::connection('receipt')->table('c0etreceipt_mt')
+        $this->info('Fetching data...');
+
+        return $this->remote();
+    }
+
+    /**
+     * Get synchronous data.
+     *
+     * @return Collection
+     */
+    protected function remote()
+    {
+        $data = DB::connection('receipt')
+            ->table('c0etreceipt_mt')
             ->where('receipt_date', (Carbon::yesterday()->year - 1911).(Carbon::yesterday()->format('md')))
             ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
+            ->where('note', 'like', '資訊能力%')
             ->where('acc5_cd', '422Y-300')
             ->get();
 
-        return collect($this->trimData($receipts));
+        $data = $data instanceof Collection ? $data : new Collection($data);
+
+        return $this->trim($data);
     }
 
     /**
-     * 同步資料.
+     * Get synchronized data.
      *
-     * @param \Illuminate\Support\Collection $receipts
-     * @return void
+     * @return null
      */
-    protected function syncDestinationData($receipts)
+    protected function local()
     {
-        $this->analysis['create'] = $receipts->count();
-
-        foreach ($receipts as $receipt) {
-            /** @var User $user */
-            $user = User::where('username', $this->getStudentId($receipt))->first();
-
-            if (null === $user) {
-                $this->userNotFound($user);
-            } elseif (! ReceiptEntity::where('receipt_no', $receipt->receipt_no)->exists()) {
-                $user->receipts()->save(new ReceiptEntity([
-                    'receipt_no' => $receipt->receipt_no,
-                    'receipt_date' => $receipt->receipt_date,
-                    'category_id' => $this->getCategoryId($receipt),
-                ]))
-                    ? ++$this->analysis['created']
-                    : ++$this->analysis['fail'];
-            }
-        }
+        return null;
     }
 
     /**
-     * 取得該收據的使用者學號
+     * Get student id number.
      *
-     * @param $receipt
+     * @param string $name
+     *
      * @return string
      */
-    protected function getStudentId($receipt)
+    protected function studentId($name)
     {
-        return mb_substr($receipt->payer_name, mb_strpos($receipt->payer_name, ':') + 1, 9);
-    }
-
-    protected function userNotFound($user)
-    {
-        ++$this->analysis['fail'];
-
-        // TODO: Log error
+        return mb_substr($name, mb_strpos($name, ':') + 1, 9);
     }
 
     /**
-     * 取得對應類別id.
+     * Get receipt info.
      *
-     * @param $receipt
+     * @param array $receipt
+     *
+     * @return \App\Accounts\Receipt
+     */
+    protected function receipt(array $receipt)
+    {
+        return new \App\Accounts\Receipt([
+            'receipt_no' => $receipt['receipt_no'],
+            'receipt_date' => $receipt['receipt_date'],
+            'category_id' => $this->categoryId($receipt['note']),
+        ]);
+    }
+
+    /**
+     * Get related category id.
+     *
+     * @param string $note
+     *
      * @return int
      */
-    protected function getCategoryId($receipt)
+    protected function categoryId($note)
     {
         switch (true) {
-            case str_contains($receipt->note, '學科'):
+            case str_contains($note, '學科'):
                 return Category::getCategories('exam.category', 'theory', true);
-            case str_contains($receipt->note, '術科'):
+            case str_contains($note, '術科'):
                 return Category::getCategories('exam.category', 'technology', true);
             default:
                 return Category::getCategories('error', 'general', true);

@@ -3,8 +3,8 @@
 namespace App\Console\Commands\Sync;
 
 use App\Categories\Category;
-use Cache;
 use DB;
+use Illuminate\Support\Collection;
 
 class Department extends Sync
 {
@@ -20,77 +20,64 @@ class Department extends Sync
      *
      * @var string
      */
-    protected $description = '更新本地資料庫的系所代碼資料';
-
-    /**
-     * Local database departments.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
-    protected $departments;
+    protected $description = '更新本地資料庫系所代碼';
 
     /**
      * Execute the console command.
      *
-     * @return array
+     * @return mixed
      */
     public function handle()
     {
-        $departments = $this->getSourceData();
+        $this->fetch()
+            ->pipe(function ($self) {
+                $this->info('Sync data...');
 
-        $this->departments = Category::getCategories('user.department');
-
-        $this->analysis['total'] = $departments->count();
-
-        $this->syncDestinationData($departments);
-
-        Cache::forget('categoriesTable');
-
-        return parent::handle();
-    }
-
-    /**
-     * 取得系所代碼資料.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    protected function getSourceData()
-    {
-        return collect($this->trimData(DB::connection('elearn')->table('unit')->get()));
-    }
-
-    /**
-     * 同步資料.
-     *
-     * @param \Illuminate\Support\Collection $departments
-     * @return void
-     */
-    protected function syncDestinationData($departments)
-    {
-        foreach ($departments as $department) {
-            $exists = $this->departments->search(function (Category $item) use ($department) {
-                return $item->getAttribute('name') === $department->cd;
-            });
-
-            if (false !== $exists) {
-                if ($this->departments[$exists]->getAttribute('remark') !== $department->name) {
-                    $this->departments[$exists]->update(['remark' => $department->name]);
-
-                    ++$this->analysis['updated'];
-                } else {
-                    ++$this->analysis['notAffect'];
-                }
-            } else {
-                $category = Category::create([
+                return $self;
+            })
+            ->each(function (array $dept) {
+                Category::updateOrCreate([
                     'category' => 'user.department',
-                    'name' => $department->cd,
-                    'remark' => $department->name,
+                    'name' => $dept['cd'],
+                ], [
+                    'remark' => $dept['name'],
                 ]);
+            });
+    }
 
-                $category->exists ? ++$this->analysis['created'] : ++$this->analysis['fail'];
-            }
-        }
+    /**
+     * Get data to be handle.
+     *
+     * @return Collection
+     */
+    protected function fetch()
+    {
+        $this->info('Fetching data...');
 
-        $this->analysis['success'] = $this->analysis['created'] + $this->analysis['updated'];
+        return $this->remote();
+    }
+
+    /**
+     * Get synchronous data.
+     *
+     * @return Collection
+     */
+    protected function remote()
+    {
+        $data = DB::connection('elearn')->table('unit')->get();
+
+        $data = $data instanceof Collection ? $data : new Collection($data);
+
+        return $this->trim($data);
+    }
+
+    /**
+     * Get synchronized data.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function local()
+    {
+        return Category::getCategories('user.department');
     }
 }

@@ -30,6 +30,13 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
     ];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'email', 'gender', 'department_id', 'grade_id', 'class'];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

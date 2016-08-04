@@ -28,11 +28,19 @@ class Category extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['category', 'name', 'remark'];
+
+    /**
      * Get filtered categories.
      *
      * @param null|string $category
      * @param null|string $name
      * @param bool $getKey
+     *
      * @return \Illuminate\Database\Eloquent\Collection|mixed|null|string
      */
     public static function getCategories($category = null, $name = null, $getKey = true)
@@ -64,11 +72,12 @@ class Category extends Entity
      * @param \Illuminate\Database\Eloquent\Collection $collection
      * @param string $column
      * @param mixed $value
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     protected static function filterBy($collection, $column, $value)
     {
-        return $collection->filter(function ($val) use ($column, $value) {
+        return $collection->filter(function (self $val) use ($column, $value) {
             return $value === $val->getAttribute($column);
         })->values();
     }
