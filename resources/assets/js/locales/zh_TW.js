@@ -72,7 +72,10 @@ export default {
   },
 
   exam: {
-    title: '考試（尚未啟用）'
+    title: '考試（尚未啟用）',
+
+    theory: '學科',
+    technology: '術科'
   },
 
   footer: {
@@ -94,6 +97,17 @@ export default {
         create: '新增題目',
         show: '查看題目',
         edit: '編輯題目'
+      }
+    },
+
+    papers: {
+      index: '試卷列表',
+      create: '新增試卷',
+      edit: '編輯試卷',
+
+      questions: {
+        index: '試卷題目列表',
+        update: '編輯試卷題目'
       }
     }
   },

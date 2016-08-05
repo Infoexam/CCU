@@ -105,6 +105,10 @@
 
     created () {
       this.$http.get('categories/f/exam.difficulty').then(response => {
+        for (const category of response.data.categories) {
+          category.name = this.$t('question.difficulty.' + category.name)
+        }
+
         this.difficulties = response.data.categories
       })
     }

@@ -29,7 +29,12 @@ router.map({
       '/exams/:name/edit': { name: 'admin.exams.edit', component: resolve => resolve(require('~/views/exam/edit.vue')), title: 'exams.edit' },
       '/exams/:name/questions': { name: 'admin.exams.questions', component: resolve => resolve(require('~/views/question/list.vue')), title: 'exams.questions.index' },
       '/exams/:name/questions/create': { name: 'admin.exams.questions.create', component: resolve => resolve(require('~/views/question/create.vue')), title: 'exams.questions.create' },
-      '/exams/:name/questions/:uuid/edit': { name: 'admin.exams.questions.edit', component: resolve => resolve(require('~/views/question/edit.vue')), title: 'exams.questions.edit' }
+      '/exams/:name/questions/:uuid/edit': { name: 'admin.exams.questions.edit', component: resolve => resolve(require('~/views/question/edit.vue')), title: 'exams.questions.edit' },
+      '/papers': { name: 'admin.papers', component: resolve => resolve(require('~/views/paper/list.vue')), title: 'papers.index' },
+      '/papers/create': { name: 'admin.papers.create', component: resolve => resolve(require('~/views/paper/create.vue')), title: 'papers.create' },
+      '/papers/:name/edit': { name: 'admin.papers.edit', component: resolve => resolve(require('~/views/paper/edit.vue')), title: 'papers.edit' },
+      '/papers/:name/questions': { name: 'admin.papers.questions', component: resolve => resolve(require('~/views/paper/question/list.vue')), title: 'papers.questions.index' },
+      '/papers/:name/questions/update': { name: 'admin.papers.questions.update', component: resolve => resolve(require('~/views/paper/question/update.vue')), title: 'papers.questions.update' }
     }
   }
 })

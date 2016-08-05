@@ -86,6 +86,16 @@ class Question extends Entity
     }
 
     /**
+     * 題目所屬題庫.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
+    }
+
+    /**
      * The "booting" method of the model.
      *
      * @return void

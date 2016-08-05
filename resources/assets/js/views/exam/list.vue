@@ -19,7 +19,7 @@
               <img v-if="exam.cover" :src="exam.cover" style="max-width: 196px;">
             </a>
           </td>
-          <td>{{ exam.category.name }}</td>
+          <td>{{ $t('exam.' + exam.category.name ) }}</td>
           <td><available-icon :available.once="exam.enable"></available-icon></td>
           <td>
             <action-button

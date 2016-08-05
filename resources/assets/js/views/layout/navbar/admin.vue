@@ -42,7 +42,7 @@
       </li>
 
       <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
+        <ul class="collapsible" data-collapsible="expandable">
           <li class="bold">
             <a
               class="collapsible-header active waves-effect waves-teal"
@@ -52,6 +52,19 @@
               <ul>
                 <li v-link-active><a v-link="{ name: 'admin.exams', exact: true }">題庫列表</a></li>
                 <li v-link-active><a v-link="{ name: 'admin.exams.create', exact: true }">新增題庫</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="bold">
+            <a
+              class="collapsible-header active waves-effect waves-teal"
+            ><i class="fa fa-file-text fa-fw" aria-hidden="true"></i>試卷</a>
+
+            <div class="collapsible-body">
+              <ul>
+                <li v-link-active><a v-link="{ name: 'admin.papers', exact: true }">試卷列表</a></li>
+                <li v-link-active><a v-link="{ name: 'admin.papers.create', exact: true }">新增試卷</a></li>
               </ul>
             </div>
           </li>

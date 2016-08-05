@@ -24,11 +24,20 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
     });
 
     $api->group(['middleware' => 'auth:admin'], function (ApiRouter $api) {
-        $api->resource('exams', 'ExamController', ['except' => ['create', 'edit'], 'parameters' => ['exams' => 'name', 'questions' => 'uuid']]);
+        $api->resource('exams', 'ExamController', ['except' => ['create', 'edit'], 'parameters' => [
+            'exams' => 'name',
+            'questions' => 'uuid',
+            'papers' => 'name',
+        ]]);
         $api->resource('exams.images', 'ExamImageController', ['only' => ['index', 'store', 'destroy']]);
         $api->get('exams/{name}/questions/groups', 'ExamQuestionController@groups');
         $api->post('exams/{name}/questions/import', 'ExamQuestionController@import');
         $api->resource('exams.questions', 'ExamQuestionController');
+
+        $api->resource('papers', 'PaperController', ['except' => ['create', 'edit']]);
+        $api->get('papers/{name}/questions/all', 'PaperQuestionController@all');
+        $api->get('papers/{name}/questions/show', 'PaperQuestionController@show');
+        $api->resource('papers.questions', 'PaperQuestionController', ['only' => ['index', 'store']]);
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
     });

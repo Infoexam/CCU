@@ -7,6 +7,7 @@
         type="text"
         class="validate"
         maxlength="48"
+        length="48"
         required
       >
       <label for="name" :class="{ active: ! create }">題庫名稱</label>
@@ -91,8 +92,16 @@
 
     created () {
       this.$http.get('categories/f/exam.category').then(response => {
+        for (const category of response.data.categories) {
+          category.name = this.$t('exam.' + category.name)
+        }
+
         this.categories = response.data.categories
       })
+    },
+
+    ready () {
+      $('#name').characterCounter()
     }
   }
 </script>
