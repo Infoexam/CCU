@@ -25,17 +25,17 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     *
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('down')->dailyAt('02:00');
+        $schedule->command('sync:department')->dailyAt('02:00');
+        $schedule->command('sync:account')->dailyAt('02:05');
+        $schedule->command('sync:receipt')->dailyAt('02:15');
 
-        $schedule->command('sync:department')->monthly()->at('02:05')->evenInMaintenanceMode()->withoutOverlapping();
-        $schedule->command('sync:account')->dailyAt('02:10')->evenInMaintenanceMode()->withoutOverlapping();
-        $schedule->command('sync:receipt')->dailyAt('02:30')->evenInMaintenanceMode()->withoutOverlapping();
-        $schedule->command('sync:certificate')->dailyAt('02:40')->evenInMaintenanceMode()->withoutOverlapping();
-
-        $schedule->command('up')->dailyAt('03:00');
+        if ($this->app->environment('production')) {
+            $schedule->command('sync:certificate')->dailyAt('02:20');
+        }
     }
 }
