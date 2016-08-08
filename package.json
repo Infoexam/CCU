@@ -19,7 +19,7 @@
     "eslint": "^3.2.2",
     "eslint-config-vue": "^1.0.3",
     "eslint-loader": "^1.5.0",
-    "eslint-plugin-html": "^1.5.1",
+    "eslint-plugin-html": "^1.5.2",
     "extract-text-webpack-plugin": "^2.0.0-beta.3",
     "json-loader": "^0.5.4",
     "node-sass": "^3.8.0",

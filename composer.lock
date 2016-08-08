@@ -1239,16 +1239,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "5.2.41",
+            "version": "v5.2.42",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2"
+                "reference": "d1bf46f359d2ede2d4ef847fb79d3758d868f2b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2",
-                "reference": "29ba2e310cfeb42ab6545bcd81ff4c2ec1f6b5c2",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/d1bf46f359d2ede2d4ef847fb79d3758d868f2b7",
+                "reference": "d1bf46f359d2ede2d4ef847fb79d3758d868f2b7",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-07-20 13:13:06"
+            "time": "2016-08-08 13:39:44"
         },
         {
             "name": "laravelcollective/bus",
@@ -2444,16 +2444,16 @@
         },
         {
             "name": "psr/http-message",
-            "version": "1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "shasum": ""
             },
             "require": {
@@ -2481,6 +2481,7 @@
                 }
             ],
             "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
             "keywords": [
                 "http",
                 "http-message",
@@ -2489,7 +2490,7 @@
                 "request",
                 "response"
             ],
-            "time": "2015-05-04 20:22:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "psr/log",
@@ -2726,16 +2727,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "4.7.1",
+            "version": "4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "c795de9388561d9cef7b2609acfba3c1bddf5408"
+                "reference": "6bc0540e7c351e9b5721b13c98d52336e338a1f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/c795de9388561d9cef7b2609acfba3c1bddf5408",
-                "reference": "c795de9388561d9cef7b2609acfba3c1bddf5408",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/6bc0540e7c351e9b5721b13c98d52336e338a1f5",
+                "reference": "6bc0540e7c351e9b5721b13c98d52336e338a1f5",
                 "shasum": ""
             },
             "require": {
@@ -2748,12 +2749,18 @@
                 "spatie/pdf-to-image": "^1.0.1",
                 "spatie/string": "^2.0.0"
             },
+            "conflict": {
+                "php-ffmpeg/php-ffmpeg": "<0.6.1"
+            },
             "require-dev": {
                 "doctrine/dbal": "^2.5.2",
                 "mockery/mockery": "^0.9.4",
                 "orchestra/testbench": "^3.0",
                 "phpunit/phpunit": "^5.0.0",
                 "scrutinizer/ocular": "^1.1"
+            },
+            "suggest": {
+                "php-ffmpeg/php-ffmpeg": "Required for generating video thumbnails"
             },
             "type": "library",
             "autoload": {
@@ -2782,7 +2789,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2016-08-02 09:40:53"
+            "time": "2016-08-06 23:40:23"
         },
         {
             "name": "spatie/pdf-to-image",
