@@ -12,7 +12,7 @@ class AccountController extends Controller
      *
      * @param Request $request
      *
-     * @return mixed
+     * @return \App\Accounts\User
      */
     public function profile(Request $request)
     {

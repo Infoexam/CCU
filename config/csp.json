@@ -12,7 +12,8 @@
   "font-src": {
     "allow": [
       "https://fonts.gstatic.com",
-      "https://cdnjs.cloudflare.com"
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/",
+      "https://cdnjs.cloudflare.com/ajax/libs/materialize/"
     ],
     "self": false
   },
@@ -27,27 +28,29 @@
       "https:"
     ],
     "self": true,
-    "data": true
+    "data": false
   },
   "media-src": [],
   "object-src": [],
   "plugin-types": [],
   "script-src": {
     "allow": [
-      "https://ajax.googleapis.com",
-      "https://cdnjs.cloudflare.com"
+      "https://ajax.googleapis.com/ajax/libs/jquery/",
+      "https://cdnjs.cloudflare.com/ajax/libs/materialize/"
     ],
     "hashes": [
       { "sha256": "6w7vfY25rjzxRvjgGUXxQWVtH2vipu/5/hnX06LWvHo=" }
     ],
     "self": true,
     "unsafe-inline": false,
-    "unsafe-eval": true
+    "unsafe-eval": false
   },
   "style-src": {
     "allow": [
-      "https://fonts.googleapis.com",
-      "https://cdnjs.cloudflare.com"
+      "https://fonts.googleapis.com/icon",
+      "https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/",
+      "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/",
+      "https://cdnjs.cloudflare.com/ajax/libs/materialize/"
     ],
     "self": true,
     "unsafe-inline": true

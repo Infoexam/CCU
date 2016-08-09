@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'HvrDgI1fgckuXcbjspZ5Dpx9fE0W7KNT'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -109,6 +109,8 @@ return [
     */
 
     'log' => env('APP_LOG', 'daily'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -214,7 +216,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
