@@ -106,17 +106,16 @@ class Account extends Sync
     {
         $this->info('Fetching data...');
 
-        $local = $this->local();
+        $indexes = $this->local()
+            ->map(function (User $user) {
+                return ['key' => $user->getAttribute('username'), 'value' => $user];
+            })
+            ->pluck('value', 'key')
+            ->all();
 
         return $this->remote()
-            ->map(function (array $user) use ($local) {
-                $model = $offset = $local->where('username', $user['std_no'])->keys()->first();
-
-                if (! is_null($offset)) {
-                    $model = $local->get($offset);
-
-                    $local->forget($offset);
-                }
+            ->map(function (array $user) use ($indexes) {
+                $model = $indexes[$user['std_no']] ?? null;
 
                 $user['_type'] = is_null($model) ? 'create' : 'update';
                 $user['_model'] = $model;
@@ -136,6 +135,8 @@ class Account extends Sync
         $data = DB::connection('elearn')->table('std_info')->get();
 
         $data = $data instanceof Collection ? $data : new Collection($data);
+
+        $data = $data->merge(DB::connection('elearn')->table('std_info2')->get());
 
         return $this->trim($data);
     }
@@ -267,13 +268,34 @@ class Account extends Sync
             $now = Carbon::now()->toDateTimeString();
 
             $info['username'] = $user['std_no'];
-            $info['role'] = starts_with($user['std_no'], '4') ? 'under' : 'graduate';
+            $info['role'] = $this->role($user['std_no']);
             $info['password'] = bcrypt($user['user_pass']);
             $info['created_at'] = $now;
             $info['updated_at'] = $now;
         }
 
         return $info;
+    }
+
+    /**
+     * Get user role according to student id.
+     *
+     * @param string $studentId
+     *
+     * @return string
+     */
+    protected function role($studentId)
+    {
+        switch (mb_substr($studentId, 0, 1)) {
+            case '4':
+                return 'under';
+            case '6':
+                return 'post';
+            case '8':
+                return 'doctoral';
+            default:
+                return 'guest';
+        }
     }
 
     /**

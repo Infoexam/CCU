@@ -7,7 +7,7 @@ const production = process.argv.includes('-p')
 
 process.env.NODE_ENV = production ? 'production' : 'local'
 
-module.exports = {
+const config = {
   entry: {
     main: './resources/assets/js/main.js',
     vendor: Object.keys(require('./package.json').dependencies)
@@ -44,5 +44,13 @@ module.exports = {
     new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, comments: false, exclude: /vendor\.js$/ }),
     new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' })
-  ]
+  ],
+
+  devtool: 'source-map'
 }
+
+if (production) {
+  Reflect.deleteProperty(config, 'devtool')
+}
+
+module.exports = config

@@ -4,7 +4,7 @@
       <a v-link="item.link">
         <div class="card hoverable">
           <div class="card-image">
-            <img :src="`/assets/images/${item.title}.png`":alt="item.title">
+            <img :src="imgSrc(item.title)" :alt="item.title">
           </div>
 
           <div class="card-action">
@@ -25,6 +25,12 @@
           { link: '#', title: 'apply' },
           { link: '#', title: 'exam' }
         ]
+      }
+    },
+
+    methods: {
+      imgSrc (title) {
+        return `/assets/images/${title}.png`
       }
     }
   }
