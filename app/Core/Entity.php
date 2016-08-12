@@ -34,7 +34,7 @@ abstract class Entity extends Eloquent
      */
     public function scopeOrderByRand($query)
     {
-        return $query->getQuery()->orderByRaw('RAND()');
+        return $query->orderByRaw('RAND()');
     }
 
     /**

@@ -31,3 +31,17 @@ if (! function_exists('_asset')) {
         ]);
     }
 }
+
+if (! function_exists('random_category')) {
+    /**
+     * Get random category from specific group.
+     *
+     * @param string $category
+     *
+     * @return string
+     */
+    function random_category($category)
+    {
+        return \App\Categories\Category::getCategories($category)->random()->getKey();
+    }
+}

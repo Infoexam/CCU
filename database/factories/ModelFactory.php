@@ -6,77 +6,10 @@ function randomCategory($category)
     return \App\Categories\Category::getCategories($category)->random()->getAttribute('id');
 }
 
-
-/*
- * users and certificates table
- */
-$factory->define(App\Accounts\User::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'username' => $faker->userName,
-        'password' => bcrypt(str_random(10)),
-        'role' => $faker->randomElement(['admin', 'manager', 'student']),
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'gender' => $faker->randomElement(['M', 'F']),
-        'department_id' => randomCategory('user.department'),
-        'grade_id' => randomCategory('user.grade'),
-        'class' => $faker->randomElement(['A', 'B']),
-        'test_count' => $faker->numberBetween(0, 100),
-    ];
-});
-
-$factory->defineAs(App\Accounts\User::class, 'passed', function () use ($factory) {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return array_merge($factory->raw(App\Accounts\User::class), [
-        'passed_score' => $faker->numberBetween(0, 100),
-        'passed_at' => $faker->dateTime,
-    ]);
-});
-
-$factory->define(App\Accounts\Certificate::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'category_id' => randomCategory('exam.category'),
-        'score' => $faker->numberBetween(0, 100),
-    ];
-});
-
-
 /*
  * exam_sets, exam_questions, exam_options, exam_explanations,
  * exam_lists, exam_applies and exam_results tables
  */
-$factory->define(\App\Exams\Exam::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'name' => $faker->name,
-        'category_id' => randomCategory('exam.category'),
-        'enable' => $faker->boolean(),
-    ];
-});
-
-$factory->define(\App\Exams\Question::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'content' => $faker->realText(120),
-        'difficulty_id' => randomCategory('exam.difficulty'),
-        'multiple' => $faker->boolean(),
-    ];
-});
-
-$factory->define(\App\Exams\Option::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'content' => $faker->realText(120),
-    ];
-});
 
 $factory->define(\App\Exams\Listing::class, function () {
     $faker = Faker\Factory::create('zh_TW');
@@ -111,21 +44,6 @@ $factory->define(\App\Exams\Result::class, function () {
         'signed_in_at' => $faker->dateTime,
     ];
 });
-
-
-/*
- * papers table
- */
-$factory->define(\App\Exams\Paper::class, function () {
-    $faker = Faker\Factory::create('zh_TW');
-
-    return [
-        'name' => $faker->name,
-        'remark' => $faker->realText(16),
-        'automatic' => $faker->boolean(),
-    ];
-});
-
 
 /*
  * announcements and faqs table

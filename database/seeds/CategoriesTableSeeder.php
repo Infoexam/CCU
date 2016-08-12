@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
         $static = [
             'error' => ['general', 'not-found'],
             'user.grade' => ['freshman', 'sophomore', 'junior', 'senior', 'deferral', 'admin'],
-            'user.department' => ['0000', '9999'],
+            'user.department' => ['未知系所' => '0000', '管理員' => '9999', '測試' => '123'],
             'exam.category' => ['theory', 'technology'],
             'exam.difficulty' => ['easy', 'middle', 'hard'],
             'exam.subject' => ['app-theory', 'app-tech', 'soft-theory', 'soft-tech'],
@@ -24,10 +24,12 @@ class CategoriesTableSeeder extends Seeder
         ];
 
         foreach ($static as $category => $items) {
-            foreach ($items as $item) {
-                Category::firstOrCreate([
+            foreach ($items as $key => $item) {
+                Category::updateOrCreate([
                     'category' => $category,
                     'name' => $item,
+                ], [
+                    'remark' => is_int($key) ? null : $key,
                 ]);
             }
         }

@@ -1,7 +1,9 @@
 <?php
 
-use App\Accounts\User;
 use App\Accounts\Certificate;
+use App\Accounts\Receipt;
+use App\Accounts\User;
+use App\Categories\Category;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -13,31 +15,26 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = Role::all()->pluck('id');
-
-        if (app()->environment(['local', 'testing'])) {
-            if (! User::where('username', '=', 'test')->exists()) {
-                factory(User::class)->create([
-                    'username' => 'test',
-                    'password' => bcrypt('test'),
-                ])->roles()->sync($roles->all());
-            }
+        if (app()->environment(['local', 'testing']) && ! User::where('username', 'test')->exists()) {
+            factory(User::class)->create([
+                'username' => 'test',
+                'password' => bcrypt('test'),
+                'role'     => 'admin',
+            ]);
         }
 
-        factory(User::class, mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificates()->save(factory(Certificate::class)->make());
+        $categories = Category::getCategories('exam.category')->pluck('id')->toArray();
 
-            $r = $roles->random(mt_rand(1, $roles->count()));
+        factory(User::class, mt_rand(20, 25))
+            ->create()
+            ->merge(factory(User::class, 'passed', mt_rand(20, 25))->create())
+            ->each(function (User $user) use ($categories) {
+                foreach ($categories as $category) {
+                    $user->certificates()
+                        ->save(factory(Certificate::class)->make(['category_id' => $category]));
+                }
 
-            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
-        });
-
-        factory(User::class, 'passed', mt_rand(15, 30))->create()->each(function (User $user) use ($roles) {
-            $user->certificates()->save(factory(Certificate::class)->make());
-
-            $r = $roles->random(mt_rand(1, $roles->count()));
-
-            $user->roles()->sync(is_int($r) ? [$r] : $r->all());
-        });
+                $user->receipts()->saveMany(factory(Receipt::class)->make());
+            });
     }
 }
