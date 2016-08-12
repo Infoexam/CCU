@@ -1,4 +1,5 @@
 import Cache from '~/components/cache'
+import QueryString from 'query-string'
 import Toast from '~/components/toast'
 
 function install (Vue) {
@@ -70,8 +71,10 @@ function install (Vue) {
     },
 
     created () {
-      if (Cache.getItem('signIn') && null !== Cache.getItem('user')) {
-        this.user = Cache.getItem('user')
+      const search = QueryString.parse(location.search)
+
+      if ((Cache.getItem('signIn') && null !== Cache.getItem('user')) || (undefined !== search.oauth)) {
+        this.user = Cache.getItem('user', {})
 
         this.$http.get('account/profile').then(response => {
           this.$emit('signIn', response.data.user)

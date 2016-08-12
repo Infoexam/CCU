@@ -65,7 +65,7 @@ class AuthController extends Controller
             }
         }
 
-        return Redirect::home();
+        return Redirect::to('/?oauth');
     }
 
     /**
@@ -85,7 +85,7 @@ class AuthController extends Controller
             }
         }
 
-        return Redirect::home();
+        return Redirect::to('/?oauth');
     }
 
     /**
