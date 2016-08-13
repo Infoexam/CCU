@@ -224,13 +224,13 @@ class Deploy extends Command
      */
     protected function setupCache()
     {
-        $this->call('api:cache');
+        $this->externalCommand('php artisan api:cache');
 
-        $this->call('config:cache');
+        $this->externalCommand('php artisan config:cache');
 
-        $this->call('clear-compiled');
+        $this->externalCommand('php artisan clear-compiled');
 
-        $this->call('optimize');
+        $this->externalCommand('php artisan optimize');
     }
 
     /**
