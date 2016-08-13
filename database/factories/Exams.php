@@ -1,7 +1,6 @@
 <?php
 
 /** @var Illuminate\Database\Eloquent\Factory $factory */
-
 use App\Exams\Exam;
 use App\Exams\Option;
 use App\Exams\Paper;
