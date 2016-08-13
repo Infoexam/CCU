@@ -166,6 +166,7 @@ return [
         Collective\Bus\BusServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
 

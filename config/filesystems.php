@@ -59,12 +59,9 @@ return [
             'visibility' => 'public',
         ],
 
-        's3' => [
-            'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
+        'backup' => [
+            'driver' => 'local',
+            'root'   => env('BACKUP_ROOT', storage_path('app')),
         ],
 
     ],

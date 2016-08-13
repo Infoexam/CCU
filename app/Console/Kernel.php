@@ -36,6 +36,8 @@ class Kernel extends ConsoleKernel
 
         if ($this->app->environment('production')) {
             $schedule->command('sync:certificate')->dailyAt('02:20');
+            $schedule->command('backup:clean')->dailyAt('03:00');
+            $schedule->command('backup:run')->dailyAt('03:30');
         }
     }
 }

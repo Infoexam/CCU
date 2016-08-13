@@ -21,7 +21,8 @@
     "ramsey/uuid": "~3.4",
     "spatie/laravel-medialibrary": "^4.0",
     "venturecraft/revisionable": "~1.28",
-    "vinkla/hashids": "~2.4"
+    "vinkla/hashids": "~2.4",
+    "spatie/laravel-backup": "^3.9"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "~2.0",
