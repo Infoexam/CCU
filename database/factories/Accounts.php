@@ -1,7 +1,6 @@
 <?php
 
 /** @var Illuminate\Database\Eloquent\Factory $factory */
-
 use App\Accounts\Certificate;
 use App\Accounts\Receipt;
 use App\Accounts\User;

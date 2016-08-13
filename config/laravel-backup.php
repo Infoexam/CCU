@@ -97,8 +97,8 @@ return [
              * After cleaning up the backups remove the oldest backup until
              * this amount of megabytes has been reached.
              */
-            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 204800
-        ]
+            'deleteOldestBackupsWhenUsingMoreMegabytesThan' => 204800,
+        ],
     ],
 
 
@@ -173,8 +173,8 @@ return [
             'token'  => env('PUSHOVER_APP_TOKEN'),
             'user'   => env('PUSHOVER_USER_KEY'),
             'sounds' => [
-                'success' => env('PUSHOVER_SOUND_SUCCESS','pushover'),
-                'error'   => env('PUSHOVER_SOUND_ERROR','siren'),
+                'success' => env('PUSHOVER_SOUND_SUCCESS', 'pushover'),
+                'error'   => env('PUSHOVER_SOUND_ERROR', 'siren'),
             ],
         ],
 
@@ -187,5 +187,5 @@ return [
             'async_requests' => env('TELEGRAM_ASYNC_REQUESTS', false),
             'disable_web_page_preview' => env('TELEGRAM_DISABLE_WEB_PAGE_PREVIEW', true),
         ],
-    ]
+    ],
 ];
