@@ -36,8 +36,9 @@
 
     <ul id="navbar-mobile" class="side-nav fixed">
       <li class="center">
-        <a v-link="{ name: 'admin.exams' }">
-          <object type="image/svg+xml" data="res/materialize.svg">Infoexam</object>
+        <a v-link="{ name: 'admin', exact: true }">
+          <!--<object type="image/svg+xml" data="res/materialize.svg">Infoexam</object>-->
+          Infoexam
         </a>
       </li>
 

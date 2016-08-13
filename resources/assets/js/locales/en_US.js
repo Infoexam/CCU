@@ -87,6 +87,8 @@ Skills test : Programming`
     signIn: 'Sign In',
     practice: 'Practice',
 
+    admin: '管理介面',
+
     exams: {
       index: '題庫列表',
       create: '新增題庫',

@@ -40,6 +40,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->resource('papers.questions', 'PaperQuestionController', ['only' => ['index', 'store']]);
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
+        $api->get('revisions', 'RevisionController@index');
     });
 });
 

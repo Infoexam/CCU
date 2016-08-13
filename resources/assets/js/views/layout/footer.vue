@@ -20,7 +20,7 @@
         <ul class="col-xs-12 col-md-offset-2 col-md-4">
           <li v-if="$auth.is('admin')">
             <a
-              v-link="{ name: 'admin.exams' }"
+              v-link="{ name: 'admin', exact: true }"
               class="grey-text text-lighten-3"
             ><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>{{ $t('footer.dashboard') }}</a>
           </li>

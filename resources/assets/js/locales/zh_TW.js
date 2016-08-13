@@ -87,6 +87,8 @@ export default {
     signIn: '登入',
     practice: '題庫練習',
 
+    admin: '管理介面',
+
     exams: {
       index: '題庫列表',
       create: '新增題庫',
