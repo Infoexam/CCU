@@ -158,7 +158,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\HashidsServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
         /*
@@ -168,6 +167,7 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class,
 
     ],
 
@@ -217,6 +217,7 @@ return [
 
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
+        'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
 
     ],
 

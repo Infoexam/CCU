@@ -3,9 +3,12 @@
 namespace App\Core;
 
 use Eloquent;
+use Venturecraft\Revisionable\RevisionableTrait;
 
 abstract class Entity extends Eloquent
 {
+    use RevisionableTrait;
+
     /**
      * Application version.
      */
@@ -17,6 +20,13 @@ abstract class Entity extends Eloquent
      * @var int
      */
     protected $perPage = 10;
+
+    /**
+     * Check if we should store creations in our revision history.
+     *
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
 
     /**
      * The attributes that should be replace sensitive characters.
@@ -55,7 +65,7 @@ abstract class Entity extends Eloquent
             }
 
             // Replace sensitive characters to '-'
-            static $search = [' ', '/', '#', '　'];
+            static $search = [' ', '\\', '/', '#', '　'];
 
             foreach ($model->urlSensitive as $key) {
                 $model->setAttribute($key, str_replace($search, '-', $model->getAttribute($key)));

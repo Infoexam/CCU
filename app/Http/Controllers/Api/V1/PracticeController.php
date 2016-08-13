@@ -15,7 +15,7 @@ class PracticeController extends Controller
      */
     public function exam()
     {
-        $exams = Exam::where('enable', true)->latest()->get(['id', 'name']);
+        $exams = Exam::has('questions')->where('enable', true)->latest()->get(['id', 'name']);
 
         $exams->each(function (Exam $exam) {
             $media = $exam->getFirstMedia('cover');

@@ -19,7 +19,9 @@
     "paragonie/csp-builder": "^2.0",
     "predis/predis": "~1.0",
     "ramsey/uuid": "~3.4",
-    "spatie/laravel-medialibrary": "^4.0"
+    "spatie/laravel-medialibrary": "^4.0",
+    "venturecraft/revisionable": "~1.28",
+    "vinkla/hashids": "~2.4"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "~2.0",
@@ -39,7 +41,10 @@
     ],
     "psr-4": {
       "App\\": "app/"
-    }
+    },
+    "exclude-from-classmap": [
+      "vendor/venturecraft/revisionable/src/migrations/2013_04_09_062329_create_revisions_table.php"
+    ]
   },
   "autoload-dev": {
     "classmap": [

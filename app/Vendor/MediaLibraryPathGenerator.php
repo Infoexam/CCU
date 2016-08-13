@@ -2,7 +2,7 @@
 
 namespace App\Vendor;
 
-use Hashids\Hashids;
+use Hashids;
 use Spatie\MediaLibrary\Media;
 use Spatie\MediaLibrary\PathGenerator\PathGenerator;
 
@@ -55,7 +55,7 @@ class MediaLibraryPathGenerator implements PathGenerator
     {
         return implode('-', [
             substr($media->getAttribute('created_at')->timestamp, 4),
-            app(Hashids::class)->encode($media->getAttribute('id'), $media->getAttribute('model_id')),
+            Hashids::connection()->encode($media->getAttribute('id'), $media->getAttribute('model_id')),
         ]);
     }
 }
