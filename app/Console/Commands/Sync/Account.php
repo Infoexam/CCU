@@ -67,6 +67,8 @@ class Account extends Sync
             });
 
         $this->certificates();
+
+        $this->postHandle();
     }
 
     /**

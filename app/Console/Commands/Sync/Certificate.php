@@ -59,6 +59,8 @@ class Certificate extends Sync
                         'passed_at' => $user->getAttribute('passed_at'),
                     ]);
             });
+
+        $this->postHandle();
     }
 
     /**

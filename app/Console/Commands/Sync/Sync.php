@@ -2,10 +2,25 @@
 
 namespace App\Console\Commands\Sync;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Log;
 
 abstract class Sync extends Command
 {
+    /**
+     * Log sync.
+     *
+     * @return void
+     */
+    protected function postHandle()
+    {
+        Log::info('sync-success', [
+            'command' => $this->getName(),
+            'sync_at' => Carbon::now()->toDateTimeString(),
+        ]);
+    }
+
     /**
      * Strip whitespace characters.
      *

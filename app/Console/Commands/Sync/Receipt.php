@@ -58,6 +58,8 @@ class Receipt extends Sync
                     ]);
                 }
             });
+
+        $this->postHandle();
     }
 
     /**

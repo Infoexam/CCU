@@ -43,6 +43,8 @@ class Department extends Sync
                     'remark' => $dept['name'],
                 ]);
             });
+
+        $this->postHandle();
     }
 
     /**
