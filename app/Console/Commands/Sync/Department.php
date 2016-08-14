@@ -36,12 +36,13 @@ class Department extends Sync
                 return $self;
             })
             ->each(function (array $dept) {
-                Category::updateOrCreate([
-                    'category' => 'user.department',
-                    'name' => $dept['cd'],
-                ], [
-                    'remark' => $dept['name'],
-                ]);
+                DB::table('categories')
+                    ->updateOrInsert([
+                        'category' => 'user.department',
+                        'name' => $dept['cd'],
+                    ], [
+                        'remark' => $dept['name'],
+                    ]);
             });
 
         $this->postHandle();
