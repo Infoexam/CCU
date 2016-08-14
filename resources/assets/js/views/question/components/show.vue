@@ -1,46 +1,56 @@
+<style lang="sass" scoped>
+  #question-modal {
+    max-height: 80%;
+    height: 80%;
+    width: 80%;
+  }
+
+  blockquote {
+    margin-left: 1rem;
+  }
+
+  .modal-header {
+    border-bottom: solid 1px rgb(189, 189, 189);
+
+    h4, h6 {
+      display: inline-block;
+    }
+  }
+</style>
+
 <template>
-  <div id="question-modal" class="modal modal-fixed-footer" style="max-height: 80%; height: 80%; width: 80%;">
+  <div id="question-modal" class="modal modal-fixed-footer">
     <div class="modal-content">
       <div v-if="loading" class="row middle-xs center-xs" style="height: 100%;">
         <div class="col-xs">
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left"><div class="circle"></div></div>
-              <div class="gap-patch"><div class="circle"></div></div>
-              <div class="circle-clipper right"><div class="circle"></div></div>
-            </div>
-          </div>
+          <loader></loader>
         </div>
       </div>
 
       <template v-else>
-        <h4 style="display: inline-block;">{{ question.uuid }}</h4>
+        <div class="modal-header">
+          <h4>{{ question.uuid }}</h4>
 
-        <span class="grey-text text-darken-1" style="display: inline-block; margin-left: .5rem;">
-            <span>{{ $t('question.difficulty.' + question.difficulty.name) }}</span>
-            <span> / </span>
-            <span>{{ question.multiple ? '多選' : '單選' }}</span>
-          </span>
-
-        <hr>
+          <h6 class="grey-text text-darken-1">{{ info }}</h6>
+        </div>
 
         <p>題目</p>
 
-        <blockquote style="margin-left: 1rem;">
+        <blockquote>
           <markdown :model="question.content"></markdown>
         </blockquote>
 
         <template v-for="option in question.options">
           <p>選項 {{ $index + 1 }}</p>
 
-          <blockquote style="margin-left: 1rem;">
+          <blockquote>
             <markdown :model="option.content"></markdown>
           </blockquote>
         </template>
 
         <p>解析</p>
 
-        <blockquote style="margin-left: 1rem;">
+        <blockquote>
           <markdown :model="question.explanation || '無'"></markdown>
         </blockquote>
       </template>
@@ -53,6 +63,7 @@
 </template>
 
 <script>
+  import Loader from '~/components/loader.vue'
   import Markdown from '~/components/markdown.vue'
 
   export default {
@@ -61,10 +72,20 @@
         question: {
           uuid: '',
           content: '',
+          difficulty: {
+            name: 'middle'
+          },
+          multiple: false,
           options: []
         },
 
         loading: true
+      }
+    },
+
+    computed: {
+      info () {
+        return this.$t(`question.difficulty.${this.question.difficulty.name}`) + ` / ${this.question.multiple ? '多選' : '單選'}`
       }
     },
 
@@ -73,20 +94,22 @@
         this.loading = true
 
         const cache = {
-          css: Object.assign({}, document.body.style),
+          css: document.body.getAttribute('style'),
           scrollY: window.scrollY
         }
 
         $('#question-modal').openModal({
-          out_duration: 0,
-
           ready () {
             document.body.style.top = -cache.scrollY + 'px'
             document.body.style.position = 'fixed'
           },
 
           complete () {
-            Object.assign(document.body.style, cache.css)
+            if (null === cache.css) {
+              document.body.removeAttribute('style')
+            } else {
+              document.body.setAttribute('style', cache.css)
+            }
 
             window.scrollTo(0, cache.scrollY)
           }
@@ -101,6 +124,7 @@
     },
 
     components: {
+      Loader,
       Markdown
     }
   }
