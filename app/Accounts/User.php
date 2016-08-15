@@ -44,6 +44,13 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
     protected $dates = ['passed_at'];
 
     /**
+     * Enable the revisioning or not.
+     *
+     * @var bool
+     */
+    public $revisionEnabled = true;
+
+    /**
      * 取得使用者測驗通過狀態.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

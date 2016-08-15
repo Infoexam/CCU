@@ -9,6 +9,7 @@ return [
         | Enable/Disable cell caching
         |--------------------------------------------------------------------------
         */
+
         'enable'   => true,
 
         /*
@@ -22,6 +23,7 @@ return [
         | memory|gzip|serialized|igbinary|discISAM|apc|memcache|temp|wincache|sqlite|sqlite3
         |
         */
+
         'driver'   => 'memory',
 
         /*
@@ -29,6 +31,7 @@ return [
         | Cache settings
         |--------------------------------------------------------------------------
         */
+
         'settings' => [
 
             'memoryCacheSize' => '32MB',
@@ -41,6 +44,7 @@ return [
         | Memcache settings
         |--------------------------------------------------------------------------
         */
+
         'memcache' => [
 
             'host' => 'localhost',
@@ -74,6 +78,7 @@ return [
     | Sheets settings
     |--------------------------------------------------------------------------
     */
+
     'sheets'     => [
 
         /*
@@ -81,6 +86,7 @@ return [
         | Default page setup
         |--------------------------------------------------------------------------
         */
+
         'pageSetup' => [
             'orientation'           => 'portrait',
             'paperSize'             => '9',
@@ -148,6 +154,7 @@ return [
         | an array of columns ( array('A', 'B') )
         |
         */
+
         'autosize'                    => true,
 
         /*
@@ -171,6 +178,7 @@ return [
         | having the appropriate fonts installed.
         |
         */
+
         'autosize-method'             => PHPExcel_Shared_Font::AUTOSIZE_METHOD_APPROX,
 
         /*
@@ -182,6 +190,7 @@ return [
         | will automatically be used as first row (table heading)
         |
         */
+
         'generate_heading_by_indices' => true,
 
         /*
@@ -189,6 +198,7 @@ return [
         | Auto set alignment on merged cells
         |--------------------------------------------------------------------------
         */
+
         'merged_cell_alignment'       => 'left',
 
         /*
@@ -196,6 +206,7 @@ return [
         | Pre-calculate formulas during export
         |--------------------------------------------------------------------------
         */
+
         'calculate'                   => false,
 
         /*
@@ -203,6 +214,7 @@ return [
         | Include Charts during export
         |--------------------------------------------------------------------------
         */
+
         'includeCharts'               => false,
 
         /*
@@ -210,6 +222,7 @@ return [
         | Default sheet settings
         |--------------------------------------------------------------------------
         */
+
         'sheets'                      => [
 
             /*
@@ -224,6 +237,7 @@ return [
             |    Default order: array(top, right, bottom, left)
             |
             */
+
             'page_margin'          => false,
 
             /*
@@ -231,6 +245,7 @@ return [
             | Value in source array that stands for blank cell
             |--------------------------------------------------------------------------
             */
+
             'nullValue'            => null,
 
             /*
@@ -238,6 +253,7 @@ return [
             | Insert array starting from this cell address as the top left coordinate
             |--------------------------------------------------------------------------
             */
+
             'startCell'            => 'A1',
 
             /*
@@ -245,6 +261,7 @@ return [
             | Apply strict comparison when testing for null values in the array
             |--------------------------------------------------------------------------
             */
+
             'strictNullComparison' => false,
         ],
 
@@ -264,6 +281,7 @@ return [
             | The path we want to save excel file to
             |
             */
+
             'path'       => storage_path('exports'),
 
             /*
@@ -274,6 +292,7 @@ return [
             | Whether we want to return information about the stored file or not
             |
             */
+
             'returnInfo' => false,
 
         ],
@@ -283,6 +302,7 @@ return [
         | PDF Settings
         |--------------------------------------------------------------------------
         */
+
         'pdf'                         => [
 
             /*
@@ -291,6 +311,7 @@ return [
             |--------------------------------------------------------------------------
             | Supported: DomPDF, tcPDF, mPDF
             */
+
             'driver'  => 'DomPDF',
 
             /*
@@ -298,6 +319,7 @@ return [
             | PDF Driver settings
             |--------------------------------------------------------------------------
             */
+
             'drivers' => [
 
                 /*
@@ -305,6 +327,7 @@ return [
                 | DomPDF settings
                 |--------------------------------------------------------------------------
                 */
+
                 'DomPDF' => [
                     'path' => base_path('vendor/dompdf/dompdf/'),
                 ],
@@ -314,6 +337,7 @@ return [
                 | tcPDF settings
                 |--------------------------------------------------------------------------
                 */
+
                 'tcPDF'  => [
                     'path' => base_path('vendor/tecnick.com/tcpdf/'),
                 ],
@@ -323,6 +347,7 @@ return [
                 | mPDF settings
                 |--------------------------------------------------------------------------
                 */
+
                 'mPDF'   => [
                     'path' => base_path('vendor/mpdf/mpdf/'),
                 ],
@@ -455,6 +480,7 @@ return [
         | When set to true, it will return a sheet collection instead.
         |
         */
+
         'force_sheets_collection' => false,
 
         /*
@@ -473,6 +499,7 @@ return [
             | Enable/disable date formatting
             |--------------------------------------------------------------------------
             */
+
             'enabled' => true,
 
             /*
@@ -483,6 +510,7 @@ return [
             | If set to false, a carbon object will return
             |
             */
+
             'format'  => false,
 
             /*
@@ -490,6 +518,7 @@ return [
             | Date columns
             |--------------------------------------------------------------------------
             */
+
             'columns' => [],
         ],
 
@@ -498,6 +527,7 @@ return [
         | Import sheets by config
         |--------------------------------------------------------------------------
         */
+
         'sheets'                  => [
 
             /*
@@ -536,6 +566,7 @@ return [
             | Table headings
             |--------------------------------------------------------------------------
             */
+
             'th'     => [
                 'font' => [
                     'bold' => true,
@@ -548,6 +579,7 @@ return [
             | Strong tags
             |--------------------------------------------------------------------------
             */
+
             'strong' => [
                 'font' => [
                     'bold' => true,
@@ -560,6 +592,7 @@ return [
             | Bold tags
             |--------------------------------------------------------------------------
             */
+
             'b'      => [
                 'font' => [
                     'bold' => true,
@@ -572,6 +605,7 @@ return [
             | Italic tags
             |--------------------------------------------------------------------------
             */
+
             'i'      => [
                 'font' => [
                     'italic' => true,
@@ -584,6 +618,7 @@ return [
             | Heading 1
             |--------------------------------------------------------------------------
             */
+
             'h1'     => [
                 'font' => [
                     'bold' => true,
@@ -596,6 +631,7 @@ return [
             | Heading 2
             |--------------------------------------------------------------------------
             */
+
             'h2'     => [
                 'font' => [
                     'bold' => true,
@@ -608,6 +644,7 @@ return [
             | Heading 2
             |--------------------------------------------------------------------------
             */
+
             'h3'     => [
                 'font' => [
                     'bold' => true,
@@ -620,6 +657,7 @@ return [
              | Heading 4
              |--------------------------------------------------------------------------
              */
+
             'h4'     => [
                 'font' => [
                     'bold' => true,
@@ -632,6 +670,7 @@ return [
              | Heading 5
              |--------------------------------------------------------------------------
              */
+
             'h5'     => [
                 'font' => [
                     'bold' => true,
@@ -644,6 +683,7 @@ return [
              | Heading 6
              |--------------------------------------------------------------------------
              */
+
             'h6'     => [
                 'font' => [
                     'bold' => true,
@@ -656,6 +696,7 @@ return [
              | Hyperlinks
              |--------------------------------------------------------------------------
              */
+
             'a'      => [
                 'font' => [
                     'underline' => true,
@@ -668,6 +709,7 @@ return [
              | Horizontal rules
              |--------------------------------------------------------------------------
              */
+
             'hr'     => [
                 'borders' => [
                     'bottom' => [

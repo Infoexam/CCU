@@ -36,11 +36,11 @@ class Receipt extends Entity
     protected $dates = ['created_at'];
 
     /**
-     * Disable the revisioning.
+     * Enable the revisioning or not.
      *
      * @var bool
      */
-    protected $revisionEnabled = false;
+    public $revisionEnabled = false;
 
     /**
      * The "booting" method of the model.

@@ -26,10 +26,11 @@ return [
      | can also be used. For PDO, run the package migrations first.
      |
      */
+
     'storage' => [
         'enabled' => true,
         'driver' => env('DEBUGBAR_DRIVER', 'file'), // redis, file, pdo
-        'path' => storage_path().'/debugbar', // For file driver
+        'path' => storage_path('debugbar'), // For file driver
         'connection' => null,   // Leave null for default connection (Redis/PDO)
     ],
 
@@ -70,6 +71,7 @@ return [
      | Extension, without the server-side code. It uses Debugbar collectors instead.
      |
      */
+
     'clockwork' => false,
 
     /*
@@ -163,6 +165,7 @@ return [
      | from trying to overcome bugs like this: http://trac.nginx.org/nginx/ticket/97
      |
      */
+
     'route_prefix' => '_debugbar',
 
 ];
