@@ -42,7 +42,7 @@ function install (Vue) {
       },
 
       signOut () {
-        this.$http.get('auth/sign-out').then(response => {
+        this.$http.post('auth/sign-out').then(response => {
           this.$emit('signOut')
         }, response => {
           Toast.failed('Something went wrong.')

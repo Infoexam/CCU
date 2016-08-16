@@ -13,7 +13,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
 
     $api->group(['prefix' => 'auth'], function (ApiRouter $api) {
         $api->post('sign-in', 'AuthController@signIn');
-        $api->get('sign-out', 'AuthController@signOut');
+        $api->post('sign-out', 'AuthController@signOut');
     });
 
     $api->group(['middleware' => 'auth'], function (ApiRouter $api) {
