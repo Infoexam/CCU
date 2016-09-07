@@ -24,7 +24,7 @@
       <label for="remark" :class="{ active: ! create }">備註</label>
     </div>
 
-    <submit :text="$t(`form.submit.${create ? 'create' : 'update'}`)"></submit>
+    <submit :text="submitText"></submit>
   </div>
 </template>
 
@@ -46,6 +46,12 @@
       create: {
         type: Boolean,
         default: false
+      }
+    },
+
+    computed: {
+      submitText () {
+        return this.$t(`form.submit.${this.create ? 'create' : 'update'}`)
       }
     },
 

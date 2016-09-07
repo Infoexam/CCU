@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <submit :text="$t(`form.submit.${create ? 'create' : 'update'}`)"></submit>
+    <submit :text="submitText"></submit>
   </div>
 </template>
 
@@ -82,6 +82,12 @@
     data () {
       return {
         categories: []
+      }
+    },
+
+    computed: {
+      submitText () {
+        return this.$t(`form.submit.${this.create ? 'create' : 'update'}`)
       }
     },
 

@@ -35,7 +35,7 @@
       <form-image></form-image>
     </div>
 
-    <submit :text="$t(`form.submit.${create ? 'create' : 'update'}`)" class="col-xs-12"></submit>
+    <submit :text="submitText" class="col-xs-12"></submit>
   </div>
 </template>
 
@@ -86,6 +86,12 @@
       create: {
         type: Boolean,
         default: false
+      }
+    },
+
+    computed: {
+      submitText () {
+        return this.$t(`form.submit.${this.create ? 'create' : 'update'}`)
       }
     },
 

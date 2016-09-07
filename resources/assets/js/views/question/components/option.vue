@@ -24,13 +24,13 @@
       <template v-for="item in option">
         <input
           v-model="item.answer"
-          :id="`option-${$index}-answer`"
+          :id="optionId($index)"
           type="checkbox"
         >
         <label
-          :for="`option-${$index}-answer`"
+          :for="optionId($index)"
           style="margin-left: .5rem; padding-left: 30px;"
-        >選項 {{ $index + 1 }}</label>
+        >{{ optionNum($index) }}</label>
       </template>
 
       <a
@@ -58,7 +58,7 @@
             <markdown
               :model.sync="item.content"
               :length="1000"
-              :label="`選項 ${$index + 1}`"
+              :label="optionNum($index)"
             ></markdown>
           </div>
         </div>
@@ -95,6 +95,16 @@
     data () {
       return {
         difficulties: []
+      }
+    },
+
+    methods: {
+      optionId (index) {
+        return `option-${index}-answer`
+      },
+
+      optionNum (index) {
+        return `選項 ${index + 1}`
       }
     },
 
