@@ -35,7 +35,7 @@
             <a
               v-else
               @click="$auth.signOut()"
-              class="cursor-pointer grey-text text-lighten-3"
+              class="grey-text text-lighten-3 cursor-pointer"
             ><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>{{ $t('auth.signOut') }}</a>
           </li>
         </ul>
@@ -48,7 +48,7 @@
 
         <a
           class="grey-text text-lighten-4 right"
-          href="http://www.ccu.edu.tw"
+          href="https://www.ccu.edu.tw"
           target="_blank"
         >{{ $t('ccu') }}</a>
       </div>

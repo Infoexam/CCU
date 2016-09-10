@@ -44,10 +44,14 @@ router.afterEach(transition => {
   if (! transition.to.hasOwnProperty('title') || null !== transition.to.title) {
     const title = Vue.t(`title.${transition.to.title || 'infoexam'}`)
 
-    document.title = title
-
     if (transition.to.path.startsWith('/admin')) {
       Vue.share.navbar.title.admin = title
+    }
+
+    document.title = title
+
+    if (transition.to.title && '/' !== transition.to.path) {
+      document.title += ' | ' + Vue.t('title.infoexam')
     }
   }
 })
