@@ -29,7 +29,7 @@ class Authenticate
             $this->iptables($request->ip(), $role);
         } elseif (is_null($user)) {
             throw new UnauthorizedHttpException('Unauthorized');
-        } elseif (! is_null($role) && ! $user->is($role)) {
+        } elseif (! is_null($role) && ! $user->own($role)) {
             throw new AccessDeniedHttpException;
         }
 

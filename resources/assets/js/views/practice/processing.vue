@@ -1,3 +1,10 @@
+<style lang="sass" scoped>
+  .question-content {
+    margin-top: .65rem;
+    margin-bottom: .4rem;
+  }
+</style>
+
 <template>
   <section class="full-width user-select-none">
     <section class="center">
@@ -72,16 +79,14 @@
 
           <markdown
             :model="question.content"
-            style="margin-top: .65rem; margin-bottom: .4rem;"
+            class="question-content"
           ></markdown>
         </div>
 
         <div v-if="question.explanation" class="card-reveal">
           <span class="card-title">{{ $t('practice.explanation') }}<i class="material-icons right">close</i></span>
 
-          <markdown
-            :model="question.explanation"
-          ></markdown>
+          <markdown :model="question.explanation"></markdown>
         </div>
 
         <div class="card-action">

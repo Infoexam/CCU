@@ -67,11 +67,7 @@ class Department extends Sync
      */
     protected function remote()
     {
-        $data = DB::connection('elearn')->table('unit')->get();
-
-        $data = $data instanceof Collection ? $data : new Collection($data);
-
-        return $this->trim($data);
+        return $this->trim(DB::connection('elearn')->table('unit')->get());
     }
 
     /**

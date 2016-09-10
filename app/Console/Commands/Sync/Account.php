@@ -134,11 +134,10 @@ class Account extends Sync
      */
     protected function remote()
     {
-        $data = DB::connection('elearn')->table('std_info')->get();
-
-        $data = $data instanceof Collection ? $data : new Collection($data);
-
-        $data = $data->merge(DB::connection('elearn')->table('std_info2')->get());
+        $data = DB::connection('elearn')
+            ->table('std_info')
+            ->get()
+            ->merge(DB::connection('elearn')->table('std_info2')->get());
 
         return $this->trim($data);
     }

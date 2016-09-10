@@ -105,7 +105,7 @@ class Certificate extends Sync
     /**
      * Get synchronized data.
      *
-     * @return array
+     * @return Collection
      */
     protected function local()
     {

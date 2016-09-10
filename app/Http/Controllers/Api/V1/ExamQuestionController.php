@@ -7,6 +7,7 @@ use App\Exams\Exam;
 use App\Exams\Option;
 use App\Exams\Question;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\ExamQuestionImportRequest;
 use App\Http\Requests\Api\V1\ExamQuestionRequest;
 use Excel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -171,15 +172,13 @@ class ExamQuestionController extends Controller
     /**
      * Import questions using file.
      *
-     * @param Request $request
+     * @param ExamQuestionImportRequest $request
      * @param string $name
      *
      * @return array
      */
-    public function import(Request $request, $name)
+    public function import(ExamQuestionImportRequest $request, $name)
     {
-        $this->validate($request, ['file' => 'required|mimes:xls,xlsx,csv']);
-
         $exam = Exam::where('name', $name)->firstOrFail(['id']);
 
         $sheet = Excel::load($request->file('file')->getRealPath())->get();

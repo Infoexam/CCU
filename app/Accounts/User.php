@@ -76,7 +76,7 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
      * @param string|array $role
      * @return bool
      */
-    public function is($role)
+    public function own($role)
     {
         if (! $this->exists) {
             return false;

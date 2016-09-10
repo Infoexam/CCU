@@ -89,8 +89,6 @@ class Receipt extends Sync
             ->where('acc5_cd', '422Y-300')
             ->get();
 
-        $data = $data instanceof Collection ? $data : new Collection($data);
-
         return $this->trim($data);
     }
 
