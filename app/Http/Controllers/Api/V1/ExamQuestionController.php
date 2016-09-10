@@ -11,7 +11,6 @@ use App\Http\Requests\Api\V1\ExamQuestionImportRequest;
 use App\Http\Requests\Api\V1\ExamQuestionRequest;
 use Excel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Collections\CellCollection;
 use Ramsey\Uuid\Uuid;
 
