@@ -102,7 +102,11 @@
 
           Toast.success('刪除成功')
         }, response => {
-          Toast.failed('刪除失敗')
+          if ('nonEmptyPaper' === response.data.message) {
+            Toast.failed('該題目已用於試卷中，無法刪除')
+          } else {
+            Toast.failed('刪除失敗')
+          }
         })
       }
     },

@@ -96,6 +96,16 @@ class Question extends Entity
     }
 
     /**
+     * 題目所屬試卷.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function papers()
+    {
+        return $this->belongsToMany(Paper::class);
+    }
+
+    /**
      * The "booting" method of the model.
      *
      * @return void

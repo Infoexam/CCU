@@ -43,7 +43,7 @@ class PaperQuestionController extends Controller
         Paper::where('name', $name)
             ->firstOrFail(['id'])
             ->questions()
-            ->sync($request->input('question'));
+            ->sync($request->input('question', []));
 
         return $this->response->created();
     }

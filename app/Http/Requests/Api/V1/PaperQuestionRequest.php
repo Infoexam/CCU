@@ -14,7 +14,7 @@ class PaperQuestionRequest extends Request
     public function rules()
     {
         return [
-            'question'   => 'required|array',
+            'question'   => 'array',
             'question.*' => 'required|integer|exists:questions,id',
         ];
     }

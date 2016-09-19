@@ -142,9 +142,11 @@ class ExamQuestionController extends Controller
             $this->response->errorNotFound();
         }
 
-        $question = Question::where('uuid', $uuid)->firstOrFail();
+        $question = Question::withCount(['papers'])->where('uuid', $uuid)->firstOrFail();
 
-        if (! $question->delete()) {
+        if ($question->getAttribute('papers_count') > 0) {
+            $this->response->error('nonEmptyPaper', 422);
+        } elseif (! $question->delete()) {
             $this->response->errorInternal();
         }
 
