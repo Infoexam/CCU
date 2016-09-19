@@ -81,5 +81,9 @@ ul.pagination a {
   display: inline-flex;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 @import "admin";
 @import "override";

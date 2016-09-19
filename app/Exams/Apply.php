@@ -4,12 +4,9 @@ namespace App\Exams;
 
 use App\Accounts\User;
 use App\Core\Entity;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apply extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -22,7 +19,7 @@ class Apply extends Entity
      *
      * @var array
      */
-    protected $dates = ['paid_at', 'deleted_at'];
+    protected $dates = ['paid_at'];
 
     public function result()
     {

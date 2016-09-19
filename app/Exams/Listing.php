@@ -3,12 +3,9 @@
 namespace App\Exams;
 
 use App\Core\Entity;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Listing extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -21,7 +18,7 @@ class Listing extends Entity
      *
      * @var array
      */
-    protected $dates = ['began_at', 'ended_at', 'started_at', 'deleted_at'];
+    protected $dates = ['began_at', 'ended_at', 'started_at'];
 
     public function applies()
     {

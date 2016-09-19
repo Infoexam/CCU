@@ -4,13 +4,9 @@ namespace App\Exams;
 
 use App\Categories\Category;
 use App\Core\Entity;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Question extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -23,7 +19,7 @@ class Question extends Entity
      *
      * @var array
      */
-    protected $hidden = ['exam_id', 'difficulty_id', 'question_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['exam_id', 'difficulty_id', 'question_id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -31,13 +27,6 @@ class Question extends Entity
      * @var array
      */
     protected $fillable = ['uuid', 'content', 'multiple', 'difficulty_id', 'explanation', 'question_id'];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be cast to native types.
@@ -115,19 +104,19 @@ class Question extends Entity
         parent::boot();
 
         static::deleting(function (self $question) {
-            // Delete the question's sub questions.
-            foreach ($question->load(['questions'])->getRelation('questions') as $subQuestion) {
-                $question->forceDeleting ? $subQuestion->forceDelete() : $subQuestion->delete();
-            }
-
-            if (! $question->forceDeleting) {
-                $question->update(['uuid' => $question->getAttribute('uuid').'-'.Carbon::now()->timestamp]);
-            } else {
-                // Delete the question's options if it is force deleting.
-                $question->load(['options'])->getRelation('options')->each(function (Option $option) {
-                    $option->forceDelete();
+            // Delete sub questions of the question.
+            $question->load(['questions'])
+                ->getRelation('questions')
+                ->each(function (self $subQuestion) {
+                    $subQuestion->delete();
                 });
-            }
+
+            // Delete options of the question.
+            $question->load(['options'])
+                ->getRelation('options')
+                ->each(function (Option $option) {
+                    $option->delete();
+                });
         });
     }
 }

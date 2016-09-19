@@ -3,14 +3,10 @@
 namespace App\Exams;
 
 use App\Core\Entity;
-use Carbon\Carbon;
 use DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Paper extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -24,13 +20,6 @@ class Paper extends Entity
      * @var array
      */
     protected $fillable = ['name', 'remark'];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be replace sensitive characters.
@@ -69,11 +58,10 @@ class Paper extends Entity
         parent::boot();
 
         static::deleting(function (self $paper) {
-            if (! $paper->forceDeleting) {
-                $paper->update(['name' => $paper->getAttribute('name').'-'.Carbon::now()->timestamp]);
-            } else {
-                DB::table('paper_question')->where('paper_id', $paper->getKey())->delete();
-            }
+            // Delete questions of the paper.
+            DB::table('paper_question')
+                ->where('paper_id', $paper->getKey())
+                ->delete();
         });
     }
 }

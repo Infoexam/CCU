@@ -5,14 +5,12 @@ namespace App\Exams;
 use App\Categories\Category;
 use App\Core\Entity;
 use App\Media\UploadImagesTrait;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Exam extends Entity implements HasMediaConversions
 {
-    use HasMediaTrait, SoftDeletes, UploadImagesTrait;
+    use HasMediaTrait, UploadImagesTrait;
 
     /**
      * The table associated with the model.
@@ -26,7 +24,7 @@ class Exam extends Entity implements HasMediaConversions
      *
      * @var array
      */
-    protected $hidden = ['category_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['category_id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -34,13 +32,6 @@ class Exam extends Entity implements HasMediaConversions
      * @var array
      */
     protected $fillable = ['category_id', 'name', 'enable'];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be cast to native types.
@@ -115,17 +106,12 @@ class Exam extends Entity implements HasMediaConversions
         parent::boot();
 
         static::deleting(function (self $exam) {
-            if (! $exam->forceDeleting) {
-                $exam->deletePreservingMedia = true;
-
-                $exam->update(['name' => $exam->getAttribute('name').'-'.Carbon::now()->timestamp]);
-            } else {
-                foreach ($exam->load(['questions'])->getRelation('questions') as $question) {
-                    $question->forceDelete();
-                }
-
-                $exam->clearMediaCollection('');
-            }
+            // Delete questions of the exam.
+            $exam->load(['questions'])
+                ->getRelation('questions')
+                ->each(function (Question $question) {
+                    $question->delete();
+                });
         });
     }
 }

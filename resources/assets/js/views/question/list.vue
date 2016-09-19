@@ -40,10 +40,8 @@
             >{{ question.uuid }}</a>
           </td>
           <td>
-            <action-button
-              :edit="{ name: 'admin.exams.questions.edit', params: { name: exam.name, uuid: question.uuid }}"
-              :destroy="question"
-            ></action-button>
+            <edit-button :edit="{ name: 'admin.exams.questions.edit', params: { name: exam.name, uuid: question.uuid }}"></edit-button>
+            <delete-button :target="question"></delete-button>
           </td>
         </tr>
       </tbody>
@@ -54,7 +52,8 @@
 </template>
 
 <script>
-  import ActionButton from '~/components/actionButton.vue'
+  import DeleteButton from '~/components/button/delete.vue'
+  import EditButton from '~/components/button/edit.vue'
   import Show from './components/show.vue'
   import Toast from '~/components/toast'
 
@@ -112,7 +111,8 @@
     },
 
     components: {
-      ActionButton,
+      DeleteButton,
+      EditButton,
       Show
     }
   }

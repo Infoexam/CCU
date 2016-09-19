@@ -23,10 +23,8 @@
           </td>
           <td>{{ paper.questions_count }}</td>
           <td>
-            <action-button
-              :edit="{ name: 'admin.papers.edit', params: { name: paper.name }}"
-              :destroy="paper"
-            ></action-button>
+            <edit-button :edit="{ name: 'admin.papers.edit', params: { name: paper.name }}"></edit-button>
+            <delete-button :target="paper"></delete-button>
           </td>
         </tr>
       </tbody>
@@ -37,7 +35,8 @@
 </template>
 
 <script>
-  import ActionButton from '~/components/actionButton.vue'
+  import DeleteButton from '~/components/button/delete.vue'
+  import EditButton from '~/components/button/edit.vue'
   import Pagination from '~/components/pagination.vue'
   import Toast from '~/components/toast'
 
@@ -77,7 +76,8 @@
     },
 
     components: {
-      ActionButton,
+      DeleteButton,
+      EditButton,
       Pagination
     }
   }

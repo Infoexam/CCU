@@ -93,6 +93,8 @@ class ExamController extends Controller
      * @param string $name
      *
      * @return \Dingo\Api\Http\Response
+     *
+     * @todo 檢查題目是否已用於試卷
      */
     public function destroy($name)
     {

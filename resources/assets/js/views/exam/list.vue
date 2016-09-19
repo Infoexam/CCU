@@ -16,16 +16,16 @@
             <a v-link="{ name: 'admin.exams.questions', params: { name: exam.name }}">
               <span style="display: block; margin: 10px 0;">{{ exam.name }}</span>
 
-              <img v-if="exam.cover" :src="exam.cover" style="max-width: 196px;">
+              <img :src="exam.cover" style="max-width: 216px;">
             </a>
           </td>
-          <td>{{ $t('exam.' + exam.category.name ) }}</td>
-          <td><available-icon :available.once="exam.enable"></available-icon></td>
+          <td>{{ $t('exam.' + exam.category.name) }}</td>
           <td>
-            <action-button
-              :edit="{ name: 'admin.exams.edit', params: { name: exam.name }}"
-              :destroy="exam"
-            ></action-button>
+            <available-icon :available="exam.enable"></available-icon>
+          </td>
+          <td>
+            <edit-button :edit="{ name: 'admin.exams.edit', params: { name: exam.name }}"></edit-button>
+            <delete-button :target="exam"></delete-button>
           </td>
         </tr>
       </tbody>
@@ -36,8 +36,9 @@
 </template>
 
 <script>
-  import ActionButton from '~/components/actionButton.vue'
   import AvailableIcon from '~/components/icon/available.vue'
+  import DeleteButton from '~/components/button/delete.vue'
+  import EditButton from '~/components/button/edit.vue'
   import Pagination from '~/components/pagination.vue'
   import Toast from '~/components/toast'
 
@@ -73,8 +74,9 @@
     },
 
     components: {
-      ActionButton,
       AvailableIcon,
+      DeleteButton,
+      EditButton,
       Pagination
     }
   }

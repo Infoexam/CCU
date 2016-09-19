@@ -3,12 +3,9 @@
 namespace App\Exams;
 
 use App\Core\Entity;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Option extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -21,7 +18,7 @@ class Option extends Entity
      *
      * @var array
      */
-    protected $hidden = ['question_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $hidden = ['question_id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -29,13 +26,6 @@ class Option extends Entity
      * @var array
      */
     protected $fillable = ['content', 'answer'];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be cast to native types.
