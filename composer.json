@@ -17,7 +17,7 @@
     "paragonie/csp-builder": "~2.0",
     "predis/predis": "~1.1",
     "ramsey/uuid": "~3.5",
-    "spatie/laravel-backup": "~3.10",
+    "spatie/laravel-backup": "~4.0",
     "spatie/laravel-medialibrary": "~4.8",
     "venturecraft/revisionable": "~1.28",
     "vinkla/hashids": "~2.4"
