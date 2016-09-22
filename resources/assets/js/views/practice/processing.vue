@@ -16,98 +16,107 @@
       <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
     </section>
 
-    <div v-if="submitted" class="row practice-result">
-      <div class="col s12 m4">
-        <div class="card-panel green center">
-          <i class="material-icons">panorama_fish_eye</i>
-          <p>{{ $t('practice.statistics.correct') }}</p>
-          <h1>{{ statistics.correct }}</h1>
-        </div>
-      </div>
-
-      <div class="col s12 m4">
-        <div class="card-panel red darken-3 center">
-          <i class="material-icons">clear</i>
-          <p>{{ $t('practice.statistics.incorrect') }}</p>
-          <h1>{{ statistics.total - statistics.blank - statistics.correct }}</h1>
-        </div>
-      </div>
-
-      <div class="col s12 m4">
-        <div class="card-panel light-blue center">
-          <p>{{ $t('practice.statistics.blank') }}</p>
-          <h3>{{ statistics.blank }}</h3>
-          <hr>
-          <p>{{ $t('practice.statistics.total') }}</p>
-          <h3>{{ statistics.total }}</h3>
-        </div>
+    <div v-if="$loadingRouteData" class="row middle-xs center-xs" style="height: calc(100% - 5.5rem);">
+      <div class="col-xs">
+        <loader></loader>
       </div>
     </div>
 
-    <form @submit.prevent="submit()">
-      <section
-        v-for="question in questions"
-        v-show="currentPage === Math.ceil(($index + 1) / perPage)"
-        class="card"
-        :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
-      >
-        <div class="card-content">
-          <div class="card-title">
-            <available-icon
-              v-if="submitted"
-              :available.once="question.correct"
-            ></available-icon>
+    <template v-else>
+      <div v-if="submitted" class="row practice-result">
+        <div class="col s12 m4">
+          <div class="card-panel green center">
+            <i class="material-icons">panorama_fish_eye</i>
+            <p>{{ $t('practice.statistics.correct') }}</p>
+            <h1>{{ statistics.correct }}</h1>
+          </div>
+        </div>
 
-            <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
+        <div class="col s12 m4">
+          <div class="card-panel red darken-3 center">
+            <i class="material-icons">clear</i>
+            <p>{{ $t('practice.statistics.incorrect') }}</p>
+            <h1>{{ statistics.total - statistics.blank - statistics.correct }}</h1>
+          </div>
+        </div>
 
-            <star-icon
-              :total="3"
-              :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
-            ></star-icon>
+        <div class="col s12 m4">
+          <div class="card-panel light-blue center">
+            <p>{{ $t('practice.statistics.blank') }}</p>
+            <h3>{{ statistics.blank }}</h3>
+            <hr>
+            <p>{{ $t('practice.statistics.total') }}</p>
+            <h3>{{ statistics.total }}</h3>
+          </div>
+        </div>
+      </div>
 
-            <span
-              v-if="question.multiple"
-              style="font-size: 0.75rem; vertical-align: middle;"
-            >({{ $t('practice.multiple') }})</span>
+      <form @submit.prevent="submit()">
+        <section
+          v-for="question in questions"
+          v-show="currentPage === Math.ceil(($index + 1) / perPage)"
+          class="card"
+          :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
+        >
+          <div class="card-content">
+            <div class="card-title">
+              <available-icon
+                v-if="submitted"
+                :available.once="question.correct"
+              ></available-icon>
 
-            <span
-              v-if="question.explanation && submitted"
-              :class="{ 'activator': question.explanation }"
-              class="yellow-text text-darken-3 right cursor-pointer"
-            ><i class="material-icons tiny">info</i> {{ $t('practice.explanation') }}</span>
+              <span>{{ $t('form.question', { num: $index + 1 }) }}</span>
+
+              <star-icon
+                :total="3"
+                :active="['easy', 'middle', 'hard'].indexOf(question.difficulty.name) + 1"
+              ></star-icon>
+
+              <span
+                v-if="question.multiple"
+                style="font-size: 0.75rem; vertical-align: middle;"
+              >({{ $t('practice.multiple') }})</span>
+
+              <span
+                v-if="question.explanation && submitted"
+                :class="{ 'activator': question.explanation }"
+                class="yellow-text text-darken-3 right cursor-pointer"
+              ><i class="material-icons tiny">info</i> {{ $t('practice.explanation') }}</span>
+            </div>
+
+            <markdown
+              :model="question.content"
+              class="question-content"
+            ></markdown>
           </div>
 
-          <markdown
-            :model="question.content"
-            class="question-content"
-          ></markdown>
-        </div>
+          <div v-if="question.explanation" class="card-reveal">
+            <span class="card-title">{{ $t('practice.explanation') }}<i class="material-icons right">close</i></span>
 
-        <div v-if="question.explanation" class="card-reveal">
-          <span class="card-title">{{ $t('practice.explanation') }}<i class="material-icons right">close</i></span>
+            <markdown :model="question.explanation"></markdown>
+          </div>
 
-          <markdown :model="question.explanation"></markdown>
-        </div>
+          <div class="card-action">
+            <form-option
+              :option="question.options"
+              :multiple="question.multiple"
+              :submitted="submitted"
+            ></form-option>
+          </div>
+        </section>
 
-        <div class="card-action">
-          <form-option
-            :option="question.options"
-            :multiple="question.multiple"
-            :submitted="submitted"
-          ></form-option>
-        </div>
-      </section>
+        <pagination :current.sync="currentPage" :total="totalPage"></pagination>
 
-      <pagination :current.sync="currentPage" :total="totalPage"></pagination>
-
-      <submit v-if="! submitted"></submit>
-    </form>
+        <submit v-if="! submitted"></submit>
+      </form>
+    </template>
   </section>
 </template>
 
 <script>
   import AvailableIcon from '~/components/icon/available.vue'
   import FormOption from './form/option.vue'
+  import Loader from '~/components/loader.vue'
   import Markdown from '~/components/markdown.vue'
   import Md5 from 'md5'
   import Pagination from './components/pagination.vue'
@@ -225,6 +234,7 @@
     components: {
       AvailableIcon,
       FormOption,
+      Loader,
       Markdown,
       Pagination,
       StarIcon,
