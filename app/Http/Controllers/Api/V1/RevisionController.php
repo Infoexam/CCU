@@ -14,7 +14,7 @@ class RevisionController extends Controller
      */
     public function index()
     {
-        $revisions = Revision::latest()->paginate();
+        $revisions = Revision::latest()->paginate(10);
 
         foreach ($revisions->items() as $revision) {
             $revision->setAttribute('user', $revision->userResponsible());

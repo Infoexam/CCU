@@ -44,28 +44,16 @@
 
       <li class="no-padding">
         <ul class="collapsible" data-collapsible="expandable">
-          <li class="bold">
+          <li v-for="group in navbar" class="bold">
             <a
               class="collapsible-header active waves-effect waves-teal"
-            ><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>題庫</a>
+            ><i :class="[group.icon]" class="fa fa-fw" aria-hidden="true"></i>{{ group.name }}</a>
 
             <div class="collapsible-body">
               <ul>
-                <li v-link-active><a v-link="{ name: 'admin.exams', exact: true }">題庫列表</a></li>
-                <li v-link-active><a v-link="{ name: 'admin.exams.create', exact: true }">新增題庫</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="bold">
-            <a
-              class="collapsible-header active waves-effect waves-teal"
-            ><i class="fa fa-file-text fa-fw" aria-hidden="true"></i>試卷</a>
-
-            <div class="collapsible-body">
-              <ul>
-                <li v-link-active><a v-link="{ name: 'admin.papers', exact: true }">試卷列表</a></li>
-                <li v-link-active><a v-link="{ name: 'admin.papers.create', exact: true }">新增試卷</a></li>
+                <li v-for="link in group.links" v-link-active>
+                  <a v-link="link.href">{{ link.name }}</a>
+                </li>
               </ul>
             </div>
           </li>
@@ -84,6 +72,37 @@
 
 <script>
   export default {
+    data () {
+      return {
+        navbar: [
+          {
+            name: '題庫',
+            icon: 'fa-tasks',
+            links: [
+              { href: { name: 'admin.exams', exact: true }, name: '題庫列表' },
+              { href: { name: 'admin.exams.create', exact: true }, name: '新增題庫' }
+            ]
+          },
+          {
+            name: '試卷',
+            icon: 'fa-file-text',
+            links: [
+              { href: { name: 'admin.papers', exact: true }, name: '試卷列表' },
+              { href: { name: 'admin.papers.create', exact: true }, name: '新增試卷' }
+            ]
+          },
+          {
+            name: '測驗',
+            icon: 'fa-book',
+            links: [
+              { href: { name: 'admin.listings', exact: true }, name: '測驗列表' },
+              { href: { name: 'admin.listings.create', exact: true }, name: '新增測驗' }
+            ]
+          }
+        ]
+      }
+    },
+
     ready () {
       $('header .button-collapse').sideNav({
         closeOnClick: 993 > window.innerWidth

@@ -48,19 +48,24 @@
 
     computed: {
       pages () {
-        let arr = [1]
         const currentPage = this.pagination.current_page
         const lastPage = this.pagination.last_page
+        const pages = []
+        let arr = [1]
+        let prev = 1
+
+        if (isNaN(currentPage) || isNaN(lastPage)) {
+          return arr
+        }
 
         arr.push(currentPage - 1, currentPage, currentPage + 1, lastPage)
 
         // Remove duplicate
-        arr = arr.sort().filter(function (item, pos, self) {
-          return (1 <= item) && (item <= lastPage) && (self.indexOf(item) === pos)
-        })
-
-        const pages = []
-        let prev = 1
+        arr = Array.from(new Set(
+          arr.filter(val => {
+            return 0 < val && val <= lastPage
+          })
+        ))
 
         for (const element of arr) {
           if (1 < element - prev) {

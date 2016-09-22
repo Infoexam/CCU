@@ -68,7 +68,12 @@ export default {
   },
 
   apply: {
-    title: '預約（尚未啟用）'
+    title: '預約（尚未啟用）',
+
+    unlimited: '一般預約',
+    senior_only: '大四專屬',
+    unity: '統一預約',
+    makeup: '衝堂補考'
   },
 
   exam: {
@@ -76,6 +81,13 @@ export default {
 
     theory: '學科',
     technology: '術科'
+  },
+
+  listing: {
+    'app_theory': '電腦應用能力 學科',
+    'app_tech': '電腦應用能力 術科',
+    'soft_theory': '電腦軟體能力 學科',
+    'soft_tech': '電腦軟體能力 術科'
   },
 
   footer: {
@@ -111,6 +123,12 @@ export default {
         index: '試卷題目列表',
         update: '編輯試卷題目'
       }
+    },
+
+    listings: {
+      index: '測驗列表',
+      create: '新增測驗',
+      edit: '編輯測驗',
     }
   },
 

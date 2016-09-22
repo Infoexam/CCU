@@ -125,6 +125,12 @@
     created () {
       // The id default value must assign here
       this.id = this.id || Uuid.v4()
+    },
+
+    ready () {
+      if (! this.binded.options || ! this.binded.model) {
+        this.init()
+      }
     }
   }
 </script>

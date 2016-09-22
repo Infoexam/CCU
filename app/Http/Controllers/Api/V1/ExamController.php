@@ -5,16 +5,23 @@ namespace App\Http\Controllers\Api\V1;
 use App\Exams\Exam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamRequest;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
     /**
      * Get the exam list.
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('listing')) {
+            return Exam::where('enable', true)->get(['id', 'name']);
+        }
+
         $exams = Exam::with(['category'])->latest()->paginate(5);
 
         foreach ($exams->items() as $exam) {

@@ -5,16 +5,25 @@ namespace App\Http\Controllers\Api\V1;
 use App\Exams\Paper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PaperRequest;
+use Illuminate\Http\Request;
 
 class PaperController extends Controller
 {
     /**
      * Get the paper list.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('listing')) {
+            return Paper::withCount(['questions'])
+                ->where('automatic', false)
+                ->get(['id', 'name']);
+        }
+
         return Paper::withCount(['questions'])
             ->orderBy('automatic')
             ->paginate(null, ['name', 'remark']);

@@ -19,7 +19,7 @@ class Paper extends Entity
      *
      * @var array
      */
-    protected $fillable = ['name', 'remark'];
+    protected $fillable = ['name', 'remark', 'automatic'];
 
     /**
      * The attributes that should be replace sensitive characters.
