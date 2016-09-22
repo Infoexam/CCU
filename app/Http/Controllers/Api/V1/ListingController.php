@@ -63,7 +63,7 @@ class ListingController extends Controller
     {
         return $this->service->show($code, [
             'id', 'code', 'began_at', 'duration', 'room', 'applicable',
-            'paper_id', 'apply_type_id', 'subject_id', 'maximum_num', 'applied_num'
+            'paper_id', 'apply_type_id', 'subject_id', 'maximum_num', 'applied_num',
         ]);
     }
 

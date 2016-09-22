@@ -40,7 +40,6 @@ class ListingRequest extends Request
                 $rules['exam'] = 'required|array';
                 $rules['exam.*'] = 'required|integer|exists:exams,id';
             }
-
         }
 
         return $rules;
