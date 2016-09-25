@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "906316513cf60bd8856de146b5369e8c",
-    "content-hash": "a3a93162891e380f6c5e9caa23dd31cf",
+    "hash": "30901238c89a09279c06a3fb0a6fbaf2",
+    "content-hash": "6473e6e5c43eca60886c107a9f2a85de",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -2959,16 +2959,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "4.8.4",
+            "version": "4.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "8c862e270d49e8bbff6f0993900c8bb59ea165ea"
+                "reference": "bb8786724f87c2d187897809849b7dc79a84a4d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/8c862e270d49e8bbff6f0993900c8bb59ea165ea",
-                "reference": "8c862e270d49e8bbff6f0993900c8bb59ea165ea",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/bb8786724f87c2d187897809849b7dc79a84a4d9",
+                "reference": "bb8786724f87c2d187897809849b7dc79a84a4d9",
                 "shasum": ""
             },
             "require": {
@@ -2978,7 +2978,7 @@
                 "illuminate/support": "~5.1.16|~5.2.0|~5.3.0",
                 "php": "^7.0",
                 "spatie/laravel-glide": "^3.0.0",
-                "spatie/pdf-to-image": "^1.0.1",
+                "spatie/pdf-to-image": "^1.2",
                 "spatie/string": "^2.0.0"
             },
             "conflict": {
@@ -2987,8 +2987,7 @@
             "require-dev": {
                 "doctrine/dbal": "^2.5.2",
                 "mockery/mockery": "^0.9.4",
-                "orchestra/database": "3.3.x-dev",
-                "orchestra/testbench": "3.3.x-dev",
+                "orchestra/testbench": "^3.1",
                 "phpunit/phpunit": "^5.0.0",
                 "scrutinizer/ocular": "^1.1"
             },
@@ -3022,7 +3021,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2016-09-14 16:31:49"
+            "time": "2016-09-23 11:54:31"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -4273,28 +4272,28 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "V2.2.3",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "ecd1ce5c4a827e2f6a8fb41bcf67713beb1c1cbd"
+                "reference": "0c87981df959c7c1943abe227baf607c92f204f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/ecd1ce5c4a827e2f6a8fb41bcf67713beb1c1cbd",
-                "reference": "ecd1ce5c4a827e2f6a8fb41bcf67713beb1c1cbd",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/0c87981df959c7c1943abe227baf607c92f204f9",
+                "reference": "0c87981df959c7c1943abe227baf607c92f204f9",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "5.1.*|5.2.*|5.3.*",
-                "maximebf/debugbar": "~1.11.0|~1.12.0",
+                "maximebf/debugbar": "~1.13.0",
                 "php": ">=5.5.9",
                 "symfony/finder": "~2.7|~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -4323,7 +4322,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2016-07-29 15:00:36"
+            "time": "2016-09-15 14:05:56"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -4589,16 +4588,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.12.0",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988"
+                "reference": "5f49a5ed6cfde81d31d89378806670d77462526e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
-                "reference": "e634fbd32cd6bc3fa0e8c972b52d4bf49bab3988",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/5f49a5ed6cfde81d31d89378806670d77462526e",
+                "reference": "5f49a5ed6cfde81d31d89378806670d77462526e",
                 "shasum": ""
             },
             "require": {
@@ -4617,7 +4616,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -4646,7 +4645,7 @@
                 "debug",
                 "debugbar"
             ],
-            "time": "2016-05-15 13:11:34"
+            "time": "2016-09-15 14:01:59"
         },
         {
             "name": "mockery/mockery",
