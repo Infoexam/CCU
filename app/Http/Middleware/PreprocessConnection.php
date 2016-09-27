@@ -7,7 +7,6 @@ use App;
 use Carbon\Carbon;
 use Closure;
 use Config;
-use Hash;
 use ParagonIE\CSPBuilder\CSPBuilder;
 
 class PreprocessConnection
@@ -32,9 +31,6 @@ class PreprocessConnection
     public function handle($request, Closure $next)
     {
         $this->request = $request;
-
-        // Set the password work factor
-        Hash::setRounds(12);
 
         // Set session to secure if the request is secure
         Config::set('session.secure', $this->request->secure());

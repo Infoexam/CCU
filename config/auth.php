@@ -66,7 +66,7 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'infoexam',
             'model' => \App\Accounts\User::class,
         ],
     ],

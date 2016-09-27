@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Extensions\InfoexamUserProvider;
+use Auth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,6 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::provider('infoexam', function ($app, array $config) {
+            return new InfoexamUserProvider($app['hash'], $config['model']);
+        });
     }
 }

@@ -58,6 +58,7 @@
 
 <script>
   import Cache from '~/components/cache'
+  import Vue from '~/vue'
 
   export default {
     data () {
@@ -75,7 +76,7 @@
       changeLocale (locale) {
         Cache.setItem('locale', locale)
 
-        this.$lang.lang = locale
+        Vue.config.lang = locale
       }
     },
 

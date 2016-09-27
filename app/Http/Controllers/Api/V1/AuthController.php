@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Accounts\User;
+use App\Events\SignIn;
 use App\Http\Controllers\Controller;
 use Auth;
 use DOMDocument;
@@ -27,7 +28,11 @@ class AuthController extends Controller
             $this->response->error('auth.failed', 422);
         }
 
-        return Auth::user();
+        $user = Auth::user();
+
+        event(new SignIn($user, $request->only(['username', 'password'])));
+
+        return $user;
     }
 
     /**
