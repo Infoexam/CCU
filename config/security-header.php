@@ -115,6 +115,10 @@ return [
         ],
 
         'style-src' => [
+            'allow' => [
+                env('STATIC_URL', 'http://localhost'),
+            ],
+
             'self' => true,
 
             'unsafe-inline' => true,
@@ -135,6 +139,10 @@ return [
          */
 
         'font-src' => [
+            'allow' => [
+                env('STATIC_URL', 'http://localhost'),
+            ],
+
             'self' => true,
         ],
 
