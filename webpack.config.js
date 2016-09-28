@@ -34,11 +34,6 @@ const config = {
     ]
   },
 
-  // babel: {
-  //   presets: ['es2015'],
-  //   plugins: ['transform-runtime']
-  // },
-
   plugins: [
     new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
     new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),

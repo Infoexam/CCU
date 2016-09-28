@@ -51,14 +51,7 @@ return [
 
     'hpkp' => [
         'hashes' => [
-            [
-                'algo' => 'sha256',
-                'hash' => 'YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=',
-            ],
-            [
-                'algo' => 'sha256',
-                'hash' => 'EdPa1nDt22bZYh+8O/dPc4NvelDJV1dIX1sSB48KLYQ=',
-            ],
+            //
         ],
 
         'include-sub-domains' => true,
