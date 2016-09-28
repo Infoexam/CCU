@@ -2,6 +2,8 @@ require('dotenv').config()
 
 const Webpack = require('webpack')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const WebpackOnBuildPlugin = require('on-build-webpack')
+const exec = require('child_process').exec
 const path = require('path')
 const production = process.argv.includes('-p')
 
@@ -38,7 +40,8 @@ const config = {
     new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
     new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
     new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, comments: false, exclude: /vendor\.js$/ }),
-    new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' })
+    new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' }),
+    new WebpackOnBuildPlugin(stats => { exec('php artisan sri --override') })
   ],
 
   devtool: 'source-map'

@@ -68,7 +68,7 @@ class SubresourceIntegrity extends Command
 
             $this->filesystem->put($path, $content, true);
 
-            $this->info('Success!');
+            $this->info('Successfully update the integrity.');
         }
     }
 
