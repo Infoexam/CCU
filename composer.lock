@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30901238c89a09279c06a3fb0a6fbaf2",
-    "content-hash": "6473e6e5c43eca60886c107a9f2a85de",
+    "hash": "f307ca745ffea65cd291ea0c3c9fba4e",
+    "content-hash": "1fa23fa0561107b32875ed310103f9ef",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -56,6 +56,57 @@
                 "toolkit"
             ],
             "time": "2015-05-16 19:24:58"
+        },
+        {
+            "name": "bepsvpt/laravel-security-header",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BePsvPT/laravel-security-header.git",
+                "reference": "640896ee8806ab6d1b6c8643953834be19d96d4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BePsvPT/laravel-security-header/zipball/640896ee8806ab6d1b6c8643953834be19d96d4a",
+                "reference": "640896ee8806ab6d1b6c8643953834be19d96d4a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "5.1.*|5.2.*|5.3.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*",
+                "paragonie/csp-builder": "^2.0",
+                "paragonie/hpkp-builder": "^0.1",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "~0.3",
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bepsvpt\\LaravelSecurityHeader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "BePsvPT",
+                    "email": "freedom@csie.io"
+                }
+            ],
+            "description": "Append security headers to response for laravel framework.",
+            "keywords": [
+                "header",
+                "hpkp",
+                "hsts",
+                "https",
+                "laravel"
+            ],
+            "time": "2016-08-24 14:58:07"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -2189,6 +2240,60 @@
                 "xss"
             ],
             "time": "2016-04-09 23:18:16"
+        },
+        {
+            "name": "paragonie/hpkp-builder",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/hpkp-builder.git",
+                "reference": "9fb17828da24a88cf823c695273703dfbd939a86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/hpkp-builder/zipball/9fb17828da24a88cf823c695273703dfbd939a86",
+                "reference": "9fb17828da24a88cf823c695273703dfbd939a86",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/constant_time_encoding": "^2",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ParagonIE\\HPKPBuilder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0+",
+                "MIT",
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Paragon Initiative Enterprises",
+                    "email": "info@paragonie.com",
+                    "homepage": "https://paragonie.com",
+                    "role": "Development Team"
+                }
+            ],
+            "description": "Easily integrate HTTP Public-Key-Pinning headers into your application.",
+            "homepage": "https://paragonie.com",
+            "keywords": [
+                "Hypertext",
+                "headers",
+                "hpkp",
+                "public key",
+                "public key pinning",
+                "security",
+                "security headers"
+            ],
+            "time": "2016-06-19 16:02:40"
         },
         {
             "name": "paragonie/random_compat",

@@ -172,8 +172,8 @@ class Deploy extends Command
         $version = Entity::VERSION;
 
         File::copyDirectory(
-            public_path('assets/js'),
-            "{$targetDir}/js/{$version}"
+            public_path('assets'),
+            "{$targetDir}/assets/{$version}"
         );
     }
 

@@ -19,15 +19,11 @@ if (! function_exists('_asset')) {
             return asset($path, $secure);
         }
 
-        $elements = explode('/', $path);
-
-        $filename = array_pop($elements);
-
         return implode('/', [
             config('infoexam.static_url'),
-            implode('/', $elements),
+            'assets',
             \App\Core\Entity::VERSION,
-            $filename,
+            $path,
         ]);
     }
 }

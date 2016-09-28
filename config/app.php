@@ -178,6 +178,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,

@@ -7,7 +7,6 @@ use App;
 use Carbon\Carbon;
 use Closure;
 use Config;
-use ParagonIE\CSPBuilder\CSPBuilder;
 
 class PreprocessConnection
 {
@@ -39,9 +38,6 @@ class PreprocessConnection
         $this->setLocale();
 
         $this->response = $next($this->request);
-
-        // Append the csp header to http response
-        $this->appendCsp();
 
         return $this->response;
     }
@@ -94,25 +90,5 @@ class PreprocessConnection
         }
 
         return Agent::languages();
-    }
-
-    /**
-     * Append the csp header to http response.
-     *
-     * @return void
-     *
-     * @throws \Exception
-     */
-    protected function appendCsp()
-    {
-        $csp = CSPBuilder::fromFile(config_path('csp.json'));
-
-        $csp->addDirective('upgrade-insecure-requests', $this->request->secure());
-
-        if (! empty($staticUrl = config('infoexam.static_url'))) {
-            $csp->addSource('script', $staticUrl);
-        }
-
-        $this->response->withHeaders($csp->getHeaderArray(false));
     }
 }
