@@ -12,7 +12,7 @@ abstract class Entity extends Eloquent
     /**
      * Application version.
      */
-    const VERSION = '0.0.9';
+    const VERSION = '0.0.10';
 
     /**
      * The number of models to return for pagination.
