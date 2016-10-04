@@ -48,7 +48,7 @@ class ListingApplyController extends Controller
 
                 $users = User::whereIn('username', explode(PHP_EOL, $username))->whereNull('passed_at')->get();
             } else {
-                $gradeId = Category::getCategories('user.grade', 'freshman');
+                $gradeId = Category::getCategories('user.grade', 'sophomore');
 
                 $users = User::where('department_id', $request->input('department'))
                     ->where('grade_id', $gradeId)
