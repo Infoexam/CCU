@@ -29,6 +29,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
             'questions' => 'uuid',
             'papers' => 'name',
             'listings' => 'code',
+            'applies' => 'id',
         ]]);
         $api->resource('exams.images', 'ExamImageController', ['only' => ['index', 'store', 'destroy']]);
         $api->get('exams/{name}/questions/groups', 'ExamQuestionController@groups');
@@ -41,6 +42,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->resource('papers.questions', 'PaperQuestionController', ['only' => ['index', 'store']]);
 
         $api->resource('listings', 'ListingController', ['except' => ['create', 'edit']]);
+        $api->resource('listings.applies', 'ListingApplyController', ['except' => ['create', 'edit']]);
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
         $api->get('revisions', 'RevisionController@index');

@@ -100,7 +100,7 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => 'NjVxv9AQfkNJLUZ04QSQUzDUuCIyKiETtAFrMxU9taw='],
+                ['sha256' => 'IzRzWwEtCV0EgH+Pe/fB2j4JDtBgQ3PWd6Lxkct0vr0='],
             ],
 
             'nonces' => [

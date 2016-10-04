@@ -143,7 +143,7 @@ class Receipt extends Sync
             case str_contains($note, '學科'):
                 return Category::getCategories('exam.category', 'theory', true);
             case str_contains($note, '術科'):
-                return Category::getCategories('exam.category', 'technology', true);
+                return Category::getCategories('exam.category', 'tech', true);
             default:
                 return Category::getCategories('error', 'general', true);
         }

@@ -16,7 +16,7 @@ class CategoriesTableSeeder extends Seeder
             'error' => ['general', 'not-found'],
             'user.grade' => ['freshman', 'sophomore', 'junior', 'senior', 'deferral', 'admin'],
             'user.department' => ['未知系所' => '0000', '管理員' => '9999', '測試' => '123'],
-            'exam.category' => ['theory', 'technology'],
+            'exam.category' => ['theory', 'tech'],
             'exam.difficulty' => ['easy', 'middle', 'hard'],
             'exam.subject' => ['app-theory', 'app-tech', 'soft-theory', 'soft-tech'],
             'exam.apply' => ['unlimited', 'senior-only', 'unity', 'makeup'],

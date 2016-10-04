@@ -20,12 +20,8 @@
 
 <template>
   <div id="question-modal" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <div v-if="loading" class="row middle-xs center-xs" style="height: 100%;">
-        <div class="col-xs">
-          <loader></loader>
-        </div>
-      </div>
+    <div class="modal-content flex-column">
+      <loader v-if="loading"></loader>
 
       <template v-else>
         <div class="modal-header">

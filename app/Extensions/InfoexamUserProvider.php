@@ -24,7 +24,7 @@ class InfoexamUserProvider extends EloquentUserProvider
     /**
      * Validate a user against the given credentials.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  UserContract  $user
      * @param  array  $credentials
      *
      * @return bool

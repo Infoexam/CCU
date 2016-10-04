@@ -38,7 +38,9 @@ router.map({
       '/papers/:name/questions/update': { name: 'admin.papers.questions.update', component: resolve => resolve(require('~/views/paper/question/update.vue')), title: 'papers.questions.update' },
       '/listings': { name: 'admin.listings', component: resolve => resolve(require('~/views/listing/list.vue')), title: 'listings.index' },
       '/listings/create': { name: 'admin.listings.create', component: resolve => resolve(require('~/views/listing/create.vue')), title: 'listings.create' },
-      '/listings/:code/edit': { name: 'admin.listings.edit', component: resolve => resolve(require('~/views/listing/edit.vue')), title: 'listings.edit' }
+      '/listings/:code/edit': { name: 'admin.listings.edit', component: resolve => resolve(require('~/views/listing/edit.vue')), title: 'listings.edit' },
+      '/listings/:code/applies': { name: 'admin.listings.applies', component: resolve => resolve(require('~/views/listing/apply/list.vue')), title: 'listings.applies.index' },
+      '/listings/:code/applies/update': { name: 'admin.listings.applies.update', component: resolve => resolve(require('~/views/listing/apply/update.vue')), title: 'listings.applies.update' }
     }
   }
 })

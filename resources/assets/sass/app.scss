@@ -73,16 +73,28 @@ ul.pagination a {
   padding-left: 1.98rem;
 }
 
-.user-select-none {
+.user-select-none * {
   user-select: none !important;
 }
 
-.inline-flex {
-  display: inline-flex;
+.inline {
+  &-flex {
+    display: inline-flex;
+  }
+
+  &-block {
+    display: inline-block;
+  }
 }
 
-.inline-block {
-  display: inline-block;
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  @extend .flex;
+
+  flex-direction: column;
 }
 
 @import "admin";

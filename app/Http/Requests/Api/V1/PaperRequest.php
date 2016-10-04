@@ -15,7 +15,7 @@ class PaperRequest extends Request
     {
         $rules = [
             'name'   => 'required|string|max:16|unique:papers,name',
-            'remark' => 'string|max:190',
+            'remark' => 'required|nullable|string|max:190',
         ];
 
         if ($this->isMethod('PATCH')) {

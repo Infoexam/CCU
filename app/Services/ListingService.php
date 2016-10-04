@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exams\Listing;
 use App\Exceptions\ListingAppliedException;
 use App\Exceptions\ListingConflictException;
 use App\Exceptions\ListingStartedException;
 use App\Repositories\ListingRepository;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -143,6 +145,34 @@ class ListingService
     }
 
     /**
+     * Check a listing is applicable.
+     *
+     * @param Listing|null $listing
+     *
+     * @return bool
+     */
+    public function applicable(Listing $listing = null)
+    {
+        if (is_null($listing)) {
+            $listing = $this->repository->getListing();
+        }
+
+        if (! $listing->exists) {
+            return false;
+        } elseif (! is_null($listing->getAttribute('started_at'))) {
+            return false;
+        } elseif (! Auth::user()->own('admin')) {
+            if ($listing->getAttribute('applied_num') >= $listing->getAttribute('maximum_num')) {
+                return false;
+            } elseif (1 > Carbon::now()->diffInDays($listing->getAttribute('began_at'), false)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Check the listing is conflict or not.
      *
      * @param array $input
@@ -179,5 +209,10 @@ class ListingService
         }
 
         return $builder->exists();
+    }
+
+    public function getListing()
+    {
+        return $this->repository->getListing();
     }
 }

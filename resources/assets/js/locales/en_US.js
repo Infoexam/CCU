@@ -80,7 +80,7 @@ Skills test : Programming`
     title: 'Exam（尚未啟用）',
 
     theory: '學科',
-    technology: '術科'
+    tech: '術科'
   },
 
   listing: {
@@ -129,6 +129,11 @@ Skills test : Programming`
       index: '測驗列表',
       create: '新增測驗',
       edit: '編輯測驗',
+
+      applies: {
+        index: '預約列表',
+        update: '管理員預約'
+      }
     }
   },
 

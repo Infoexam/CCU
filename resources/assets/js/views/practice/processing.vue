@@ -6,25 +6,22 @@
 </style>
 
 <template>
-  <section class="full-width user-select-none">
-    <section class="center">
+  <section class="flex-column middle-xs full-width user-select-none">
+    <section class="flex center-xs middle-xs">
       <a
         v-link="{ name: 'practice' }"
-        class="btn-floating btn-large waves-effect waves-light left"
+        class="btn-floating btn-large waves-effect waves-light"
+        style="margin-right: 1rem;"
       ><i class="material-icons">reply</i></a>
 
-      <h3>{{ $route.params.name }} {{ $t('practice.heading') }}</h3>
+      <h4>{{ $route.params.name }} {{ $t('practice.heading') }}</h4>
     </section>
 
-    <div v-if="$loadingRouteData" class="row middle-xs center-xs" style="height: calc(100% - 5.5rem);">
-      <div class="col-xs">
-        <loader></loader>
-      </div>
-    </div>
+    <loader v-if="$loadingRouteData"></loader>
 
     <template v-else>
-      <div v-if="submitted" class="row practice-result">
-        <div class="col s12 m4">
+      <div v-if="submitted" class="row full-width practice-result">
+        <div class="col-xs-12 col-sm-4">
           <div class="card-panel green center">
             <i class="material-icons">panorama_fish_eye</i>
             <p>{{ $t('practice.statistics.correct') }}</p>
@@ -32,7 +29,7 @@
           </div>
         </div>
 
-        <div class="col s12 m4">
+        <div class="col-xs-12 col-sm-4">
           <div class="card-panel red darken-3 center">
             <i class="material-icons">clear</i>
             <p>{{ $t('practice.statistics.incorrect') }}</p>
@@ -40,7 +37,7 @@
           </div>
         </div>
 
-        <div class="col s12 m4">
+        <div class="col-xs-12 col-sm-4">
           <div class="card-panel light-blue center">
             <p>{{ $t('practice.statistics.blank') }}</p>
             <h3>{{ statistics.blank }}</h3>

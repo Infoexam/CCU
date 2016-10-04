@@ -13,14 +13,16 @@
 
       <tbody>
         <tr v-for="listing in listings.data">
-          <td>{{ listing.code }}</td>
+          <td>
+            <a v-link="{ name: 'admin.listings.applies', params: {code: listing.code }}">{{ listing.code }}</a>
+          </td>
           <td>
             <p>{{ i18n('listing', listing.subject.name) }}</p>
             <p>{{ i18n('apply', listing.apply_type.name) }}</p>
           </td>
           <td>{{ listing.applied_num }} / {{ listing.maximum_num }}</td>
           <td>
-            <available-icon :available="listing.applicable "></available-icon>
+            <available-icon :available="listing.applicable"></available-icon>
           </td>
           <td>
             <edit-button :edit="{ name: 'admin.listings.edit', params: { code: listing.code }}"></edit-button>

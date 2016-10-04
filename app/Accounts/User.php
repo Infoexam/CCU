@@ -2,6 +2,7 @@
 
 namespace App\Accounts;
 
+use App\Categories\Category;
 use App\Core\Entity;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -48,6 +49,16 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
      * @var bool
      */
     public $revisionEnabled = true;
+
+    public function department()
+    {
+        return $this->belongsTo(Category::class, 'department_id');
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Category::class, 'grade_id');
+    }
 
     /**
      * 取得使用者測驗通過狀態.
