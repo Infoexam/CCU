@@ -11,8 +11,21 @@ process.env.NODE_ENV = production ? 'production' : 'local'
 
 const config = {
   entry: {
-    main: './resources/assets/js/main.js',
+    main: path.resolve(__dirname, 'resources', 'assets', 'js', 'main.js'),
     vendor: Object.keys(require('./package.json').dependencies)
+  },
+
+  output: {
+    path: path.resolve(__dirname, 'public', production ? 'assets' : '', 'js'),
+    filename: 'main.js'
+  },
+
+  module: {
+    loaders: [
+      { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.vue$/, loader: 'vue!eslint', exclude: /node_modules/ }
+    ]
   },
 
   resolve: {
@@ -21,34 +34,16 @@ const config = {
     }
   },
 
-  output: {
-    path: path.resolve(__dirname, 'public', production ? 'assets' : '', 'js'),
-    filename: '[name].js',
-    chunkFilename: '[name].min.js',
-    sourceMapFilename: '[file].map'
-  },
-
-  module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
-      { test: /\.json$/, loader: 'json' },
-      { test: /\.vue$/, loader: 'vue!eslint' }
-    ]
-  },
-
   plugins: [
-    new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
-    new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
-    new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, comments: false, exclude: /vendor\.js$/ }),
     new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' }),
-    new WebpackOnBuildPlugin(stats => { exec('php artisan sri --override') })
+    new WebpackOnBuildPlugin(stats => { exec('php artisan sri --override') }),
+    new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
+    new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
+    new Webpack.optimize.OccurrenceOrderPlugin(true),
+    new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, output: { comments: false }})
   ],
 
-  devtool: 'source-map'
-}
-
-if (production) {
-  Reflect.deleteProperty(config, 'devtool')
+  devtool: production ? false : 'source-map'
 }
 
 module.exports = config

@@ -1,5 +1,6 @@
 /vendor
 /node_modules
+/certs
 /public/storage
 /public/js/main.*
 /public/js/vendor.*
@@ -7,3 +8,4 @@ Homestead.yaml
 Homestead.json
 .env
 npm-debug.log
+stats.json
