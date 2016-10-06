@@ -15,7 +15,7 @@
 
     <script src="{{ _asset('js/jquery.min.js') }}" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" defer></script>
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-LS21vVxAziwEBOyLJf62xeqQzrV3eglhBiN6mHfI8NunEas/xoXzitRL3x6p8/tg" defer></script>
-    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-E5SjZfV1sl9HJw9uOn5ucp8ZTNygpin+J1BsX4WNNKGh52kjXgnCEccCE9+38Xf8 sha384-XGsU1hFhpiEB6guQmJw7Kqa/GNiPClFNrNuL87FIlYhx/zgA0ASOoKq+TdRER9KN" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-ex3v/dBs3MlH4W+wcDPsLlsBJPWv+VgzpKSwfwDOc3luumJXvJ5ZzF7zzZdu803r sha384-oM88aht61QRge76kmD6SO/ibeQP6wn0/4DlilIMdWOa/5yPA/8R992Tx72A8es+8" defer></script>
+    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-kbF7/3aYcNhkSphElsaItgMaWE2/B1082mHf4b3AMi1cTZdG/pzsYfwkjNKxU22T sha384-LEw2tKYiyI46ZoeI5VRKQh88WWy8zTHlbtniDdWR1RSypLb2kig1OfYZobBkBkch" defer></script>
+    <script src="{{ _asset('js/main.js') }}" integrity="sha384-FiLmJGBU4QzUngNPZ6VbVNCt8721WkuMx71MTwBm3JwzvAwyqaspxLPk3gvHbd/C sha384-oIROOijbEBit04T/e+rv4Ljeo6yNuM3eRkHftjwSJEcwGGfoegxLqHs8KeWFm8LU" defer></script>
   </body>
 </html>
