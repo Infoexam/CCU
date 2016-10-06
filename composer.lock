@@ -3065,16 +3065,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "4.9.1",
+            "version": "4.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "bb8786724f87c2d187897809849b7dc79a84a4d9"
+                "reference": "8799c17ca99c49718d7effe49de06b55117e8662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/bb8786724f87c2d187897809849b7dc79a84a4d9",
-                "reference": "bb8786724f87c2d187897809849b7dc79a84a4d9",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/8799c17ca99c49718d7effe49de06b55117e8662",
+                "reference": "8799c17ca99c49718d7effe49de06b55117e8662",
                 "shasum": ""
             },
             "require": {
@@ -3127,7 +3127,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2016-09-23 11:54:31"
+            "time": "2016-10-06 05:42:25"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -5169,16 +5169,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.6",
+            "version": "5.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79"
+                "reference": "3f67cee782c9abfaee5e32fd2f57cdd54bc257ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/146e0fe0bb7f44d1cefade0c93e86fe0b206dd79",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3f67cee782c9abfaee5e32fd2f57cdd54bc257ba",
+                "reference": "3f67cee782c9abfaee5e32fd2f57cdd54bc257ba",
                 "shasum": ""
             },
             "require": {
@@ -5248,7 +5248,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-10-03 07:48:45"
+            "time": "2016-10-03 13:04:15"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
