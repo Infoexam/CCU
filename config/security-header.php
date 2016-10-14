@@ -56,10 +56,11 @@ return [
      *
      * Reference: https://w3c.github.io/webappsec-referrer-policy
      *
-     * Available Value: 'no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-crossorigin', 'unsafe-url'
+     * Available Value: 'no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin',
+     *                  'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'
      */
 
-    'referrer-policy' => 'origin-when-cross-origin',
+    'referrer-policy' => 'strict-origin-when-cross-origin',
 
     /*
      * HTTP Strict Transport Security
@@ -136,7 +137,7 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => 'ZgfqX3PBBKFxV0IZVYndkNNbO5OSHJq6mDZW8+S0Ht4='],
+                ['sha256' => '21p67Wrzndw1nTb0xtAvy04sW5ZrteZrzwCg3MhXCNk='],
             ],
 
             'nonces' => [

@@ -3,8 +3,7 @@
   "scripts": {
     "build": "webpack -p --progress",
     "dev": "webpack --watch --progress --output-pathinfo --display-error-details",
-    "profile": "webpack --progress --profile --json > stats.json",
-    "postinstall": "rm -rf node_modules/webpack/node_modules/uglify-js"
+    "profile": "webpack --progress --profile --json > stats.json"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -15,7 +14,7 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-es2016": "^6.16.0",
     "babel-runtime": "^6.11.6",
-    "browser-sync": "^2.17.0",
+    "browser-sync": "^2.17.3",
     "browser-sync-webpack-plugin": "^1.1.3",
     "css-loader": "^0.25.0",
     "dotenv": "^2.0.0",
@@ -28,14 +27,14 @@
     "node-sass": "^3.10.1",
     "on-build-webpack": "^0.1.0",
     "sass-loader": "^4.0.2",
-    "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony",
+    "uglify-js": "^2.7.3",
     "underscore": "^1.8.3",
     "vue-hot-reload-api": "^1.3.3",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.5.4",
     "vue-style-loader": "^1.0.0",
     "webpack": "^2.1.0-beta.25",
-    "webpack-node-externals": "^1.4.3"
+    "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
     "clipboard": "^1.5.12",
