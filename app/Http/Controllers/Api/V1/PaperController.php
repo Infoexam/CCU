@@ -26,6 +26,7 @@ class PaperController extends Controller
 
         return Paper::withCount(['questions'])
             ->orderBy('automatic')
+            ->latest()
             ->paginate(null, ['name', 'remark']);
     }
 

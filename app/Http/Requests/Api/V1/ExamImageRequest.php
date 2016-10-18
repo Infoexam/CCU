@@ -15,7 +15,7 @@ class ExamImageRequest extends Request
     {
         return [
             'collection' => 'sometimes|required|string|in:default,cover',
-            'image'      => 'required|array',
+            'image'      => 'array',
             'image.*'    => 'required|image',
         ];
     }

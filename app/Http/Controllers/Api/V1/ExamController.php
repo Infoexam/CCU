@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Categories\Category;
 use App\Exams\Exam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamRequest;
@@ -19,7 +20,11 @@ class ExamController extends Controller
     public function index(Request $request)
     {
         if ($request->has('listing')) {
-            return Exam::where('enable', true)->get(['id', 'name']);
+            $theoryId = Category::getCategories('exam.category', 'theory');
+
+            return Exam::where('category_id', $theoryId)
+                ->where('enable', true)
+                ->get(['id', 'name']);
         }
 
         $exams = Exam::with(['category'])->latest()->paginate(5);

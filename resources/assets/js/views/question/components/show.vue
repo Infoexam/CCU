@@ -20,7 +20,7 @@
 
 <template>
   <div id="question-modal" class="modal modal-fixed-footer">
-    <div class="modal-content flex-column">
+    <div class="modal-content">
       <loader v-if="loading"></loader>
 
       <template v-else>

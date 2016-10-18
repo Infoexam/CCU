@@ -1,6 +1,5 @@
 /vendor
 /node_modules
-/certs
 /public/storage
 /public/js/main.*
 /public/js/vendor.*

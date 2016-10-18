@@ -1,7 +1,7 @@
 <template>
   <section>
     <section class="row middle-xs">
-      <h3 class="col-xs-5">{{ paper.name }}</h3>
+      <h5 class="col-xs-8 col-sm-9" style="word-break: break-all;">{{ paper.name }}</h5>
 
       <div class="col-xs end-xs">
         <a

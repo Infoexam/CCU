@@ -50,6 +50,10 @@ ul.pagination a {
 .markdown-content * {
   white-space: pre-wrap !important;
   word-break: break-all !important;
+
+  img {
+    max-width: 448px;
+  }
 }
 
 .practice-result {

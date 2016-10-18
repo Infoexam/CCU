@@ -17,11 +17,9 @@
     </div>
   </div>
 
-  <br>
-
   <div class="row">
     <template v-for="image in images" track-by="uuid">
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-xs-12 col-sm-6" style="margin: 1.5rem 0;">
         <input :id="image.uuid" :value="image.url" style="width: calc(100% - 5.61rem)">
 
         <button
@@ -102,6 +100,8 @@
           this.images = this.preprocess(response.data)
 
           this.$els.imageWrapper.value = ''
+        }, response => {
+          Toast.formRequestFailed(response)
         })
       }
     },

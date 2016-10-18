@@ -10,11 +10,13 @@ use App\Exceptions\ApplyInconsistentTransformException;
 use App\Exceptions\ApplyUnapplicableException;
 use App\Exceptions\ApplyUncancelableException;
 use App\Exceptions\ApplyUntransformableException;
+use App\Notifications\ListingApplied;
 use App\Repositories\ApplyRepository;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Notification;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ApplyService
@@ -90,6 +92,8 @@ class ApplyService
         ]));
 
         $listing->increment('applied_num');
+
+        Notification::send([$user], new ListingApplied($listing));
     }
 
     protected function passed(User $user, Listing $listing)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Categories\Category;
 use App\Exams\Exam;
 use App\Exams\Paper;
 use App\Http\Controllers\Controller;
@@ -73,9 +74,12 @@ class PaperQuestionController extends Controller
      */
     public function all()
     {
+        $theoryId = Category::getCategories('exam.category', 'theory');
+
         return Exam::with(['questions' => function (HasMany $query) {
             $query->getBaseQuery()->select(['id', 'uuid', 'exam_id']);
         }])
+            ->where('category_id', $theoryId)
             ->where('enable', true)
             ->get(['id', 'name']);
     }

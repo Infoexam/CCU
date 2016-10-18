@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <form @submit.prevent="submit()">
+      <form @submit.prevent="submit()" class="full-width">
         <section
           v-for="question in questions"
           v-show="currentPage === Math.ceil(($index + 1) / perPage)"
