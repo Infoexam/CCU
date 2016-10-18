@@ -15,7 +15,6 @@ class ListingApplied extends Notification implements ShouldQueue
     /**
      * @var Listing
      */
-
     protected $listing;
 
     /**
