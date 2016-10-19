@@ -35,6 +35,11 @@
         for (const code of document.querySelectorAll(`#${this.id} code`)) {
           Prism.highlightElement(code)
         }
+
+        for (const link of document.querySelectorAll(`#${this.id} a`)) {
+          link.rel = 'noopener noreferrer'
+          link.target = '_blank'
+        }
       }
     },
 
