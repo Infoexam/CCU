@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   #question-modal {
     max-height: 80%;
     height: 80%;

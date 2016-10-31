@@ -1,9 +1,6 @@
 require('dotenv').config()
 
-const Webpack = require('webpack')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const WebpackOnBuildPlugin = require('on-build-webpack')
-const exec = require('child_process').exec
+const webpack = require('webpack')
 const path = require('path')
 const production = process.argv.includes('-p')
 
@@ -17,14 +14,15 @@ const config = {
 
   output: {
     path: path.resolve(__dirname, 'public', production ? 'assets' : '', 'js'),
-    filename: 'main.js'
+    publicPath: production ? '/assets/js/' : '/js/',
+    filename: '[name].js'
   },
 
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.vue$/, loader: 'vue!eslint', exclude: /node_modules/ }
+      { test: /\.vue$/, loader: 'vue!eslint' }
     ]
   },
 
@@ -35,15 +33,29 @@ const config = {
   },
 
   plugins: [
-    new BrowserSyncPlugin({ proxy: 'https://infoexam.dev', browser: 'google chrome' }),
-    new WebpackOnBuildPlugin(stats => { exec('php artisan sri --override') }),
-    new Webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
-    new Webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
-    new Webpack.optimize.OccurrenceOrderPlugin(true),
-    new Webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, output: { comments: false }})
+    require('./build/on-build-webpack'),
+    require('./build/extract-text-webpack').instance,
+    new webpack.LoaderOptionsPlugin({
+      vue: {
+        loaders: require('./build/extract-text-webpack').loaders
+      }
+    }),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' })
   ],
 
   devtool: production ? false : 'source-map'
+}
+
+if (! production) {
+  config.plugins.push(
+    require('./build/browser-sync')
+  )
+} else {
+  config.plugins.push(
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, output: { comments: false }})
+  )
 }
 
 module.exports = config

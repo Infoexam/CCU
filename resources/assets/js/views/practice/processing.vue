@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .question-content {
     margin-top: .65rem;
     margin-bottom: .4rem;

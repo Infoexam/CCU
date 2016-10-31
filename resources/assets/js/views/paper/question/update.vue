@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   .collapsible p {
     padding: 0 1.5rem;
     margin: 1rem 0 !important;

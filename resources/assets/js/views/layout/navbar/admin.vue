@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   $side-width: 250px;
 
   @media only screen and (min-width: 993px) {

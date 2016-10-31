@@ -1,4 +1,4 @@
-<style lang="sass" scoped>
+<style lang="scss" scoped>
   @media only screen and (min-width: 993px) {
     main {
       padding-left: 250px;

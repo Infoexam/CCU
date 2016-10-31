@@ -1,4 +1,4 @@
-<style src="../../sass/app.scss" lang="sass"></style>
+<style src="../../sass/app.scss" lang="scss"></style>
 
 <template>
   <div id="vuejs-app">

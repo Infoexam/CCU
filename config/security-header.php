@@ -88,7 +88,7 @@ return [
 
     'hpkp' => [
         'hashes' => [
-            //
+
         ],
 
         'include-sub-domains' => true,
@@ -120,15 +120,15 @@ return [
         'upgrade-insecure-requests' => false,
 
         'base-uri' => [
-            //
+
         ],
 
         'default-src' => [
-            //
+
         ],
 
         'child-src' => [
-            //
+
         ],
 
         'script-src' => [
@@ -137,11 +137,11 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => '21p67Wrzndw1nTb0xtAvy04sW5ZrteZrzwCg3MhXCNk='],
+                ['sha256' => 'i7PshISEwg2EgnmQ50VZDYsuW/NpRTiflxGsrxist8k='],
             ],
 
             'nonces' => [
-                //
+
             ],
 
             'self' => true,
@@ -192,23 +192,23 @@ return [
         ],
 
         'form-action' => [
-            //
+
         ],
 
         'frame-ancestors' => [
-            //
+
         ],
 
         'media-src' => [
-            //
+
         ],
 
         'object-src' => [
-            //
+
         ],
 
         'plugin-types' => [
-            //
+
         ],
     ],
 ];
