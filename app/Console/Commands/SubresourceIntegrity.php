@@ -46,7 +46,7 @@ class SubresourceIntegrity extends Command
         $this->validate();
 
         foreach ($this->integrity() as $filename => $integrity) {
-            if (!$this->option('override')) {
+            if (! $this->option('override')) {
                 $this->line("<info>$filename</info>:<comment>$integrity</comment>");
             } else {
                 $patterns[] = '/('.preg_quote($filename).'.+integrity=")(.*)"/U';
@@ -75,7 +75,7 @@ class SubresourceIntegrity extends Command
      */
     protected function validate()
     {
-        if (!in_array($this->argument('algo'), ['sha256', 'sha384', 'sha512'])) {
+        if (! in_array($this->argument('algo'), ['sha256', 'sha384', 'sha512'])) {
             $this->error('Currently the allowed hash algorithm are sha256, sha384 and sha512.');
 
             exit(1);
