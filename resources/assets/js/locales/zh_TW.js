@@ -77,8 +77,10 @@ export default {
   },
 
   test: {
-    title: '考試',
+    title: '考試'
+  },
 
+  exam: {
     theory: '學科',
     tech: '術科'
   },

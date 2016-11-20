@@ -1,5 +1,5 @@
 <template>
-  <section v-if="pagination.current_page" class="center">
+  <section v-if="pagination.from" class="center">
     <ul class="pagination user-select-none">
       <li :class="prevPageClass">
         <a @click.prevent="prevPage()"><i class="material-icons">chevron_left</i></a>

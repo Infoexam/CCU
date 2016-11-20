@@ -34,6 +34,10 @@
               </template>
             </td>
           </tr>
+
+          <tr v-if="0 === generals.data.length">
+            <td colspan="4">尚無測驗</td>
+          </tr>
         </tbody>
       </table>
 
@@ -76,6 +80,10 @@
                 >轉移</a>
               </template>
             </td>
+          </tr>
+
+          <tr v-if="0 === unities.data.length">
+            <td colspan="4">尚無測驗</td>
           </tr>
         </tbody>
       </table>

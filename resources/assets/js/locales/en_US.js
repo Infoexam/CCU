@@ -77,8 +77,10 @@ Skills test : Programming`
   },
 
   test: {
-    title: 'Test',
+    title: 'Test'
+  },
 
+  exam: {
     theory: '學科',
     tech: '術科'
   },
