@@ -2,10 +2,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const loaders = {
   css: ExtractTextPlugin.extract({
-    loader: 'css'
+    loader: 'css-loader'
   }),
   scss: ExtractTextPlugin.extract({
-    loader: 'css!sass'
+    loader: ['css-loader', 'sass-loader']
   })
 }
 

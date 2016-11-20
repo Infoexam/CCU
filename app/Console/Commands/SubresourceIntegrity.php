@@ -92,7 +92,7 @@ class SubresourceIntegrity extends Command
         $integrity = [];
 
         foreach ($this->files() as $file) {
-            $content = $this->filesystem->get($file, true);
+            $content = $this->filesystem->get($file);
 
             $hash = hash($this->argument('algo'), $content, true);
 

@@ -68,7 +68,7 @@ Skills test : Programming`
   },
 
   apply: {
-    title: 'Apply（尚未啟用）',
+    title: 'Apply',
 
     unlimited: '一般預約',
     senior_only: '大四專屬',
@@ -98,6 +98,7 @@ Skills test : Programming`
     infoexam: 'Infoexam',
     signIn: 'Sign In',
     practice: 'Practice',
+    apply: 'Apply',
 
     admin: '管理介面',
 

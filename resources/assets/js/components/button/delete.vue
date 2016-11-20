@@ -3,11 +3,14 @@
     <a
       @click="trigger()"
       class="waves-effect waves-light btn red"
-    ><i class="material-icons">delete</i></a>
+    >
+      <i v-if="null === text" class="material-icons">delete</i>
+      <span>{{ text }}</span>
+    </a>
 
     <div :id="id" class="modal">
       <div class="modal-content left-align">
-        <h5>確定要刪除該資料？</h5>
+        <h5>確定要執行此操作？</h5>
         <p>此操作無法復原，請再次確認。</p>
       </div>
       <div class="modal-footer">
@@ -28,6 +31,11 @@
     props: {
       target: {
         required: true
+      },
+
+      text: {
+        type: String,
+        default: null
       }
     },
 
@@ -39,7 +47,7 @@
 
     methods: {
       trigger () {
-        $(`#${this.id}`).openModal()
+        $(`#${this.id}`).modal().modal('open')
       }
     }
   }

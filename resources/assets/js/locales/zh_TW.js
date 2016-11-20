@@ -68,7 +68,7 @@ export default {
   },
 
   apply: {
-    title: '預約（尚未啟用）',
+    title: '預約',
 
     unlimited: '一般預約',
     senior_only: '大四專屬',
@@ -98,6 +98,7 @@ export default {
     infoexam: '資訊能力測驗系統',
     signIn: '登入',
     practice: '題庫練習',
+    apply: '預約',
 
     admin: '管理介面',
 

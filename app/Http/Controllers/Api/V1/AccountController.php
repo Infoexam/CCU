@@ -16,10 +16,18 @@ class AccountController extends Controller
      */
     public function profile(Request $request)
     {
-        if (is_null($request->user())) {
-            $this->response->errorUnauthorized();
-        }
-
         return $request->user();
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function applies(Request $request)
+    {
+        return $request->user()
+            ->load(['applies', 'applies.result', 'applies.listing'])
+            ->getRelation('applies');
     }
 }

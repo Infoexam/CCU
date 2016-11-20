@@ -4,6 +4,7 @@ namespace App\Accounts;
 
 use App\Categories\Category;
 use App\Core\Entity;
+use App\Exams\Apply;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -79,6 +80,16 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
     public function receipts()
     {
         return $this->hasMany(Receipt::class);
+    }
+
+    /**
+     * 取得使用者報名紀錄.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function applies()
+    {
+        return $this->hasMany(Apply::class);
     }
 
     /**

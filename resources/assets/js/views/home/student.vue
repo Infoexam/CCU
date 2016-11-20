@@ -22,7 +22,7 @@
       return {
         navigation: [
           { link: { name: 'practice' }, title: 'practice' },
-          { link: '#', title: 'apply' },
+          { link: { name: 'apply' }, title: 'apply' },
           { link: '#', title: 'exam' }
         ]
       }

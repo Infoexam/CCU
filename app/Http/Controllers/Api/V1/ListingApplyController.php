@@ -41,7 +41,9 @@ class ListingApplyController extends Controller
     public function store(ListingApplyRequest $request, $code)
     {
         if (! $request->user()->own('admin')) {
-            $this->service->apply($code);
+            if (false === $this->service->apply($code)) {
+                $this->response->errorBadRequest();
+            }
         } else {
             if (! $request->has('department')) {
                 $username = str_replace(["\r\n", "\r", "\n"], PHP_EOL, trim($request->input('username')));
@@ -76,6 +78,8 @@ class ListingApplyController extends Controller
     public function update($code, $id)
     {
         $this->service->transform($id, $code);
+
+        return $this->response->noContent();
     }
 
     /**

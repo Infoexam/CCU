@@ -94,7 +94,7 @@
           scrollY: window.scrollY
         }
 
-        $('#question-modal').openModal({
+        $('#question-modal').modal({
           ready () {
             document.body.style.top = -cache.scrollY + 'px'
             document.body.style.position = 'fixed'
@@ -109,7 +109,7 @@
 
             window.scrollTo(0, cache.scrollY)
           }
-        })
+        }).modal('open')
 
         this.$http.get(`exams/${name}/questions/${uuid}`).then(response => {
           this.question = response.data.question

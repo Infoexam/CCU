@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Categories\Category;
+use App\Exams\Listing;
 use App\Exceptions\ListingAppliedException;
 use App\Exceptions\ListingConflictException;
 use App\Exceptions\ListingStartedException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ListingRequest;
 use App\Services\ListingService;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
@@ -31,8 +36,31 @@ class ListingController extends Controller
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('apply')) {
+            return Listing::with(['applyType', 'subject'])
+                ->where('applicable', true)
+                ->where(function (Builder $query) use ($request) {
+                    $ids = Category::getCategories('exam.apply')
+                        ->filter(function (Category $category) {
+                            return in_array($category->getAttribute('name'), ['unity', 'makeup'], true);
+                        })
+                        ->pluck('id')
+                        ->toArray();
+
+                    if ($request->has('unity')) {
+                        $query->whereIn('apply_type_id', $ids);
+                    } else {
+                        $query->whereNotIn('apply_type_id', $ids);
+                    }
+                })
+                ->where('began_at', '>=', Carbon::now()->addDay())
+                ->latest('began_at')
+                ->orderBy('room')
+                ->paginate(5);
+        }
+
         return $this->service->listing();
     }
 

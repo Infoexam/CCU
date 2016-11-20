@@ -20,9 +20,9 @@ const config = {
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
-      { test: /\.json$/, loader: 'json' },
-      { test: /\.vue$/, loader: 'vue!eslint' }
+      { test: /\.js$/, loader: ['babel-loader', 'eslint-loader'], exclude: /node_modules/ },
+      { test: /\.json$/, loader: 'json-loader' },
+      { test: /\.vue$/, loader: ['vue-loader', 'eslint-loader'] }
     ]
   },
 

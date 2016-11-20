@@ -14,6 +14,7 @@ use App\Notifications\ListingApplied;
 use App\Repositories\ApplyRepository;
 use Auth;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Notification;
@@ -71,6 +72,10 @@ class ApplyService
 
         if (is_null($user)) {
             $user = Auth::user();
+
+            if ($this->applied($user, $listing)) {
+                return false;
+            }
         }
 
         if ($this->passed($user, $listing)) {
@@ -94,6 +99,14 @@ class ApplyService
         $listing->increment('applied_num');
 
         Notification::send([$user], new ListingApplied($listing));
+    }
+
+    protected function applied(User $user, Listing $listing)
+    {
+        return DB::table('applies')
+            ->where('user_id', $user->getKey())
+            ->where('listing_id', $listing->getKey())
+            ->exists();
     }
 
     protected function passed(User $user, Listing $listing)
@@ -151,18 +164,18 @@ class ApplyService
 
             $time = $listing->getAttribute('began_at');
 
-            $listings = \DB::table('listings')->whereBetween('began_at', [$time->startOfWeek(), $time->copy()->endOfWeek()])->get('id')->all();
+            $listings = DB::table('listings')->whereBetween('began_at', [$time->startOfWeek(), $time->copy()->endOfWeek()])->get(['id'])->pluck('id')->all();
 
             if (($key = array_search($listing->getKey(), $listings)) !== false) {
                 unset($listings[$key]);
             }
 
-            if (\DB::table('applies')->whereIn('listing_id', $listings)->exists()) {
+            if (DB::table('applies')->where('user_id', $user->getKey())->whereIn('listing_id', $listings)->exists()) {
                 return false;
             }
         }
 
-        if (\DB::table('applies')->where('user_id', $user->getKey())->where('listing_id', $listing->getKey())->exists()) {
+        if (DB::table('applies')->where('user_id', $user->getKey())->where('listing_id', $listing->getKey())->exists()) {
             return false;
         }
 
@@ -209,7 +222,7 @@ class ApplyService
             ) {
                 throw new ApplyUntransformableException;
             } elseif ($listing->getAttribute('subject_id') !== $apply->getRelation('listing')->getAttribute('subject_id') ||
-                in_array($listing->getRelation('applyType')->getAttribute('name'), ['unity', 'makeup'], true)
+                ! in_array($listing->getRelation('applyType')->getAttribute('name'), ['unity', 'makeup'], true)
             ) {
                 throw new ApplyInconsistentTransformException;
             }
@@ -278,11 +291,12 @@ class ApplyService
      */
     protected function cancelable(Listing $listing)
     {
-        switch (true) {
-            case ! is_null($listing->getAttribute('started_at')):
-            case ! Auth::user()->own('admin'):
-            case 1 >= Carbon::now()->diffInDays($listing->getAttribute('began_at'), false):
+        if (Auth::user()->own('admin')) {
+            if (! is_null($listing->getAttribute('started_at'))) {
                 throw new ApplyUncancelableException;
+            }
+        } else if (1 >= Carbon::now()->diffInDays($listing->getAttribute('began_at'), false)) {
+            throw new ApplyUncancelableException;
         }
 
         return $this;

@@ -11,7 +11,7 @@
     width: $side-width;
 
     .collapsible-body li.active {
-      background-color: #42a5f5;
+      background-color: #42a5f5 !important;
     }
 
     .bold > a {
