@@ -23,7 +23,7 @@
         navigation: [
           { link: { name: 'practice' }, title: 'practice' },
           { link: { name: 'apply' }, title: 'apply' },
-          { link: '#', title: 'exam' }
+          { link: { name: 'test' }, title: 'test' }
         ]
       }
     },

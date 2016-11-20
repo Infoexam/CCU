@@ -19,7 +19,9 @@ router.map({
       '/sign-in': { name: 'signIn', component: resolve => resolve(require('~/views/auth/signIn.vue')), title: 'signIn' },
       '/practice': { name: 'practice', component: resolve => resolve(require('~/views/practice/list.vue')), title: 'practice' },
       '/practice/:name': { name: 'practice.processing', component: resolve => resolve(require('~/views/practice/processing.vue')), title: 'practice' },
-      '/apply': { name: 'apply', component: resolve => resolve(require('~/views/apply/list.vue')), title: 'apply' }
+      '/apply': { name: 'apply', component: resolve => resolve(require('~/views/apply/list.vue')), title: 'applies.index' },
+      '/apply/notification': { name: 'apply.notification', component: resolve => resolve(require('~/views/apply/notification.vue')), title: 'applies.notification' },
+      '/test': { name: 'test', component: resolve => resolve(require('~/views/test/prepare.vue')), title: 'test' }
     }
   },
   '/admin': {

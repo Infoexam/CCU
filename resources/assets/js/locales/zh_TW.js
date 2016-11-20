@@ -76,8 +76,8 @@ export default {
     makeup: '衝堂補考'
   },
 
-  exam: {
-    title: '考試（尚未啟用）',
+  test: {
+    title: '考試',
 
     theory: '學科',
     tech: '術科'
@@ -98,7 +98,12 @@ export default {
     infoexam: '資訊能力測驗系統',
     signIn: '登入',
     practice: '題庫練習',
-    apply: '預約',
+    test: '考試',
+
+    applies: {
+      index: '預約',
+      notification: '預約確認'
+    },
 
     admin: '管理介面',
 

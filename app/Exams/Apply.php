@@ -26,7 +26,7 @@ class Apply extends Entity
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'listing_id', 'type', 'paid_at'];
+    protected $fillable = ['user_id', 'listing_id', 'type', 'paid_at', 'token'];
 
     /**
      * The attributes that should be mutated to dates.

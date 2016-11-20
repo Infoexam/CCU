@@ -90,7 +90,7 @@ class ApplyService
             return false;
         }
 
-        $listing->applies()->save(new Apply([
+        $apply = $listing->applies()->save(new Apply([
             'user_id' => $user->getKey(),
             'type' => $user->own('admin') ? 'A' : 'S',
             'paid_at' => $this->isFree($user, $listing) ? Carbon::now() : null,
@@ -98,7 +98,7 @@ class ApplyService
 
         $listing->increment('applied_num');
 
-        Notification::send([$user], new ListingApplied($listing));
+        Notification::send([$user], new ListingApplied($apply));
     }
 
     protected function applied(User $user, Listing $listing)

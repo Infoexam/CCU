@@ -2,7 +2,8 @@
 
 namespace App\Notifications;
 
-use App\Exams\Listing;
+use App\Exams\Apply;
+use Hashids;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,18 +14,18 @@ class ListingApplied extends Notification implements ShouldQueue
     use Queueable;
 
     /**
-     * @var Listing
+     * @var Apply
      */
-    protected $listing;
+    protected $apply;
 
     /**
      * Create a new notification instance.
      *
-     * @param Listing $listing
+     * @param Apply $apply
      */
-    public function __construct(Listing $listing)
+    public function __construct(Apply $apply)
     {
-        $this->listing = $listing;
+        $this->apply = $apply;
     }
 
     /**
@@ -50,9 +51,28 @@ class ListingApplied extends Notification implements ShouldQueue
             ->subject('資訊能力測驗預約確認信')
             ->greeting('同學您好')
             ->line('這是一封由資訊能力測驗系統發出的測驗通知信件，請點擊下方按鈕查看詳細資訊')
-            ->action('前往確認', url('/'))
-            ->line('若您有任何問題，請儘速回應給管理者 '.config('mail.from.address').' 或電校內分機：14007')
+            ->action('前往確認', url('/apply/notification?'.$this->token()))
+            ->line('若您有任何問題，請儘速來信 '.config('mail.from.address').' 或電校內分機：14007')
             ->line('　');
+    }
+
+    /**
+     * Get the apply token.
+     *
+     * @return string
+     */
+    protected function token()
+    {
+        $token = str_random(100);
+
+        $identify = Hashids::connection()->encode(
+            $this->apply->getAttribute('user_id'),
+            $this->apply->getAttribute('listing_id')
+        );
+
+        $this->apply->update(['token' => $token]);
+
+        return "token={$token}&checksum={$identify}";
     }
 
     /**

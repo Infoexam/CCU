@@ -76,8 +76,8 @@ Skills test : Programming`
     makeup: '衝堂補考'
   },
 
-  exam: {
-    title: 'Exam（尚未啟用）',
+  test: {
+    title: 'Test',
 
     theory: '學科',
     tech: '術科'
@@ -98,7 +98,12 @@ Skills test : Programming`
     infoexam: 'Infoexam',
     signIn: 'Sign In',
     practice: 'Practice',
-    apply: 'Apply',
+    test: 'Test',
+
+    applies: {
+      index: '預約',
+      notification: '預約確認'
+    },
 
     admin: '管理介面',
 
