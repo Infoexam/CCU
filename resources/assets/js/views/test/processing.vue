@@ -110,6 +110,8 @@
           } else {
             console.log(response)
           }
+
+          this.$router.replace({ name: 'test' })
         })
       }
     },
@@ -129,7 +131,8 @@
 
         ids: {
           timing: -1,
-          countdown: -1
+          countdown: -1,
+          blur: 0
         }
       }
     },
@@ -174,6 +177,8 @@
       submit () {
         this.$http.post(`tests`, new FormData(document.querySelector('form'))).then(response => {
           this.submitted = true
+
+          this.removeListener()
         }, response => {
           //
         })
@@ -206,6 +211,24 @@
 
       blur () {
         this.submit()
+      },
+
+      removeListener () {
+        if (-1 !== this.ids.timing) {
+          window.clearInterval(this.ids.timing)
+        }
+
+        if (-1 !== this.ids.countdown) {
+          window.clearInterval(this.ids.countdown)
+        }
+
+        if (-1 !== this.ids.blur) {
+          window.removeEventListener('blur', this.blur)
+
+          this.ids.blur = -1
+        }
+
+        document.oncontextmenu = null
       }
     },
 
@@ -223,20 +246,12 @@
       this.ids.timing = window.setInterval(this.timing, 5000)
 
       window.addEventListener('blur', this.blur)
+
       document.oncontextmenu = () => false
     },
 
     beforeDestroy () {
-      if (-1 !== this.ids.timing) {
-        window.clearInterval(this.ids.timing)
-      }
-
-      if (-1 !== this.ids.countdown) {
-        window.clearInterval(this.ids.countdown)
-      }
-
-      window.removeEventListener('blur', this.blur)
-      document.oncontextmenu = null
+      this.removeListener()
     }
   }
 </script>

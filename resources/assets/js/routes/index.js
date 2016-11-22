@@ -22,7 +22,8 @@ router.map({
       '/apply': { name: 'apply', component: resolve => resolve(require('~/views/apply/list.vue')), title: 'applies.index' },
       '/apply/notification': { name: 'apply.notification', component: resolve => resolve(require('~/views/apply/notification.vue')), title: 'applies.notification' },
       '/test': { name: 'test', component: resolve => resolve(require('~/views/test/list.vue')), title: 'test' },
-      '/test/:code': { name: 'test.processing', component: resolve => resolve(require('~/views/test/processing.vue')), title: 'test' }
+      '/test/:code': { name: 'test.processing', component: resolve => resolve(require('~/views/test/processing.vue')), title: 'test' },
+      '/test/:code/manage': { name: 'test.manage', component: resolve => resolve(require('~/views/test/manage.vue')), title: 'test' }
     }
   },
   '/admin': {

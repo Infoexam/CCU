@@ -26,7 +26,14 @@
           <td>{{ listing.duration }} 分鐘</td>
           <td>
             <a
-              v-link="{ name: 'test.processing', params: { code: listing.code }}"
+              v-if="$auth.is('admin')"
+              v-link="{ name: 'test.manage', params: { code: listing.code }}"
+              class="waves-effect waves-light btn orange"
+            >管理</a>
+
+            <a
+              v-else
+              v-link="{ name: 'test.processing', params: { code: listing.code }, replace: true }"
               class="waves-effect waves-light btn green"
               :class="{'disabled': ! listing.started_at}"
             >開始</a>
