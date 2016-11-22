@@ -31,6 +31,10 @@
       LayoutFooter,
       NavbarStudent,
       NavbarAdmin
+    },
+
+    ready () {
+      console.log('%c資訊能力測驗系統徵工讀生，請電校內分機 14007', 'color: blue; font-size: x-large')
     }
   }
 </script>

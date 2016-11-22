@@ -240,6 +240,12 @@
 
     ready () {
       document.title += ` - ${this.$route.params.name}`
+
+      document.oncontextmenu = () => false
+    },
+
+    beforeDestroy () {
+      document.oncontextmenu = null
     }
   }
 </script>
