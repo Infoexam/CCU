@@ -10,14 +10,19 @@
         </tr>
         <tr>
           <td>場次：{{ apply.listing.code }}</td>
-          <td>時間地點：{{ apply.listing.began_at }} {{ apply.listing.room }}</td>
+          <td>時間：{{ apply.listing.began_at }}</td>
         </tr>
         <tr>
           <td>類型：{{ i18n('listing', apply.listing.subject.name) }}</td>
-          <td>已繳費：<available-icon :available="!!apply.paid_at"></available-icon></td>
+          <td>地點：電算中心 {{ apply.listing.room }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">費用：{{ !! apply.paid_at ? '已繳費或免費' : '未繳費' }}</td>
         </tr>
       </tbody>
     </table>
+
+    <p class="center">若您有任何問題，請儘速來信 infoexam@ccu.edu.tw 或電校內分機：14007</p>
   </div>
 </template>
 

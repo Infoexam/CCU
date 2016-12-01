@@ -1,12 +1,12 @@
 <template>
   <div class="full-width">
     <div>
-      <h5>一般預約</h5>
+      <h5>自行預約</h5>
 
       <table class="bordered highlight centered">
         <thead>
           <tr>
-            <th>代碼</th>
+            <th>日期</th>
             <th>類型</th>
             <th>人數</th>
             <th></th>
@@ -15,7 +15,7 @@
 
         <tbody>
           <tr v-for="listing in generals.data">
-            <td>{{ listing.code }}</td>
+            <td>{{ listing.began_at }}</td>
             <td>
               <p>{{ i18n('listing', listing.subject.name) }}</p>
               <p>{{ i18n('apply', listing.apply_type.name) }}</p>
@@ -23,15 +23,19 @@
             <td>{{ listing.applied_num }} / {{ listing.maximum_num }}</td>
             <td>
               <template v-if="id = hasApply(listing.code)">
-                <delete-button :target="{ code: listing.code, id: id }" :text="'取消'"></delete-button>
+                <delete-button
+                  @mouseover="isOver = true"
+                  @mouseleave="isOver = false"
+                  :target="{ code: listing.code, id: id }"
+                  :text="isOver ? '取　消' : '已預約'"
+                ></delete-button>
               </template>
 
-              <template v-else>
-                <a
-                  @click="apply(listing.code)"
-                  class="waves-effect waves-light btn green"
-                >預約</a>
-              </template>
+              <a
+                v-else
+                @click="apply(listing.code)"
+                class="waves-effect waves-light btn green"
+              >預　約</a>
             </td>
           </tr>
 
@@ -52,7 +56,7 @@
       <table class="bordered highlight centered">
         <thead>
           <tr>
-            <th>代碼</th>
+            <th>日期</th>
             <th>類型</th>
             <th>人數</th>
             <th></th>
@@ -60,25 +64,25 @@
         </thead>
 
         <tbody>
-          <tr v-for="listing in unities.data">
-            <td>{{ listing.code }}</td>
+          <tr v-for="listing in unities.data" v-if="'makeup' === listing.apply_type.name || hasApply(listing.code)">
+            <td>{{ listing.began_at }}</td>
             <td>
               <p>{{ i18n('listing', listing.subject.name) }}</p>
               <p>{{ i18n('apply', listing.apply_type.name) }}</p>
             </td>
             <td>{{ listing.applied_num }} / {{ listing.maximum_num }}</td>
             <td>
-              <template v-if="id = hasApply(listing.code)">
-                <delete-button :target="{ code: listing.code, id: id }" :text="'取消'"></delete-button>
-              </template>
+              <a
+                v-if="hasApply(listing.code)"
+                class="waves-effect waves-light btn red disabled"
+              >已預約</a>
 
-              <template v-else>
-                <a
-                  @click="transform(hasUnity, listing.code)"
-                  class="waves-effect waves-light btn orange"
-                  :class="{'disabled': ! hasUnity}"
-                >轉移</a>
-              </template>
+              <a
+                v-else
+                @click="transform(hasUnity, listing.code)"
+                class="waves-effect waves-light btn orange"
+                :class="{'disabled': ! hasUnity}"
+              >轉　移</a>
             </td>
           </tr>
 
@@ -124,7 +128,9 @@
 
         unities: {
           data: []
-        }
+        },
+
+        isOver: false
       }
     },
 

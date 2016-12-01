@@ -12,7 +12,7 @@
     <table class="bordered centered">
       <thead>
         <tr>
-          <th>場次</th>
+          <th>日期</th>
           <th>教室</th>
           <th>測驗時間</th>
           <th></th>
@@ -21,7 +21,7 @@
 
       <tbody>
         <tr v-for="listing in listings">
-          <td>{{ listing.code }}</td>
+          <td>{{ listing.began_at }}</td>
           <td>{{ listing.room }}</td>
           <td>{{ listing.duration }} 分鐘</td>
           <td>

@@ -34,6 +34,8 @@ class ListingController extends Controller
     /**
      * Get listing list.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index(Request $request)

@@ -12,20 +12,21 @@
     </div>
 
     <template v-else>
-      <div v-if="-1 !== remaining" class="center" style="position: fixed; right: 2rem; top: 5rem; z-index: 1;">
+      <div v-if="-1 !== remaining" class="center" style="position: fixed; right: 1.5rem; top: 5rem; z-index: 1;">
+        <p class="flow-text">
+          {{ $auth.user.username }}
+          <br>
+          {{ $auth.user.name }}
+        </p>
         <span>剩餘時間</span>
         <br>
         <span :class="{'red-text': remaining < 300}">{{ remainingHuman }}</span>
       </div>
 
-      <section class="flex center-xs middle-xs">
-        <h4>{{ $route.params.code }} 考試</h4>
-      </section>
-
       <loader v-if="$loadingRouteData"></loader>
 
       <template v-else>
-        <form @submit.prevent="confirm()" class="full-width">
+        <form @submit.prevent="confirm()" class="full-width" style="margin-top: 1rem;">
           <section
             v-for="question in questions"
             v-show="currentPage === Math.ceil(($index + 1) / perPage)"
