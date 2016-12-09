@@ -53,6 +53,7 @@
           v-for="question in questions"
           v-show="currentPage === Math.ceil(($index + 1) / perPage)"
           class="card"
+          style="margin-top: 0; margin-bottom: 3rem;"
           :style="{ borderLeft: submitted ? (question.correct ? '5px solid #4caf50' : '5px solid #f44336') : 'none' }"
         >
           <div class="card-content">

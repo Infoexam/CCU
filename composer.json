@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.0.0",
     "laravel/framework": "5.3.*",
+    "barryvdh/laravel-dompdf": "^0.7",
     "bepsvpt/laravel-security-header": "^2.1",
     "dingo/api": "1.0.*@dev",
     "doctrine/dbal": "^2.5",

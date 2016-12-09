@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Exams\Apply;
 use App\Exams\Listing;
 use App\Exams\Result;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PDF;
 
 class TestController extends Controller
 {
@@ -67,7 +69,6 @@ class TestController extends Controller
 
         if (! is_null($result)) {
             if (! $result->getAttribute('re_sign_in')) {
-                // @todo Dev
 //                $this->response->error('Conflict', 409);
             } else {
                 $result->update([
@@ -80,6 +81,8 @@ class TestController extends Controller
                 'duration' => $listing->getAttribute('duration'),
                 'signed_in_at' => $this->now,
             ]));
+
+            $listing->increment('tested_num');
         }
 
         return $listing->getRelation('paper')->getRelation('questions');
@@ -96,5 +99,66 @@ class TestController extends Controller
         $timing = $this->now->diffInSeconds($listing->getAttribute('ended_at'));
 
         return max($timing - 3, 0);
+    }
+
+    public function manage($code)
+    {
+        $listing = Listing::with(['applies', 'applies.result', 'applies.user'])->where('code', $code)->firstOrFail();
+
+        return $listing;
+    }
+
+    public function checkIn($code)
+    {
+        $listing = Listing::with(['applies', 'applies.user'])->where('code', $code)->firstOrFail();
+
+        $pdf = PDF::loadView('vendor.pdfs.check-in', compact('listing'));
+
+        return $pdf->stream();
+    }
+
+    public function start($code)
+    {
+        $listing = Listing::where('code', $code)->firstOrFail();
+
+        if (! is_null($listing->getAttribute('started_at'))) {
+            $this->response->errorMethodNotAllowed();
+        } elseif ($this->now->diffInSeconds($listing->getAttribute('began_at'), false) > 0) {
+            $this->response->errorBadRequest();
+        }
+
+        $listing->update([
+            'started_at' => $this->now,
+        ]);
+
+        return $this->response->noContent();
+    }
+
+    public function extend(Request $request, $code)
+    {
+        $listing = Listing::where('code', $code)->firstOrFail();
+
+        $listing->update([
+            'duration' => $listing->getAttribute('duration') + intval($request->input('minutes', 0)),
+        ]);
+
+        return $this->response->noContent();
+    }
+
+    public function redo(Request $request, $code)
+    {
+        $listing = Listing::where('code', $code)->firstOrFail();
+
+        $apply = Apply::with(['result'])->findOrFail($request->input('id', 0));
+
+        if ($apply->getAttribute('listing_id') !== $listing->getKey()) {
+            $this->response->errorBadRequest();
+        } elseif (is_null($apply->getRelation('result'))) {
+            $this->response->errorBadRequest();
+        }
+
+        $apply->getRelation('result')->update(['re_sign_in' => true]);
+
+        return $this->response->noContent();
     }
 }

@@ -164,6 +164,7 @@ class ApplyService
 
             $time = $listing->getAttribute('began_at');
 
+            // @todo 拆分學術科
             $listings = DB::table('listings')->whereBetween('began_at', [$time->startOfWeek(), $time->copy()->endOfWeek()])->get(['id'])->pluck('id')->all();
 
             if (($key = array_search($listing->getKey(), $listings)) !== false) {

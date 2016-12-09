@@ -157,9 +157,8 @@ class ListingService
             $listing = $this->repository->getListing();
         }
 
+        // @todo Prevent ended_at
         if (! $listing->exists) {
-            return false;
-        } elseif (! is_null($listing->getAttribute('started_at'))) {
             return false;
         } elseif (! Auth::user()->own('admin')) {
             if ($listing->getAttribute('applied_num') >= $listing->getAttribute('maximum_num')) {

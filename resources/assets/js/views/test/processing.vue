@@ -31,6 +31,7 @@
             v-for="question in questions"
             v-show="currentPage === Math.ceil(($index + 1) / perPage)"
             class="card"
+            style="margin-top: 0; margin-bottom: 3rem;"
           >
             <div class="card-content">
               <div class="card-title">

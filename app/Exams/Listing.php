@@ -20,7 +20,7 @@ class Listing extends Entity
      *
      * @var array
      */
-    protected $fillable = ['began_at', 'duration', 'room', 'applicable', 'apply_type_id', 'subject_id', 'maximum_num'];
+    protected $fillable = ['began_at', 'duration', 'started_at', 'room', 'applicable', 'apply_type_id', 'subject_id', 'maximum_num'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -94,7 +94,12 @@ class Listing extends Entity
 
         static::saving(function (self $listing) {
             $listing->setAttribute('code', $listing->getAttribute('began_at')->format('YmdHi').$listing->getAttribute('room'));
-            $listing->setAttribute('ended_at', $listing->getAttribute('began_at')->copy()->addMinutes($listing->getAttribute('duration')));
+
+            if (! is_null($listing->getAttribute('started_at'))) {
+                $listing->setAttribute('ended_at', $listing->getAttribute('started_at')->copy()->addMinutes($listing->getAttribute('duration')));
+            } else {
+                $listing->setAttribute('ended_at', $listing->getAttribute('began_at')->copy()->addMinutes($listing->getAttribute('duration')));
+            }
         });
     }
 }
