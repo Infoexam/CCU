@@ -204,7 +204,7 @@ return [
         ],
 
         'object-src' => [
-
+            'self' => true,
         ],
 
         'plugin-types' => [
