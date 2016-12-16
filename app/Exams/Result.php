@@ -18,7 +18,7 @@ class Result extends Entity
      *
      * @var array
      */
-    protected $fillable = ['duration', 're_sign_in', 'signed_in_at'];
+    protected $fillable = ['duration', 're_sign_in', 'signed_in_at', 'submitted_at', 'score', 'log'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -26,4 +26,13 @@ class Result extends Entity
      * @var array
      */
     protected $dates = ['signed_in_at', 'submitted_at'];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'log' => 'array',
+    ];
 }

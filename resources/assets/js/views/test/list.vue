@@ -13,6 +13,7 @@
       <thead>
         <tr>
           <th>日期</th>
+          <th>類型</th>
           <th>教室</th>
           <th>測驗時間</th>
           <th></th>
@@ -22,6 +23,10 @@
       <tbody>
         <tr v-for="listing in listings">
           <td>{{ listing.began_at }}</td>
+          <td>
+            <p>{{ i18n('listing', listing.subject.name) }}</p>
+            <p>{{ i18n('apply', listing.apply_type.name) }}</p>
+          </td>
           <td>{{ listing.room }}</td>
           <td>{{ listing.duration }} 分鐘</td>
           <td>
@@ -78,6 +83,10 @@
         this.$http.get(`tests`).then(response => {
           this.listings = response.data.listings || []
         })
+      },
+
+      i18n (type, key) {
+        return this.$t(`${type}.${key.replace(/-/g, '_')}`)
       }
     },
 

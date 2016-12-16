@@ -19,6 +19,10 @@
             </td>
           </tr>
           <tr>
+            <td>類型：{{ i18n('listing', listing.subject.name) }}</td>
+            <td colspan="2">{{ i18n('apply', listing.apply_type.name) }}</td>
+          </tr>
+          <tr>
             <td>開始時間：{{ listing.started_at || '尚未開始' }}</td>
             <td>結束時間：{{ listing.started_at ? listing.ended_at : '-' }}</td>
             <td>時長：{{ listing.duration }} 分鐘</td>
@@ -132,7 +136,9 @@
     data () {
       return {
         listing: {
-          applies: []
+          applies: [],
+          subject: {},
+          apply_type: {}
         },
 
         ids: {
@@ -180,6 +186,14 @@
 
           Toast.success('操作成功')
         })
+      },
+
+      i18n (type, key) {
+        if (! key) {
+          return ''
+        }
+
+        return this.$t(`${type}.${key.replace(/-/g, '_')}`)
       }
     },
 

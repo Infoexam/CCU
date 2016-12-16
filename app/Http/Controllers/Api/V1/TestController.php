@@ -19,15 +19,41 @@ class TestController extends Controller
         $this->now = Carbon::now();
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $code)
     {
-        //
+        $listing = Listing::with([
+            'applies' => function ($query) use ($request) {
+                $query->where('user_id', $request->user()->getkey());
+            },
+            'applies.result',
+        ])
+            ->where('started_at', '<=', $this->now)
+            ->where('ended_at', '>=', $this->now)
+            ->whereHas('applies', function ($query) use ($request) {
+                $query->where('user_id', $request->user()->getKey());
+            })
+            ->first();
+
+        if (is_null($listing) || $code !== $listing->getAttribute('code')) {
+            $this->response->errorNotFound();
+        }
+
+        $apply = $listing->getRelation('applies')->first();
+        $result = $apply->getRelation('result');
+
+        $result->update([
+            'submitted_at' => $this->now,
+            'log' => $request->all(),
+        ]);
+
+        return $this->response->created();
     }
 
     public function index(Request $request)
     {
         if (! $request->user()->own('admin')) {
-            return Listing::where('began_at', '<=', $this->now)
+            return Listing::with(['applyType', 'subject'])
+                ->where('began_at', '<=', $this->now)
                 ->where('ended_at', '>=', $this->now)
                 ->whereHas('applies', function ($query) use ($request) {
                     $query->where('user_id', $request->user()->getKey());
@@ -35,19 +61,15 @@ class TestController extends Controller
                 ->get();
         }
 
-        return Listing::where('ended_at', '>=', $this->now)->orderBy('began_at')->get();
+        return Listing::with(['applyType', 'subject'])
+            ->where('ended_at', '>=', $this->now)
+            ->orderBy('began_at')
+            ->get();
     }
 
     public function show(Request $request, $code)
     {
         $listing = Listing::with([
-            'paper',
-            'paper.questions' => function ($query) {
-                $query->select(['questions.id', 'uuid', 'questions.content', 'multiple']);
-            },
-            'paper.questions.options' => function ($query) {
-                $query->select(['options.id', 'question_id', 'options.content']);
-            },
             'applies' => function ($query) use ($request) {
                 $query->where('user_id', $request->user()->getkey());
             },
@@ -85,7 +107,7 @@ class TestController extends Controller
             $listing->increment('tested_num');
         }
 
-        return $listing->getRelation('paper')->getRelation('questions');
+        return $listing->getAttribute('log')->getRelation('questions');
     }
 
     public function timing($code)
@@ -103,7 +125,9 @@ class TestController extends Controller
 
     public function manage($code)
     {
-        $listing = Listing::with(['applies', 'applies.result', 'applies.user'])->where('code', $code)->firstOrFail();
+        $listing = Listing::with(['applyType', 'subject', 'applies', 'applies.result', 'applies.user'])
+            ->where('code', $code)
+            ->firstOrFail();
 
         return $listing;
     }
@@ -114,12 +138,14 @@ class TestController extends Controller
 
         $pdf = PDF::loadView('vendor.pdfs.check-in', compact('listing'));
 
-        return $pdf->stream();
+        return $pdf->inline();
     }
 
     public function start($code)
     {
-        $listing = Listing::where('code', $code)->firstOrFail();
+        $listing = Listing::with(['paper', 'paper.questions', 'paper.questions.options'])
+            ->where('code', $code)
+            ->firstOrFail();
 
         if (! is_null($listing->getAttribute('started_at'))) {
             $this->response->errorMethodNotAllowed();
@@ -129,6 +155,7 @@ class TestController extends Controller
 
         $listing->update([
             'started_at' => $this->now,
+            'log' => $listing->getRelation('paper'),
         ]);
 
         return $this->response->noContent();

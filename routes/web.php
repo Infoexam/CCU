@@ -51,6 +51,9 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
         $api->get('revisions', 'RevisionController@index');
 
+        $api->get('tests', 'TestController@index');
+        $api->post('tests/{code}', 'TestController@store');
+        $api->get('tests/{code}', 'TestController@show');
         $api->get('tests/{code}/timing', 'TestController@timing');
         $api->group(['prefix' => 'tests/{code}/manage'], function (ApiRouter $api) {
             $api->get('/', 'TestController@manage');
@@ -59,7 +62,6 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
             $api->patch('extend', 'TestController@extend');
             $api->patch('redo', 'TestController@redo');
         });
-        $api->resource('tests', 'TestController', ['except' => ['create', 'edit']]);
     });
 });
 

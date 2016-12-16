@@ -137,7 +137,7 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => 'sethQd/rjUVc7sHrc1xXVf7TFEs9yBAs8Uvosu0gGTI='],
+                ['sha256' => 'ACIB33Hl9LVJSjX98OCGHPk/v2R6/jJW0Jcf1Rvk4BI='],
             ],
 
             'nonces' => [

@@ -20,7 +20,7 @@ class Listing extends Entity
      *
      * @var array
      */
-    protected $fillable = ['began_at', 'duration', 'started_at', 'room', 'applicable', 'apply_type_id', 'subject_id', 'maximum_num'];
+    protected $fillable = ['began_at', 'duration', 'started_at', 'room', 'applicable', 'apply_type_id', 'subject_id', 'maximum_num', 'log'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -81,6 +81,16 @@ class Listing extends Entity
     public function setBeganAtAttribute($value)
     {
         $this->attributes['began_at'] = Carbon::parse($value);
+    }
+
+    public function getLogAttribute($value)
+    {
+        return unserialize($value);
+    }
+
+    public function setLogAttribute($value)
+    {
+        $this->attributes['log'] = serialize($value);
     }
 
     /**

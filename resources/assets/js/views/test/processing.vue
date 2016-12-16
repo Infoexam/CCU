@@ -177,7 +177,7 @@
       },
 
       submit () {
-        this.$http.post(`tests`, new FormData(document.querySelector('form'))).then(response => {
+        this.$http.post(`tests/${this.$route.params.code}`, new FormData(document.querySelector('form'))).then(response => {
           this.submitted = true
 
           this.removeListener()
