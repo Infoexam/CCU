@@ -41,7 +41,7 @@ const config = {
       }
     }),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'API_PREFIX', 'API_STANDARDS_TREE', 'API_SUBTYPE', 'API_VERSION']),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' })
+    new webpack.optimize.CommonsChunkPlugin({ name: ['vendor', 'manifest'] })
   ],
 
   devtool: production ? false : 'source-map'

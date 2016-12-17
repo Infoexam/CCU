@@ -4,6 +4,7 @@
 /public/storage
 /public/js/main.*
 /public/js/vendor.*
+/public/js/manifest.*
 Homestead.yaml
 Homestead.json
 .env

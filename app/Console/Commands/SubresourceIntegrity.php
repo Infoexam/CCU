@@ -132,6 +132,7 @@ class SubresourceIntegrity extends Command
         return array_merge($files, [
             public_path('js/main.css'),
             public_path('js/main.js'),
+            public_path('js/manifest.js'),
             public_path('js/vendor.js'),
         ]);
     }
