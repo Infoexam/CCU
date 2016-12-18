@@ -1,36 +1,37 @@
 {
   "name": "infoexam/ccu",
-  "description": "Infoexam for CCU.",
-  "license": "Private",
+  "description": "Infoexam.",
   "type": "project",
+  "homepage": "https://github.com/Infoexam",
+  "license": "proprietary",
   "require": {
-    "php": ">=7.0.0",
-    "laravel/framework": "5.3.*",
-    "barryvdh/laravel-snappy": "^0.3.1",
-    "bepsvpt/laravel-security-header": "^2.1",
+    "php": "^7.0",
+    "barryvdh/laravel-snappy": "^0.3",
+    "bepsvpt/laravel-security-header": "^2.2",
     "dingo/api": "1.0.*@dev",
     "doctrine/dbal": "^2.5",
     "guzzlehttp/guzzle": "^6.2",
-    "h4cc/wkhtmltoimage-amd64": "^0.12.3",
-    "h4cc/wkhtmltopdf-amd64": "^0.12.3",
-    "jenssegers/agent": "^2.3",
+    "h4cc/wkhtmltoimage-amd64": "^0.12",
+    "h4cc/wkhtmltopdf-amd64": "^0.12",
+    "jenssegers/agent": "^2.4",
+    "laravel/framework": "5.3.*",
     "m6web/firewall": "^1.0",
     "maatwebsite/excel": "^2.1",
     "misterion/ko-process": "^0.5",
     "nesbot/carbon": "^1.21",
     "predis/predis": "^1.1",
     "ramsey/uuid": "^3.5",
-    "spatie/laravel-backup": "^4.0",
-    "spatie/laravel-medialibrary": "^4.8",
+    "spatie/laravel-backup": "^4.3",
+    "spatie/laravel-medialibrary": "^4.10",
     "venturecraft/revisionable": "^1.28",
     "vinkla/hashids": "^2.4"
   },
   "require-dev": {
-    "barryvdh/laravel-debugbar": "^2.2",
+    "barryvdh/laravel-debugbar": "^2.3",
     "barryvdh/laravel-ide-helper": "^2.2",
     "fzaninotto/faker": "^1.6",
     "mockery/mockery": "^0.9",
-    "phpunit/phpunit": "^5.5",
+    "phpunit/phpunit": "^5.7",
     "symfony/css-selector": "3.1.*",
     "symfony/dom-crawler": "3.1.*"
   },
@@ -53,6 +54,12 @@
       "tests/TestCase.php"
     ]
   },
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "notify-on-install": false
+  },
   "scripts": {
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
@@ -70,8 +77,5 @@
       "php artisan ide-helper:meta",
       "php artisan optimize"
     ]
-  },
-  "config": {
-    "preferred-install": "dist"
   }
 }
