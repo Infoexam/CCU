@@ -13,6 +13,7 @@
     "guzzlehttp/guzzle": "^6.2",
     "h4cc/wkhtmltoimage-amd64": "^0.12",
     "h4cc/wkhtmltopdf-amd64": "^0.12",
+    "infoexam/password": "dev-master",
     "jenssegers/agent": "^2.4",
     "laravel/framework": "5.3.*",
     "m6web/firewall": "^1.0",
@@ -35,6 +36,9 @@
     "symfony/css-selector": "3.1.*",
     "symfony/dom-crawler": "3.1.*"
   },
+  "repositories": [
+    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"}
+  ],
   "autoload": {
     "classmap": [
       "database"

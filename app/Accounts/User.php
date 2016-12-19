@@ -7,6 +7,7 @@ use App\Core\Entity;
 use App\Exams\Apply;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 
@@ -36,7 +37,7 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'gender', 'department_id', 'grade_id', 'class'];
+    protected $fillable = ['password', 'version', 'name', 'email', 'gender', 'department_id', 'grade_id', 'class'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -51,6 +52,30 @@ class User extends Entity implements AuthenticatableContract, AuthorizableContra
      * @var bool
      */
     public $revisionEnabled = true;
+
+    /**
+     * Get the user's password.
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getPasswordAttribute($value)
+    {
+        return decrypt($value);
+    }
+
+    /**
+     * Set the user's password.
+     *
+     * @param string $value
+     *
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = encrypt($value);
+    }
 
     public function department()
     {

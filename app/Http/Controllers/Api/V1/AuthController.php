@@ -28,11 +28,7 @@ class AuthController extends Controller
             $this->response->error('auth.failed', 422);
         }
 
-        $user = Auth::user();
-
-        event(new SignIn($user, $request->only(['username', 'password'])));
-
-        return $user;
+        return Auth::user();
     }
 
     /**

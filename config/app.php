@@ -186,6 +186,11 @@ return [
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
 
+        /*
+         * Infoexam Service Providers...
+         */
+        Infoexam\Password\PasswordServiceProvider::class,
+
     ],
 
     /*

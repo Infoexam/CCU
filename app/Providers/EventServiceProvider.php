@@ -12,9 +12,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \App\Events\SignIn::class => [
-            \App\Listeners\UpgradeUserPassword::class,
-        ],
+        //
     ];
 
     /**
