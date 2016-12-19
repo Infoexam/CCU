@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d2e7ddb1ebccf47a707d1d99fbae6504",
-    "content-hash": "fd08ae78c105afa106da67c4916aa45c",
+    "hash": "02cde65deb2498cab6228673a82a0caa",
+    "content-hash": "b5f11195d7eef1dfad3e439a9ea97e79",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -110,34 +110,35 @@
             "time": "2016-08-05 13:08:28"
         },
         {
-            "name": "bepsvpt/laravel-security-header",
-            "version": "2.2.0",
+            "name": "bepsvpt/secure-headers",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/BePsvPT/laravel-security-header.git",
-                "reference": "e107a218a087abcc0bfbf333ac8321a84bb9d56b"
+                "url": "https://github.com/BePsvPT/secure-headers.git",
+                "reference": "f5b143644b6c3015b9c79906c04d8904f1123037"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BePsvPT/laravel-security-header/zipball/e107a218a087abcc0bfbf333ac8321a84bb9d56b",
-                "reference": "e107a218a087abcc0bfbf333ac8321a84bb9d56b",
+                "url": "https://api.github.com/repos/BePsvPT/secure-headers/zipball/f5b143644b6c3015b9c79906c04d8904f1123037",
+                "reference": "f5b143644b6c3015b9c79906c04d8904f1123037",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "5.1.*|5.2.*|5.3.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
+                "illuminate/http": "^5.1",
+                "illuminate/support": "^5.1",
                 "paragonie/csp-builder": "^2.0",
                 "paragonie/hpkp-builder": "^0.1",
-                "php": ">=7.0"
+                "php": "^7.0"
             },
             "require-dev": {
                 "codeclimate/php-test-reporter": "^0.3",
-                "phpunit/phpunit": "^5.5"
+                "orchestra/testbench": "^3.3",
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Bepsvpt\\LaravelSecurityHeader\\": "src/"
+                    "Bepsvpt\\SecureHeaders\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -150,7 +151,8 @@
                     "email": "freedom@csie.io"
                 }
             ],
-            "description": "Append secure headers to response for laravel framework.",
+            "description": "Add secure headers to HTTP response.",
+            "homepage": "https://github.com/BePsvPT/secure-headers",
             "keywords": [
                 "csp",
                 "header",
@@ -159,7 +161,7 @@
                 "https",
                 "laravel"
             ],
-            "time": "2016-10-03 15:00:01"
+            "time": "2016-12-19 05:28:15"
         },
         {
             "name": "classpreloader/classpreloader",

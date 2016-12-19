@@ -14,7 +14,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Bepsvpt\LaravelSecurityHeader\SecurityHeaderMiddleware::class,
+        \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
     ];
 

@@ -179,7 +179,7 @@ return [
          * Package Service Providers...
          */
         Barryvdh\Snappy\ServiceProvider::class,
-        Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
+        Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,

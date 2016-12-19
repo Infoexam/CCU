@@ -7,7 +7,7 @@
   "require": {
     "php": "^7.0",
     "barryvdh/laravel-snappy": "^0.3",
-    "bepsvpt/laravel-security-header": "^2.2",
+    "bepsvpt/secure-headers": "^3.0",
     "dingo/api": "1.0.*@dev",
     "doctrine/dbal": "^2.5",
     "guzzlehttp/guzzle": "^6.2",
