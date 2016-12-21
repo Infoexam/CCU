@@ -91,7 +91,7 @@ class TestController extends Controller
 
         if (! is_null($result)) {
             if (! $result->getAttribute('re_sign_in')) {
-//                $this->response->error('Conflict', 409);
+                $this->response->error('Conflict', 409);
             } else {
                 $result->update([
                     're_sign_in' => false,

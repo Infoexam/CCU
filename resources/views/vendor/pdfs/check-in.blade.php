@@ -2,18 +2,19 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <style type="text/css" media="all">
+      table {
+        width: 100%;
+        border:1px solid black;
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      thead, tbody, tr, th, td {
+        border:1px solid black;
+      }
+    </style>
   </head>
-  <style type="text/css" media="all">
-    table {
-      width: 100%;
-      border:1px solid black;
-      border-collapse: collapse;
-      text-align: center;
-    }
-    thead, tbody, tr, th, td {
-      border:1px solid black;
-    }
-  </style>
   <body>
     <table>
       <thead style="display: table-header-group">
@@ -32,7 +33,7 @@
             <td></td>
             <td>未繳費</td>
           </tr>
-        @endforeach 
+        @endforeach
       </tbody>
     </table>
   </body>
