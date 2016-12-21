@@ -41,7 +41,6 @@ class ExamSetTest extends TestCase
         $userAdmin = factory(User::class)->create();
         $userAdmin->roles()->sync([$adminRoleId]);
 
-
         // 未登入下新增題庫
         Auth::logout();
         $this->call('POST', $route);
