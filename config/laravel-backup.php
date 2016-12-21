@@ -60,7 +60,6 @@ return [
         ],
     ],
 
-
     /*
      * You can get notified when specific events occur. Out of the box you can use 'mail' and 'slack'.
      * For Slack you need to install guzzlehttp/guzzle.
@@ -116,7 +115,6 @@ return [
         ],
         */
     ],
-
 
     'cleanup' => [
         /*
