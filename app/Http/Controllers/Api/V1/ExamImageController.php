@@ -36,7 +36,7 @@ class ExamImageController extends Controller
     {
         $exam = Exam::where('name', $name)->firstOrFail(['id']);
 
-        $exam->uploadImages($request->file('image'), $request->input('collection', 'default'));
+        $exam->uploadMedias($request->file('image'), $request->input('collection', 'default'));
 
         return $this->transformImage($exam, $request->input('collection', 'default'));
     }

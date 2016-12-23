@@ -33,7 +33,7 @@ $factory->define(Question::class, function () {
         'multiple'      => $faker->boolean(),
         'difficulty_id' => random_category('exam.difficulty'),
         'explanation'   => $faker->boolean() ? $faker->realText(120) : null,
-        'question_id'   => $faker->boolean() ? Question::whereNull('question_id')->orderByRand()->first()->getKey() : null,
+        'question_id'   => $faker->boolean() ? Question::whereNull('question_id')->inRandomOrder()->first()->getKey() : null,
     ];
 });
 

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "15127a1ca8304fcfd512a21e16bf78a5",
-    "content-hash": "b791e59555ce334ea219d55ef605ddff",
+    "hash": "b6494c49ec7ca35474796c401538fa4a",
+    "content-hash": "0b1581421e2d305e11a0cb80304047cf",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1162,33 +1162,34 @@
         },
         {
             "name": "hashids/hashids",
-            "version": "1.0.6",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivanakimov/hashids.php.git",
-                "reference": "6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c"
+                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ivanakimov/hashids.php/zipball/6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c",
-                "reference": "6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c",
+                "url": "https://api.github.com/repos/ivanakimov/hashids.php/zipball/57cf3bbfbb939868a37a201aa858071e6c1b4764",
+                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "ext-bcmath": "*",
+                "php": "^5.6.4 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8 || ^5.0"
+                "phpunit/phpunit": "^5.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Hashids\\": "lib/Hashids/"
+                    "Hashids\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1200,9 +1201,14 @@
                     "name": "Ivan Akimov",
                     "email": "ivan@barreleye.com",
                     "homepage": "https://twitter.com/IvanAkimov"
+                },
+                {
+                    "name": "Vincent Klaiber",
+                    "email": "hello@vinkla.com",
+                    "homepage": "https://vinkla.com"
                 }
             ],
-            "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers.",
+            "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers",
             "homepage": "http://hashids.org/php",
             "keywords": [
                 "bitly",
@@ -1215,7 +1221,65 @@
                 "obfuscate",
                 "youtube"
             ],
-            "time": "2016-01-21 04:26:38"
+            "time": "2016-11-15 18:59:27"
+        },
+        {
+            "name": "infoexam/media",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Infoexam/media.git",
+                "reference": "937cdddec1deae9744159ca211c74f084fdf47d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Infoexam/media/zipball/937cdddec1deae9744159ca211c74f084fdf47d9",
+                "reference": "937cdddec1deae9744159ca211c74f084fdf47d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "hashids/hashids": "^2.0",
+                "php": "^7.0",
+                "spatie/laravel-medialibrary": "^4.10",
+                "symfony/http-foundation": "3.1.*"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.3",
+                "illuminate/filesystem": "^5.3",
+                "orchestra/testbench": "^3.3",
+                "phpunit/phpunit": "^5.7"
+            },
+            "suggest": {
+                "ext-gmp": "Allows for arbitrary-length integers to be worked"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Infoexam\\Media\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "classmap": [
+                    "tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "BePsvPT",
+                    "email": "freedom@csie.io"
+                }
+            ],
+            "description": "Infoexam media.",
+            "homepage": "https://github.com/Infoexam/media",
+            "support": {
+                "source": "https://github.com/Infoexam/media/tree/master",
+                "issues": "https://github.com/Infoexam/media/issues"
+            },
+            "time": "2016-12-23 10:24:55"
         },
         {
             "name": "infoexam/password",
@@ -4481,34 +4545,34 @@
         },
         {
             "name": "vinkla/hashids",
-            "version": "2.4.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vinkla/laravel-hashids.git",
-                "reference": "77238d50efa2473cdf627d2e0b6a1834037c5b66"
+                "reference": "4fc2f13677001580768be6c6d9a6b51d28e6c72e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vinkla/laravel-hashids/zipball/77238d50efa2473cdf627d2e0b6a1834037c5b66",
-                "reference": "77238d50efa2473cdf627d2e0b6a1834037c5b66",
+                "url": "https://api.github.com/repos/vinkla/laravel-hashids/zipball/4fc2f13677001580768be6c6d9a6b51d28e6c72e",
+                "reference": "4fc2f13677001580768be6c6d9a6b51d28e6c72e",
                 "shasum": ""
             },
             "require": {
                 "graham-campbell/manager": "^2.4",
-                "hashids/hashids": "^1.0",
-                "illuminate/contracts": "5.1.* || 5.2.* || 5.3.*",
-                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
+                "hashids/hashids": "^2.0",
+                "illuminate/contracts": "5.2.* || 5.3.*",
+                "illuminate/support": "5.2.* || 5.3.*",
                 "php": "^5.6.4 || ^7.0"
             },
             "require-dev": {
                 "graham-campbell/testbench": "^3.2",
                 "mockery/mockery": "^0.9.5",
-                "phpunit/phpunit": "^5.4"
+                "phpunit/phpunit": "^5.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -4523,7 +4587,8 @@
             "authors": [
                 {
                     "name": "Vincent Klaiber",
-                    "email": "hello@vinkla.com"
+                    "email": "hello@vinkla.com",
+                    "homepage": "https://vinkla.com"
                 }
             ],
             "description": "A Hashids bridge for Laravel",
@@ -4539,7 +4604,7 @@
                 "obfuscate",
                 "youtube"
             ],
-            "time": "2016-07-11 19:13:05"
+            "time": "2016-11-15 19:19:18"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -5022,16 +5087,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.6",
+            "version": "0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0"
+                "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
-                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4de7969f4664da3cef1ccd83866c9f59378c3371",
+                "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371",
                 "shasum": ""
             },
             "require": {
@@ -5083,7 +5148,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2016-09-30 12:09:40"
+            "time": "2016-12-19 14:50:55"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6260,6 +6325,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "dingo/api": 20,
+        "infoexam/media": 20,
         "infoexam/password": 20
     },
     "prefer-stable": false,

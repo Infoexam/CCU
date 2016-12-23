@@ -53,7 +53,7 @@ class ExamController extends Controller
             $this->response->errorInternal();
         }
 
-        $exam->uploadImages($request->file('cover'), 'cover');
+        $exam->uploadMedias($request->file('cover'), 'cover');
 
         return $exam;
     }
@@ -93,7 +93,7 @@ class ExamController extends Controller
         if ($request->hasFile('cover')) {
             $exam->clearMediaCollection('cover');
 
-            $exam->uploadImages($request->file('cover'), 'cover');
+            $exam->uploadMedias($request->file('cover'), 'cover');
         }
 
         return $exam;

@@ -13,6 +13,7 @@
     "guzzlehttp/guzzle": "^6.2",
     "h4cc/wkhtmltoimage-amd64": "^0.12",
     "h4cc/wkhtmltopdf-amd64": "^0.12",
+    "infoexam/media": "dev-master",
     "infoexam/password": "dev-master",
     "jenssegers/agent": "^2.4",
     "laravel/framework": "5.3.*",
@@ -23,9 +24,8 @@
     "predis/predis": "^1.1",
     "ramsey/uuid": "^3.5",
     "spatie/laravel-backup": "^4.3",
-    "spatie/laravel-medialibrary": "^4.10",
     "venturecraft/revisionable": "^1.28",
-    "vinkla/hashids": "^2.4"
+    "vinkla/hashids": "^3.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^2.3",
@@ -37,7 +37,8 @@
     "symfony/dom-crawler": "3.1.*"
   },
   "repositories": [
-    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"}
+    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"},
+    {"type": "vcs", "url": "https://github.com/Infoexam/media.git"}
   ],
   "autoload": {
     "classmap": [

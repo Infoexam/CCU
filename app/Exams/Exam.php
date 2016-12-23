@@ -3,14 +3,12 @@
 namespace App\Exams;
 
 use App\Categories\Category;
-use App\Core\Entity;
-use App\Media\UploadImagesTrait;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Infoexam\Media\Media;
+use Venturecraft\Revisionable\RevisionableTrait;
 
-class Exam extends Entity implements HasMediaConversions
+class Exam extends Media
 {
-    use HasMediaTrait, UploadImagesTrait;
+    use RevisionableTrait;
 
     /**
      * The table associated with the model.
@@ -18,6 +16,13 @@ class Exam extends Entity implements HasMediaConversions
      * @var string
      */
     protected $table = 'exams';
+
+    /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 10;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -50,6 +55,13 @@ class Exam extends Entity implements HasMediaConversions
     protected $urlSensitive = ['name'];
 
     /**
+     * Check if we should store creations in our revision history.
+     *
+     * @var bool
+     */
+    protected $revisionCreationsEnabled = true;
+
+    /**
      * 取得題庫類型.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -67,19 +79,6 @@ class Exam extends Entity implements HasMediaConversions
     public function questions()
     {
         return $this->hasMany(Question::class);
-    }
-
-    /**
-     * Register the conversions that should be performed.
-     *
-     * @return array
-     */
-    public function registerMediaConversions()
-    {
-        $this->addMediaConversion('thumb')
-            ->setManipulations(['w' => 368])
-            ->performOnCollections('*')
-            ->nonQueued();
     }
 
     /**
@@ -104,6 +103,22 @@ class Exam extends Entity implements HasMediaConversions
     protected static function boot()
     {
         parent::boot();
+
+        static::saving(function (self $model) {
+            // Transform empty string to null
+            foreach ($model->getAttributes() as $key => $value) {
+                if (is_string($value) && empty($value)) {
+                    $model->setAttribute($key, null);
+                }
+            }
+
+            // Replace sensitive characters to '-'
+            static $search = [' ', '\\', '/', '#', '　'];
+
+            foreach ($model->urlSensitive as $key) {
+                $model->setAttribute($key, str_replace($search, '-', $model->getAttribute($key)));
+            }
+        });
 
         static::deleting(function (self $exam) {
             // Delete questions of the exam.

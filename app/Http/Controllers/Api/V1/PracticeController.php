@@ -37,15 +37,15 @@ class PracticeController extends Controller
     {
         return Exam::with([
             'questions' => function (HasMany $query) {
-                $query->whereNull('question_id')->orderByRand()->limit(50);
+                $query->whereNull('question_id')->inRandomOrder()->limit(50);
             },
             'questions.options' => function (HasMany $query) {
-                $query->orderByRand();
+                $query->inRandomOrder();
             },
             'questions.difficulty',
             'questions.questions',
             'questions.questions.options' => function (HasMany $query) {
-                $query->orderByRand();
+                $query->inRandomOrder();
             },
             'questions.questions.difficulty',
         ])->where('enable', true)->where('name', $name)->firstOrFail();

@@ -15,7 +15,7 @@ return [
     'max_file_size' => 1024 * 1024 * 10,
 
     /*
-     * This queue will used to generate derived images.
+     * This queue will be used to generate derived images.
      * Leave empty to use the default queue.
      */
     'queue_name' => '',
@@ -29,12 +29,12 @@ return [
      * When urls to files get generated this class will be called. Leave empty
      * if your files are stored locally above the site root or on s3.
      */
-    'custom_url_generator_class' => App\Vendor\MediaLibraryUrlGenerator::class,
+    'custom_url_generator_class' => Infoexam\Media\Generators\Url::class,
 
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'custom_path_generator_class' => App\Vendor\MediaLibraryPathGenerator::class,
+    'custom_path_generator_class' => Infoexam\Media\Generators\Path::class,
 
     'media_url' => env('MEDIA_URL', ''),
 
@@ -58,4 +58,12 @@ return [
             'CacheControl' => 'max-age=604800',
         ],
     ],
+
+    /*
+     * FFMPEG & FFProbe binaries path, only used if you try to generate video
+     * thumbnails and have installed the php-ffmpeg/php-ffmpeg composer
+     * dependency.
+     */
+    'ffmpeg_binaries' => '/usr/bin/ffmpeg',
+    'ffprobe_binaries' => '/usr/bin/ffprobe',
 ];
