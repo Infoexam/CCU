@@ -4,6 +4,7 @@ namespace App\Console\Commands\Sync;
 
 use App\Accounts\User;
 use App\Categories\Category;
+use App\Exams\Apply;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Collection;
@@ -39,17 +40,23 @@ class Receipt extends Sync
                 return $self;
             })
             ->each(function (array $receipt) {
-                $user = User::with(['receipts'])
+                $user = User::with(['receipts', 'applies', 'applies.listing', 'applies.listing.subject'])
                     ->where('username', $this->studentId($receipt['payer_name']))
                     ->first();
 
                 if (! is_null($user)) {
-                    $model = $user->receipts()->save($this->receipt($receipt));
+                    $model = $user->receipts()->save($this->receipt($receipt))->fresh(['category']);
 
                     DB::table('certificates')
                         ->where('user_id', $model->getAttribute('user_id'))
                         ->where('category_id', $model->getAttribute('category_id'))
                         ->increment('free');
+
+                    $user->getRelation('applies')->each(function (Apply $apply) use ($model) {
+                        if (str_contains($apply->getRelation('listing')->getRelation('subject')->getAttribute('name'), $model->getRelation('category')->getAttribute('name'))) {
+                            $apply->update(['paid_at' => Carbon::now()]);
+                        }
+                    });
                 } else {
                     Log::error('sync:receipt', [
                         'type' => 'user-not-found',

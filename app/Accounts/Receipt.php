@@ -2,6 +2,7 @@
 
 namespace App\Accounts;
 
+use App\Categories\Category;
 use App\Core\Entity;
 use Carbon\Carbon;
 
@@ -54,5 +55,15 @@ class Receipt extends Entity
         static::creating(function (self $receipt) {
             $receipt->setAttribute('created_at', Carbon::now());
         });
+    }
+
+    /**
+     * 取得收據類型.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
