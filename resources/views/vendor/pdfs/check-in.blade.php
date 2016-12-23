@@ -16,6 +16,8 @@
     </style>
   </head>
   <body>
+    <h4>場次：{{ $listing->getAttribute('code') }}</h4>
+
     <table>
       <thead style="display: table-header-group">
         <tr>
