@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Categories\Category;
 use App\Exams\Apply;
 use App\Exams\Listing;
 use Carbon\Carbon;
@@ -47,10 +48,22 @@ class Judge extends Command
     public function handle()
     {
         $this->listing()->each(function (Listing $listing) {
+            $subject = Category::getCategories('exam.category', explode('-', $listing->getRelation('subject')->getAttribute('name'), 2)[1]);
+
             $questions = $listing->getAttribute('log')->getRelation('questions');
 
-            $listing->getRelation('applies')->each(function (Apply $apply) use ($questions) {
+            $listing->getRelation('applies')->each(function (Apply $apply) use ($questions, $subject) {
                 if (! is_null($result = $apply->getRelation('result'))) {
+                    if ($apply->getAttribute('type') !== 'U') {
+                        $certificate = $apply->getRelation('user')->getRelation('certificates')->where('category_id', $subject)->first();
+
+                        try {
+                            $certificate->decrement('free');
+                        } catch (\PDOException $e) {
+                            return;
+                        }
+                    }
+
                     $correct = 0.0;
 
                     $log = array_map('intval', $result->getAttribute('log') ?? []);
@@ -80,8 +93,6 @@ class Judge extends Command
                     $score = ceil(100 / $questions->count() * $correct);
 
                     $result->update(['score' => $score]);
-
-                    // @todo money
                 }
             });
         });
@@ -89,7 +100,7 @@ class Judge extends Command
 
     public function listing()
     {
-        return Listing::with(['applies', 'applies.result', 'applies.user', 'applyType', 'subject'])
+        return Listing::with(['applies', 'applies.result', 'applies.user', 'applies.user.certificates', 'applyType', 'subject'])
             ->whereBetween('started_at', [$this->now->copy()->startOfDay(), $this->now->copy()->endOfDay()])
             ->get();
     }

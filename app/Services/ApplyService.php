@@ -62,7 +62,7 @@ class ApplyService
             ->firstOrFail(['id', 'code']);
     }
 
-    public function apply($code, User $user = null)
+    public function apply($code, User $user = null, $unity = false)
     {
         $listing = $this->getListing()->where('code', $code)->firstOrFail();
 
@@ -92,8 +92,8 @@ class ApplyService
 
         $apply = $listing->applies()->save(new Apply([
             'user_id' => $user->getKey(),
-            'type' => $user->own('admin') ? 'A' : 'S',
-            'paid_at' => $this->isFree($user, $listing) ? Carbon::now() : null,
+            'type' => $user->own('admin') ? ($unity ? 'U' : 'A') : 'S',
+            'paid_at' => ($this->isFree($user, $listing) || $unity) ? Carbon::now() : null,
         ]));
 
         $listing->increment('applied_num');
@@ -235,7 +235,6 @@ class ApplyService
 
         return $apply->update([
             'listing_id' => $listing->getKey(),
-            'type' => Auth::user()->own('admin') ? 'A' : 'S',
         ]);
     }
 

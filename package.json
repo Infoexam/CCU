@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "build": "webpack -p --progress",
-    "dev": "webpack --watch --progress --output-pathinfo --display-error-details",
-    "once": "webpack --progress",
+    "dev": "webpack --watch --progress --colors --output-pathinfo --display-error-details",
+    "once": "webpack --progress --colors",
     "profile": "webpack --progress --profile --json > stats.json"
   },
   "devDependencies": {

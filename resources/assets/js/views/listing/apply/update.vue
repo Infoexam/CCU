@@ -44,6 +44,16 @@
         >
         <label for="class-B">B</label>
       </p>
+    </div>
+
+    <div class="input-field">
+      <p>
+        <input
+          v-model="form.unity"
+          id="unity"
+          type="checkbox"
+        >
+        <label for="unity">統一預約</label>
       </p>
     </div>
 
@@ -80,7 +90,8 @@
         form: {
           username: '',
           department: '',
-          'class': 'A'
+          'class': 'A',
+          unity: false
         }
       }
     },

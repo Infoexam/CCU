@@ -59,8 +59,8 @@ class ListingApplyController extends Controller
                     ->get();
             }
 
-            $users->each(function (User $user) use ($code) {
-                $this->service->apply($code, $user);
+            $users->each(function (User $user) use ($request, $code) {
+                $this->service->apply($code, $user, $request->input('unity', false));
             });
         }
 

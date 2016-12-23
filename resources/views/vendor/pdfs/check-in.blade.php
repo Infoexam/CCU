@@ -31,7 +31,11 @@
             <td>{{ $apply->getRelation('user')->getAttribute('username') }}</td>
             <td>{{ $apply->getRelation('user')->getAttribute('name') }}</td>
             <td></td>
-            <td>未繳費</td>
+            <td>
+              @if (is_null($apply->getAttribute('paid_at')))
+                <span>未繳費</span>
+              @endif
+            </td>
           </tr>
         @endforeach
       </tbody>
