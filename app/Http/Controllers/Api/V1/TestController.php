@@ -138,7 +138,7 @@ class TestController extends Controller
 
         $pdf = PDF::loadView('vendor.pdfs.check-in', compact('listing'));
 
-        return $pdf->inline();
+        return $pdf->inline($listing->getAttribute('code').'.pdf');
     }
 
     public function start($code)
