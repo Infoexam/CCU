@@ -134,7 +134,7 @@ class TestController extends Controller
 
     public function checkIn($code)
     {
-        $listing = Listing::with(['applies', 'applies.user'])->where('code', $code)->firstOrFail();
+        $listing = Listing::with(['applies', 'applies.user', 'applyType', 'subject'])->where('code', $code)->firstOrFail();
 
         $pdf = PDF::loadView('vendor.pdfs.check-in', compact('listing'));
 

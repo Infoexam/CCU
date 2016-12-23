@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:department')->dailyAt('02:00');
         $schedule->command('sync:account')->dailyAt('02:05');
         $schedule->command('sync:receipt')->dailyAt('02:15');
-//        $schedule->command('judge')->dailyAt('02:30');
+        $schedule->command('judge')->dailyAt('02:30');
 
         if ($this->app->environment('production')) {
             $schedule->command('sync:certificate')->dailyAt('02:20');

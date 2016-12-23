@@ -12,4 +12,11 @@ class Certificate extends Entity
      * @var string
      */
     protected $table = 'certificates';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['score'];
 }

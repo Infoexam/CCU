@@ -16,13 +16,30 @@
     </style>
   </head>
   <body>
-    <h4>場次：{{ $listing->getAttribute('code') }}</h4>
+    <table class="bordered">
+      <tbody>
+        <tr>
+          <td>場次：{{ $listing->getAttribute('code') }}</td>
+          <td>地點：{{ $listing->getAttribute('room') }}</td>
+          <td>人數：{{ $listing->getAttribute('applied_num') }}</td>
+        </tr>
+        <tr>
+          <td>類型：{{ trans('infoexam.exam.subject.'.$listing->getRelation('subject')->getAttribute('name')) }}</td>
+          <td colspan="2">{{ trans('infoexam.exam.apply.'.$listing->getRelation('applyType')->getAttribute('name')) }}</td>
+        </tr>
+        <tr>
+          <td>時間：{{ $listing->getAttribute('began_at') }}</td>
+          <td colspan="2">時長：{{ $listing->getAttribute('duration') }} 分鐘</td>
+        </tr>
+      </tbody>
+    </table>
 
     <table>
       <thead style="display: table-header-group">
         <tr>
-          <th>姓名</th>
+          <th>#</th>
           <th>學號</th>
+          <th>姓名</th>
           <th>簽到</th>
           <th>備註</th>
         </tr>
@@ -30,6 +47,7 @@
       <tbody>
         @foreach ($listing->getRelation('applies') as $index => $apply)
           <tr style="page-break-inside: avoid">
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $apply->getRelation('user')->getAttribute('username') }}</td>
             <td>{{ $apply->getRelation('user')->getAttribute('name') }}</td>
             <td></td>

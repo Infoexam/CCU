@@ -36,8 +36,7 @@ class Judge extends Command
     {
         parent::__construct();
 
-//        $this->now = Carbon::yesterday();
-        $this->now = Carbon::now();
+        $this->now = Carbon::yesterday();
     }
 
     /**
@@ -54,9 +53,9 @@ class Judge extends Command
 
             $listing->getRelation('applies')->each(function (Apply $apply) use ($questions, $subject) {
                 if (! is_null($result = $apply->getRelation('result'))) {
-                    if ($apply->getAttribute('type') !== 'U') {
-                        $certificate = $apply->getRelation('user')->getRelation('certificates')->where('category_id', $subject)->first();
+                    $certificate = $apply->getRelation('user')->getRelation('certificates')->where('category_id', $subject)->first();
 
+                    if ($apply->getAttribute('type') !== 'U') {
                         try {
                             $certificate->decrement('free');
                         } catch (\PDOException $e) {
@@ -90,9 +89,13 @@ class Judge extends Command
                         }
                     }
 
-                    $score = ceil(100 / $questions->count() * $correct);
+                    $score = min(ceil(100 / $questions->count() * $correct), 100.0);
 
                     $result->update(['score' => $score]);
+
+                    if ($score > $certificate->getAttribute('score')) {
+                        $certificate->update(['score' => $score]);
+                    }
                 }
             });
         });
