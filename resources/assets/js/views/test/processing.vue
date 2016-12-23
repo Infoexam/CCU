@@ -88,6 +88,7 @@
   import Markdown from '~/components/markdown.vue'
   import Md5 from 'md5'
   import Pagination from './components/pagination.vue'
+  import Shuffle from 'shuffle-array'
   import Submit from '~/components/form/submit.vue'
   import Toast from '~/components/toast'
 
@@ -162,6 +163,8 @@
     methods: {
       preprocess (questions) {
         for (const question of questions) {
+          Shuffle(question.options)
+
           for (const option of question.options) {
             option.hash = Md5(option.id)
           }
@@ -169,7 +172,7 @@
 
         this.total = questions.length
 
-        this.questions = questions
+        this.questions = Shuffle(questions)
       },
 
       confirm () {

@@ -17,7 +17,7 @@
     <script src="{{ _asset('js/jquery.min.js') }}" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-MtG4F5bFIlwRS0MZiDIhuZp/FjoKpMFITxaG2vZqu3K6uh8Xx0VYgpo7JZ4uTJaT" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-/D3AGYPHOG62N83IIOYsJ2lYIInATz01gDy9/j27QKytBPdwyHBU4jWFIXGMoTot sha384-XP8NC9kjbHrsBgW+U1Rk0oviTC0mw1QOj2J02u4UwANlYrE88BXzU+w6o90yWk24" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-CnNfmqxpGfFBHpLlHWMtKjXWr0TXQSf2uLjp11NZCx8b1VIqcZCu4UqJpfge7ylo sha384-fZX/SiENf3gQupY29Z0ap4YfpCnhBva/UA2tVilAz35oQ84xOz3lgoUewke1HZ7T" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-mmlsXNblx9oX2vqMF5y12GUjMRPreDL8dhd4jWZxMChK5PW4SG5WsAwn6sgHW/WF sha384-N/5uHRAlKTrq+V/LrgadmEs3bQV+KQ6CXVon/v1YIf4dWFsdGWgWEdfq3evY0/ul" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-HzYwO7k/Gi8nokQFadi+LjLUl9BGd6VWvUXjVLov7vKKq+cTJxjX7mRmaq9uzNxA sha384-fZX/SiENf3gQupY29Z0ap4YfpCnhBva/UA2tVilAz35oQ84xOz3lgoUewke1HZ7T" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/main.js') }}" integrity="sha384-+aVzTfjy5nXyID/TY5nq4pGBnaE3OvoybvFV0ffbd83Xw+aML3b9/psZJ65+ce8+ sha384-dV+Q/0/psM5Mtx+vcxfSFq/jdshM/we0YzmkRvAAM6lkN9EgIi85DYrk86AttVhP" crossOrigin="anonymous" defer></script>
   </body>
 </html>
