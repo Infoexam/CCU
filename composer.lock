@@ -1229,17 +1229,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Infoexam/media.git",
-                "reference": "937cdddec1deae9744159ca211c74f084fdf47d9"
+                "reference": "6c62a50a0857f8526968cdffe52b02d5738567f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Infoexam/media/zipball/937cdddec1deae9744159ca211c74f084fdf47d9",
-                "reference": "937cdddec1deae9744159ca211c74f084fdf47d9",
+                "url": "https://api.github.com/repos/Infoexam/media/zipball/6c62a50a0857f8526968cdffe52b02d5738567f6",
+                "reference": "6c62a50a0857f8526968cdffe52b02d5738567f6",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "hashids/hashids": "^2.0",
+                "illuminate/support": "^5.3",
                 "php": "^7.0",
                 "spatie/laravel-medialibrary": "^4.10",
                 "symfony/http-foundation": "3.1.*"
@@ -1251,7 +1252,7 @@
                 "phpunit/phpunit": "^5.7"
             },
             "suggest": {
-                "ext-gmp": "Allows for arbitrary-length integers to be worked"
+                "ext-gmp": "Allows arbitrary-length integers to be worked"
             },
             "type": "library",
             "autoload": {
@@ -1279,7 +1280,7 @@
                 "source": "https://github.com/Infoexam/media/tree/master",
                 "issues": "https://github.com/Infoexam/media/issues"
             },
-            "time": "2016-12-23 10:24:55"
+            "time": "2016-12-24 08:32:47"
         },
         {
             "name": "infoexam/password",

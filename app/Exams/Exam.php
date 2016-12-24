@@ -3,12 +3,13 @@
 namespace App\Exams;
 
 use App\Categories\Category;
+use App\Core\Entity;
 use Infoexam\Media\Media;
-use Venturecraft\Revisionable\RevisionableTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Exam extends Media
+class Exam extends Entity implements HasMediaConversions
 {
-    use RevisionableTrait;
+    use Media;
 
     /**
      * The table associated with the model.
@@ -16,13 +17,6 @@ class Exam extends Media
      * @var string
      */
     protected $table = 'exams';
-
-    /**
-     * The number of models to return for pagination.
-     *
-     * @var int
-     */
-    protected $perPage = 10;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -53,13 +47,6 @@ class Exam extends Media
      * @var array
      */
     protected $urlSensitive = ['name'];
-
-    /**
-     * Check if we should store creations in our revision history.
-     *
-     * @var bool
-     */
-    protected $revisionCreationsEnabled = true;
 
     /**
      * 取得題庫類型.
@@ -103,22 +90,6 @@ class Exam extends Media
     protected static function boot()
     {
         parent::boot();
-
-        static::saving(function (self $model) {
-            // Transform empty string to null
-            foreach ($model->getAttributes() as $key => $value) {
-                if (is_string($value) && empty($value)) {
-                    $model->setAttribute($key, null);
-                }
-            }
-
-            // Replace sensitive characters to '-'
-            static $search = [' ', '\\', '/', '#', '　'];
-
-            foreach ($model->urlSensitive as $key) {
-                $model->setAttribute($key, str_replace($search, '-', $model->getAttribute($key)));
-            }
-        });
 
         static::deleting(function (self $exam) {
             // Delete questions of the exam.
