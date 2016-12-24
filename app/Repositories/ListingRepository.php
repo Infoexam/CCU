@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Categories\Category;
-use App\Exams\Listing;
 use App\Services\PaperService;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Listing;
 
 class ListingRepository
 {

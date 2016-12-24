@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Exams\Exam;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Exam;
 
 class PracticeController extends Controller
 {

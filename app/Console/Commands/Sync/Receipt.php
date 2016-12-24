@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Accounts\User;
-use App\Categories\Category;
-use App\Exams\Apply;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\User;
 use Log;
 
 class Receipt extends Sync
@@ -126,11 +126,11 @@ class Receipt extends Sync
      *
      * @param array $receipt
      *
-     * @return \App\Accounts\Receipt
+     * @return \Infoexam\Eloquent\Models\Receipt
      */
     protected function receipt(array $receipt)
     {
-        return new \App\Accounts\Receipt([
+        return new \Infoexam\Eloquent\Models\Receipt([
             'receipt_no' => $receipt['receipt_no'],
             'receipt_date' => $receipt['receipt_date'],
             'category_id' => $this->categoryId($receipt['note']),

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Accounts\User;
-use App\Events\SignIn;
 use App\Http\Controllers\Controller;
 use Auth;
 use DOMDocument;
 use GuzzleHttp\Client;
 use Hash;
 use Illuminate\Http\Request;
+use Infoexam\Eloquent\Models\User;
 use Redirect;
 use Session;
 
@@ -20,7 +19,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      *
-     * @return \App\Accounts\User
+     * @return \Infoexam\Eloquent\Models\User
      */
     public function signIn(Request $request)
     {

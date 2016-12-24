@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Exams\Apply;
+use Infoexam\Eloquent\Models\Apply;
 
 class ApplyRepository
 {

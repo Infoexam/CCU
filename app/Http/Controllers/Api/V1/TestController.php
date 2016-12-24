@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Exams\Apply;
-use App\Exams\Listing;
-use App\Exams\Result;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Listing;
+use Infoexam\Eloquent\Models\Result;
 use PDF;
 
 class TestController extends Controller

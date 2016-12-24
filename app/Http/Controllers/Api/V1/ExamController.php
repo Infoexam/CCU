@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Categories\Category;
-use App\Exams\Exam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamRequest;
 use Illuminate\Http\Request;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Exam;
 
 class ExamController extends Controller
 {

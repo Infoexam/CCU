@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Exams\Question;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Question;
 
 class QuestionRepository
 {

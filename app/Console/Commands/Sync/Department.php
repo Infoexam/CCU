@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Categories\Category;
 use DB;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Category;
 
 class Department extends Sync
 {

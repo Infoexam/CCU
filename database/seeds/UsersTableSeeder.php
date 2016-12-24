@@ -1,10 +1,10 @@
 <?php
 
-use App\Accounts\Certificate;
-use App\Accounts\Receipt;
-use App\Accounts\User;
-use App\Categories\Category;
 use Illuminate\Database\Seeder;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Certificate;
+use Infoexam\Eloquent\Models\Receipt;
+use Infoexam\Eloquent\Models\User;
 
 class UsersTableSeeder extends Seeder
 {

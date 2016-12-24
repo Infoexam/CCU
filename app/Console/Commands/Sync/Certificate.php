@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Accounts\User;
-use App\Categories\Category;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\User;
 
 class Certificate extends Sync
 {
@@ -121,7 +121,7 @@ class Certificate extends Sync
      */
     protected function certificates($certificates)
     {
-        return $certificates->map(function (\App\Accounts\Certificate $certificate) {
+        return $certificates->map(function (\Infoexam\Eloquent\Models\Certificate $certificate) {
             return [
                 $this->categories[$certificate->getAttribute('category_id')] => [
                     'score' => $certificate->getAttribute('score'),

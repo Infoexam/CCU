@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Categories\Category;
-use App\Exams\Apply;
-use App\Exams\Listing;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Listing;
 
 class Judge extends Command
 {

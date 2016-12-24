@@ -2,10 +2,6 @@
 
 namespace App\Services;
 
-use App\Accounts\User;
-use App\Categories\Category;
-use App\Exams\Apply;
-use App\Exams\Listing;
 use App\Exceptions\ApplyInconsistentTransformException;
 use App\Exceptions\ApplyUnapplicableException;
 use App\Exceptions\ApplyUncancelableException;
@@ -17,6 +13,10 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Listing;
+use Infoexam\Eloquent\Models\User;
 use Notification;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 

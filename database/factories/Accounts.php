@@ -1,10 +1,10 @@
 <?php
 
 /** @var Illuminate\Database\Eloquent\Factory $factory */
-use App\Accounts\Certificate;
-use App\Accounts\Receipt;
-use App\Accounts\User;
 use Faker\Factory as Faker;
+use Infoexam\Eloquent\Models\Certificate;
+use Infoexam\Eloquent\Models\Receipt;
+use Infoexam\Eloquent\Models\User;
 
 $factory->define(User::class, function () {
     $faker = Faker::create('zh_TW');

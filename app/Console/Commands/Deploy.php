@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App;
-use App\Core\Entity;
 use Artisan;
 use Cache;
 use Carbon\Carbon;
@@ -169,7 +168,7 @@ class Deploy extends Command
             return;
         }
 
-        $version = Entity::VERSION;
+        $version = json_decode(File::get(base_path('composer.json'), true), true)['version'];
 
         File::copyDirectory(
             public_path('assets'),

@@ -2,12 +2,12 @@
 
 namespace App\Notifications;
 
-use App\Exams\Apply;
 use Hashids;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Infoexam\Eloquent\Models\Apply;
 
 class ListingApplied extends Notification implements ShouldQueue
 {

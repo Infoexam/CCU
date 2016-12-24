@@ -1,11 +1,11 @@
 <?php
 
 /** @var Illuminate\Database\Eloquent\Factory $factory */
-use App\Exams\Exam;
-use App\Exams\Option;
-use App\Exams\Paper;
-use App\Exams\Question;
 use Faker\Factory as Faker;
+use Infoexam\Eloquent\Models\Exam;
+use Infoexam\Eloquent\Models\Option;
+use Infoexam\Eloquent\Models\Paper;
+use Infoexam\Eloquent\Models\Question;
 
 $factory->define(Exam::class, function () {
     $faker = Faker::create('zh_TW');

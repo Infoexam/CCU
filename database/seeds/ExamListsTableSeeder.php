@@ -1,9 +1,9 @@
 <?php
 
-use App\Infoexam\Exam\Apply;
-use App\Infoexam\Exam\Lists;
-use App\Infoexam\Exam\Result;
 use Illuminate\Database\Seeder;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Lists;
+use Infoexam\Eloquent\Models\Result;
 
 class ExamListsTableSeeder extends Seeder
 {

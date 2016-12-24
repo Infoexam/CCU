@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Categories\Category;
-use App\Exams\Exam;
-use App\Exams\Option;
-use App\Exams\Question;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ExamQuestionImportRequest;
 use App\Http\Requests\Api\V1\ExamQuestionRequest;
 use Excel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Exam;
+use Infoexam\Eloquent\Models\Option;
+use Infoexam\Eloquent\Models\Question;
 use Maatwebsite\Excel\Collections\CellCollection;
 use Ramsey\Uuid\Uuid;
 

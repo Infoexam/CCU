@@ -1,7 +1,7 @@
 <?php
 
-use App\Categories\Category;
 use Illuminate\Database\Seeder;
+use Infoexam\Eloquent\Models\Category;
 
 class CategoriesTableSeeder extends Seeder
 {

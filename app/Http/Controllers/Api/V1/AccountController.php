@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Exams\Apply;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Hashids;
 use Illuminate\Http\Request;
+use Infoexam\Eloquent\Models\Apply;
 
 class AccountController extends Controller
 {
@@ -15,7 +15,7 @@ class AccountController extends Controller
      *
      * @param Request $request
      *
-     * @return \App\Accounts\User
+     * @return \Infoexam\Eloquent\Models\User
      */
     public function profile(Request $request)
     {

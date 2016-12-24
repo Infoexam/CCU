@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Categories\Category;
-use App\Exams\Exam;
-use App\Exams\Paper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\PaperQuestionRequest;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Exam;
+use Infoexam\Eloquent\Models\Paper;
 
 class PaperQuestionController extends Controller
 {

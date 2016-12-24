@@ -1,10 +1,8 @@
 <?php
 
-use App\Infoexam\Exam\Explanation;
-use App\Infoexam\Exam\Option;
-use App\Infoexam\Exam\Question;
-use App\Infoexam\Exam\Set;
 use Illuminate\Database\Seeder;
+use Infoexam\Eloquent\Models\Option;
+use Infoexam\Eloquent\Models\Question;
 
 class ExamSetsTableSeeder extends Seeder
 {

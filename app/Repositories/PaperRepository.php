@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Exams\Paper;
+use Infoexam\Eloquent\Models\Paper;
 
 class PaperRepository
 {

@@ -1,7 +1,7 @@
 <?php
 
-use App\Infoexam\Exam\Paper;
-use App\Infoexam\Exam\Question;
+use Infoexam\Eloquent\Models\Paper;
+use Infoexam\Eloquent\Models\Question;
 use Illuminate\Database\Seeder;
 
 class PapersTableSeeder extends Seeder

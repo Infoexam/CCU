@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Exams\Listing;
 use App\Exceptions\ListingAppliedException;
 use App\Exceptions\ListingConflictException;
 use App\Exceptions\ListingStartedException;
@@ -11,6 +10,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Listing;
 
 class ListingService
 {

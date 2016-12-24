@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Configs\Config;
 use Cache;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Config;
 use M6Web\Component\Firewall\Entry\EntryFactory;
 
 class Firewall extends Command

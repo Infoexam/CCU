@@ -3,7 +3,7 @@
 /** @var $factory \Illuminate\Database\Eloquent\Factory */
 function randomCategory($category)
 {
-    return \App\Categories\Category::getCategories($category)->random()->getAttribute('id');
+    return \Infoexam\Eloquent\Models\Category::getCategories($category)->random()->getAttribute('id');
 }
 
 /*
@@ -11,7 +11,7 @@ function randomCategory($category)
  * exam_lists, exam_applies and exam_results tables
  */
 
-$factory->define(\App\Exams\Listing::class, function () {
+$factory->define(\Infoexam\Eloquent\Models\Listing::class, function () {
     $faker = Faker\Factory::create('zh_TW');
 
     return [
@@ -19,28 +19,28 @@ $factory->define(\App\Exams\Listing::class, function () {
         'began_at' => $faker->dateTime,
         'duration' => $faker->numberBetween(30, 90),
         'room' => $faker->numberBetween(100, 999),
-        'paper_id' => \App\Exams\Paper::all()->random()->getAttribute('id'),
+        'paper_id' => \Infoexam\Eloquent\Models\Paper::all()->random()->getAttribute('id'),
         'apply_type_id' => randomCategory('exam.apply'),
         'subject_id' => randomCategory('exam.subject'),
         'std_maximum_num' => $faker->numberBetween(10, 50),
     ];
 });
 
-$factory->define(\App\Exams\Apply::class, function () {
+$factory->define(\Infoexam\Eloquent\Models\Apply::class, function () {
     $faker = Faker\Factory::create('zh_TW');
 
     return [
-        'user_id' => \App\Accounts\User::all()->random()->getAttribute('id'),
+        'user_id' => \Infoexam\Eloquent\Models\User::all()->random()->getAttribute('id'),
         'apply_type_id' => randomCategory('exam.applied'),
         'paid_at' => $faker->boolean() ? $faker->dateTime : null,
     ];
 });
 
-$factory->define(\App\Exams\Result::class, function () {
+$factory->define(\Infoexam\Eloquent\Models\Result::class, function () {
     $faker = Faker\Factory::create('zh_TW');
 
     return [
-        'score' => \App\Accounts\User::all()->random()->getAttribute('id'),
+        'score' => \Infoexam\Eloquent\Models\User::all()->random()->getAttribute('id'),
         'signed_in_at' => $faker->dateTime,
     ];
 });

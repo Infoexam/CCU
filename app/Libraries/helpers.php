@@ -22,7 +22,7 @@ if (! function_exists('_asset')) {
         return implode('/', [
             config('infoexam.static_url'),
             'assets',
-            \App\Core\Entity::VERSION,
+            json_decode(File::get(base_path('composer.json'), true), true)['version'],
             $path,
         ]);
     }
@@ -38,6 +38,6 @@ if (! function_exists('random_category')) {
      */
     function random_category($category)
     {
-        return \App\Categories\Category::getCategories($category)->random()->getKey();
+        return \Infoexam\Eloquent\Models\Category::getCategories($category)->random()->getKey();
     }
 }

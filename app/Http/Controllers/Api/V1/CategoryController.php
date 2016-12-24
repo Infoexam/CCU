@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Categories\Category;
 use App\Http\Controllers\Controller;
+use Infoexam\Eloquent\Models\Category;
 
 class CategoryController extends Controller
 {

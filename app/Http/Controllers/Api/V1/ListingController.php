@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Categories\Category;
-use App\Exams\Listing;
 use App\Exceptions\ListingAppliedException;
 use App\Exceptions\ListingConflictException;
 use App\Exceptions\ListingStartedException;
@@ -13,6 +11,8 @@ use App\Services\ListingService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Listing;
 
 class ListingController extends Controller
 {

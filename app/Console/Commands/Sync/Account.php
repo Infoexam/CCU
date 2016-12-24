@@ -2,14 +2,14 @@
 
 namespace App\Console\Commands\Sync;
 
-use App\Accounts\Certificate;
-use App\Accounts\User;
-use App\Categories\Category;
 use Cache;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Certificate;
+use Infoexam\Eloquent\Models\User;
 use Ko\ProcessManager;
 use Ramsey\Uuid\Uuid;
 

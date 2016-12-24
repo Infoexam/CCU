@@ -188,8 +188,7 @@ return [
         /*
          * Infoexam Service Providers...
          */
-        Infoexam\Media\MediaServiceProvider::class,
-        Infoexam\Password\PasswordServiceProvider::class,
+        Infoexam\Eloquent\EloquentServiceProvider::class,
 
     ],
 

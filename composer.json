@@ -1,6 +1,7 @@
 {
   "name": "infoexam/ccu",
   "description": "Infoexam.",
+  "version": "0.0.12",
   "type": "project",
   "homepage": "https://github.com/Infoexam",
   "license": "proprietary",
@@ -13,6 +14,7 @@
     "guzzlehttp/guzzle": "^6.2",
     "h4cc/wkhtmltoimage-amd64": "^0.12",
     "h4cc/wkhtmltopdf-amd64": "^0.12",
+    "infoexam/eloquent": "dev-master",
     "infoexam/media": "dev-master",
     "infoexam/password": "dev-master",
     "jenssegers/agent": "^2.4",
@@ -37,8 +39,9 @@
     "symfony/dom-crawler": "3.1.*"
   },
   "repositories": [
-    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"},
-    {"type": "vcs", "url": "https://github.com/Infoexam/media.git"}
+    {"type": "vcs", "url": "https://github.com/Infoexam/eloquent.git"},
+    {"type": "vcs", "url": "https://github.com/Infoexam/media.git"},
+    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"}
   ],
   "autoload": {
     "classmap": [

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\Categories\Category;
 use App\Http\Requests\Request;
+use Infoexam\Eloquent\Models\Category;
 
 class ListingRequest extends Request
 {
