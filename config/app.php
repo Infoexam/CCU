@@ -178,7 +178,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\Snappy\ServiceProvider::class,
         Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
@@ -189,6 +188,7 @@ return [
          * Infoexam Service Providers...
          */
         Infoexam\Eloquent\EloquentServiceProvider::class,
+        Infoexam\Snappy\SnappyServiceProvider::class,
 
     ],
 
@@ -240,8 +240,6 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
-        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

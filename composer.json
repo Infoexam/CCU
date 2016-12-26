@@ -7,16 +7,14 @@
   "license": "proprietary",
   "require": {
     "php": "^7.0",
-    "barryvdh/laravel-snappy": "^0.3",
     "bepsvpt/secure-headers": "^3.0",
     "dingo/api": "1.0.*@dev",
     "doctrine/dbal": "^2.5",
     "guzzlehttp/guzzle": "^6.2",
-    "h4cc/wkhtmltoimage-amd64": "^0.12",
-    "h4cc/wkhtmltopdf-amd64": "^0.12",
     "infoexam/eloquent": "dev-master",
     "infoexam/media": "dev-master",
     "infoexam/password": "dev-master",
+    "infoexam/snappy": "dev-master",
     "jenssegers/agent": "^2.4",
     "laravel/framework": "5.3.*",
     "m6web/firewall": "^1.0",
@@ -41,7 +39,8 @@
   "repositories": [
     {"type": "vcs", "url": "https://github.com/Infoexam/eloquent.git"},
     {"type": "vcs", "url": "https://github.com/Infoexam/media.git"},
-    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"}
+    {"type": "vcs", "url": "https://github.com/Infoexam/password.git"},
+    {"type": "vcs", "url": "https://github.com/Infoexam/snappy.git"}
   ],
   "autoload": {
     "classmap": [

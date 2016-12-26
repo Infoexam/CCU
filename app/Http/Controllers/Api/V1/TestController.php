@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Infoexam\Eloquent\Models\Apply;
 use Infoexam\Eloquent\Models\Listing;
 use Infoexam\Eloquent\Models\Result;
-use PDF;
+use SnappyPdf;
 
 class TestController extends Controller
 {
@@ -136,7 +136,7 @@ class TestController extends Controller
     {
         $listing = Listing::with(['applies', 'applies.user', 'applyType', 'subject'])->where('code', $code)->firstOrFail();
 
-        $pdf = PDF::loadView('vendor.pdfs.check-in', compact('listing'));
+        $pdf = SnappyPdf::loadView('vendor.pdfs.check-in', compact('listing'));
 
         return $pdf->inline($listing->getAttribute('code').'.pdf');
     }
