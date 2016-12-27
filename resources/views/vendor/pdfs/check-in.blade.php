@@ -16,13 +16,13 @@
       }
 
       th, td {
-        padding: .7rem .5rem;
+        padding: .65rem .45rem;
       }
     </style>
   </head>
   <body>
     @foreach($listing->getRelation('applies')->chunk(40) as $chunks)
-      <table style="text-align: left;">
+      <table style="text-align: left; page-break-before: always;">
         <tbody>
           <tr>
             <td>場次：{{ $listing->getAttribute('code') }}</td>
@@ -61,7 +61,7 @@
           @foreach($chunks->chunk(2) as $chunk)
             <tr>
               @foreach ($chunk as $index => $apply)
-                <td style="padding: .45rem .3rem;">{{ $index + 1 }}</td>
+                <td style="padding: .45rem .3rem;">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</td>
                 <td>{{ $apply->getRelation('user')->getAttribute('username') }}</td>
                 <td>{{ $apply->getRelation('user')->getAttribute('name') }}</td>
                 <td>　　　　</td>
