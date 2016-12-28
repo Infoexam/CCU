@@ -222,17 +222,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dingo/api.git",
-                "reference": "dc312a566ff8fe16098f95360d3778789727f63f"
+                "reference": "81dbdbded14ec4b1529bb435ee0532540dbae24f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dingo/api/zipball/dc312a566ff8fe16098f95360d3778789727f63f",
-                "reference": "dc312a566ff8fe16098f95360d3778789727f63f",
+                "url": "https://api.github.com/repos/dingo/api/zipball/81dbdbded14ec4b1529bb435ee0532540dbae24f",
+                "reference": "81dbdbded14ec4b1529bb435ee0532540dbae24f",
                 "shasum": ""
             },
             "require": {
                 "dingo/blueprint": "0.2.*",
-                "doctrine/annotations": "1.2.*",
                 "illuminate/routing": "5.1.* || 5.2.* || 5.3.*",
                 "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
                 "league/fractal": ">=0.12.0",
@@ -289,24 +288,24 @@
                 "laravel",
                 "restful"
             ],
-            "time": "2016-10-18T16:20:39+00:00"
+            "time": "2016-12-27T22:09:26+00:00"
         },
         {
             "name": "dingo/blueprint",
-            "version": "v0.2.0",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dingo/blueprint.git",
-                "reference": "d37fb7433aeadb3d40d5e790978c3c8d229d0e7d"
+                "reference": "53c2e553e2cb1284d5736f0bd264599ba89c376f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dingo/blueprint/zipball/d37fb7433aeadb3d40d5e790978c3c8d229d0e7d",
-                "reference": "d37fb7433aeadb3d40d5e790978c3c8d229d0e7d",
+                "url": "https://api.github.com/repos/dingo/blueprint/zipball/53c2e553e2cb1284d5736f0bd264599ba89c376f",
+                "reference": "53c2e553e2cb1284d5736f0bd264599ba89c376f",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "1.2.*",
+                "doctrine/annotations": "~1.2",
                 "illuminate/filesystem": "5.1.* || 5.2.* || 5.3.*",
                 "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
                 "php": ">=5.5.9",
@@ -345,7 +344,7 @@
                 "docs",
                 "laravel"
             ],
-            "time": "2016-08-30T03:27:49+00:00"
+            "time": "2016-12-27T21:55:37+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1308,12 +1307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Infoexam/eloquent.git",
-                "reference": "810d82d77872f102316d84a449db341f21a55e58"
+                "reference": "3a6c7218310d7a10041f672dc495a7312c52e0a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Infoexam/eloquent/zipball/810d82d77872f102316d84a449db341f21a55e58",
-                "reference": "810d82d77872f102316d84a449db341f21a55e58",
+                "url": "https://api.github.com/repos/Infoexam/eloquent/zipball/3a6c7218310d7a10041f672dc495a7312c52e0a0",
+                "reference": "3a6c7218310d7a10041f672dc495a7312c52e0a0",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1356,7 @@
                 "source": "https://github.com/Infoexam/eloquent/tree/master",
                 "issues": "https://github.com/Infoexam/eloquent/issues"
             },
-            "time": "2016-12-26T06:58:26+00:00"
+            "time": "2016-12-28T01:17:21+00:00"
         },
         {
             "name": "infoexam/media",
@@ -1365,12 +1364,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Infoexam/media.git",
-                "reference": "25de11a0f4f08bac6d8c844783e137c2a03a53dd"
+                "reference": "d10dc4c9b6a6758654752564afb8b81c54df2141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Infoexam/media/zipball/25de11a0f4f08bac6d8c844783e137c2a03a53dd",
-                "reference": "25de11a0f4f08bac6d8c844783e137c2a03a53dd",
+                "url": "https://api.github.com/repos/Infoexam/media/zipball/d10dc4c9b6a6758654752564afb8b81c54df2141",
+                "reference": "d10dc4c9b6a6758654752564afb8b81c54df2141",
                 "shasum": ""
             },
             "require": {
@@ -1416,7 +1415,7 @@
                 "source": "https://github.com/Infoexam/media/tree/master",
                 "issues": "https://github.com/Infoexam/media/issues"
             },
-            "time": "2016-12-26T06:57:22+00:00"
+            "time": "2016-12-28T01:15:00+00:00"
         },
         {
             "name": "infoexam/password",
@@ -1424,12 +1423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Infoexam/password.git",
-                "reference": "ec021d531f5fc2c010c46c996c2fff836f9cb23c"
+                "reference": "5c25a6911af311f5468f50e79678af5f59993b19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Infoexam/password/zipball/ec021d531f5fc2c010c46c996c2fff836f9cb23c",
-                "reference": "ec021d531f5fc2c010c46c996c2fff836f9cb23c",
+                "url": "https://api.github.com/repos/Infoexam/password/zipball/5c25a6911af311f5468f50e79678af5f59993b19",
+                "reference": "5c25a6911af311f5468f50e79678af5f59993b19",
                 "shasum": ""
             },
             "require": {
@@ -1471,7 +1470,7 @@
                 "source": "https://github.com/Infoexam/password/tree/master",
                 "issues": "https://github.com/Infoexam/password/issues"
             },
-            "time": "2016-12-19T13:46:09+00:00"
+            "time": "2016-12-28T01:12:57+00:00"
         },
         {
             "name": "infoexam/snappy",
@@ -1479,12 +1478,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Infoexam/snappy.git",
-                "reference": "b86a03840589c6a6897e61933a00291647bcdc36"
+                "reference": "5c1f1f31b0954fc644be6f23ef7596cdbef992ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Infoexam/snappy/zipball/b86a03840589c6a6897e61933a00291647bcdc36",
-                "reference": "b86a03840589c6a6897e61933a00291647bcdc36",
+                "url": "https://api.github.com/repos/Infoexam/snappy/zipball/5c1f1f31b0954fc644be6f23ef7596cdbef992ea",
+                "reference": "5c1f1f31b0954fc644be6f23ef7596cdbef992ea",
                 "shasum": ""
             },
             "require": {
@@ -1527,7 +1526,7 @@
                 "source": "https://github.com/Infoexam/snappy/tree/master",
                 "issues": "https://github.com/Infoexam/snappy/issues"
             },
-            "time": "2016-12-26T06:53:09+00:00"
+            "time": "2016-12-28T01:18:23+00:00"
         },
         {
             "name": "intervention/image",
