@@ -93,7 +93,7 @@ class Deploy extends Command
             }
 
             // 執行 package 更新
-            $this->externalCommand("git pull; {$path} install --no-scripts --no-dev -o");
+            $this->externalCommand("git fetch; git reset --hard origin/master; {$path} install --no-scripts --no-dev -o");
         }
     }
 
