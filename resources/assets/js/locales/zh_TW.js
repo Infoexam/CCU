@@ -109,6 +109,10 @@ export default {
 
     admin: '管理介面',
 
+    users: {
+      index: '學生列表'
+    },
+
     exams: {
       index: '題庫列表',
       create: '新增題庫',

@@ -34,6 +34,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
             'listings' => 'code',
             'applies' => 'id',
             'tests' => 'code',
+            'users' => 'username',
         ]]);
         $api->resource('exams.images', 'ExamImageController', ['only' => ['index', 'store', 'destroy']]);
         $api->get('exams/{name}/questions/groups', 'ExamQuestionController@groups');
@@ -62,6 +63,9 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
             $api->patch('extend', 'TestController@extend');
             $api->patch('redo', 'TestController@redo');
         });
+
+        $api->get('users/search', 'UserController@search');
+        $api->resource('users', 'UserController');
     });
 });
 

@@ -30,6 +30,8 @@ router.map({
     component: resolve => resolve(require('~/views/base/admin.vue')),
     subRoutes: {
       '/': { name: 'admin', component: resolve => resolve(require('~/views/home/admin.vue')), title: 'admin' },
+      '/users': { name: 'admin.users', component: resolve => resolve(require('~/views/user/list.vue')), title: 'users.index' },
+      '/users/:username': { name: 'admin.users.show', component: resolve => resolve(require('~/views/user/show.vue')), title: 'users.index' },
       '/exams': { name: 'admin.exams', component: resolve => resolve(require('~/views/exam/list.vue')), title: 'exams.index' },
       '/exams/create': { name: 'admin.exams.create', component: resolve => resolve(require('~/views/exam/create.vue')), title: 'exams.create' },
       '/exams/:name/edit': { name: 'admin.exams.edit', component: resolve => resolve(require('~/views/exam/edit.vue')), title: 'exams.edit' },

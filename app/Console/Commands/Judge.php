@@ -93,7 +93,7 @@ class Judge extends Command
 
                     $result->update(['score' => $score]);
 
-                    if ($score > $certificate->getAttribute('score')) {
+                    if (is_null($certificate->getAttribute('score')) || (0 > $certificate->getAttribute('score') && $score > $certificate->getAttribute('score'))) {
                         $certificate->update(['score' => $score]);
                     }
                 }

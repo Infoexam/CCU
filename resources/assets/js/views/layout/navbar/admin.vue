@@ -76,6 +76,13 @@
       return {
         navbar: [
           {
+            name: '帳號',
+            icon: 'fa-users',
+            links: [
+              { href: { name: 'admin.users', exact: true }, name: '帳號列表' }
+            ]
+          },
+          {
             name: '題庫',
             icon: 'fa-tasks',
             links: [
