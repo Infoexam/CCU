@@ -43,7 +43,8 @@ class UserController extends Controller
         $user = User::with([
             'certificates' => function ($query) use ($request) {
                 $query->where('category_id', $request->input('category'));
-            }])
+            },
+        ])
             ->where('username', $username)
             ->first();
 
