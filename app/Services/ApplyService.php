@@ -117,7 +117,13 @@ class ApplyService
             $query->where('category_id', Category::getCategories('exam.category', $type));
         }]);
 
-        return $user->getRelation('certificates')->first()->getAttribute('score') >= 70;
+        $score = $user->getRelation('certificates')->first()->getAttribute('score');
+
+        if (is_null($score)) {
+            return false;
+        }
+
+        return $score >= 70 || 0 > $score;
     }
 
     protected function validSubject(User $user, Listing $listing)
