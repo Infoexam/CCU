@@ -197,7 +197,7 @@ class Account extends Sync
 
         $users->each(function (array $user) {
             if ($this->isModified($user)) {
-                $user['_model']->revisionEnabled = false;
+//                $user['_model']->revisionEnabled = false;
 
                 $user['_model']->update($this->user($user, true));
             }
