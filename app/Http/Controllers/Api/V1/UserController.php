@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function show($username)
     {
-        $user = User::with(['department', 'grade', 'certificates', 'certificates.category'])
+        $user = User::with(['department', 'grade', 'certificates', 'certificates.category', 'applies', 'applies.listing.subject', 'applies.result'])
             ->where('username', $username)
             ->first();
 

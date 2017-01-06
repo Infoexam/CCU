@@ -2,6 +2,8 @@
 
 <template>
   <div>
+    <h5>個人資訊</h5>
+
     <table class="bordered striped">
       <tbody>
         <tr>
@@ -24,6 +26,8 @@
     </table>
 
     <br>
+
+    <h5>檢定狀態</h5>
 
     <table class="bordered striped centered">
       <thead>
@@ -69,10 +73,39 @@
         </tr>
       </tbody>
     </table>
+
+    <br>
+
+    <h5>歷史測驗</h5>
+
+    <table class="bordered striped centered">
+      <thead>
+        <tr>
+          <th>場次</th>
+          <th>類型</th>
+          <th>成績</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="apply in user.applies">
+          <td>{{ apply.listing.code }}</td>
+          <td>{{ i18n('listing', apply.listing.subject.name) }}</td>
+          <td
+            v-if="ended(apply.listing.ended_at)"
+          >{{ apply.result ? apply.result.score : '缺考' }}</td>
+          <td v-else>-</td>
+        </tr>
+        <tr v-if="! user.applies.length">
+          <td colspan="3">尚無紀錄</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
+  import Moment from 'moment'
+
   export default {
     route: {
       data (transition) {
@@ -87,6 +120,7 @@
     data () {
       return {
         user: {
+          applies: [],
           certificates: [],
           department: {},
           grade: {}
@@ -105,6 +139,14 @@
         this.$http.patch(`users/${this.$route.params.username}`, { category, type: 'credit' }).then(response => {
           this.user = response.data.user
         })
+      },
+
+      ended (time) {
+        return 0 < Moment().diff(time)
+      },
+
+      i18n (type, key) {
+        return this.$t(`${type}.${key.replace(/-/g, '_')}`)
       }
     }
   }
