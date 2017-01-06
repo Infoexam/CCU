@@ -17,6 +17,7 @@ router.map({
     subRoutes: {
       '/': { name: 'home', component: resolve => resolve(require('~/views/home/student.vue')), title: 'infoexam' },
       '/sign-in': { name: 'signIn', component: resolve => resolve(require('~/views/auth/signIn.vue')), title: 'signIn' },
+      '/profile': { name: 'profile', component: resolve => resolve(require('~/views/user/profile.vue')), title: 'profile' },
       '/practice': { name: 'practice', component: resolve => resolve(require('~/views/practice/list.vue')), title: 'practice' },
       '/practice/:name': { name: 'practice.processing', component: resolve => resolve(require('~/views/practice/processing.vue')), title: 'practice' },
       '/apply': { name: 'apply', component: resolve => resolve(require('~/views/apply/list.vue')), title: 'applies.index' },

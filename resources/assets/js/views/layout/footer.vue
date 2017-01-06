@@ -25,6 +25,13 @@
             ><i class="fa fa-dashboard fa-fw" aria-hidden="true"></i>{{ $t('footer.dashboard') }}</a>
           </li>
 
+          <li v-if="$auth.is('under')">
+            <a
+              v-link="{ name: 'profile', exact: true }"
+              class="grey-text text-lighten-3"
+            ><i class="fa fa-user fa-fw" aria-hidden="true"></i>{{ $t('footer.profile') }}</a>
+          </li>
+
           <li>
             <a
               v-if="$auth.guest()"

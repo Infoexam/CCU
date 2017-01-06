@@ -34,9 +34,6 @@
         <tr>
           <th>類型</th>
           <th>成績</th>
-          <th></th>
-          <th>免費次數</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -48,27 +45,6 @@
               <span v-if="0 > certificate.score">抵免</span>
               <span v-else v-text="certificate.score"></span>
             </template>
-          </td>
-          <td>
-            <a
-              @click="credit(certificate.category_id)"
-              class="waves-effect waves-light btn orange"
-              :class="{'disabled': 0 > certificate.score}"
-            >抵免</a>
-          </td>
-          <td>{{ certificate.free }}</td>
-          <td>
-            <a
-              @click="extend(1, certificate.category_id)"
-              class="waves-effect waves-light btn green"
-              :class="{'disabled': certificate.free > 254}"
-            >+1</a>
-
-            <a
-              @click="extend(-1, certificate.category_id)"
-              class="waves-effect waves-light btn red"
-              :class="{'disabled': certificate.free < 1}"
-            >-1</a>
           </td>
         </tr>
       </tbody>
@@ -109,7 +85,7 @@
   export default {
     route: {
       data (transition) {
-        return this.$http.get(`users/${this.$route.params.username}`).then(response => {
+        return this.$http.get(`users/${this.$auth.user.username}`).then(response => {
           return {
             user: response.data.user
           }
@@ -129,18 +105,6 @@
     },
 
     methods: {
-      extend (times, category) {
-        this.$http.patch(`users/${this.$route.params.username}`, { times, category, type: 'free' }).then(response => {
-          this.user = response.data.user
-        })
-      },
-
-      credit (category) {
-        this.$http.patch(`users/${this.$route.params.username}`, { category, type: 'credit' }).then(response => {
-          this.user = response.data.user
-        })
-      },
-
       ended (time) {
         return 0 < Moment().diff(time)
       },

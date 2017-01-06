@@ -93,6 +93,7 @@ Skills test : Programming`
   },
 
   footer: {
+    profile: 'Profile',
     dashboard: 'Dashboard'
   },
 
@@ -110,7 +111,8 @@ Skills test : Programming`
     admin: '管理介面',
 
     users: {
-      index: '學生列表'
+      index: '學生列表',
+      profile: '個人資料'
     },
 
     exams: {

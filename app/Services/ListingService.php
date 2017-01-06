@@ -51,7 +51,7 @@ class ListingService
      *
      * @param array $input
      *
-     * @return \App\Exams\Listing
+     * @return \Infoexam\Eloquent\Models\Listing
      *
      * @throws ListingConflictException
      */
@@ -93,7 +93,7 @@ class ListingService
      * @param string $code
      * @param array $input
      *
-     * @return \App\Exams\Listing
+     * @return \Infoexam\Eloquent\Models\Listing
      *
      * @throws ListingConflictException
      */

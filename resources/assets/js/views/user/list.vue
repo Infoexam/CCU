@@ -29,6 +29,9 @@
           <td>{{ user.name }}</td>
           <td>{{ user.department.remark }}</td>
         </tr>
+        <tr v-if="! users.data.length">
+          <td colspan="3">無搜尋結果</td>
+        </tr>
       </tbody>
     </table>
 

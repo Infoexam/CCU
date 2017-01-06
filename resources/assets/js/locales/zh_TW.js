@@ -93,6 +93,7 @@ export default {
   },
 
   footer: {
+    profile: '個人資料',
     dashboard: '後台'
   },
 
@@ -110,7 +111,8 @@ export default {
     admin: '管理介面',
 
     users: {
-      index: '學生列表'
+      index: '學生列表',
+      profile: '個人資料'
     },
 
     exams: {
