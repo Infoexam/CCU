@@ -40,7 +40,9 @@
 
     data () {
       return {
-        revisions: {}
+        revisions: {
+          data: []
+        }
       }
     },
 

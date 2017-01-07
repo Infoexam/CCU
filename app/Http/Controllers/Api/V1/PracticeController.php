@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Infoexam\Eloquent\Models\Category;
 use Infoexam\Eloquent\Models\Exam;
 
 class PracticeController extends Controller
@@ -15,7 +16,13 @@ class PracticeController extends Controller
      */
     public function exam()
     {
-        $exams = Exam::has('questions')->where('enable', true)->latest()->get(['id', 'name']);
+        $tech = Category::getCategories('exam.category', 'tech');
+
+        $exams = Exam::has('questions')
+            ->where('category_id', $tech)
+            ->where('enable', true)
+            ->latest()
+            ->get(['id', 'name']);
 
         $exams->each(function (Exam $exam) {
             $media = $exam->getFirstMedia('cover');

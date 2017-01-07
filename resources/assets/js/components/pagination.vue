@@ -97,6 +97,10 @@
       },
 
       baseUrl () {
+        if (! this.pagination.per_page) {
+          return null
+        }
+
         if (this.pagination.per_page >= this.pagination.total) {
           return null
         }
