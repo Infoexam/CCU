@@ -20,7 +20,14 @@
           </tr>
           <tr>
             <td>類型：{{ i18n('listing', listing.subject.name) }}</td>
-            <td colspan="2">{{ i18n('apply', listing.apply_type.name) }}</td>
+            <td>{{ i18n('apply', listing.apply_type.name) }}</td>
+            <td>
+              <a
+                :href="'/api/tests/' + listing.code + '/manage/pc2'"
+                target="_blank"
+                class="waves-effect waves-light btn teal darken-1 right"
+              >PC^2 名單</a>
+            </td>
           </tr>
           <tr>
             <td>開始時間：{{ listing.started_at || '尚未開始' }}</td>

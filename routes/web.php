@@ -63,6 +63,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->group(['prefix' => 'tests/{code}/manage'], function (ApiRouter $api) {
             $api->get('/', 'TestController@manage');
             $api->get('check-in', 'TestController@checkIn');
+            $api->get('pc2', 'TestController@pc2');
             $api->patch('start', 'TestController@start');
             $api->patch('extend', 'TestController@extend');
             $api->patch('redo', 'TestController@redo');

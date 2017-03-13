@@ -96,8 +96,8 @@ return [
             'fitToWidth'            => true,
             'columnsToRepeatAtLeft' => ['', ''],
             'rowsToRepeatAtTop'     => [0, 0],
-            'horizontalCentered'    => false,
-            'verticalCentered'      => false,
+            'horizontalCentered'    => true,
+            'verticalCentered'      => true,
             'printArea'             => null,
             'firstPageNumber'       => null,
         ],
@@ -140,7 +140,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'line_ending' => "\r\n",
+        'line_ending' => PHP_EOL,
     ],
 
     'export'     => [

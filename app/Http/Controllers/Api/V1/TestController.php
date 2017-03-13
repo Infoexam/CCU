@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Excel;
 use Illuminate\Http\Request;
 use Infoexam\Eloquent\Models\Apply;
 use Infoexam\Eloquent\Models\Listing;
 use Infoexam\Eloquent\Models\Result;
+use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
+use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use SnappyPdf;
 
 class TestController extends Controller
@@ -139,6 +142,30 @@ class TestController extends Controller
         $pdf = SnappyPdf::loadView('vendor.pdfs.check-in', compact('listing'));
 
         return $pdf->inline($listing->getAttribute('code').'.pdf');
+    }
+
+    public function pc2($code)
+    {
+        $listing = Listing::with(['applies', 'applies.user', 'subject'])->where('code', $code)->firstOrFail();
+
+        return Excel::create($listing->getAttribute('code'), function (LaravelExcelWriter $excel) use ($listing) {
+            $excel->sheet('testlist', function (LaravelExcelWorksheet $sheet) use ($listing) {
+                $sheet->appendRow(['學號', '姓名', '測驗代碼', '測驗類別', '測驗日期', '測驗地點', '開始時間', '結束時間']);
+
+                foreach ($listing->getRelation('applies') as $apply) {
+                    $sheet->appendRow([
+                        $apply->getRelation('user')->getAttribute('username'),
+                        $apply->getRelation('user')->getAttribute('name'),
+                        $listing->getAttribute('code'),
+                        explode(' ', trans('infoexam.exam.subject.'.$listing->getRelation('subject')->getAttribute('name')), 2)[1],
+                        $listing->getAttribute('began_at')->toDateString(),
+                        $listing->getAttribute('room'),
+                        $listing->getAttribute('began_at')->toTimeString(),
+                        $listing->getAttribute('ended_at')->toTimeString(),
+                    ]);
+                }
+            });
+        })->download('xlsx');
     }
 
     public function start($code)
