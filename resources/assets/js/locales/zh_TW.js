@@ -148,6 +148,11 @@ export default {
         index: '預約列表',
         update: '管理員預約'
       }
+    },
+
+    gradings: {
+      index: '成績列表',
+      show: '成績查詢'
     }
   },
 

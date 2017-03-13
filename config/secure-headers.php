@@ -60,7 +60,7 @@ return [
      *                  'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'
      */
 
-    'referrer-policy' => 'strict-origin-when-cross-origin',
+    'referrer-policy' => 'no-referrer-when-downgrade',
 
     /*
      * HTTP Strict Transport Security
@@ -137,7 +137,7 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => 'ACIB33Hl9LVJSjX98OCGHPk/v2R6/jJW0Jcf1Rvk4BI='],
+                ['sha256' => 'aDF0S1KtOesRBAL1RZ+4udo7TvBPG3BaH1xB81dOuWk='],
             ],
 
             'nonces' => [
@@ -148,7 +148,7 @@ return [
 
             'unsafe-inline' => false,
 
-            'unsafe-eval' => false,
+            'unsafe-eval' => true,
         ],
 
         'style-src' => [
@@ -186,6 +186,7 @@ return [
         'connect-src' => [
             'allow' => [
                 'wss://localhost:3000',
+                'ws://localhost:3000',
             ],
 
             'self' => true,

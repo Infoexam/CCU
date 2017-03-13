@@ -105,6 +105,13 @@
               { href: { name: 'admin.listings', exact: true }, name: '測驗列表' },
               { href: { name: 'admin.listings.create', exact: true }, name: '新增測驗' }
             ]
+          },
+          {
+            name: '成績',
+            icon: 'fa-bar-chart',
+            links: [
+              { href: { name: 'admin.gradings', exact: true }, name: '成績列表' }
+            ]
           }
         ]
       }

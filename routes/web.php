@@ -33,6 +33,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
             'papers' => 'name',
             'listings' => 'code',
             'applies' => 'id',
+            'gradings' => 'code',
             'tests' => 'code',
             'users' => 'username',
         ]]);
@@ -48,6 +49,9 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
 
         $api->resource('listings', 'ListingController', ['except' => ['create', 'edit']]);
         $api->resource('listings.applies', 'ListingApplyController', ['except' => ['create', 'edit']]);
+
+        $api->post('gradings/{code}/import', 'GradingController@import');
+        $api->resource('gradings', 'GradingController', ['except' => ['create', 'edit']]);
 
         $api->get('categories/f/{category}/{name?}', 'CategoryController@filter');
         $api->get('revisions', 'RevisionController@index');

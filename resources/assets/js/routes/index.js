@@ -48,7 +48,9 @@ router.map({
       '/listings/create': { name: 'admin.listings.create', component: resolve => resolve(require('~/views/listing/create.vue')), title: 'listings.create' },
       '/listings/:code/edit': { name: 'admin.listings.edit', component: resolve => resolve(require('~/views/listing/edit.vue')), title: 'listings.edit' },
       '/listings/:code/applies': { name: 'admin.listings.applies', component: resolve => resolve(require('~/views/listing/apply/list.vue')), title: 'listings.applies.index' },
-      '/listings/:code/applies/update': { name: 'admin.listings.applies.update', component: resolve => resolve(require('~/views/listing/apply/update.vue')), title: 'listings.applies.update' }
+      '/listings/:code/applies/update': { name: 'admin.listings.applies.update', component: resolve => resolve(require('~/views/listing/apply/update.vue')), title: 'listings.applies.update' },
+      '/gradings': { name: 'admin.gradings', component: resolve => resolve(require('~/views/grading/list.vue')), title: 'gradings.index' },
+      '/gradings/:code': { name: 'admin.gradings.show', component: resolve => resolve(require('~/views/grading/show.vue')), title: 'gradings.show' }
     }
   }
 })
