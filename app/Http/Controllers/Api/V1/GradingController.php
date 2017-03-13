@@ -8,10 +8,8 @@ use App\Http\Requests\Api\V1\GradingImportRequest;
 use App\Http\Requests\Api\V1\GradingRequest;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Http\Request;
 use Infoexam\Eloquent\Models\Apply;
 use Infoexam\Eloquent\Models\Listing;
-use Infoexam\Eloquent\Models\Result;
 
 class GradingController extends Controller
 {
