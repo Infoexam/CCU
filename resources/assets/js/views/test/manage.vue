@@ -26,7 +26,7 @@
                 :href="'/api/tests/' + listing.code + '/manage/pc2'"
                 target="_blank"
                 class="waves-effect waves-light btn teal darken-1 right"
-              >PC^2 名單</a>
+              >術科名單</a>
             </td>
           </tr>
           <tr>

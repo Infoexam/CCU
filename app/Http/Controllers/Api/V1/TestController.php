@@ -165,6 +165,20 @@ class TestController extends Controller
                     ]);
                 }
             });
+
+            $excel->sheet('pc2', function (LaravelExcelWorksheet $sheet) use ($listing) {
+                $i = 1;
+
+                foreach ($listing->getRelation('applies') as $apply) {
+                    $sheet->appendRow([
+                        1, // just 1
+                        'team'.($i++), // serial num
+                        substr(md5(mt_rand()), 0, 7), // password
+                        $apply->getRelation('user')->getAttribute('username'), // student id
+                        'true', // just true
+                    ]);
+                }
+            });
         })->download('xlsx');
     }
 

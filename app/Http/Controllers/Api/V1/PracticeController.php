@@ -16,10 +16,8 @@ class PracticeController extends Controller
      */
     public function exam()
     {
-        $tech = Category::getCategories('exam.category', 'tech');
-
         $exams = Exam::has('questions')
-            ->where('category_id', $tech)
+            ->where('category_id', Category::getCategories('exam.category', 'theory'))
             ->where('enable', true)
             ->latest()
             ->get(['id', 'name']);
