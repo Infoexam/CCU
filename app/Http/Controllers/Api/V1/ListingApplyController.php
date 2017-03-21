@@ -41,8 +41,8 @@ class ListingApplyController extends Controller
     public function store(ListingApplyRequest $request, $code)
     {
         if (! $request->user()->own('admin')) {
-            if (false === $this->service->apply($code)) {
-                $this->response->errorBadRequest();
+            if (true !== ($result = $this->service->apply($code))) {
+                $this->response->errorBadRequest($result);
             }
         } else {
             if (! $request->has('department')) {
@@ -62,7 +62,7 @@ class ListingApplyController extends Controller
             $successes = [];
 
             $users->each(function (User $user) use ($request, $code, &$successes) {
-                if ($this->service->apply($code, $user, $request->input('unity', false))) {
+                if (true === $this->service->apply($code, $user, $request->input('unity', false))) {
                     $successes[] = $user->getAttribute('username');
                 }
             });

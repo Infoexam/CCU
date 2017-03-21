@@ -199,7 +199,7 @@
 
           Toast.success('預約成功')
         }, response => {
-          Toast.failed('預約失敗')
+          Toast.failed(`預約失敗: ${response.data.message}`)
         })
       },
 

@@ -74,20 +74,20 @@ class ApplyService
             $user = Auth::user();
 
             if ($this->applied($user, $listing)) {
-                return false;
+                return 'already_applied';
             }
         }
 
         if ($this->passed($user, $listing)) {
-            return false;
+            return 'passed';
         }
 
         if ($this->validSubject($user, $listing)) {
-            return false;
+            return 'invalid_subject';
         }
 
-        if (! $this->miscellaneous($user, $listing)) {
-            return false;
+        if (true !== ($result = $this->miscellaneous($user, $listing))) {
+            return $result;
         }
 
         $apply = $listing->applies()->save(new Apply([
@@ -163,11 +163,11 @@ class ApplyService
             $applyType = $listing->getRelation('applyType')->getAttribute('name');
 
             if (in_array($applyType, ['unity', 'makeup'])) {
-                return false;
+                return 'unity_list';
             }
 
             if ('senior-only' == $applyType && 'senior' != $user->getRelation('grade')) {
-                return false;
+                return 'senior_only';
             }
 
             $time = $listing->getAttribute('began_at');
@@ -180,12 +180,12 @@ class ApplyService
             }
 
             if (DB::table('applies')->where('user_id', $user->getKey())->whereIn('listing_id', $listings)->exists()) {
-                return false;
+                return 'has_another_apply';
             }
         }
 
         if (DB::table('applies')->where('user_id', $user->getKey())->where('listing_id', $listing->getKey())->exists()) {
-            return false;
+            return 'same_list';
         }
 
         return true;

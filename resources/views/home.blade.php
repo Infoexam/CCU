@@ -18,6 +18,6 @@
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-MtG4F5bFIlwRS0MZiDIhuZp/FjoKpMFITxaG2vZqu3K6uh8Xx0VYgpo7JZ4uTJaT" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-ya1MBrEns5dH8MnwsMOgDvfbNzbUK5N4vLKC7OlmkwLqwMEgHhzZZdqkeCc9KLx9 sha384-yCYDb1zpQsaLY4xtYLD8u/a8zApva1Q3H1YZ/oVVNoQZ7SQUqmHJV7LjF0mxc6vR" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-9p2meUXk1mbViAdiQfcy1Va+1ofO08Lov/i7iQATy4/wsXItGg1dJO4CFLj8xUmn sha384-7qGQVu4yV62bux1YWIz5yX2RS6pvyuRI252cOy4jdhY8vAvHTNFT2Q3AMzA/gdMF" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-xqUqbNnB56Pcyg9Z9He+xBn7AnwvfK9i7TDuxhKU8TzlB446Op4FKPWNQgiOL3cf sha384-dj2WYuor5n42LDjEvkdSzNzerqgB3wNvVgqnQvo89ulxqQsQEJVC88/icdz9FEPk" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/main.js') }}" integrity="sha384-NINpKv0uGt+gihrlwZ6RW7f2rYO33u0MO3NDbanAYfFZHJa8+Y/GOGC4rB2Hw1e6 sha384-Kgd4h9E5ARDntR4CU+TXbTakxpE4iyVM0gJy3MUVY7fSHygx5Tax3VzQjseEu+rT" crossOrigin="anonymous" defer></script>
   </body>
 </html>
