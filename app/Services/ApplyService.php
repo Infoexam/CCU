@@ -99,6 +99,8 @@ class ApplyService
         $listing->increment('applied_num');
 
         Notification::send([$user], new ListingApplied($apply));
+
+        return true;
     }
 
     protected function applied(User $user, Listing $listing)

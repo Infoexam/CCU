@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ _asset('css/font-awesome.min.css') }}" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous">
     <link rel="stylesheet" href="{{ _asset('css/flexboxgrid.min.css') }}" integrity="sha384-lYQsy3+y5OZ48NxBmwaDdLIfraac06B9Y+GxLBpls0w3B97eRObW0Bs6yzuUMvV9" crossOrigin="anonymous">
     <link rel="stylesheet" href="{{ _asset('css/materialize.min.css') }}" integrity="sha384-b53qKoC8m5cqqbOrHihG/FABYWjs4RCLaQpiSD5/6gKXmsKJDk0Cth0CVGWqiH1+" crossOrigin="anonymous">
-    <link rel="stylesheet" href="{{ _asset('js/main.css') }}" integrity="sha384-YPAqFqExZnrCHLvHn+eluYtIoBmOwFdTpLf5L6yaqgVYobCxT2GHVlpXBALz3gEA sha384-IYBRoy5uhZ259GcUObJ+ZKQuqRm8pfdZlYFvPbtzT+zwP/1BOqqoe7ds2RqB0hlr" crossOrigin="anonymous">
+    <link rel="stylesheet" href="{{ _asset('js/main.css') }}" integrity="sha384-bIxPlMv3/0Mk+ADF1aD/18SBFld/LBlylKYbgCqkvZZCRCRNcw7m1Ry9cgdqy1me sha384-1yLp9w1YY0m+PsRlznjwEa5lxQkjjaBQKwDJfnKSzC+DhifB98h7e9HeQgBjogz9" crossOrigin="anonymous">
   </head>
   <body>
     <main></main>
@@ -17,7 +17,7 @@
     <script src="{{ _asset('js/jquery.min.js') }}" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-MtG4F5bFIlwRS0MZiDIhuZp/FjoKpMFITxaG2vZqu3K6uh8Xx0VYgpo7JZ4uTJaT" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-ya1MBrEns5dH8MnwsMOgDvfbNzbUK5N4vLKC7OlmkwLqwMEgHhzZZdqkeCc9KLx9 sha384-yCYDb1zpQsaLY4xtYLD8u/a8zApva1Q3H1YZ/oVVNoQZ7SQUqmHJV7LjF0mxc6vR" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-9p2meUXk1mbViAdiQfcy1Va+1ofO08Lov/i7iQATy4/wsXItGg1dJO4CFLj8xUmn sha384-alWeinV4gBszXocsxpUz3t1Fb/bbHOVKE5OAYdljQ0AVNFO8X6uTm61+bv+qyk5H" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-LvQ74YjMsTD9T/vk6c5R7LLri4FZop2VaR6aSzN5iYn3vCpIuY5AHpmEGlQ9FKMU sha384-xOl6oj4SoKOpQhbtgAm/MK1FqNdoqQmkB0flngLYjJ1M4Lf40x01gHVlbC4F3f22" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-9p2meUXk1mbViAdiQfcy1Va+1ofO08Lov/i7iQATy4/wsXItGg1dJO4CFLj8xUmn sha384-7qGQVu4yV62bux1YWIz5yX2RS6pvyuRI252cOy4jdhY8vAvHTNFT2Q3AMzA/gdMF" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/main.js') }}" integrity="sha384-xqUqbNnB56Pcyg9Z9He+xBn7AnwvfK9i7TDuxhKU8TzlB446Op4FKPWNQgiOL3cf sha384-dj2WYuor5n42LDjEvkdSzNzerqgB3wNvVgqnQvo89ulxqQsQEJVC88/icdz9FEPk" crossOrigin="anonymous" defer></script>
   </body>
 </html>

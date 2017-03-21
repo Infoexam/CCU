@@ -8,10 +8,6 @@ module.exports = new BrowserSyncPlugin({
   host: 'localhost',
   port: 3000,
   files: path.resolve(basePath, 'resources', 'views', 'home.blade.php'),
-  // https: {
-  //   key: path.resolve(basePath, 'certs', 'server.key'),
-  //   cert: path.resolve(basePath, 'certs', 'server.crt')
-  // },
-  browser: ['google chrome'],
+  browser: process.platform === 'darwin' ? 'google chrome' : 'google-chrome',
   reloadDelay: 500
 })

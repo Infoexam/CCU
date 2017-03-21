@@ -97,9 +97,17 @@
     },
 
     methods: {
+      success (users) {
+        Toast.success(users.splice(0, 10).reduce((acc, val) => `${acc}<br>${val}`, 'Success List'))
+
+        setTimeout(this.success, 4300, users)
+      },
+
       store () {
         this.$http.post(`listings/${this.$route.params.code}/applies`, this.form).then(response => {
           this.$router.go({ name: 'admin.listings.applies', params: { code: this.$route.params.code }})
+
+          this.success(response.data)
         }, response => {
           Toast.formRequestFailed(response)
         })

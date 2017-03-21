@@ -59,12 +59,16 @@ class ListingApplyController extends Controller
                     ->get();
             }
 
-            $users->each(function (User $user) use ($request, $code) {
-                $this->service->apply($code, $user, $request->input('unity', false));
+            $successes = [];
+
+            $users->each(function (User $user) use ($request, $code, &$successes) {
+                if ($this->service->apply($code, $user, $request->input('unity', false))) {
+                    $successes[] = $user->getAttribute('username');
+                }
             });
         }
 
-        return $this->response->created();
+        return $this->response->created([], $successes ?? []);
     }
 
     /**
