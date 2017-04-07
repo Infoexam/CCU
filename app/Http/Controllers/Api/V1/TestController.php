@@ -46,7 +46,7 @@ class TestController extends Controller
 
         $result->update([
             'submitted_at' => $this->now,
-            'log' => $request->all(),
+            'log' => ['answer' => $request->all(), 'result' => []],
         ]);
 
         return $this->response->created();
@@ -77,6 +77,7 @@ class TestController extends Controller
                 $query->where('user_id', $request->user()->getkey());
             },
             'applies.result',
+            'subject',
         ])
             ->where('started_at', '<=', $this->now)
             ->where('ended_at', '>=', $this->now)
@@ -108,6 +109,10 @@ class TestController extends Controller
             ]));
 
             $listing->increment('tested_num');
+        }
+
+        if (ends_with($listing->getRelation('subject')->getAttribute('name'), 'tech')) {
+            return $this->response->created();
         }
 
         return $listing->getAttribute('log')->getRelation('questions');

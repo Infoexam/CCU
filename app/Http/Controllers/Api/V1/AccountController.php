@@ -60,4 +60,51 @@ class AccountController extends Controller
 
         return $apply;
     }
+
+    public function log(Request $request, $id)
+    {
+        $apply = Apply::with(['listing', 'result'])->where('id', $id);
+
+        if ($request->user()->own('admin')) {
+            $apply = $apply->first();
+        } else {
+            $apply = $apply->where('user_id', $request->user()->getKey())->first();
+        }
+
+        if (is_null($apply)) {
+            $this->response->errorNotFound();
+        }
+
+        if (is_null($result = $apply->getRelation('result'))) {
+            $this->response->errorNotFound();
+        }
+
+        $log = $result->getAttribute('log');
+
+        if (is_string($log)) {
+            $log = explode(PHP_EOL . PHP_EOL, $log);
+
+            array_shift($log);
+
+            foreach ($log as &$t) {
+                if (str_contains($t, 'Word')) {
+                    $t = '<h5>Word</h5>';
+                } elseif (str_contains($t, 'Excel')) {
+                    $t = '<h5>Excel</h5>';
+                } elseif (str_contains($t, 'PowerPoint')) {
+                    $t = '<h5>PowerPoint</h5>';
+                } elseif (false !== ($pos = strpos($t, '原始配分'))) {
+                    $t = substr($t, $pos) . PHP_EOL;
+                } else {
+                    $t = $t . PHP_EOL;
+                }
+            }
+
+            return implode('', $log);
+        }
+
+        $questions = $apply->getRelation('listing')->getAttribute('log')->getRelation('questions')->pluck('content', 'uuid');
+
+        return ['questions' => $questions, 'result' => $log['result']];
+    }
 }

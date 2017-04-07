@@ -101,6 +101,7 @@ export default {
     infoexam: '資訊能力測驗系統',
     signIn: '登入',
     practice: '題庫練習',
+    profile: '個人資訊',
     test: '考試',
 
     applies: {

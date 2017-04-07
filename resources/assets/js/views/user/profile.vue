@@ -66,9 +66,21 @@
         <tr v-for="apply in user.applies">
           <td>{{ apply.listing.code }}</td>
           <td>{{ i18n('listing', apply.listing.subject.name) }}</td>
-          <td
-            v-if="ended(apply.listing.ended_at)"
-          >{{ apply.result ? apply.result.score : '缺考' }}</td>
+          <td v-if="ended(apply.listing.ended_at)">
+            <span v-if="! apply.result">缺考</span>
+            <template v-else>
+              <span v-if="null === apply.result.score">-</span>
+              <div v-else>
+                <span>{{ apply.result.score }}</span>
+                <br>
+                <a
+                  v-else
+                  @click="log(apply.id)"
+                  class="cursor-pointer"
+                >閱卷結果</a>
+              </div>
+            </template>
+          </td>
           <td v-else>-</td>
         </tr>
         <tr v-if="! user.applies.length">
@@ -76,10 +88,13 @@
         </tr>
       </tbody>
     </table>
+
+    <log-modal :log="logHTML"></log-modal>
   </div>
 </template>
 
 <script>
+  import LogModal from './components/log-modal.vue'
   import Moment from 'moment'
 
   export default {
@@ -100,11 +115,23 @@
           certificates: [],
           department: {},
           grade: {}
-        }
+        },
+
+        logHTML: ''
       }
     },
 
     methods: {
+      log (id) {
+        this.$http.get(`account/log/${id}`).then(response => {
+          this.logHTML = response.data
+
+          $('#test-result').modal().modal('open')
+        }, response => {
+          //
+        })
+      },
+
       ended (time) {
         return 0 < Moment().diff(time)
       },
@@ -112,6 +139,10 @@
       i18n (type, key) {
         return this.$t(`${type}.${key.replace(/-/g, '_')}`)
       }
+    },
+
+    components: {
+      LogModal
     }
   }
 </script>

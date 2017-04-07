@@ -64,8 +64,9 @@ class Judge extends Command
                     }
 
                     $correct = 0.0;
+                    $corrects = [];
 
-                    $log = array_map('intval', $result->getAttribute('log') ?? []);
+                    $log = array_map('intval', $result->getAttribute('log')['answer'] ?? []);
 
                     foreach ($questions as $question) {
                         $uuid = $question->getAttribute('uuid');
@@ -83,6 +84,7 @@ class Judge extends Command
                         if (! $question->getAttribute('multiple')) {
                             if (! empty($intersect)) {
                                 $correct += 1.0;
+                                $corrects[] = $uuid;
                             }
                         } else {
                             $correct += max(count($intersect) - count(array_intersect($student, $options)), 0) / $question->getRelation('options')->count();
@@ -91,7 +93,10 @@ class Judge extends Command
 
                     $score = min(ceil(100 / $questions->count() * $correct), 100.0);
 
-                    $result->update(['score' => $score]);
+                    $newLog = $result->getAttribute('log');
+                    $newLog['result'] = $corrects;
+
+                    $result->update(['score' => $score, 'log' => $newLog]);
 
                     if (is_null($certificate->getAttribute('score')) || (0 > $certificate->getAttribute('score') && $score > $certificate->getAttribute('score'))) {
                         $certificate->update(['score' => $score]);
@@ -103,8 +108,16 @@ class Judge extends Command
 
     public function listing()
     {
+        $categories = Category::getCategories('exam.subject')
+            ->filter(function (Category $category) {
+                return ends_with($category->getAttribute('name'), 'theory');
+            })
+            ->pluck('id')
+            ->toArray();
+
         return Listing::with(['applies', 'applies.result', 'applies.user', 'applies.user.certificates', 'applyType', 'subject'])
             ->whereBetween('started_at', [$this->now->copy()->startOfDay(), $this->now->copy()->endOfDay()])
+            ->whereIn('subject_id', $categories)
             ->get();
     }
 }

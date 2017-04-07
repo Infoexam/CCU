@@ -101,6 +101,7 @@ Skills test : Programming`
     infoexam: 'Infoexam',
     signIn: 'Sign In',
     practice: 'Practice',
+    profile: 'Profile',
     test: 'Test',
 
     applies: {

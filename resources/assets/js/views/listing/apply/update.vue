@@ -100,7 +100,9 @@
       success (users) {
         Toast.success(users.splice(0, 10).reduce((acc, val) => `${acc}<br>${val}`, 'Success List'))
 
-        setTimeout(this.success, 4300, users)
+        if (users.length) {
+          setTimeout(this.success, 4300, users)
+        }
       },
 
       store () {

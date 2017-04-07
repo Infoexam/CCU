@@ -20,6 +20,7 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
         $api->group(['prefix' => 'account'], function (ApiRouter $api) {
             $api->get('profile', 'AccountController@profile');
             $api->get('applies', 'AccountController@applies');
+            $api->get('log/{id}', 'AccountController@log');
         });
 
         $api->group(['prefix' => 'practice'], function (ApiRouter $api) {

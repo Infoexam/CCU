@@ -39,6 +39,10 @@
 
       data (transition) {
         return this.$http.get('practice/exams').then(response => {
+          response.data.exams.sort((a, b) => {
+            return b.name.localeCompare(a.name)
+          })
+
           return {
             exams: response.data.exams
           }

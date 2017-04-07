@@ -8,7 +8,8 @@
 <template>
   <div class="flex-column middle-xs full-width user-select-none" :class="{'center-xs': submitted}">
     <div v-if="submitted">
-      <p>考試結束，請務必登出及關閉電腦</p>
+      <p v-if="tech">簽到成功，請關閉此頁面</p>
+      <p v-else>考試結束，請務必登出及關閉電腦</p>
     </div>
 
     <template v-else>
@@ -104,7 +105,14 @@
 
       data (transition) {
         return this.$http.get(`tests/${this.$route.params.code}`).then(response => {
-          this.preprocess(response.data.questions)
+          if (201 === response.status) {
+            this.removeListener()
+
+            this.submitted = true
+            this.tech = true
+          } else {
+            this.preprocess(response.data.questions)
+          }
         }, response => {
           if (409 === response.status) {
             Toast.failed('重複登入，請向監考官反應')
@@ -128,6 +136,7 @@
         perPage: 10,
         currentPage: 1,
 
+        tech: false,
         submitted: false,
 
         remaining: -1,
