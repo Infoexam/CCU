@@ -82,7 +82,7 @@ class AccountController extends Controller
         $log = $result->getAttribute('log');
 
         if (is_string($log)) {
-            $log = explode(PHP_EOL . PHP_EOL, $log);
+            $log = explode(PHP_EOL.PHP_EOL, $log);
 
             array_shift($log);
 
@@ -94,9 +94,9 @@ class AccountController extends Controller
                 } elseif (str_contains($t, 'PowerPoint')) {
                     $t = '<h5>PowerPoint</h5>';
                 } elseif (false !== ($pos = strpos($t, '原始配分'))) {
-                    $t = substr($t, $pos) . PHP_EOL;
+                    $t = substr($t, $pos).PHP_EOL;
                 } else {
-                    $t = $t . PHP_EOL;
+                    $t = $t.PHP_EOL;
                 }
             }
 
