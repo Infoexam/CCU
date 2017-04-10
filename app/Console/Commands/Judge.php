@@ -66,7 +66,9 @@ class Judge extends Command
                     $correct = 0.0;
                     $corrects = [];
 
-                    $log = array_map('intval', $result->getAttribute('log')['answer'] ?? []);
+                    $log = array_map(function ($val) {
+                        return is_array($val) ? array_map('intval', $val) : intval($val);
+                    }, $result->getAttribute('log')['answer'] ?? []);
 
                     foreach ($questions as $question) {
                         $uuid = $question->getAttribute('uuid');
@@ -79,15 +81,19 @@ class Judge extends Command
 
                         $student = is_array($log[$uuid]) ? $log[$uuid] : [$log[$uuid]];
 
-                        $intersect = array_intersect($options, $student);
-
                         if (! $question->getAttribute('multiple')) {
-                            if (! empty($intersect)) {
+                            if (array_diff($options, $student) === array_diff($student, $options)) {
                                 $correct += 1.0;
                                 $corrects[] = $uuid;
                             }
                         } else {
-                            $correct += max(count($intersect) - count(array_intersect($student, $options)), 0) / $question->getRelation('options')->count();
+                            $temp = max(1 - (count(array_diff($options, $student)) + count(array_diff($student, $options))) * 2 / $question->getRelation('options')->count(), 0);
+
+                            $correct += $temp;
+
+                            if (1 === $temp) {
+                                $corrects[] = $uuid;
+                            }
                         }
                     }
 

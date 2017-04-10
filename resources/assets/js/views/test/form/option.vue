@@ -2,7 +2,7 @@
   <div style="margin-top: .5rem; margin-bottom: -1rem;">
     <div v-for="o in option">
       <input
-        :name="uuid"
+        :name="multiple ? uuid+'[]' : uuid"
         :type="multiple ? 'checkbox' : 'radio'"
         :id="o.hash"
         :value="o.id"
