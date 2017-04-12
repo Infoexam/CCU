@@ -82,7 +82,7 @@ class ApplyService
             return 'passed';
         }
 
-        if ($this->validSubject($user, $listing)) {
+        if (! $this->validSubject($user, $listing)) {
             return 'invalid_subject';
         }
 
@@ -141,7 +141,7 @@ class ApplyService
         if ('4104' == $user->getRelation('department')->getAttribute('name')) {
             $subject = $listing->getRelation('subject')->getAttribute('name');
 
-            if ('app' != explode('-', $subject, 2)[0]) {
+            if ('soft' != array_first(explode('-', $subject))) {
                 return false;
             }
         }
