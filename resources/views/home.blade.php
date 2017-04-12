@@ -18,6 +18,6 @@
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-MtG4F5bFIlwRS0MZiDIhuZp/FjoKpMFITxaG2vZqu3K6uh8Xx0VYgpo7JZ4uTJaT" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-ya1MBrEns5dH8MnwsMOgDvfbNzbUK5N4vLKC7OlmkwLqwMEgHhzZZdqkeCc9KLx9 sha384-yCYDb1zpQsaLY4xtYLD8u/a8zApva1Q3H1YZ/oVVNoQZ7SQUqmHJV7LjF0mxc6vR" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/vendor.js') }}" integrity="sha384-igcSGuDCKJDm3AMzU2urhXUK0YYJGl87zzclX/j2U4w0RG2QSx+/USpAeesFPLAw sha384-lHl7EcT4T6xHwV5/aYGWtro/DpNUFZBNNgku/+Mq/Jh7Zf68fjlyT4QRZulkGsTx" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-TuZ2Qp63YqmEfAM9fjuwJsYP0vDJ/JtdTKTclftMlqy7imC6sI0PV/BysQUBPyRl sha384-ak1/sjOM2zc8kf/b/fQKP0+CYDnEe90eTmqUKpTYFZY4lnPabbtPyuqnQbEqo8Y7" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/main.js') }}" integrity="sha384-RoY4hiEwBRHz243em9WAOFzTwqaSlw6CNqtZNrApX1zHDIzHaAJOERhfN6L3dGzI sha384-QpxMX0+JywrrewKVrxilRDtTGw8Ecc8+njBFH41N9POekIHncqVW7Dk38Vqc6h+N" crossOrigin="anonymous" defer></script>
   </body>
 </html>
