@@ -1,10 +1,10 @@
 <template>
   <div :class="[align]" class="input-field">
     <button
-      :class="{ disabled: disabled }"
+      :class="{ disabled: disabled || invalid }"
       class="btn waves-effect waves-light"
       type="submit"
-      :disabled="disabled"
+      :disabled="disabled || invalid"
     >
       <span>{{ text || $t('form.submit.send') }}</span>
 
@@ -25,13 +25,18 @@
         type: String
       },
 
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+
       validation: {
         type: Object
       }
     },
 
     computed: {
-      disabled () {
+      invalid () {
         return this.validation && this.validation.invalid
       }
     }

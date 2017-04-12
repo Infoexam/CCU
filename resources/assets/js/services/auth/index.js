@@ -30,6 +30,8 @@ function install (Vue) {
 
     methods: {
       signIn (credentials, callable) {
+        credentials.authorizing = true
+
         this.$http.post('auth/sign-in', credentials).then(response => {
           this.$emit('signIn', response.data.user)
 
@@ -37,6 +39,8 @@ function install (Vue) {
             callable(this.homeRoute())
           }
         }, response => {
+          credentials.authorizing = false
+
           Toast.failed(this.$t(response.data.message))
         })
       },

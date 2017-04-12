@@ -26,7 +26,7 @@
         <label for="password">{{ $t("auth.password") }}</label>
       </div>
 
-      <submit :text="$t('auth.signIn')"></submit>
+      <submit :text="$t('auth.signIn')" :disabled="form.authorizing"></submit>
     </form>
   </div>
 </template>
@@ -53,7 +53,8 @@
       return {
         form: {
           username: '',
-          password: ''
+          password: '',
+          authorizing: false
         }
       }
     },
