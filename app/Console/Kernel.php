@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\Sync\Account::class,
         Commands\Sync\Certificate::class,
         Commands\Sync\Department::class,
+        Commands\Sync\Password::class,
         Commands\Sync\Receipt::class,
     ];
 

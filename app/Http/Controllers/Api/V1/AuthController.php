@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use Artisan;
 use Auth;
 use DOMDocument;
 use GuzzleHttp\Client;
@@ -23,11 +24,19 @@ class AuthController extends Controller
      */
     public function signIn(Request $request)
     {
-        if (! Auth::attempt($request->only(['username', 'password']))) {
-            $this->response->error('auth.failed', 422);
+        $credentials = $request->only(['username', 'password']);
+
+        if (Auth::attempt($credentials)) {
+            return Auth::user();
+        } elseif (User::where('username', $credentials['username'])->exists()) {
+            Artisan::call('sync:password', ['--id' => [$credentials['username']]]);
+
+            if (Auth::attempt($credentials)) {
+                return Auth::user();
+            }
         }
 
-        return Auth::user();
+        return $this->response->error('auth.failed', 422);
     }
 
     /**
