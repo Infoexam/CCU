@@ -9,19 +9,15 @@
     </div>
 
     <div v-for="exam in exams" class="col-xs-12 col-sm-4">
-      <a v-link="{ name: 'practice.processing', params: { name: exam.name }}">
-        <div class="card hoverable">
-          <div class="card-image">
-            <img :src="exam.cover" :alt="exam.name">
-          </div>
-
-          <div class="card-action">
-            <a
-              v-link="{ name: 'practice.processing', params: { name: exam.name }}"
-            >{{ exam.name }}</a>
-          </div>
+      <div @click="navigate(exam.name)" class="card hoverable cursor-pointer">
+        <div class="card-image">
+          <img :src="exam.cover" :alt="exam.name">
         </div>
-      </a>
+
+        <div class="card-action">
+          <a>{{ exam.name }}</a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +49,12 @@
     data () {
       return {
         exams: []
+      }
+    },
+
+    methods: {
+      navigate (name) {
+        this.$router.go({ name: 'practice.processing', params: { name }})
       }
     }
   }

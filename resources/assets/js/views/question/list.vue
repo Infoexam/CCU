@@ -1,7 +1,7 @@
 <template>
   <section>
     <section class="row middle-xs">
-      <h3 class="col-xs-5">{{ exam.name }}</h3>
+      <h4 class="col-xs-5">{{ exam.name }}</h4>
 
       <div class="col-xs end-xs">
         <div class="file-field input-field inline-flex">
