@@ -8,7 +8,7 @@
       </blockquote>
     </div>
 
-    <div class="col-xs-12">
+    <div v-if="exams.theories.length" class="col-xs-12">
       <h4>學科</h4>
     </div>
 
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12">
+    <div v-if="exams.techs.length" class="col-xs-12">
       <h4>術科</h4>
     </div>
 
