@@ -8,8 +8,28 @@
       </blockquote>
     </div>
 
-    <div v-for="exam in exams" class="col-xs-12 col-sm-4">
+    <div class="col-xs-12">
+      <h4>學科</h4>
+    </div>
+
+    <div v-for="exam in exams.theories" class="col-xs-12 col-sm-4">
       <div @click="navigate(exam.name)" class="card hoverable cursor-pointer">
+        <div class="card-image">
+          <img :src="exam.cover" :alt="exam.name">
+        </div>
+
+        <div class="card-action">
+          <a>{{ exam.name }}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <h4>術科</h4>
+    </div>
+
+    <div v-for="exam in exams.techs" class="col-xs-12 col-sm-4">
+      <div @click="navigate(exam)" class="card hoverable cursor-pointer">
         <div class="card-image">
           <img :src="exam.cover" :alt="exam.name">
         </div>
@@ -35,12 +55,16 @@
 
       data (transition) {
         return this.$http.get('practice/exams').then(response => {
-          response.data.exams.sort((a, b) => {
+          response.data.theories.sort((a, b) => {
+            return b.name.localeCompare(a.name)
+          })
+
+          response.data.techs.sort((a, b) => {
             return b.name.localeCompare(a.name)
           })
 
           return {
-            exams: response.data.exams
+            exams: response.data
           }
         })
       }
@@ -54,7 +78,11 @@
 
     methods: {
       navigate (name) {
-        this.$router.go({ name: 'practice.processing', params: { name }})
+        if ('string' === typeof name) {
+          this.$router.go({ name: 'practice.processing', params: { name }})
+        } else {
+          window.open(name.attachment, '_blank')
+        }
       }
     }
   }

@@ -45,6 +45,10 @@
           data.append('cover', this.$refs.formComponent.$els.cover.files[0])
         }
 
+        if (0 < this.$refs.formComponent.$els.attachment.files.length) {
+          data.append('attachment', this.$refs.formComponent.$els.attachment.files[0])
+        }
+
         this.$http.post(`exams/${this.$route.params.name}`, data).then(response => {
           Toast.success('更新成功')
 

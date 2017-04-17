@@ -16,19 +16,34 @@ class PracticeController extends Controller
      */
     public function exam()
     {
-        $exams = Exam::has('questions')
+        $theories = Exam::has('questions')
             ->where('category_id', Category::getCategories('exam.category', 'theory'))
             ->where('enable', true)
             ->latest()
             ->get(['id', 'name']);
 
-        $exams->each(function (Exam $exam) {
+        $theories->each(function (Exam $exam) {
             $media = $exam->getFirstMedia('cover');
 
             $exam->setAttribute('cover', is_null($media) ? null : $media->getUrl('thumb'));
         });
 
-        return $exams;
+        $techs = Exam::where('category_id', Category::getCategories('exam.category', 'tech'))
+            ->where('enable', true)
+            ->latest()
+            ->get(['id', 'name']);
+
+        $techs->each(function (Exam $exam) {
+            $media = $exam->getFirstMedia('cover');
+
+            $exam->setAttribute('cover', is_null($media) ? null : $media->getUrl('thumb'));
+
+            $media = $exam->getFirstMedia('attachment');
+
+            $exam->setAttribute('attachment', is_null($media) ? null : $media->getUrl());
+        });
+
+        return compact('theories', 'techs');
     }
 
     /**

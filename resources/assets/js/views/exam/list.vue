@@ -13,7 +13,13 @@
       <tbody>
         <tr v-for="exam in exams.data">
           <td>
-            <a v-link="{ name: 'admin.exams.questions', params: { name: exam.name }}">
+            <a v-if="'tech' === exam.category.name" :href="exam.attachment" target="_blank">
+              <span style="display: block; margin: 10px 0;">{{ exam.name }}</span>
+
+              <img :src="exam.cover" style="max-width: 216px;">
+            </a>
+
+            <a v-else v-link="{ name: 'admin.exams.questions', params: { name: exam.name }}">
               <span style="display: block; margin: 10px 0;">{{ exam.name }}</span>
 
               <img :src="exam.cover" style="max-width: 216px;">

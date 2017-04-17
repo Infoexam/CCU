@@ -33,6 +33,7 @@
         data.append('category_id', this.form.category_id)
         data.append('enable', this.form.enable ? 1 : 0)
         data.append('cover', this.$refs.formComponent.$els.cover.files[0])
+        data.append('attachment', this.$refs.formComponent.$els.attachment.files[0])
 
         this.$http.post('exams', data).then(response => {
           this.$router.go({ name: 'admin.exams' })

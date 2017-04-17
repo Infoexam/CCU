@@ -33,6 +33,12 @@ class ExamController extends Controller
             $media = $exam->getFirstMedia('cover');
 
             $exam->setAttribute('cover', is_null($media) ? null : $media->getUrl('thumb'));
+
+            if ('tech' === $exam->getRelation('category')->getAttribute('name')) {
+                $media = $exam->getFirstMedia('attachment');
+
+                $exam->setAttribute('attachment', is_null($media) ? null : $media->getUrl());
+            }
         }
 
         return $exams;
@@ -54,6 +60,10 @@ class ExamController extends Controller
         }
 
         $exam->uploadMedias($request->file('cover'), 'cover');
+
+        if ($request->hasFile('attachment')) {
+            $exam->uploadMedias($request->file('attachment'), 'attachment');
+        }
 
         return $exam;
     }
@@ -94,6 +104,12 @@ class ExamController extends Controller
             $exam->clearMediaCollection('cover');
 
             $exam->uploadMedias($request->file('cover'), 'cover');
+        }
+
+        if ($request->hasFile('attachment')) {
+            $exam->clearMediaCollection('attachment');
+
+            $exam->uploadMedias($request->file('attachment'), 'attachment');
         }
 
         return $exam;

@@ -18,6 +18,7 @@ class ExamRequest extends Request
             'name'        => 'required|string|max:48|unique:exams,name',
             'enable'      => 'required|boolean',
             'cover'       => 'required|image',
+            'attachment'  => 'file',
         ];
 
         if ($this->isMethod('PATCH')) {

@@ -48,6 +48,22 @@
       </div>
     </div>
 
+    <div class="file-field input-field">
+      <div class="btn">
+        <span>附件檔案</span>
+
+        <input
+          v-el:attachment
+          type="file"
+          accept="application/*"
+        >
+      </div>
+
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+
     <submit :text="submitText"></submit>
   </div>
 </template>
