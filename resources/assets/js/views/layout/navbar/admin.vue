@@ -10,10 +10,6 @@
   .side-nav {
     width: $side-width;
 
-    .collapsible-body li.active {
-      background-color: #42a5f5 !important;
-    }
-
     .bold > a {
       font-weight: bold;
     }
@@ -42,29 +38,11 @@
         </a>
       </li>
 
-      <li class="no-padding">
-        <ul class="collapsible" data-collapsible="expandable">
-          <li v-for="group in navbar" class="bold">
-            <a
-              class="collapsible-header active waves-effect waves-teal"
-            ><i :class="[group.icon]" class="fa fa-fw" aria-hidden="true"></i>{{ group.name }}</a>
-
-            <div class="collapsible-body">
-              <ul>
-                <li v-for="link in group.links" v-link-active>
-                  <a v-link="link.href">{{ link.name }}</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </li>
-
-      <li class="bold">
+      <li class="bold" v-for="link in links" v-link-active>
         <a
-          v-link="{ name: 'home', exact: true }"
+          v-link="{ name: link.target, exact: true }"
           class="waves-effect waves-teal"
-        ><i class="fa fa-home fa-fw" aria-hidden="true"></i>前台</a>
+        ><i :class="[link.icon]" class="fa fa-fw" aria-hidden="true"></i>{{ link.name }}</a>
       </li>
     </ul>
   </header>
@@ -74,44 +52,36 @@
   export default {
     data () {
       return {
-        navbar: [
+        links: [
           {
             name: '帳號',
             icon: 'fa-users',
-            links: [
-              { href: { name: 'admin.users', exact: true }, name: '帳號列表' }
-            ]
+            target: 'admin.users'
           },
           {
             name: '題庫',
             icon: 'fa-tasks',
-            links: [
-              { href: { name: 'admin.exams', exact: true }, name: '題庫列表' },
-              { href: { name: 'admin.exams.create', exact: true }, name: '新增題庫' }
-            ]
+            target: 'admin.exams'
           },
           {
             name: '試卷',
             icon: 'fa-file-text',
-            links: [
-              { href: { name: 'admin.papers', exact: true }, name: '試卷列表' },
-              { href: { name: 'admin.papers.create', exact: true }, name: '新增試卷' }
-            ]
+            target: 'admin.papers'
           },
           {
             name: '測驗',
             icon: 'fa-book',
-            links: [
-              { href: { name: 'admin.listings', exact: true }, name: '測驗列表' },
-              { href: { name: 'admin.listings.create', exact: true }, name: '新增測驗' }
-            ]
+            target: 'admin.listings'
           },
           {
             name: '成績',
             icon: 'fa-bar-chart',
-            links: [
-              { href: { name: 'admin.gradings', exact: true }, name: '成績列表' }
-            ]
+            target: 'admin.gradings'
+          },
+          {
+            name: '前台',
+            icon: 'fa-home',
+            target: 'home'
           }
         ]
       }
@@ -121,8 +91,6 @@
       $('header .button-collapse').sideNav({
         closeOnClick: 993 > window.innerWidth
       })
-
-      $('header .collapsible').collapsible()
     },
 
     beforeDestroy () {

@@ -1,5 +1,12 @@
 <template>
   <section>
+    <div class="row middle-xs end-xs">
+      <a
+        v-link="{ name: 'admin.exams.create' }"
+        class="waves-effect waves-light btn green inline-flex"
+      >新增題庫</a>
+    </div>
+
     <table class="bordered highlight centered">
       <thead>
         <tr>
