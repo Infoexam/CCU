@@ -54,6 +54,11 @@
       return {
         links: [
           {
+            name: '訊息',
+            icon: 'fa-bullhorn',
+            target: 'admin.news'
+          },
+          {
             name: '帳號',
             icon: 'fa-users',
             target: 'admin.users'

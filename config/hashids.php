@@ -43,6 +43,11 @@ return [
             'alphabet' => env('HASHIDS_ALPHABET', 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'),
         ],
 
+        'news' => [
+            'salt' => 'maOn20BAcIkOF8Uiw8vABepn6gqS6bTN',
+            'length' => 6,
+        ],
+
     ],
 
 ];

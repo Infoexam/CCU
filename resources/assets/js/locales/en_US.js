@@ -111,6 +111,13 @@ Skills test : Programming`
 
     admin: '管理介面',
 
+    news: {
+      index: '訊息列表',
+      show: '訊息查看',
+      create: '新增訊息',
+      edit: '編輯訊息'
+    },
+
     users: {
       index: '學生列表',
       profile: '個人資料'

@@ -16,6 +16,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
 
     $api->get('account/apply', 'AccountController@apply');
 
+    $api->resource('news', 'NewsController', ['except' => ['create', 'edit']]);
+
     $api->group(['middleware' => ['auth']], function (ApiRouter $api) {
         $api->group(['prefix' => 'account'], function (ApiRouter $api) {
             $api->get('profile', 'AccountController@profile');

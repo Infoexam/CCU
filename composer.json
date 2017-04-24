@@ -12,7 +12,7 @@
     "dingo/api": "1.0.*@dev",
     "doctrine/dbal": "^2.5",
     "guzzlehttp/guzzle": "^6.2",
-    "infoexam/eloquent": "^1.0",
+    "infoexam/eloquent": "dev-master",
     "infoexam/media": "^1.0",
     "infoexam/password": "^1.0",
     "infoexam/snappy": "^1.0",
