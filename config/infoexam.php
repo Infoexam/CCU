@@ -79,4 +79,17 @@ return [
 
     'composer_path' => env('COMPOSER_PATH'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cachet Api Key
+    |--------------------------------------------------------------------------
+    |
+    | Cachet API 密鑰.
+    |
+    */
+
+    'cachet_component_id' => env('CACHET_COMPONENT_ID'),
+
+    'cachet_api_key' => env('CACHET_API_KEY'),
+
 ];

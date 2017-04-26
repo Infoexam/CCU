@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\Cachet\Working::class,
         Commands\Deploy::class,
         Commands\Firewall::class,
         Commands\Judge::class,
@@ -42,6 +43,7 @@ class Kernel extends ConsoleKernel
             $schedule->command('sync:certificate')->dailyAt('02:20');
             $schedule->command('backup:clean')->dailyAt('03:00');
             $schedule->command('backup:run')->dailyAt('03:30');
+            $schedule->command('cachet:working')->everyFiveMinutes();
         }
     }
 }
