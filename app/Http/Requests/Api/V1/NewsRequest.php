@@ -17,7 +17,7 @@ class NewsRequest extends Request
             'heading' => 'required|string|max:190',
             'link' => 'required|nullable|url|max:190',
             'content' => 'required|string|max:1000',
-            'is_announcement' => 'required|boolean'
+            'is_announcement' => 'required|boolean',
         ];
     }
 }
