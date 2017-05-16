@@ -112,6 +112,7 @@ return [
     'attributes'           => [
         'address'               => '地址',
         'age'                   => '年齡',
+        'attachment'            => '附件',
         'available'             => '可用的',
         'city'                  => '城市',
         'content'               => '內容',

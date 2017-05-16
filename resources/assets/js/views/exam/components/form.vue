@@ -55,12 +55,11 @@
         <input
           v-el:attachment
           type="file"
-          accept="application/*"
         >
       </div>
 
       <div class="file-path-wrapper">
-        <input class="file-path validate" type="text">
+        <input class="file-path validate" type="text" placeholder="僅支援壓縮黨">
       </div>
     </div>
 

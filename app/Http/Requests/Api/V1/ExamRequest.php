@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1;
 
 use App\Http\Requests\Request;
+use Infoexam\Eloquent\Models\Category;
 
 class ExamRequest extends Request
 {
@@ -13,12 +14,14 @@ class ExamRequest extends Request
      */
     public function rules()
     {
+        $tech = Category::getCategories('exam.category', 'tech');
+
         $rules = [
             'category_id' => 'required|integer|exists:categories,id,category,exam.category',
             'name'        => 'required|string|max:48|unique:exams,name',
             'enable'      => 'required|boolean',
             'cover'       => 'required|image',
-            'attachment'  => 'file',
+            'attachment'  => "required_if:category_id,{$tech}|file",
         ];
 
         if ($this->isMethod('PATCH')) {
