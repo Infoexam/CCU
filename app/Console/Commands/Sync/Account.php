@@ -272,7 +272,7 @@ class Account extends Sync
 
             $info['username'] = $user['std_no'];
             $info['role'] = $this->role($user['std_no']);
-            $info['password'] = bcrypt($user['user_pass']);
+            $info['password'] = encrypt(bcrypt($user['user_pass']));
             $info['created_at'] = $now;
             $info['updated_at'] = $now;
         }
