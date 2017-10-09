@@ -64,11 +64,6 @@ return [
             'prefix'    => '',
             'strict'    => false,
             'engine'    => null,
-            'options'   => [
-                PDO::MYSQL_ATTR_SSL_KEY     => env('MYSQL_ATTR_SSL_KEY'),
-                PDO::MYSQL_ATTR_SSL_CERT    => env('MYSQL_ATTR_SSL_CERT'),
-                PDO::MYSQL_ATTR_SSL_CA      => env('MYSQL_ATTR_SSL_CA'),
-            ],
             'dump_command_timeout'          => 60 * 5,
             'dump_using_single_transaction' => true,
         ],
