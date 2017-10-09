@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Infoexam\Eloquent\Models\User;
 
 class UserController extends Controller

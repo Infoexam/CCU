@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ExamImageRequest;
+use App\Http\Requests\ExamImageRequest;
 use Illuminate\Http\Request;
 use Infoexam\Eloquent\Models\Exam;
 

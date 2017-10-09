@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Hashids;
 use Illuminate\Http\Request;

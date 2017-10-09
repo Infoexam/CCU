@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use App\Exceptions\ApplyUncancelableException;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ListingApplyRequest;
+use App\Http\Requests\ListingApplyRequest;
 use App\Services\ApplyService;
 use Infoexam\Eloquent\Models\Category;
 use Infoexam\Eloquent\Models\User;

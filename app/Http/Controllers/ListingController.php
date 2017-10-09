@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use App\Exceptions\ListingAppliedException;
 use App\Exceptions\ListingConflictException;
 use App\Exceptions\ListingStartedException;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ListingRequest;
+use App\Http\Requests\ListingRequest;
 use App\Services\ListingService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;

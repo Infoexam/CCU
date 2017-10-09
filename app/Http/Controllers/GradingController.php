@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use Alchemy\Zippy\Zippy;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\GradingImportRequest;
-use App\Http\Requests\Api\V1\GradingRequest;
+use App\Http\Requests\GradingImportRequest;
+use App\Http\Requests\GradingRequest;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Infoexam\Eloquent\Models\Apply;

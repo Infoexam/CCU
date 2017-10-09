@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use Infoexam\Eloquent\Models\Category;
 
 class ListingRequest extends Request

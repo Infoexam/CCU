@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\V1\ExamRequest;
+use App\Http\Requests\ExamRequest;
 use Illuminate\Http\Request;
 use Infoexam\Eloquent\Models\Category;
 use Infoexam\Eloquent\Models\Exam;

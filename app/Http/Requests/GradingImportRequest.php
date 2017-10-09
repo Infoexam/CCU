@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
-class ExamQuestionImportRequest extends Request
+class GradingImportRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +12,7 @@ class ExamQuestionImportRequest extends Request
     public function rules()
     {
         return [
-            'file' => 'required|mimes:xls,xlsx,csv',
+            'file' => 'required',
         ];
     }
 }

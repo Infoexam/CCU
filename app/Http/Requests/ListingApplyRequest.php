@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
-
-use App\Http\Requests\Request;
+namespace App\Http\Requests;
 
 class ListingApplyRequest extends Request
 {

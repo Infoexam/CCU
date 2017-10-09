@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
-use App\Http\Requests\Api\V1\NewsRequest;
+use App\Http\Requests\NewsRequest;
 use Hashids;
-use App\Http\Controllers\Controller;
 use Infoexam\Eloquent\Models\News;
 
 class NewsController extends Controller
