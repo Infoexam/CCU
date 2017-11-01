@@ -318,6 +318,7 @@ class Account extends Sync
                     return [
                         'user_id' => $userId,
                         'category_id' => $category->getAttribute('id'),
+                        'free' => 1,
                         'created_at' => $now,
                         'updated_at' => $now,
                     ];
