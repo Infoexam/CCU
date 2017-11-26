@@ -8,7 +8,7 @@ use Illuminate\Routing\Router as Router;
 
 $api = app(ApiRouter::class);
 
-$api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Http\Controllers\Api\V1'], function (ApiRouter $api) {
+$api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Http\Controllers'], function (ApiRouter $api) {
     $api->group(['prefix' => 'auth'], function (ApiRouter $api) {
         $api->post('sign-in', 'AuthController@signIn');
         $api->post('sign-out', 'AuthController@signOut');
@@ -77,8 +77,8 @@ $api->group(['version' => 'v1', 'middleware' => ['web'], 'namespace' => 'App\Htt
     });
 });
 
-$router->get('auth/old-website', 'Api\V1\AuthController@oldWebsite');
-$router->get('auth/sso', 'Api\V1\AuthController@sso');
+$router->get('auth/old-website', 'AuthController@oldWebsite');
+$router->get('auth/sso', 'AuthController@sso');
 
 $router->post('deploy', 'HomeController@deploy');
 
