@@ -226,7 +226,7 @@ class ApplyService
                 throw new ApplyUntransformableException;
             }
         } else {
-            if (1 >= Carbon::now()->diffInDays($listing->getAttribute('began_at'), false) ||
+            if (1 >= Carbon::now()->startOfDay()->diffInDays($listing->getAttribute('began_at'), false) ||
                 $listing->getAttribute('applied_num') >= $listing->getAttribute('maximum_num')
             ) {
                 throw new ApplyUntransformableException;
@@ -303,7 +303,7 @@ class ApplyService
             if (! is_null($listing->getAttribute('started_at'))) {
                 throw new ApplyUncancelableException;
             }
-        } elseif (1 >= Carbon::now()->diffInDays($listing->getAttribute('began_at'), false)) {
+        } elseif (1 >= Carbon::now()->startOfDay()->diffInDays($listing->getAttribute('began_at'), false)) {
             throw new ApplyUncancelableException;
         }
 
