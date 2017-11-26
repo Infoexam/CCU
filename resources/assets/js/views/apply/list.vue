@@ -86,27 +86,29 @@
         </thead>
 
         <tbody>
-          <tr v-for="listing in unities.data" v-if="'makeup' === listing.apply_type.name || hasApply(listing.code)">
-            <td>{{ listing.began_at }}</td>
-            <td>
-              <p>{{ i18n('listing', listing.subject.name) }}</p>
-              <p>{{ i18n('apply', listing.apply_type.name) }}</p>
-            </td>
-            <td>{{ listing.applied_num }} / {{ listing.maximum_num }}</td>
-            <td>
-              <a
-                v-if="hasApply(listing.code)"
-                class="waves-effect waves-light btn red disabled"
-              >已預約</a>
+          <template v-for="listing in unities.data">
+            <tr v-if="'makeup' === listing.apply_type.name || hasApply(listing.code)">
+              <td>{{ listing.began_at }}</td>
+              <td>
+                <p>{{ i18n('listing', listing.subject.name) }}</p>
+                <p>{{ i18n('apply', listing.apply_type.name) }}</p>
+              </td>
+              <td>{{ listing.applied_num }} / {{ listing.maximum_num }}</td>
+              <td>
+                <a
+                  v-if="hasApply(listing.code)"
+                  class="waves-effect waves-light btn red disabled"
+                >已預約</a>
 
-              <a
-                v-else
-                @click="transform(hasUnity, listing.code)"
-                class="waves-effect waves-light btn orange"
-                :class="{'disabled': ! hasUnity}"
-              >轉　移</a>
-            </td>
-          </tr>
+                <a
+                  v-else
+                  @click="transform(hasUnity, listing.code)"
+                  class="waves-effect waves-light btn orange"
+                  :class="{'disabled': (! hasUnity || listing.subject_id !== applies[hasUnity].subject_id)}"
+                >轉　移</a>
+              </td>
+            </tr>
+          </template>
 
           <tr v-if="0 === unities.data.length">
             <td colspan="4">尚無測驗</td>
@@ -177,7 +179,10 @@
 
           for (const apply of response.data.applies || []) {
             if (0 > Moment().diff(apply.listing.ended_at)) {
-              applies[apply.id] = apply.listing.code
+              applies[apply.id] = {
+                code: apply.listing.code,
+                subject_id: apply.listing.subject_id
+              }
             }
           }
 
@@ -225,7 +230,7 @@
 
       hasApply (code) {
         for (const key of Object.keys(this.applies)) {
-          if (code === this.applies[key]) {
+          if (code === this.applies[key].code) {
             return key
           }
         }
