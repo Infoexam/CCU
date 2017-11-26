@@ -57,7 +57,7 @@ class ListingController extends Controller
                     }
                 })
                 ->where('began_at', '>=', Carbon::now()->addDay())
-                ->latest('began_at')
+                ->oldest('began_at')
                 ->orderBy('room')
                 ->paginate(5)
                 ->appends($request->only(['apply', 'unity']));

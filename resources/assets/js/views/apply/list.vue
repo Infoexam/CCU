@@ -87,7 +87,7 @@
 
         <tbody>
           <template v-for="listing in unities.data">
-            <tr v-if="'makeup' === listing.apply_type.name || hasApply(listing.code)">
+            <tr>
               <td>{{ listing.began_at }}</td>
               <td>
                 <p>{{ i18n('listing', listing.subject.name) }}</p>
@@ -104,7 +104,7 @@
                   v-else
                   @click="transform(hasUnity, listing.code)"
                   class="waves-effect waves-light btn orange"
-                  :class="{'disabled': (! hasUnity || listing.subject_id !== applies[hasUnity].subject_id)}"
+                  :class="{'disabled': ('unity' === listing.apply_type.name || ! hasUnity || listing.subject_id !== applies[hasUnity].subject_id)}"
                 >轉　移</a>
               </td>
             </tr>
@@ -160,11 +160,9 @@
 
     computed: {
       hasUnity () {
-        for (const listing of this.unities.data) {
-          const id = this.hasApply(listing.code)
-
-          if (false !== id) {
-            return id
+        for (const key of Object.keys(this.applies)) {
+          if (['unity', 'makeup'].includes(this.applies[key].type)) {
+            return key
           }
         }
 
@@ -181,6 +179,7 @@
             if (0 > Moment().diff(apply.listing.ended_at)) {
               applies[apply.id] = {
                 code: apply.listing.code,
+                type: apply.listing.apply_type.name,
                 subject_id: apply.listing.subject_id
               }
             }

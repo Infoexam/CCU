@@ -29,7 +29,7 @@ class AccountController extends Controller
     public function applies(Request $request)
     {
         return $request->user()
-            ->load(['applies', 'applies.result', 'applies.listing'])
+            ->load(['applies', 'applies.result', 'applies.listing', 'applies.listing.applyType'])
             ->getRelation('applies');
     }
 
