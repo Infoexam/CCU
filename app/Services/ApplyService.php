@@ -303,7 +303,7 @@ class ApplyService
             if (! is_null($listing->getAttribute('started_at'))) {
                 throw new ApplyUncancelableException;
             }
-        } elseif (1 >= Carbon::now()->startOfDay()->diffInDays($listing->getAttribute('began_at'), false)) {
+        } elseif (1 > Carbon::now()->startOfDay()->diffInDays($listing->getAttribute('began_at'), false)) {
             throw new ApplyUncancelableException;
         }
 
