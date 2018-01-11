@@ -20,11 +20,6 @@ class JudgeSession extends Command
     protected $description = '批改指定場次測驗(listings.code)';
 
     /**
-     * @var Carbon
-     */
-    protected $now;
-
-    /**
      * Create a new command instance.
      */
     public function __construct()
@@ -108,7 +103,6 @@ class JudgeSession extends Command
     public function listing()
     {
         $judgeSession = $this->ask('Session code: ');
-        $this->now = Carbon::createFromFormat('Y-m-d', $judgeDay);
         $categories = Category::getCategories('exam.subject')
             ->filter(function (Category $category) {
                 return ends_with($category->getAttribute('name'), 'theory');
@@ -117,7 +111,6 @@ class JudgeSession extends Command
             ->toArray();
 
         return Listing::with(['applies', 'applies.result', 'applies.user', 'applies.user.certificates', 'applyType', 'subject'])
-            ->whereBetween('started_at', [$this->now->copy()->startOfDay(), $this->now->copy()->endOfDay()])
             ->whereIn('subject_id', $categories)
             ->where('code', $judgeSession)
             ->get();
