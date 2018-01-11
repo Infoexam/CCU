@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\Deploy::class,
         Commands\Firewall::class,
         Commands\Judge::class,
+        Commands\JudgeSession::class,
         Commands\SubresourceIntegrity::class,
         Commands\Sync\Account::class,
         Commands\Sync\Certificate::class,
