@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Infoexam\Eloquent\Models\Apply;
+use Infoexam\Eloquent\Models\Category;
+use Infoexam\Eloquent\Models\Listing;
 
 class JudgeSession extends Command
 {
