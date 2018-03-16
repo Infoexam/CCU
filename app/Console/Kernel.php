@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
         Commands\Sync\Department::class,
         Commands\Sync\Password::class,
         Commands\Sync\Receipt::class,
-        Commands\ImportOldData::class,
+        Commands\ExportOldData::class,
+
     ];
 
     /**
