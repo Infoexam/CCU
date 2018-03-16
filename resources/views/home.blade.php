@@ -16,8 +16,8 @@
 
     <script src="{{ _asset('js/jquery.min.js') }}" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossOrigin="anonymous" defer></script>
     <script src="{{ _asset('js/materialize.min.js') }}" integrity="sha384-MtG4F5bFIlwRS0MZiDIhuZp/FjoKpMFITxaG2vZqu3K6uh8Xx0VYgpo7JZ4uTJaT" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-20HybGmnl0sgyzIkmc0HOI3rlc3NBIQsRtw/wIgAiRmpeqCwQ0SP/HSjyIhypser" crossOrigin="anonymous" defer></script>git
-    <script src="{{ _asset('js/vendor.min.js') }}" integrity="sha384-HncTACYHnHPW1mTGIyaBPpp1UYkCfxxZuCqHflEG8Wv3/j5oxQFnhaQ4kpUYhybC" crossOrigin="anonymous" defer></script>
-    <script src="{{ _asset('js/main.js') }}" integrity="sha384-gN5GtT5wuDWXll2w4/CrzphVoqP/uiCyblr3jkqEWu7GP8lJqOc+3peEGOTkCZOo" crossOrigin="anonymous" defer></script>
+    <script src="{{ _asset('js/manifest.js') }}" integrity="sha384-20HybGmnl0sgyzIkmc0HOI3rlc3NBIQsRtw/wIgAiRmpeqCwQ0SP/HSjyIhypser" crossOrigin="anonymous" defer></script>
+    <script src="https://static-infoexam.ccu.edu.tw/assets/0.0.22/js/vendor.js')" integrity="sha384-HncTACYHnHPW1mTGIyaBPpp1UYkCfxxZuCqHflEG8Wv3/j5oxQFnhaQ4kpUYhybC" crossOrigin="anonymous" defer></script>
+    <script src="https://static-infoexam.ccu.edu.tw/assets/0.0.22/js/main.js')" integrity="sha384-gN5GtT5wuDWXll2w4/CrzphVoqP/uiCyblr3jkqEWu7GP8lJqOc+3peEGOTkCZOo" crossOrigin="anonymous" defer></script>
   </body>
 </html>
