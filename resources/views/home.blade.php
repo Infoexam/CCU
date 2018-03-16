@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8">
-    <title>資訊能力測驗系統1</title>
+    <title>資訊能力測驗系統</title>
     <link rel="stylesheet" href="{{ _asset('css/material-icons.css') }}" integrity="sha384-HW5BS5ZexnkLWD0V9LWRI4qqfF+jY5czO55nfMCI8ZYZ2v+eQgO0jT8OuHPRXiJ2" crossOrigin="anonymous">
     <link rel="stylesheet" href="{{ _asset('css/font-awesome.min.css') }}" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous">
     <link rel="stylesheet" href="{{ _asset('css/flexboxgrid.min.css') }}" integrity="sha384-lYQsy3+y5OZ48NxBmwaDdLIfraac06B9Y+GxLBpls0w3B97eRObW0Bs6yzuUMvV9" crossOrigin="anonymous">
