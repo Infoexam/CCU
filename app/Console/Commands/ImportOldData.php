@@ -10,14 +10,18 @@ use Infoexam\Eloquent\Models\Listing;
 use Infoexam\Eloquent\Models\Result;
 use Infoexam\Eloquent\Models\Certificate;
 
-class ExportOldData extends Command
+/**
+    系統中不存在帳號將不匯入
+    CSV Format: 場次, 學號, 日期, 學術科(T/S), 成績
+*/
+class ImportOldData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'exportolddata';
+    protected $signature = 'importolddata';
 
     /**
      * The console command description.
@@ -43,7 +47,7 @@ class ExportOldData extends Command
      */
     public function handle()
     {
-        $filePath = $this->ask("Exported file path:");
+        $filePath = $this->ask("Imported file path:");
         try {            
             if (!file_exists($filePath)) {
                 throw new \Exception('File not found.');
@@ -58,10 +62,10 @@ class ExportOldData extends Command
             $this->error($e->getMessage());
             return;
         }
-        $this->info("Exported file path: $filePath");
-        /*if ($this->confirm("Export the file? [yes|no]") == false) {
+        $this->info("Imported file path: $filePath");
+        if ($this->confirm("Import the file? [yes|no]") == false) {
             return;
-        }*/
+        }
 
         $count = 0;
         $exportRowNumber = 0;
