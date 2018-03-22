@@ -10,14 +10,14 @@ use Infoexam\Eloquent\Models\Listing;
 use Infoexam\Eloquent\Models\Result;
 use Infoexam\Eloquent\Models\Certificate;
 
-class ExportOldData extends Command
+class ImportOldData extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'exportolddata';
+    protected $signature = 'importolddata {subject : 應用/軟體(app/soft)} {--ignorezero : ignore score zero}';
 
     /**
      * The console command description.
@@ -43,7 +43,7 @@ class ExportOldData extends Command
      */
     public function handle()
     {
-        $filePath = $this->ask("Exported file path:");
+        $filePath = $this->ask("Imported file path:");
         try {            
             if (!file_exists($filePath)) {
                 throw new \Exception('File not found.');
@@ -58,25 +58,24 @@ class ExportOldData extends Command
             $this->error($e->getMessage());
             return;
         }
-        $this->info("Exported file path: $filePath");
-        /*if ($this->confirm("Export the file? [yes|no]") == false) {
+        $this->info("Imported file path: $filePath");
+        if ($this->confirm("Import this file? [yes|no]") == false) {
             return;
-        }*/
+        }
 
         $count = 0;
-        $exportRowNumber = 0;
+        $ImportRowNumber = 0;
         while(($data = fgetcsv($fp, 1000, ",")) !== false) {
             $code = $data[0];
             $username = $data[1];
             $date = $data[2];
             $subjectType = $data[3];
             $score = $data[4];
+            $subject = $this->argument('subject');
             $count++;
 
-            $subject = 'app';
-
-            if($this->isCSIE($this->getDepartmentCode($username))) {
-                $subject = 'soft';
+            if($this->option('ignorezero') && $score <= 0) {
+            	continue;
             }
 
             $user = User::where('username', $username)->first();
@@ -88,21 +87,18 @@ class ExportOldData extends Command
             $subjectId = $this->getSubjectId($subject, $subjectType);
             $listing = $this->createListing($code, $date, $subjectId);
             $apply = $this->createApply($user, $listing);
-            $result = $this->createResult($apply, $score);
-            if($result == null) echo 'NULLLLL';
-            $certificate = $this->updateCertificateScore($user, $result, $subjectType);
+            if($apply == false) {
+                continue;
+            }
+            if($score >= 0) {
+	            $result = $this->createResult($apply, $score);
+	            $certificate = $this->updateCertificateScore($user, $result, $subjectType);
+	        }
 
-            $exportRowNumber++;
+            $ImportRowNumber++;
 
         }
-        //$this->createApply(4263, 27);
-        //$this->createListing('11112', '2018/02/14', 23);
-        /*$user = new User();
-        $user->id = 4263;
-        $result = new Result();
-        $result->score = 100;
-        $this->updateCertificateScore($user, $result, 'S');*/
-        $this->info("Finished Rows:$count Actual:$exportRowNumber");
+        $this->info("Data rows: $count. Affected row:$ImportRowNumber.");
     }
 
     public function getDepartmentCode($username)
@@ -161,6 +157,10 @@ class ExportOldData extends Command
     }
     public function createApply(User $user, Listing $listing)
     {
+        $apply = Apply::where('user_id', $user->id)->where('listing_id', $listing->id)->first(); // Existed row
+        if($apply) {
+            return false;
+        }
         $apply = new Apply();
         $apply->user_id = $user->id;
         $apply->listing_id = $listing->id;
