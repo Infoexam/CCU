@@ -93,7 +93,7 @@ class Receipt extends Sync
             ->where('receipt_date', (Carbon::yesterday()->year - 1911).(Carbon::yesterday()->format('md')))
             ->leftJoin('c0etreceipt_acc_dt', 'c0etreceipt_mt.receipt_no', '=', 'c0etreceipt_acc_dt.receipt_no')
             ->where('note', 'like', '資訊能力%')
-            ->where('acc5_cd', '422Y-300')
+            ->where('acc5_cd', '420298-3000')
             ->get();
 
         return $this->trim($data);
