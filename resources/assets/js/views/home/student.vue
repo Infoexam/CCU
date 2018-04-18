@@ -27,7 +27,7 @@
 
         <tbody>
           <tr v-for="n in news.data">
-            <td>
+            <td style="text-align: left;">
               <a @click="show(n)" class="cursor-pointer">{{ n.heading }}</a>
             </td>
             <td>{{ n.created_at }}</td>
