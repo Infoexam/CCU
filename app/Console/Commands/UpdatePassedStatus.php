@@ -32,6 +32,15 @@ class UpdatePassedStatus extends Command
     {
         parent::__construct();
 
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
         $users = User::all();
 
         foreach($users as $user) {
@@ -57,15 +66,5 @@ class UpdatePassedStatus extends Command
                 $user->save();
             }
         }
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
-    {
-        //
     }
 }
