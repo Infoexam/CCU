@@ -45,23 +45,45 @@ class UpdatePassedStatus extends Command
 
         foreach($users as $user) {
             $cert = $user->certificates;
+            $applies = $user->applies;
             
-            $s = $cert->where('category_id', 16)->first();
-            $t = $cert->where('category_id', 17)->first();
+            $maxScore = 0;
+            foreach($applies as $apply) {
+                $subject = $apply->listing->subject_id;
+                if($subject == 21 || $subject == 23) { // 跳過學科
+                    continue;
+                }
 
-            $sScore = $s['score'];
+                $result = $apply->result;
+                if($result != null) {
+                    $score = $apply->result->score;
+                    $maxScore = max($maxScore, $score);
+                }
+            }
+            //echo $maxScore;
+            
+            $t = $cert->where('category_id', 16)->first(); //學科
+            $s = $cert->where('category_id', 17)->first(); //術科
+
             $tScore = $t['score'];
+            $sScore = $s['score'];
 
-            $sPassed = $sScore >= 70 || $sScore == -999;
+            if($maxScore > $sScore && $sScore != -999) {
+                $s['score'] = $maxScore;
+                $s->save();
+                $sScore = $s['score'];
+            }
+
             $tPassed = $tScore >= 70 || $tScore == -999;
+            $sPassed = $sScore >= 70 || $sScore == -999;
 
-            if($sPassed && $tPassed) {
-                $user->passed_at = max($s->updated_at, $t->updated_at);
-                if($sScore == -999 || $tScore == -999) {
-                    $user->passed_score = max($sScore, $tScore);
+            if($tPassed && $sPassed) {
+                $user->passed_at = max($t->updated_at, $s->updated_at);
+                if($tScore == -999 || $sScore == -999) {
+                    $user->passed_score = max($tScore, $sScore);
                 }
                 else {
-                    $user->passed_score = ($sScore + $tScore) / 2;
+                    $user->passed_score = ($tScore + $sScore) / 2;
                 }
                 $user->save();
             }

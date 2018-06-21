@@ -64,23 +64,30 @@ class ImportOldData extends Command
         }
 
         $count = 0;
+        $log = '';
         $ImportRowNumber = 0;
+        $imported = false;
         while(($data = fgetcsv($fp, 1000, ",")) !== false) {
+            $imported = false;
             $code = $data[0];
             $username = $data[1];
             $date = $data[2];
             $subjectType = $data[3];
             $score = $data[4];
             $subject = $this->argument('subject');
+
+            $log .= "$code, $username, $subject, $score";
             $count++;
 
             if($this->option('ignorezero') && $score <= 0) {
+                $log .= ", $imported, zero score\n";
             	continue;
             }
 
             $user = User::where('username', $username)->first();
 
             if($user == null) {
+                $log .= ", $imported, user not found\n";
                 continue;
             }
 
@@ -88,17 +95,24 @@ class ImportOldData extends Command
             $listing = $this->createListing($code, $date, $subjectId);
             $apply = $this->createApply($user, $listing);
             if($apply == false) {
+                $log .= ", $imported, apply exist\n";
                 continue;
             }
             if($score >= 0) {
 	            $result = $this->createResult($apply, $score);
 	            $certificate = $this->updateCertificateScore($user, $result, $subjectType);
-	        }
+            }
 
+            $imported = true;
+            $log .= ", $imported, success\n";
             $ImportRowNumber++;
 
         }
+        $log .= "Data rows: $count. Affected row:$ImportRowNumber.";
         $this->info("Data rows: $count. Affected row:$ImportRowNumber.");
+        $fp = fopen("/var/www/html/log.csv","wb");
+        fwrite($fp, $log);
+        fclose($fp);
     }
 
     public function getDepartmentCode($username)
