@@ -20,7 +20,7 @@
         </tr>
         <tr>
           <td>測驗：{{ user.passed_at ? '已通過' : '未通過' }}</td>
-          <td colspan="2">分數：{{ user.passed_score || '-' }}</td>
+          <td colspan="2">分數：{{ (user.passed_score >= 0 && user.passed_score) || (user.passed_score == -999 && '全抵免') || '-' }}</td>
         </tr>
       </tbody>
     </table>
